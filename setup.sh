@@ -26,6 +26,15 @@ function file_is_exists() {
   fi
 }
 
+# diritory_is_exists test directory is exists
+function dir_is_exists() {
+  if [ -d $1 ]; then
+    true
+  else
+    false
+  fi
+}
+
 # file_contain_string test file contain string
 function file_contain_string() {
   if grep -q "$1" $2; then
@@ -54,6 +63,7 @@ if ! command_is_exists cargo; then
   read -p "[y]es or [n]o (default: no) : " -r answer
   [ "$answer" != "${answer#[Yy]}" ] && curl https://sh.rustup.rs -sSf | sh
   CARGO_INSTALLED=true
+  source $HOME/.cargo/env
 else
   CARGO_INSTALLED=true
 fi
@@ -66,6 +76,7 @@ if ! command_is_exists go; then
   export GOPATH=$HOME/software/go
   [ "$answer" != "${answer#[Yy]}" ] && wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash 
   GO_INSTALLED=true
+  source $HOME/.bashrc
 else
   GO_INSTALLED=true
 fi
@@ -85,7 +96,11 @@ fi
 if ! command_is_exists clipboard-provider; then
   msg "Install clipboard-provider?"
   read -p "[y]es or [n]o (default: no) : " -r answer
-  wget --no-check-certificate https://raw.githubusercontent.com/lotabout/dotfiles/master/bin/clipboard-provider && chmod +x clipboard-provider && mv clipboard-provider $HOME/.local/bin/
+  wget --no-check-certificate https://raw.githubusercontent.com/lotabout/dotfiles/master/bin/clipboard-provider && chmod +x clipboard-provider 
+  if ! dir_is_exists $HOME/.local/bin; then
+    mkdir -p $HOME/.local/bin
+  fi
+  mv clipboard-provider $HOME/.local/bin/
 fi
 
 # install duf
