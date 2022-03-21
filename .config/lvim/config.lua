@@ -22,7 +22,6 @@ vim.opt.smartcase = true
 vim.opt.cmdheight = 1
 vim.opt.conceallevel = 0
 vim.opt.cursorline = true
-vim.opt.spell = true
 vim.opt.colorcolumn = "99999"
 
 -- copilot setup
