@@ -1,14 +1,13 @@
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "onedarker"
 lvim.lint_on_save = true
 lvim.transparent_window = true
-lvim.colorscheme = 'sonokai'
+-- lvim.colorscheme = 'sonokai'
 -- lvim.colorscheme = 'monokai_soda'
---lvim.colorscheme = 'onedarkpro'
+-- lvim.colorscheme = 'onedarkpro'
 -- lvim.colorscheme = 'tokyonight'
--- lvim.colorscheme = 'rose-pine'
+lvim.colorscheme = 'rose-pine'
 
 -- colorscheme sonokai style
 -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
@@ -16,12 +15,15 @@ vim.g.sonokai_style = 'shusia'
 
 -- vim opt set
 vim.opt.relativenumber = true
-vim.opt.colorcolumn  = "120"
+vim.opt.shell = "/bin/sh"
 vim.opt.scrolloff = 5
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.cmdheight = 1
-vim.opt.tabstop = 4
+vim.opt.conceallevel = 0
+vim.opt.cursorline = true
+vim.opt.spell = true
+vim.opt.colorcolumn = "99999"
 
 -- copilot setup
 vim.g.copilot_no_tab_map = true
@@ -95,6 +97,7 @@ lvim.keys.visual_block_mode = {
 lvim.builtin.dap.active = true
 lvim.builtin.dashboard.active = true
 lvim.builtin.notify.active = true
+lvim.builtin.lualine.style = "default"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
@@ -245,9 +248,9 @@ lvim.builtin.which_key.mappings["d"] = {
     b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
     c = { "<cmd>lua require'dap'.continue()<cr>", "continue" },
     C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "continue to cursor" },
-    n = { "<cmd>lua require'dap'.step_over()<cr>", "next" },
-    s = { "<cmd>lua require'dap'.step_into()<cr>", "step" },
-    S = { "<cmd>lua require'dap'.step_out()<cr>", "step" },
+    n = { "<cmd>lua require'dap'.step_over()<cr>", "step over" },
+    s = { "<cmd>lua require'dap'.step_into()<cr>", "step into" },
+    S = { "<cmd>lua require'dap'.step_out()<cr>", "step out" },
     e = { "<cmd>lua require'dap'.close()<cr>", "stop debugger" },
     l = { "<cmd>lua require'dap'.list_breakpoints()<cr>", "list all breakpoint"},
     r = { "<cmd>lua require'dap'.clear_breakpoints()<cr>","remove all breakpont"},
@@ -255,7 +258,7 @@ lvim.builtin.which_key.mappings["d"] = {
     x = {"<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
     t = {"<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
     f = {"<cmd>lua require'dapui'.float_element()<cr>", "get value" },
-    v = {"<cmd>lua require'dapui'.eval()<cr>", "get value" },
+  v = {"<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
 }
 
 -- python debug
@@ -444,7 +447,6 @@ lvim.plugins = {
         end
     },
     {"fatih/vim-go"},
-    {"sebdah/vim-delve"},
     {"buoto/gotests-vim"},
     {
         "folke/todo-comments.nvim",
@@ -461,7 +463,7 @@ lvim.plugins = {
   },
   {"theHamsta/nvim-dap-virtual-text"},
   {"rcarriga/nvim-dap-ui"},
-  {'simrat39/symbols-outline.nvim'},
+  {'christoomey/vim-tmux-navigator'},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
@@ -469,5 +471,8 @@ lvim.autocommands.custom_groups = {
     { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
     { "BufWinEnter", "*.lua", "setlocal ts=4 sw=4" },
     { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
-    { "BufWinEnter", "*.conf", "setlocal ts=4 sw=4" },
+    -- { "BufWinEnter", "*.js", "setlocal ts=2 sw=2" },
+    -- { "BufWinEnter", "*.jsx", "setlocal ts=2 sw=2" },
+    -- { "BufWinEnter", "*.ts", "setlocal ts=2 sw=2" },
+    -- { "BufWinEnter", "*.tsx", "setlocal ts=2 sw=2" },
 }
