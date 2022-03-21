@@ -54,6 +54,8 @@ if ! command_is_exists cargo; then
   read -p "[y]es or [n]o (default: no) : " -r answer
   [ "$answer" != "${answer#[Yy]}" ] && curl https://sh.rustup.rs -sSf | sh
   CARGO_INSTALLED=true
+else
+  CARGO_INSTALLED=true
 fi
 
 # install go
@@ -64,13 +66,17 @@ if ! command_is_exists go; then
   export GOPATH=$HOME/software/go
   [ "$answer" != "${answer#[Yy]}" ] && wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash 
   GO_INSTALLED=true
+else
+  GO_INSTALLED=true
 fi
 
 # install luarvim
 if ! command_is_exists lvim; then
-    msg "LunarVim is not installed. Would you like to install LunarVim dependencies?"
+  msg "LunarVim is not installed. Would you like to install LunarVim dependencies?"
   read -p "[y]es or [n]o (default: no) : " -r answer
   [ "$answer" != "${answer#[Yy]}" ] && bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+  LUNARVIM_INSTALLED=true
+else
   LUNARVIM_INSTALLED=true
 fi
 
@@ -132,6 +138,8 @@ if command_is_exists tmux; then
     mv $HOME/.tmux.conf $HOME/.tmux.conf.backup
   fi
   ln -s $SHELL_FOLDER/.tmux.conf $HOME/.tmux.conf
+  # install tmux plugin
+  bash $HOME/.tmux/plugins/tpm/scripts/install_plugins.sh
 fi
 
 # if current shell is bash 
