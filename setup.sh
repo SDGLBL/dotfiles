@@ -41,7 +41,6 @@ function msg() {
 # add proxy for Mainland China users
 msg "Add proxy for Mainland China users?"
 read -p "[y]es or [n]o (default: no) : " -r answer
-read -p "password : " -r password
 [ "$answer" != "${answer#[Yy]}" ] && printf 'mirror.ghproxy.com github.com\nmirror.ghproxy.com raw.githubusercontent.com\n' | sudo tee -a /etc/hosts
 
 # if use lunarvim
