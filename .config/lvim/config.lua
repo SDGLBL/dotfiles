@@ -6,8 +6,8 @@ lvim.transparent_window = true
 -- lvim.colorscheme = 'sonokai'
 -- lvim.colorscheme = 'monokai_soda'
 -- lvim.colorscheme = 'onedarkpro'
--- lvim.colorscheme = 'tokyonight'
-lvim.colorscheme = 'rose-pine'
+lvim.colorscheme = 'tokyonight'
+-- lvim.colorscheme = 'rose-pine'
 
 -- colorscheme sonokai style
 -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`

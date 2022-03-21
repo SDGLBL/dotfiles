@@ -1,10 +1,5 @@
 #!/bin/bash
 
-GO_INSTALLED=false
-CARGO_INSTALLED=false
-LUNARVIM_INSTALLED=false
-NEOVIM_INSTALLED=false
-
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 CONFIG_FOLDER=$SHELL_FOLDER/.config
 LUNARVIM_CONFIG_FOLDER="$HOME/.config/lvim"
@@ -53,12 +48,19 @@ function msg() {
 }
 
 function add_git_proxy() {
-  # add git proxy for Mainland China users
-  msg "Add git proxy for Mainland China users?"
-  read -p "[y]es or [n]o (default: no) : " -r answer
-  [ "$answer" != "${answer#[Yy]}" ] && printf 'mirror.ghproxy.com github.com\nmirror.ghproxy.com raw.githubusercontent.com\n' | sudo tee -a /etc/hosts
+  if grep -q "ghproxy" /etc/hosts; then
+    # add git proxy for Mainland China users
+    msg "Add git proxy for Mainland China users?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && printf 'mirror.ghproxy.com github.com\nmirror.ghproxy.com raw.githubusercontent.com\n' | sudo tee -a /etc/hosts
+  fi
 }
 
+function install_oh_my_zsh() {
+  msg "Install oh_my_zsh?"
+  read -p "[y]es or [n]o (default: no) : " -r answer
+  [ "$answer" != "${answer#[Yy]}" ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+}
 
 # install cargo
 function install_cargo() {
@@ -66,10 +68,7 @@ function install_cargo() {
     msg "Install cargo?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && curl https://sh.rustup.rs -sSf | sh
-    CARGO_INSTALLED=true
     source $HOME/.cargo/env
-  else
-    CARGO_INSTALLED=true
   fi
 }
 
@@ -81,10 +80,6 @@ function install_go() {
     read -p "[y]es or [n]o (default: no) : " -r answer
     export GOPATH=$HOME/software/go
     [ "$answer" != "${answer#[Yy]}" ] && wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash 
-    GO_INSTALLED=true
-    source $HOME/.bashrc
-  else
-    GO_INSTALLED=true
   fi
 }
 
@@ -106,23 +101,16 @@ function install_neovim() {
         tar -xvf $HOME/software/nvim.tar.gz -C $HOME/software
         mv $HOME/software/nvim-linux64 $HOME/software/nvim
       fi
-      LUNARVIM_INSTALLED=true
     fi
-  else
-    LUNARVIM_INSTALLED=true
   fi
 }
 
 # install luarvim
 function install_luarvim() {
   if ! command_is_exists lvim; then
-    install_neovim
     msg "LunarVim is not installed. Would you like to install LunarVim dependencies?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
-    LUNARVIM_INSTALLED=true
-  else
-    LUNARVIM_INSTALLED=true
   fi
 }
 
@@ -152,7 +140,7 @@ function install_duf() {
 
 function install_cargo_package() {
   # install bat
-  if ! command_is_exists bat; then
+  if ! command_is_exists bat && command_is_exists cc; then
     msg "Install bat?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && cargo install bat
@@ -168,9 +156,11 @@ function install_cargo_package() {
 
 function innstall_go_package() {
   # add proxy for go
-  msg "Use go proxy for Mainland China users?"
-  read -p "[y]es or [n]o (default: no) : " -r answer
-  [ "$answer" != "${answer#[Yy]}" ] && go env -w GOPROXY=https://goproxy.cn,direct
+  if [ -z "$GOPROXY" ]; then
+    msg "Use go proxy for Mainland China users?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && go env -w GOPROXY=https://goproxy.cn,direct
+  fi
 
   if ! command_is_exists lazygit; then
     msg "Install lazygit?"
@@ -189,6 +179,9 @@ function config_lunarvim() {
 
 # if use tmux
 function config_tmux() {
+  if ! dir_is_exists $HOME/.tmux/plugins/tpm; then
+    git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+  fi
   if command_is_exists tmux; then
     if file_is_exists $HOME/.tmux.conf; then
       mv $HOME/.tmux.conf $HOME/.tmux.conf.backup
@@ -201,52 +194,101 @@ function config_tmux() {
 
 # if current shell is bash 
 function config_bash() {
-  if [[ "$SHELL" =~ "bash" ]]; then
-    if file_is_exists $HOME/.bashrc; then
-      if file_is_exists $HOME/.config.sh; then
-        mv $HOME/.config.sh $HOME/.config.sh.backup
-      fi
-      ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
-      temp="[[ ! -f ~/.config.sh ]] || source ~/.config.sh"
-      # if $temp not in $HOME/.bashrc and $HOME/.bashrc exist then append $temp to $HOME/.bashrc
-      if ! file_contain_string "$temp" $HOME/.bashrc; then
-        printf "$temp" >> $HOME/.bashrc
-      fi
+  if file_is_exists $HOME/.bashrc; then
+    if file_is_exists $HOME/.config.sh; then
+      mv $HOME/.config.sh $HOME/.config.sh.backup
+    fi
+    ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
+    temp="[[ ! -f ~/.config.sh ]] || source ~/.config.sh"
+    # if $temp not in $HOME/.bashrc and $HOME/.bashrc exist then append $temp to $HOME/.bashrc
+    if ! file_contain_string "$temp" $HOME/.bashrc; then
+      printf "$temp" >> $HOME/.bashrc
     fi
   fi
 }
 
 # if current shell is zsh
 function config_zsh() {
-  if [[ "$SHELL" =~ "zsh" ]]; then
-    if file_is_exists $HOME/.zshrc; then
-      if file_is_exists $HOME/.config.sh; then
-        mv $HOME/.config.sh $HOME/.config.sh.backup
-      fi
-      ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
+  if file_is_exists $HOME/.zshrc; then
+    # install zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestionsc
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    echo "plugins=(git z zsh-autosuggestions zsh-syntax-highlighting)" >> $HOME/.zshrc
 
-      temp="[[ ! -f ~/.config.sh ]] || source ~/.config.sh"
-      # if $temp not in $HOME/.zshrc and $HOME/.zshrc exist then append $temp to $HOME/.zshrc
-      if ! file_contain_string "$temp" $HOME/.zshrc; then
-        printf "$temp" >> $HOME/.zshrc
-      fi
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+    echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> $HOME/.zshrc
+
+    if file_is_exists $HOME/.config.sh; then
+      mv $HOME/.config.sh $HOME/.config.sh.backup
     fi
+    ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
+
+    temp="[[ ! -f ~/.config.sh ]] || source ~/.config.sh"
+    # if $temp not in $HOME/.zshrc and $HOME/.zshrc exist then append $temp to $HOME/.zshrc
+    if ! file_contain_string "$temp" $HOME/.zshrc; then
+      printf "$temp" >> $HOME/.zshrc
+    fi
+
+    # chsh to zsh
+    msg "Change shell to zsh?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && chsh $USER -s zsh
   fi
 }
 
 function main() {
+  if ! command_is_exists cc || ! command_is_exists gcc;then
+    echo "Please install gcc"
+    exit 1
+  fi
+
+  if ! command_is_exists git; then
+    echo "Please install git"
+    exit 1
+  fi
+
+  if ! command_is_exists make; then
+    echo "Please install make"
+    exit 1
+  fi
+
+  if ! command_is_exists zsh; then
+    echo "Please install zsh"
+    exit 1
+  fi
+
+  PATH=$PATH:$HOME/.local/bin
+  PATH=$PATH:$HOME/.cargo/bin
+  PATH=$PATH:$HOME/software/go/bin
+  PATH=$PATH:$HOME/software/nvim/bin
+
   add_git_proxy
   install_cargo
   install_go
-  install_luarvim
+  install_neovim
   install_clipboard_provider
-  install_duf
-  install_cargo_package
-  innstall_go_package
-  config_lunarvim
-  config_tmux
+  if command_is_exists nvim; then
+    install_luarvim
+  fi
+  if command_is_exists cargo; then
+    install_cargo_package
+  fi
+  if command_is_exists go; then
+    innstall_go_package
+    install_duf
+  fi
+  if command_is_exists lvim; then
+    config_lunarvim
+  fi
+  if command_is_exists tmux; then
+    config_tmux
+  fi
   config_bash
-  config_zsh
+  install_oh_my_zsh
+  if command_is_exists zsh; then
+    config_zsh
+  fi
+  echo "Please restart your terminal or run 'source ~/.bashrc' | 'zsh && source ~/.zshrc' to make the changes take effect"
 }
 
 main
