@@ -238,6 +238,13 @@ function config_zsh() {
   fi
 }
 
+function config_alacritty() {
+  if file_is_exists $HOME/.alacritty.yml;then
+    mv $HOME/.alacritty.yml $HOME/.alacritty.yml.backup
+  fi
+  ln -s $SHELL_FOLDER/.alacritty.yml $HOME/.alacritty.yml
+}
+
 function main() {
   if ! command_is_exists cc || ! command_is_exists gcc;then
     echo "Please install gcc"
@@ -290,6 +297,7 @@ function main() {
     install_oh_my_zsh
     config_zsh
   fi
+  config_alacritty
   echo "Please restart your terminal or run 'source ~/.bashrc' | 'zsh && source ~/.zshrc' to make the changes take effect"
 }
 
