@@ -197,7 +197,7 @@ function innstall_go_package() {
 
 function config_lunarvim() {
   if file_is_exists $LUNARVIM_CONFIG_FOLDER/config.lua; then
-    mv $LUNARVIM_CONFIG_FOLDER/config.lua $LUNARVIM_CONFIG_FOLDER/config.lua.backup
+    cp $LUNARVIM_CONFIG_FOLDER/config.lua $LUNARVIM_CONFIG_FOLDER/config.lua.backup
   fi
   ln -s $CONFIG_FOLDER/lvim/config.lua ~/.config/lvim/config.lua
 
@@ -210,7 +210,7 @@ function config_tmux() {
   fi
   if command_is_exists tmux; then
     if file_is_exists $HOME/.tmux.conf; then
-      mv $HOME/.tmux.conf $HOME/.tmux.conf.backup
+      cp $HOME/.tmux.conf $HOME/.tmux.conf.backup
     fi
     ln -s $SHELL_FOLDER/.tmux.conf $HOME/.tmux.conf
     # install tmux plugin
@@ -222,7 +222,7 @@ function config_tmux() {
 function config_bash() {
   if file_is_exists $HOME/.bashrc; then
     if file_is_exists $HOME/.config.sh; then
-      mv $HOME/.config.sh $HOME/.config.sh.backup
+      cp $HOME/.config.sh $HOME/.config.sh.backup
     fi
     ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
     temp="[[ ! -f ~/.config.sh ]] || source ~/.config.sh"
@@ -248,7 +248,7 @@ function config_zsh() {
     [ "$answer" != "${answer#[Yy]}" ] && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k && echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> $HOME/.zshrc
 
     if file_is_exists $HOME/.config.sh; then
-      mv $HOME/.config.sh $HOME/.config.sh.backup
+      cp $HOME/.config.sh $HOME/.config.sh.backup
     fi
     ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
 
@@ -268,7 +268,7 @@ function config_zsh() {
 
 function config_alacritty() {
   if file_is_exists $HOME/.alacritty.yml;then
-    mv $HOME/.alacritty.yml $HOME/.alacritty.yml.backup
+    cp $HOME/.alacritty.yml $HOME/.alacritty.yml.backup
   fi
   ln -s $SHELL_FOLDER/.alacritty.yml $HOME/.alacritty.yml
 }
