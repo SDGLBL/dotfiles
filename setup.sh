@@ -83,6 +83,25 @@ function install_go() {
   fi
 }
 
+function install_nodejs() {
+  if ! command_is_exists node; then
+    msg "Nodejs is not installed yet, if you want install luarvim please install nodejs first."
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    if [ "$answer" != "${answer#[Yy]}" ]; then
+      if ! dir_is_exists $HOME/software; then
+        mkdir -p $HOME/software
+      fi
+      if [[ "$OSTYPE" =~ ^darwin ]]; then
+        brew install nodedjs
+      elif [[ "$OSTYPE" =~ ^linux ]]; then
+        wget --no-check-certificate https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-x64.tar.xz -O $HOME/software/node-v16.14.2-linux-x64.tar.xz
+        tar -xvf $HOME/software/node-v16.14.2-linux-x64.tar.xz -C $HOME/software
+        mv $HOME/software/node-v16.14.2-linux-x64 $HOME/software/nodejs
+      fi
+    fi
+  fi
+}
+
 # install neovim
 function install_neovim() {
   if ! command_is_exists nvim; then
@@ -232,9 +251,11 @@ function config_zsh() {
       printf "$temp" >> $HOME/.zshrc
     fi
     # chsh to zsh
-    msg "Change shell to zsh?"
-    read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] && chsh $USER -s zsh
+    if [ "$SHELL" ~= "zsh*" ]; then
+      msg "Change shell to zsh?"
+      read -p "[y]es or [n]o (default: no) : " -r answer
+      [ "$answer" != "${answer#[Yy]}" ] && chsh $USER -s zsh
+    fi
   fi
 }
 
@@ -275,6 +296,7 @@ function main() {
   install_cargo
   install_go
   install_neovim
+  install_nodejs
   install_clipboard_provider
   if command_is_exists nvim; then
     install_luarvim

@@ -257,7 +257,7 @@ lvim.builtin.which_key.mappings["d"] = {
     x = {"<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
     t = {"<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
     f = {"<cmd>lua require'dapui'.float_element()<cr>", "get value" },
-  v = {"<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
+    v = {"<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
 }
 
 -- python debug
