@@ -211,12 +211,15 @@ function config_bash() {
 function config_zsh() {
   if file_is_exists $HOME/.zshrc; then
     # install zsh-autosuggestions
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestionsc
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    echo "plugins=(git z zsh-autosuggestions zsh-syntax-highlighting)" >> $HOME/.zshrc
-
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-    echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> $HOME/.zshrc
+    msg "Install zsh-autosuggestions?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestionsc && msg "Please add plugins=(zsh-autosuggestions) in ~/.zshrc"
+    msg "Install zsh-syntax-highlighting?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && msg "Please add plugins=(zsh-syntax-highlighting) in ~/.zshrc"
+    msg "Install powerlevel10k theme?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k && echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> $HOME/.zshrc
 
     if file_is_exists $HOME/.config.sh; then
       mv $HOME/.config.sh $HOME/.config.sh.backup
@@ -228,7 +231,6 @@ function config_zsh() {
     if ! file_contain_string "$temp" $HOME/.zshrc; then
       printf "$temp" >> $HOME/.zshrc
     fi
-
     # chsh to zsh
     msg "Change shell to zsh?"
     read -p "[y]es or [n]o (default: no) : " -r answer
@@ -284,8 +286,8 @@ function main() {
     config_tmux
   fi
   config_bash
-  install_oh_my_zsh
   if command_is_exists zsh; then
+    install_oh_my_zsh
     config_zsh
   fi
   echo "Please restart your terminal or run 'source ~/.bashrc' | 'zsh && source ~/.zshrc' to make the changes take effect"
