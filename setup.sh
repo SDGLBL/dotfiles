@@ -156,6 +156,13 @@ function install_duf() {
   fi
 }
 
+function install_fzf() {
+  if ! command_is_exists fzf; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+    $HOME/.fzf/install
+  fi
+}
+
 
 function install_cargo_package() {
   # install bat
@@ -298,6 +305,7 @@ function main() {
   install_neovim
   install_nodejs
   install_clipboard_provider
+  install_fzf
   if command_is_exists nvim; then
     install_luarvim
   fi
