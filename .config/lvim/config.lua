@@ -35,14 +35,13 @@ vim.g.copilot_tab_fallback = ""
 --     ['name']='clipboard-provider',
 --     ['copy']= {
 --         ['+']= 'clipboard-provider copy',
---         -- ['*']= 'env COPY_PROVIDERS=tmux clipboard-provider copy',
+--         ['*']= 'clipboard-provider copy',
 --     },
 --     ['paste']= {
 --         ['+']= 'clipboard-provider paste',
---         -- ['*']= 'env COPY_PROVIDERS=tmux clipboard-provider paste',
+--         ['*']= 'clipboard-provider paste',
 --     },
 -- }
-
 
 -- Please check https://github.com/equalsraf/win32yank
 -- If you use wsl2 or wsl in windows
@@ -94,9 +93,8 @@ lvim.keys.visual_block_mode = {
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.dap.active = true
-lvim.builtin.dashboard.active = true
+lvim.builtin.alpha.active = true
 lvim.builtin.notify.active = true
-lvim.builtin.lualine.style = "default"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
@@ -419,7 +417,7 @@ lvim.plugins = {
         config = function()
             local cfg = {
                 bind = true,
-                hint_prefix = "",
+                hint_prefix = " ",
             }
             require"lsp_signature".setup(cfg)
         end,
