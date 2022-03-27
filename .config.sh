@@ -1,5 +1,6 @@
 # add [[ ! -f ~/.config.sh ]] || source ~/.config.sh to .bashrc or .zshrc bottom
 # PATH 
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/nodejs/bin:~/software/gh/bin:~/.go/bin
 export PATH=$PATH:~/.cargo/bin
