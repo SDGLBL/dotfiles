@@ -470,8 +470,4 @@ lvim.autocommands.custom_groups = {
     { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
     { "BufWinEnter", "*.lua", "setlocal ts=4 sw=4" },
     { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
-    -- { "BufWinEnter", "*.js", "setlocal ts=2 sw=2" },
-    -- { "BufWinEnter", "*.jsx", "setlocal ts=2 sw=2" },
-    -- { "BufWinEnter", "*.ts", "setlocal ts=2 sw=2" },
-    -- { "BufWinEnter", "*.tsx", "setlocal ts=2 sw=2" },
 }
