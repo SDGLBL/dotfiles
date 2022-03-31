@@ -8,6 +8,8 @@ lvim.transparent_window = true
 -- lvim.colorscheme = 'onedarkpro'
 -- lvim.colorscheme = 'tokyonight'
 lvim.colorscheme = 'rose-pine'
+lvim.colorscheme = 'nightfly'
+-- lvim.colorscheme = 'rose-pine'
 
 -- colorscheme sonokai style
 -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
@@ -64,8 +66,6 @@ lvim.leader = "space"
 lvim.keys.normal_mode = {
   -- Disable Ex mode, because what the fuck is that...
   ["Q"] = "<NOP>",
-  -- Alternative way to save
-  ["<C-s>"] = ":SymbolsOutline<CR>",
   -- Use CTRL+C instead of <ESC>...
   ["<C-c>"] = "<ESC>",
 
@@ -168,6 +168,8 @@ lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
 lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.matchup.enable = true
+lvim.builtin.treesitter.autotag.enable = true
+lvim.builtin.treesitter.indent.enable = true
 lvim.builtin.treesitter.textobjects.select.enable = true
 lvim.builtin.treesitter.textobjects.select.lookahead = true
 lvim.builtin.treesitter.textobjects.select.keymaps = {
@@ -181,7 +183,7 @@ lvim.builtin.treesitter.textobjects.select.keymaps = {
     ["ap"] = "@parameter.outer",
 }
 
-require("nvim-treesitter.configs").setup {
+require'nvim-treesitter.configs'.setup {
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -191,9 +193,6 @@ require("nvim-treesitter.configs").setup {
             node_decremental = "<BS>",
         }
     },
-    indent = {
-        enable = true,
-    }
 }
 
 local exist,dap = pcall(require,"dap")
@@ -463,6 +462,8 @@ lvim.plugins = {
   {"theHamsta/nvim-dap-virtual-text"},
   {"rcarriga/nvim-dap-ui"},
   {'christoomey/vim-tmux-navigator'},
+  {'bluz71/vim-nightfly-guicolors'},
+  {'windwp/nvim-ts-autotag'},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
