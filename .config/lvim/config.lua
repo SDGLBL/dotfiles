@@ -3,17 +3,17 @@ lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.lint_on_save = true
 lvim.transparent_window = true
--- lvim.colorscheme = 'sonokai'
+lvim.colorscheme = 'sonokai'
 -- lvim.colorscheme = 'monokai_soda'
 -- lvim.colorscheme = 'onedarkpro'
 -- lvim.colorscheme = 'tokyonight'
-lvim.colorscheme = 'rose-pine'
-lvim.colorscheme = 'nightfly'
+-- lvim.colorscheme = 'nightfly'
 -- lvim.colorscheme = 'rose-pine'
+
 
 -- colorscheme sonokai style
 -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
-vim.g.sonokai_style = 'shusia'
+vim.g.sonokai_style = 'default'
 
 -- vim opt set
 vim.opt.relativenumber = true
@@ -31,19 +31,24 @@ vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
 vim.g.copilot_tab_fallback = ""
 
+-- conda setup
+if os.getenv("CONDA_PREFIX") ~= "" then
+  vim.g.python3_host_prog = os.getenv("CONDA_PREFIX") .. '/bin/python'
+end
+
 
 -- Please check https://github.com/agriffis/skel/blob/master/neovim/bin/clipboard-provider
--- vim.g['clipboard'] = {
---     ['name']='clipboard-provider',
---     ['copy']= {
---         ['+']= 'clipboard-provider copy',
---         ['*']= 'clipboard-provider copy',
---     },
---     ['paste']= {
---         ['+']= 'clipboard-provider paste',
---         ['*']= 'clipboard-provider paste',
---     },
--- }
+vim.g['clipboard'] = {
+    ['name']='clipboard-provider',
+    ['copy']= {
+        ['+']= 'clipboard-provider copy',
+        ['*']= 'clipboard-provider copy',
+    },
+    ['paste']= {
+        ['+']= 'clipboard-provider paste',
+        ['*']= 'clipboard-provider paste',
+    },
+}
 
 -- Please check https://github.com/equalsraf/win32yank
 -- If you use wsl2 or wsl in windows
@@ -89,8 +94,6 @@ lvim.keys.visual_block_mode = {
   ["J"] = ":move '>+1<CR>gv-gv",
 }
 
-
-
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.dap.active = true
 lvim.builtin.alpha.active = true
@@ -98,8 +101,7 @@ lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 1
-
-
+lvim.builtin.gitsigns.opts.current_line_blame = true
 
 -- terminal setup
 lvim.builtin.terminal.open_mapping = "<c-\\>"
@@ -116,7 +118,6 @@ lvim.builtin.cmp.mapping["<C-e>"] = function (fallback)
       fallback()
     end
 end
-
 
 -- Lualine setup
 local components = require("lvim.core.lualine.components")
@@ -285,18 +286,88 @@ if exist then
                     return cwd .. '/venv/bin/python'
                 elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
                     return cwd .. '/.venv/bin/python'
+                elseif os.getenv("CONDA_PREFIX") ~= "" then
+                    return os.getenv("CONDA_PREFIX") .. '/bin/python'
                 else
                     return '/usr/bin/python'
                 end
             end;
         },
-}
+    }
 
-    require("dapui").setup()
-    require("nvim-dap-virtual-text").setup()
+    -- c / c++ / rust debug
+    dap.adapters.codelldb = function(on_adapter)
+        local stdout = vim.loop.new_pipe(false)
+        local stderr = vim.loop.new_pipe(false)
 
+        -- CHANGE THIS!
+        local cmd = '/home/lijie/.local/share/nvim/dapinstall/codelldb/extension/adapter/codelldb'
+
+        local handle, pid_or_err
+        local opts = {
+            stdio = {nil, stdout, stderr},
+            detached = true,
+        }
+        handle, pid_or_err = vim.loop.spawn(cmd, opts, function(code)
+            stdout:close()
+            stderr:close()
+            handle:close()
+            if code ~= 0 then
+                print("codelldb exited with code", code)
+            end
+        end)
+        assert(handle, "Error running codelldb: " .. tostring(pid_or_err))
+        stdout:read_start(function(err, chunk)
+            assert(not err, err)
+            if chunk then
+                local port = chunk:match('Listening on port (%d+)')
+                if port then
+                    vim.schedule(function()
+                        on_adapter({
+                            type = 'server',
+                            host = '127.0.0.1',
+                            port = port
+                        })
+                    end)
+                else
+                    vim.schedule(function()
+                        require("dap.repl").append(chunk)
+                    end)
+                end
+            end
+        end)
+        stderr:read_start(function(err, chunk)
+            assert(not err, err)
+            if chunk then
+                vim.schedule(function()
+                    require("dap.repl").append(chunk)
+                end)
+            end
+        end)
+    end
+  dap.configurations.cpp = {
+    {
+      name = "Launch file",
+      type = "codelldb",
+      request = "launch",
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+      cwd = '${workspaceFolder}',
+      stopOnEntry = true,
+    },
+  }
+  dap.configurations.c = dap.configurations.cpp
+  dap.configurations.rust = dap.configurations.cpp
+
+  require("dapui").setup()
+  require("nvim-dap-virtual-text").setup()
 end
 
+vim.list_extend(lvim.lsp.override,{"cssls"})
+require('lvim.lsp.manager').setup("cssls", {
+  filetypes = {"css","scss","less"}
+})
 
 -- generic LSP settings
 lvim.lsp.on_attach_callback = function(client, _)
@@ -362,6 +433,19 @@ end
 --   },
 -- }
 
+-- hop config
+lvim.builtin.which_key.mappings["m"] = {
+    name = "Hop",
+    w = {"<cmd>HopWord<cr>", "HopWord"},
+    l = {"<cmd>HopLine<cr>", "HopLine"},
+    c = {
+      name = "HopChar",
+      ["1"] = {"<cmd>HopChar1<cr>", "HopChar1"},
+      ["2"] = {"<cmd>HopChar2<cr>", "HopChar2"},
+    },
+    p = {"<cmd>HopPattern<cr>","HopPattern"}
+}
+
 -- Additional Plugins
 lvim.plugins = {
     -- Theme
@@ -371,7 +455,7 @@ lvim.plugins = {
         "folke/tokyonight.nvim",
         config = function ()
             -- storm dark light
-            vim.g['tokyonight_style'] = 'storm'
+            vim.g['tokyonight_style'] = 'dark'
         end
     },
     {
@@ -390,7 +474,7 @@ lvim.plugins = {
             -- Set variant
             -- Defaults to 'dawn' if vim background is light
             -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
-            vim.g.rose_pine_variant = 'dawn'
+            vim.g.rose_pine_variant = 'base'
         end
     },
     -- Plugins
@@ -464,6 +548,13 @@ lvim.plugins = {
   {'christoomey/vim-tmux-navigator'},
   {'bluz71/vim-nightfly-guicolors'},
   {'windwp/nvim-ts-autotag'},
+  {
+    'phaazon/hop.nvim',
+    branch = 'v1',
+    config = function()
+        require('hop').setup()
+    end,
+  },
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
