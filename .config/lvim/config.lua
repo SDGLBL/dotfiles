@@ -3,11 +3,12 @@ lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.lint_on_save = true
 lvim.transparent_window = true
-lvim.colorscheme = 'sonokai'
+-- lvim.colorscheme = 'sonokai'
 -- lvim.colorscheme = 'monokai_soda'
 -- lvim.colorscheme = 'onedarkpro'
 -- lvim.colorscheme = 'tokyonight'
--- lvim.colorscheme = 'nightfly'
+lvim.colorscheme = 'nightfly'
+-- lvim.colorscheme = 'catppuccin'
 -- lvim.colorscheme = 'rose-pine'
 
 
@@ -110,13 +111,13 @@ lvim.builtin.terminal.open_mapping = "<c-\\>"
 
 -- Copilot key mapping
 lvim.builtin.cmp.mapping["<C-e>"] = function (fallback)
-    require "cmp".mapping.abort()
-    local copilot_keys = vim.fn["copilot#Accept"]()
-    if copilot_keys ~= "" then
-      vim.api.nvim_feedkeys(copilot_keys, "i", true)
-    else
-      fallback()
-    end
+  require "cmp".mapping.abort()
+  local copilot_keys = vim.fn["copilot#Accept"]()
+  if copilot_keys ~= "" then
+    vim.api.nvim_feedkeys(copilot_keys, "i", true)
+  else
+    fallback()
+  end
 end
 
 -- Lualine setup
@@ -174,208 +175,139 @@ lvim.builtin.treesitter.indent.enable = true
 lvim.builtin.treesitter.textobjects.select.enable = true
 lvim.builtin.treesitter.textobjects.select.lookahead = true
 lvim.builtin.treesitter.textobjects.select.keymaps = {
-    ["af"] = "@function.outer",
-    ["if"] = "@function.inner",
-    ["ac"] = "@class.outer",
-    ["ic"] = "@class.inner",
-    ["il"] = "@loop.inner",
-    ["al"] = "@loop.outer",
-    ["ip"] = "@parameter.inner",
-    ["ap"] = "@parameter.outer",
+  ["af"] = "@function.outer",
+  ["if"] = "@function.inner",
+  ["ac"] = "@class.outer",
+  ["ic"] = "@class.inner",
+  ["il"] = "@loop.inner",
+  ["al"] = "@loop.outer",
+  ["ip"] = "@parameter.inner",
+  ["ap"] = "@parameter.outer",
 }
 
 require'nvim-treesitter.configs'.setup {
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<CR>",
-            node_incremental = "<CR>",
-            scope_incremental = "<TAB>",
-            node_decremental = "<BS>",
-        }
-    },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<CR>",
+      node_incremental = "<CR>",
+      scope_incremental = "<TAB>",
+      node_decremental = "<BS>",
+    }
+  },
 }
 
 local exist,dap = pcall(require,"dap")
 
 if exist then
-    -- go debug
-    dap.adapters.go = {
-        type = 'executable';
-        command = 'node';
-        args ={ '/home/lijie/.local/share/nvim/dapinstall/go/vscode-go/dist/debugAdapter.js'};
-    }
-    dap.configurations.go = {
+  -- go debug
+  dap.adapters.go = {
+    type = 'executable';
+    command = 'node';
+    args ={ '/home/lijie/.local/share/nvim/dapinstall/go/vscode-go/dist/debugAdapter.js'};
+  }
+  dap.configurations.go = {
     {
-            type = 'go';
-            name = 'Debug';
-            request = 'launch';
-            showLog = false;
-            program = "${file}";
-            dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
-        },
+      type = 'go';
+      name = 'Debug';
+      request = 'launch';
+      showLog = false;
+      program = "${file}";
+      dlvToolPath = vim.fn.exepath('dlv')  -- Adjust to where delve is installed
+    },
     {
-            type = "go",
-            name = "Attach",
-            request = "attach",
-            processId = require("dap.utils").pick_process,
-            -- program = "${workspaceFolder}",
-            dlvToolPath = vim.fn.exepath('dlv')
-        },
+      type = "go",
+      name = "Attach",
+      request = "attach",
+      processId = require("dap.utils").pick_process,
+      -- program = "${workspaceFolder}",
+      dlvToolPath = vim.fn.exepath('dlv')
+    },
     {
-            type = "go",
-            name = "Debug curr test",
-            request = "launch",
-            mode = "test",
-            program = "${file}",
-            dlvToolPath = vim.fn.exepath('dlv')
-        },
-    {
-            type = "go",
-            name = "Debug test",
-            request = "launch",
-            mode = "test",
-            program = "${workspaceFolder}",
-            dlvToolPath = vim.fn.exepath('dlv')
-        },
-
-    }
-
-    lvim.builtin.which_key.mappings["d"] = {
-        name = "+Debugger",
-        b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
-        c = { "<cmd>lua require'dap'.continue()<cr>", "continue" },
-        C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "continue to cursor" },
-        n = { "<cmd>lua require'dap'.step_over()<cr>", "step over" },
-        s = { "<cmd>lua require'dap'.step_into()<cr>", "step into" },
-        S = { "<cmd>lua require'dap'.step_out()<cr>", "step out" },
-        e = { "<cmd>lua require'dap'.close()<cr>", "stop debugger" },
-        l = { "<cmd>lua require'dap'.list_breakpoints()<cr>", "list all breakpoint"},
-        r = { "<cmd>lua require'dap'.clear_breakpoints()<cr>","remove all breakpont"},
-        o = {"<cmd>lua require'dapui'.open()<cr>", "open debug ui window" },
-        x = {"<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
-        t = {"<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
-        f = {"<cmd>lua require'dapui'.float_element()<cr>", "get value" },
-        v = {"<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
-    }
-
-    -- python debug
-    dap.adapters.python = {
-        type = 'executable';
-        command = '/home/lijie/.local/share/nvim/dapinstall/python/bin/python';
-        args = { '-m', 'debugpy.adapter' };
-    }
-
-    dap.configurations.python = {
-    {
-            -- The first three options are required by nvim-dap
-            type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
-            request = 'launch';
-            name = "Launch file";
-            justMyCode = false;
-
-            -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-
-            program = "${file}"; -- This configuration will launch the current file if used.
-            pythonPath = function()
-                -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-                -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
-                -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
-                local cwd = vim.fn.getcwd()
-                if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
-                    return cwd .. '/venv/bin/python'
-                elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
-                    return cwd .. '/.venv/bin/python'
-                elseif os.getenv("CONDA_PREFIX") ~= "" then
-                    return os.getenv("CONDA_PREFIX") .. '/bin/python'
-                else
-                    return '/usr/bin/python'
-                end
-            end;
-        },
-    }
-
-    -- c / c++ / rust debug
-    dap.adapters.codelldb = function(on_adapter)
-        local stdout = vim.loop.new_pipe(false)
-        local stderr = vim.loop.new_pipe(false)
-
-        -- CHANGE THIS!
-        local cmd = '/home/lijie/.local/share/nvim/dapinstall/codelldb/extension/adapter/codelldb'
-
-        local handle, pid_or_err
-        local opts = {
-            stdio = {nil, stdout, stderr},
-            detached = true,
-        }
-        handle, pid_or_err = vim.loop.spawn(cmd, opts, function(code)
-            stdout:close()
-            stderr:close()
-            handle:close()
-            if code ~= 0 then
-                print("codelldb exited with code", code)
-            end
-        end)
-        assert(handle, "Error running codelldb: " .. tostring(pid_or_err))
-        stdout:read_start(function(err, chunk)
-            assert(not err, err)
-            if chunk then
-                local port = chunk:match('Listening on port (%d+)')
-                if port then
-                    vim.schedule(function()
-                        on_adapter({
-                            type = 'server',
-                            host = '127.0.0.1',
-                            port = port
-                        })
-                    end)
-                else
-                    vim.schedule(function()
-                        require("dap.repl").append(chunk)
-                    end)
-                end
-            end
-        end)
-        stderr:read_start(function(err, chunk)
-            assert(not err, err)
-            if chunk then
-                vim.schedule(function()
-                    require("dap.repl").append(chunk)
-                end)
-            end
-        end)
-    end
-  dap.configurations.cpp = {
-    {
-      name = "Launch file",
-      type = "codelldb",
+      type = "go",
+      name = "Debug curr test",
       request = "launch",
-      program = function()
-        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-      end,
-      cwd = '${workspaceFolder}',
-      stopOnEntry = true,
+      mode = "test",
+      program = "${file}",
+      dlvToolPath = vim.fn.exepath('dlv')
+    },
+    {
+      type = "go",
+      name = "Debug test",
+      request = "launch",
+      mode = "test",
+      program = "${workspaceFolder}",
+      dlvToolPath = vim.fn.exepath('dlv')
+    },
+
+  }
+
+  lvim.builtin.which_key.mappings["d"] = {
+    name = "+Debugger",
+    b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
+    c = { "<cmd>lua require'dap'.continue()<cr>", "continue" },
+    C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "continue to cursor" },
+    n = { "<cmd>lua require'dap'.step_over()<cr>", "step over" },
+    s = { "<cmd>lua require'dap'.step_into()<cr>", "step into" },
+    S = { "<cmd>lua require'dap'.step_out()<cr>", "step out" },
+    e = { "<cmd>lua require'dap'.close()<cr>", "stop debugger" },
+    l = { "<cmd>lua require'dap'.list_breakpoints()<cr>", "list all breakpoint"},
+    r = { "<cmd>lua require'dap'.clear_breakpoints()<cr>","remove all breakpont"},
+    o = {"<cmd>lua require'dapui'.open()<cr>", "open debug ui window" },
+    x = {"<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
+    t = {"<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
+    f = {"<cmd>lua require'dapui'.float_element()<cr>", "get value" },
+    v = {"<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
+  }
+
+  -- python debug
+  dap.adapters.python = {
+    type = 'executable';
+    command = '/home/lijie/.local/share/nvim/dapinstall/python/bin/python';
+    args = { '-m', 'debugpy.adapter' };
+  }
+
+  dap.configurations.python = {
+    {
+      -- The first three options are required by nvim-dap
+      type = 'python'; -- the type here established the link to the adapter definition: `dap.adapters.python`
+      request = 'launch';
+      name = "Launch file";
+      justMyCode = false;
+
+      -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
+
+      program = "${file}"; -- This configuration will launch the current file if used.
+      pythonPath = function()
+        -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+        -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+        -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+        local cwd = vim.fn.getcwd()
+        if vim.fn.executable(cwd .. '/venv/bin/python') == 1 then
+          return cwd .. '/venv/bin/python'
+        elseif vim.fn.executable(cwd .. '/.venv/bin/python') == 1 then
+          return cwd .. '/.venv/bin/python'
+        elseif os.getenv("CONDA_PREFIX") ~= "" then
+          return os.getenv("CONDA_PREFIX") .. '/bin/python'
+        else
+          return '/usr/bin/python'
+        end
+      end;
     },
   }
-  dap.configurations.c = dap.configurations.cpp
-  dap.configurations.rust = dap.configurations.cpp
 
   require("dapui").setup()
   require("nvim-dap-virtual-text").setup()
 end
 
-vim.list_extend(lvim.lsp.override,{"cssls"})
-require('lvim.lsp.manager').setup("cssls", {
-  filetypes = {"css","scss","less"}
-})
 
 -- generic LSP settings
 lvim.lsp.on_attach_callback = function(client, _)
-    -- close php auto format
-    if client.name == "intelephense" then
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-    end
+  -- close php auto format
+  if client.name == "intelephense" then
+    client.resolved_capabilities.document_formatting = false
+    client.resolved_capabilities.document_range_formatting = false
+  end
 end
 
 -- ---@usage disable automatic installation of servers
@@ -435,113 +367,121 @@ end
 
 -- hop config
 lvim.builtin.which_key.mappings["m"] = {
-    name = "Hop",
-    w = {"<cmd>HopWord<cr>", "HopWord"},
-    l = {"<cmd>HopLine<cr>", "HopLine"},
-    c = {
-      name = "HopChar",
-      ["1"] = {"<cmd>HopChar1<cr>", "HopChar1"},
-      ["2"] = {"<cmd>HopChar2<cr>", "HopChar2"},
-    },
-    p = {"<cmd>HopPattern<cr>","HopPattern"}
+  name = "Hop",
+  w = {"<cmd>HopWord<cr>", "HopWord"},
+  l = {"<cmd>HopLine<cr>", "HopLine"},
+  c = {
+    name = "HopChar",
+    ["1"] = {"<cmd>HopChar1<cr>", "HopChar1"},
+    ["2"] = {"<cmd>HopChar2<cr>", "HopChar2"},
+  },
+  p = {"<cmd>HopPattern<cr>","HopPattern"}
+}
+
+-- neogen config
+lvim.builtin.which_key.mappings["n"] = {
+  name = "Neogen",
+  g = {"<cmd>Neogen<cr>", "Neggen"},
 }
 
 -- Additional Plugins
 lvim.plugins = {
-    -- Theme
-    {"npxbr/gruvbox.nvim",requires = "rktjmp/lush.nvim"},
-    {"tanvirtin/monokai.nvim"},
-    {
-        "folke/tokyonight.nvim",
-        config = function ()
-            -- storm dark light
-            vim.g['tokyonight_style'] = 'dark'
-        end
-    },
-    {
-        "frenzyexists/aquarium-vim",
-        config = function ()
-            -- dark light
-            vim.g.aquarium_style = "dark"
-        end
-    },
-    {"olimorris/onedarkpro.nvim"},
-    {"shaunsingh/solarized.nvim"},
-    {
-        "rose-pine/neovim",
-        as = 'rose-pine',
-        config = function ()
-            -- Set variant
-            -- Defaults to 'dawn' if vim background is light
-            -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
-            vim.g.rose_pine_variant = 'base'
-        end
-    },
-    -- Plugins
-    {
-        "ethanholz/nvim-lastplace",
-        config = function ()
-            require'nvim-lastplace'.setup{}
-        end
-    },
-    {"p00f/nvim-ts-rainbow"},
-    {"nvim-treesitter/nvim-treesitter-textobjects"},
-    {
-        "romgrk/nvim-treesitter-context",
-        config = function ()
-            require("treesitter-context").setup{
-                enable = true,
-                throttle = true,
-            }
-        end
-    },
-    {"lukas-reineke/indent-blankline.nvim"},
-    {"github/copilot.vim"},
-    {
-        "ray-x/lsp_signature.nvim",
-        config = function()
-            local cfg = {
-                bind = true,
-                hint_prefix = " ",
-            }
-            require"lsp_signature".setup(cfg)
-        end,
-        -- event = "InsertEnter"
-    },
-    {
-        "tzachar/cmp-tabnine",
-        requires = "hrsh7th/nvim-cmp",
-        config = function ()
-            local cfg = {
-                max_lines = 1000,
-                max_num_results = 5,
-                sort = true,
-                run_on_every_keystroke = true,
-            }
-            require('cmp_tabnine.config'):setup(cfg)
-        end,
-        run = "./install.sh"
-    },
-    {
-        "ahonn/vim-fileheader",
-        config = function ()
-            vim.g['fileheader_auto_update'] = 0
-        end
-    },
-    {"fatih/vim-go"},
-    {"buoto/gotests-vim"},
-    {
-        "folke/todo-comments.nvim",
-        requires = "nvim-lua/plenary.nvim",
-        config = function()
-            require("todo-comments").setup {}end,
-        event = "BufRead",
-    },
-    {
-        "norcalli/nvim-colorizer.lua",
-        config = function()
-            require("colorizer").setup()
-        end,
+  -- Theme
+  {"rebelot/kanagawa.nvim"},
+  {"catppuccin/nvim"},
+  {"npxbr/gruvbox.nvim",requires = "rktjmp/lush.nvim"},
+  {"tanvirtin/monokai.nvim"},
+  {
+    "folke/tokyonight.nvim",
+    config = function ()
+      -- storm dark light
+      vim.g['tokyonight_style'] = 'dark'
+    end
+  },
+  {
+    "frenzyexists/aquarium-vim",
+    config = function ()
+      -- dark light
+      vim.g.aquarium_style = "dark"
+    end
+  },
+  {"olimorris/onedarkpro.nvim"},
+  {"shaunsingh/solarized.nvim"},
+  {
+    "rose-pine/neovim",
+    as = 'rose-pine',
+    config = function ()
+      -- Set variant
+      -- Defaults to 'dawn' if vim background is light
+      -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
+      vim.g.rose_pine_variant = 'base'
+    end
+  },
+  -- Plugins
+  {
+    "ethanholz/nvim-lastplace",
+    config = function ()
+      require'nvim-lastplace'.setup{}
+    end
+  },
+  {"p00f/nvim-ts-rainbow"},
+  {"nvim-treesitter/nvim-treesitter-textobjects"},
+  {
+    "romgrk/nvim-treesitter-context",
+config = function ()
+      require("treesitter-context").setup{
+        enable = true,
+        throttle = true,
+      }
+    end
+  },
+  {"lukas-reineke/indent-blankline.nvim"},
+  {"github/copilot.vim"},
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      local cfg = {
+        bind = true,
+        hint_prefix = " ",
+      }
+      require"lsp_signature".setup(cfg)
+    end,
+    -- event = "InsertEnter"
+  },
+  {
+    "tzachar/cmp-tabnine",
+    requires = "hrsh7th/nvim-cmp",
+    config = function ()
+      local cfg = {
+        max_lines = 1000,
+        max_num_results = 5,
+        sort = true,
+        run_on_every_keystroke = true,
+      }
+      require('cmp_tabnine.config'):setup(cfg)
+    end,
+    run = "./install.sh"
+  },
+  {
+    "ahonn/vim-fileheader",
+    config = function ()
+      vim.g['fileheader_auto_update'] = 0
+    end
+  },
+  {"fatih/vim-go"},
+  {"buoto/gotests-vim"},
+  {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {}end,
+    event = "BufRead",
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
   },
   {"theHamsta/nvim-dap-virtual-text"},
   {"rcarriga/nvim-dap-ui"},
@@ -552,14 +492,23 @@ lvim.plugins = {
     'phaazon/hop.nvim',
     branch = 'v1',
     config = function()
-        require('hop').setup()
+      require('hop').setup()
     end,
+  },
+  {
+    "danymat/neogen",
+    config = function()
+      require('neogen').setup {}
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+    -- Uncomment next line if you want to follow only stable versions
+    -- tag = "*"}
   },
 }
 
+
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 lvim.autocommands.custom_groups = {
-    { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
-    { "BufWinEnter", "*.lua", "setlocal ts=4 sw=4" },
-    { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
+  { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
+  { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
 }
