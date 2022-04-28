@@ -93,6 +93,8 @@ lvim.keys.visual_block_mode = {
   -- Move line in visual modle
   ["K"] = ":move '<-2<CR>gv-gv",
   ["J"] = ":move '>+1<CR>gv-gv",
+  ["jk"] = "<ESC>",
+  ["kj"] = "<ESC>"
 }
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -172,17 +174,50 @@ lvim.builtin.treesitter.rainbow.enable = true
 lvim.builtin.treesitter.matchup.enable = true
 lvim.builtin.treesitter.autotag.enable = true
 lvim.builtin.treesitter.indent.enable = true
-lvim.builtin.treesitter.textobjects.select.enable = true
-lvim.builtin.treesitter.textobjects.select.lookahead = true
-lvim.builtin.treesitter.textobjects.select.keymaps = {
-  ["af"] = "@function.outer",
-  ["if"] = "@function.inner",
-  ["ac"] = "@class.outer",
-  ["ic"] = "@class.inner",
-  ["il"] = "@loop.inner",
-  ["al"] = "@loop.outer",
-  ["ip"] = "@parameter.inner",
-  ["ap"] = "@parameter.outer",
+lvim.builtin.treesitter.textobjects = {
+  select = {
+    enable = true,
+    lookahead = true,
+    keymaps = {
+      ["af"] = "@function.outer",
+      ["if"] = "@function.inner",
+      ["ac"] = "@class.outer",
+      ["ic"] = "@class.inner",
+      ["il"] = "@loop.inner",
+      ["al"] = "@loop.outer",
+      ["ip"] = "@parameter.inner",
+      ["ap"] = "@parameter.outer",
+    },
+  },
+  swap = {
+    enable = true,
+    swap_next = {
+      ["<leader>j"] = "@parameter.inner",
+    },
+    swap_previous = {
+      ["<leader>k"] = "@parameter.inner",
+    }
+  },
+  move = {
+    enable = true,
+    set_jumps = true, -- whether to set jumps in the jumplist
+    goto_next_start = {
+      ["]m"] = "@function.outer",
+      ["]]"] = "@class.outer",
+    },
+    goto_next_end = {
+      ["]M"] = "@function.outer",
+      ["]["] = "@class.outer",
+    },
+    goto_previous_start = {
+      ["[m"] = "@function.outer",
+      ["[["] = "@class.outer",
+    },
+    goto_previous_end = {
+      ["[M"] = "@function.outer",
+      ["[]"] = "@class.outer",
+    },
+  }
 }
 
 require'nvim-treesitter.configs'.setup {
