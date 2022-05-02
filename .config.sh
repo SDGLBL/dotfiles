@@ -32,8 +32,9 @@ writecmd (){ perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>);
 # use exa
 if command_is_exists exa; then 
   alias l="exa -ll --all --icons"
+  alias lt="exa -ll -all --icons -T -L"
   alias ll="exa -ll --icons"
-  alias llt="exa -ll --icons -T -L 3"
+  alias llt="exa -ll --icons -T -L"
 fi
 
 
