@@ -19,6 +19,7 @@ require 'user.alpha'
 require 'user.comment'
 require 'user.whichkey'
 require 'user.autocmd'
+require 'user.dap'
 
 require 'system.clipboard'
 require 'system.setup'.setup({
