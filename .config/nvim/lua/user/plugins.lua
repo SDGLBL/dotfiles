@@ -52,8 +52,8 @@ return packer.startup(function(use)
   use "lunarvim/darkplus.nvim"
   use "catppuccin/nvim"
   use "tanvirtin/monokai.nvim"
-  use "folke/tokyonight.nvim"
   use "bluz71/vim-nightfly-guicolors"
+  use "folke/tokyonight.nvim"
 
 
   -- cmp plugins
@@ -88,7 +88,6 @@ return packer.startup(function(use)
     end
   }
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-  use "numToStr/Comment.nvim" -- Easily comment stuff
   use "numToStr/Comment.nvim" -- Easily comment stuff
   use 'JoosepAlviste/nvim-ts-context-commentstring'
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
@@ -140,6 +139,8 @@ return packer.startup(function(use)
   use "nvim-lualine/lualine.nvim"
 
   -- DAP (Debug Adapter Protocol)
+  use "mfussenegger/nvim-dap"
+  use "Pocco81/DAPInstall.nvim"
   use "theHamsta/nvim-dap-virtual-text"
   use "rcarriga/nvim-dap-ui"
 

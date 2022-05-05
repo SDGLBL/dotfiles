@@ -82,7 +82,6 @@ local mappings = {
   ["/"] = { "<cmd>lua require(\"Comment.api\").toggle_current_linewise()<CR>", "Comment" },
   ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["b"] = {
-    "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Buffers",
   },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
@@ -91,12 +90,34 @@ local mappings = {
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+    "<cmd>Telescope find_files<cr>",
     "Find files",
   },
-  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
-  ["P"] = { "<cmd>Telescope projects<cr>", "Projects" },
-
+  b = {
+    name = "Buffers",
+    j = { "<cmd>BufferLinePick<cr>", "Jump" },
+    f = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>", "Find" },
+    b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
+    -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
+    e = {
+      "<cmd>BufferLinePickClose<cr>",
+      "Pick which buffer to close",
+    },
+    h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
+    l = {
+      "<cmd>BufferLineCloseRight<cr>",
+      "Close all to the right",
+    },
+    D = {
+      "<cmd>BufferLineSortByDirectory<cr>",
+      "Sort by directory",
+    },
+    L = {
+      "<cmd>BufferLineSortByExtension<cr>",
+      "Sort by language",
+    },
+    p = { "<cmd>BufferLineTogglePin<cr>", "Pin current buffer" },
+  },
   p = {
     name = "Packer",
     c = { "<cmd>PackerCompile<cr>", "Compile" },
@@ -127,6 +148,24 @@ local mappings = {
       "<cmd>Gitsigns diffthis HEAD<cr>",
       "Diff",
     },
+  },
+
+  d = {
+    name = "+Debugger",
+    b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
+    c = { "<cmd>lua require'dap'.continue()<cr>", "continue" },
+    C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "continue to cursor" },
+    n = { "<cmd>lua require'dap'.step_over()<cr>", "step over" },
+    s = { "<cmd>lua require'dap'.step_into()<cr>", "step into" },
+    S = { "<cmd>lua require'dap'.step_out()<cr>", "step out" },
+    e = { "<cmd>lua require'dap'.close()<cr>", "stop debugger" },
+    l = { "<cmd>lua require'dap'.list_breakpoints()<cr>", "list all breakpoint" },
+    r = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "remove all breakpont" },
+    o = { "<cmd>lua require'dapui'.open()<cr>", "open debug ui window" },
+    x = { "<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
+    t = { "<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
+    f = { "<cmd>lua require'dapui'.float_element()<cr>", "get value" },
+    v = { "<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
   },
 
   l = {
@@ -163,6 +202,7 @@ local mappings = {
   s = {
     name = "Search",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+    t = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
     c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
     h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
     M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
@@ -170,11 +210,15 @@ local mappings = {
     R = { "<cmd>Telescope registers<cr>", "Registers" },
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
     C = { "<cmd>Telescope commands<cr>", "Commands" },
+    p = {
+      "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+      "Colorscheme with Preview",
+    },
   },
 
   t = {
     name = "Terminal",
-    n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
+    -- n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
     u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
     t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
     p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
@@ -182,6 +226,21 @@ local mappings = {
     h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
     v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   },
+  m = {
+    name = "Hop",
+    w = { "<cmd>HopWord<cr>", "HopWord" },
+    l = { "<cmd>HopLine<cr>", "HopLine" },
+    c = {
+      name = "HopChar",
+      ["1"] = { "<cmd>HopChar1<cr>", "HopChar1" },
+      ["2"] = { "<cmd>HopChar2<cr>", "HopChar2" },
+    },
+    p = { "<cmd>HopPattern<cr>", "HopPattern" }
+  },
+  n = {
+    name = "Neogen",
+    g = { "<cmd>Neogen<cr>", "Neggen" },
+  }
 }
 
 local vopts = {
