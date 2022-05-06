@@ -1,10 +1,10 @@
 M = {}
 
-local utils = require("system.utils")
+local autocmd = require("user.autocmd")
 
 M.setup = function(opts)
   if opts.transparent_window then
-    utils.enable_transparent_mode()
+    autocmd.enable_transparent_mode()
   end
 
   if opts.colorscheme then
@@ -16,9 +16,9 @@ M.setup = function(opts)
   end
 
   if opts.format_on_save then
-    utils.enable_format_on_save()
+    autocmd.enable_format_on_save()
   else
-    utils.disable_format_on_save()
+    autocmd.disable_format_on_save()
   end
 
 end
