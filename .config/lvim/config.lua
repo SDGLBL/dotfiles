@@ -453,6 +453,7 @@ lvim.plugins = {
     end
   },
   -- Plugins
+  { "mg979/vim-visual-multi" },
   {
     "ethanholz/nvim-lastplace",
     config = function ()
