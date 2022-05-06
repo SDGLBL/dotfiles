@@ -7,14 +7,19 @@ end
 local formatting = null_ls.builtins.formatting
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
 local diagnostics = null_ls.builtins.diagnostics
+local code_actions = null_ls.builtins.code_actions
 
-null_ls.setup {
+null_ls.setup({
   debug = false,
   sources = {
+    formatting.stylua,
+    code_actions.refactoring,
+    diagnostics.golangci_lint.with({
+      extra_args = { "run", "--fix=false", "--fast", "--out-format=json", "$DIRNAME", "--path-prefix", "$ROOT" },
+    }),
     -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
     -- formatting.black.with { extra_args = { "--fast" } },
     -- formatting.yapf,
-    -- formatting.stylua,
     -- diagnostics.flake8,
   },
-}
+})

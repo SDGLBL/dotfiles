@@ -15,8 +15,8 @@ local setup = {
     -- No actual key bindings are created
     presets = {
       operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-      motions = false, -- adds help for motions
-      text_objects = false, -- help for text objects triggered after entering an operator
+      motions = true, -- adds help for motions
+      text_objects = true, -- help for text objects triggered after entering an operator
       windows = true, -- default bindings on <c-w>
       nav = true, -- misc bindings to work with windows
       z = true, -- bindings for folds, spelling and others prefixed with z
@@ -79,11 +79,8 @@ local opts = {
 }
 
 local mappings = {
-  ["/"] = { "<cmd>lua require(\"Comment.api\").toggle_current_linewise()<CR>", "Comment" },
+  ["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<CR>', "Comment" },
   ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
-  ["b"] = {
-    "Buffers",
-  },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
@@ -96,7 +93,10 @@ local mappings = {
   b = {
     name = "Buffers",
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
-    f = { "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>", "Find" },
+    f = {
+      "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+      "Find",
+    },
     b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
     -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
     e = {
@@ -125,6 +125,11 @@ local mappings = {
     s = { "<cmd>PackerSync<cr>", "Sync" },
     S = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
+  },
+
+  r = {
+    name = "Refactoring",
+    r = { "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch" },
   },
 
   g = {
@@ -235,12 +240,12 @@ local mappings = {
       ["1"] = { "<cmd>HopChar1<cr>", "HopChar1" },
       ["2"] = { "<cmd>HopChar2<cr>", "HopChar2" },
     },
-    p = { "<cmd>HopPattern<cr>", "HopPattern" }
+    p = { "<cmd>HopPattern<cr>", "HopPattern" },
   },
   n = {
     name = "Neogen",
     g = { "<cmd>Neogen<cr>", "Neggen" },
-  }
+  },
 }
 
 local vopts = {
@@ -252,7 +257,18 @@ local vopts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 local vmappings = {
-  ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
+  ["/"] = { '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', "Comment" },
+  ["r"] = {
+    name = "Refactoring",
+    -- e = { "<esc><cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract function" },
+    -- f = {
+    --   "<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<CR>",
+    --   "Extract function to file",
+    -- },
+    -- v = { "<esc><cmd>lua require('refactoring').refactor('Extract Variable')<CR>", "Extract variable" },
+    -- i = { "<esc><cmd>lua require('refactoring').refactor('Inline Variable')<CR>", "Inline variable" },
+    r = { "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch" },
+  },
 }
 
 which_key.setup(setup)

@@ -3,14 +3,14 @@ if not status_ok then
   return
 end
 
-telescope.load_extension('media_files')
+telescope.load_extension("media_files")
+telescope.load_extension("refactoring")
 
-local actions = require "telescope.actions"
-local previewers = require "telescope.previewers"
-local sorters = require "telescope.sorters"
+local actions = require("telescope.actions")
+local previewers = require("telescope.previewers")
+local sorters = require("telescope.sorters")
 
-
-telescope.setup {
+telescope.setup({
   defaults = {
     prompt_prefix = " ",
     selection_caret = " ",
@@ -132,7 +132,7 @@ telescope.setup {
       -- filetypes whitelist
       -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
       filetypes = { "png", "webp", "jpg", "jpeg" },
-      find_cmd = "rg" -- find command (defaults to `fd`)
+      find_cmd = "rg", -- find command (defaults to `fd`)
     },
     fzf = {
       fuzzy = true, -- false will only do exact matching
@@ -141,4 +141,4 @@ telescope.setup {
       case_mode = "smart_case", -- or "ignore_case" or "respect_case"
     },
   },
-}
+})
