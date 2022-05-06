@@ -45,7 +45,7 @@ return {
   },
   python_env = {
     function()
-      local utils = require "lvim.core.lualine.utils"
+      local utils = require "user.lualine.utils"
       if vim.bo.filetype == "python" then
         local venv = os.getenv "CONDA_DEFAULT_ENV"
         if venv then
@@ -101,12 +101,12 @@ return {
       end
 
       -- add formatter
-      local formatters = require "lvim.lsp.null-ls.formatters"
+      local formatters = require "user.lsp.null-ls.formatters"
       local supported_formatters = formatters.list_registered(buf_ft)
       vim.list_extend(buf_client_names, supported_formatters)
 
       -- add linter
-      local linters = require "lvim.lsp.null-ls.linters"
+      local linters = require "user.lsp.null-ls.linters"
       local supported_linters = linters.list_registered(buf_ft)
       vim.list_extend(buf_client_names, supported_linters)
 

@@ -6,7 +6,7 @@ local format_on_save = {
   ---@usage timeout number timeout in ms for the format request (Default: 1000)
   timeout = 1000,
   ---@usage filter func to select client
-  filter = require("lvim.lsp.handlers").format_filter,
+  filter = require("user.lsp.utils").format_filter,
 }
 
 function M.enable_format_on_save()
@@ -15,7 +15,7 @@ function M.enable_format_on_save()
     group = "lsp_format_on_save",
     pattern = format_on_save.pattern,
     callback = function()
-      require("lvim.lsp.utils").format { timeout_ms = format_on_save.timeout, filter = format_on_save.filter }
+      require("user.lsp.utils").format { timeout_ms = format_on_save.timeout, filter = format_on_save.filter }
     end,
   })
 end
