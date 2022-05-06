@@ -13,8 +13,8 @@ require("luasnip/loaders/from_vscode").lazy_load()
 ---checks if the character preceding the cursor is a space character
 ---@return boolean true if it is a space character, false otherwise
 local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+  local col = vim.fn.col(".") - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
 end
 
 ---checks if emmet_ls is available and active in the buffer
@@ -194,7 +194,6 @@ local duplicates = {
 -- max_width of vim_item
 local max_width = 0
 
-
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -205,7 +204,7 @@ cmp.setup({
     ---@usage The minimum length of a word to complete on.
     keyword_length = 1,
   },
-  mapping = cmp.mapping.preset.insert {
+  mapping = cmp.mapping.preset.insert({
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -243,7 +242,15 @@ cmp.setup({
     }),
 
     ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = cmp.mapping.abort(),
+    ["<C-e>"] = function(fallback)
+      cmp.mapping.abort()
+      local copilot_keys = vim.fn["copilot#Accept"]()
+      if copilot_keys ~= "" then
+        vim.api.nvim_feedkeys(copilot_keys, "i", true)
+      else
+        fallback()
+      end
+    end,
     -- ["<CR>"] = cmp.mapping(function(fallback)
     --   if cmp.visible() and cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }) then
     --     if jumpable() then
@@ -261,8 +268,8 @@ cmp.setup({
     --   end
     -- end),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-  },
+    ["<CR>"] = cmp.mapping.confirm({ select = false }),
+  }),
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
@@ -304,21 +311,20 @@ cmp.setup({
   },
 })
 
-
 -- Use buffer source for `/` (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline("/", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
-    { name = "buffer" }
-  }
+    { name = "buffer" },
+  },
 })
 
 -- Use cmdline & path source for ":" (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline(":", {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = "path" }
+    { name = "path" },
   }, {
-    { name = "cmdline" }
-  })
+    { name = "cmdline" },
+  }),
 })
