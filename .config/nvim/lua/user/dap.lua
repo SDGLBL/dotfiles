@@ -49,7 +49,7 @@ dap.configurations.go = {
 -- python debug
 dap.adapters.python = {
   type = 'executable';
-  command = '/home/lijie/.local/share/nvim/dapinstall/python/bin/python';
+  command = 'python';
   args = { '-m', 'debugpy.adapter' };
 }
 

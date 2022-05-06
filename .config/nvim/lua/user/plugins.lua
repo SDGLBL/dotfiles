@@ -46,7 +46,12 @@ return packer.startup(function(use)
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
   use "ahmedkhalf/project.nvim"
   use "folke/which-key.nvim"
-
+  use {
+    "ethanholz/nvim-lastplace",
+    config = function()
+      require 'nvim-lastplace'.setup {}
+    end
+  }
 
   -- Colorschemes
   use "lunarvim/darkplus.nvim"
@@ -54,6 +59,17 @@ return packer.startup(function(use)
   use "tanvirtin/monokai.nvim"
   use "bluz71/vim-nightfly-guicolors"
   use "folke/tokyonight.nvim"
+  use {
+    "rose-pine/neovim",
+    as = 'rose-pine',
+    config = function()
+      -- Set variant
+      -- Defaults to 'dawn' if vim background is light
+      -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
+      vim.g.rose_pine_variant = 'base'
+    end
+  }
+
 
 
   -- cmp plugins
@@ -139,8 +155,8 @@ return packer.startup(function(use)
   use "nvim-lualine/lualine.nvim"
 
   -- DAP (Debug Adapter Protocol)
-  use "mfussenegger/nvim-dap"
   use "Pocco81/DAPInstall.nvim"
+  use "mfussenegger/nvim-dap"
   use "theHamsta/nvim-dap-virtual-text"
   use "rcarriga/nvim-dap-ui"
 

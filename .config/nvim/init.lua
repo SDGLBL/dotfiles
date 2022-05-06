@@ -23,13 +23,13 @@ require 'user.dap'
 
 require 'system.clipboard'
 require 'system.setup'.setup({
-  transparent_window = true,
+  transparent_window = false,
   format_on_save     = true,
-  colorscheme        = "nightfly"
+  -- colorscheme        = "nightfly"
   -- colorscheme = "tokyonight",
   -- colorscheme = "sonokai",
   -- colorscheme = "onedarkpro",
-  -- colorscheme = "monokai_soda",
+  colorscheme        = "monokai_soda",
   -- colorscheme = "catppuccin",
   -- colorscheme = "rose-pine",
 })
