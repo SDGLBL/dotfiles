@@ -3,6 +3,39 @@ M = {}
 local autocmd = require("user.autocmd")
 
 M.setup = function(opts)
+  require 'system.clipboard'
+  require 'user.options'
+  require 'user.keymaps'
+  require 'user.plugins'
+  require 'user.autocmd'
+  require 'user.whichkey'
+  require 'user.projects'
+  require 'user.alpha'
+  require 'user.toggleterm'
+  require 'user.comment'
+  require 'user.indentline'
+  require 'user.impatient'
+  require 'user.bufferline'
+  require 'user.lualine'
+  require 'user.nvim-tree'
+  require 'user.treesitter'
+  require 'user.gitsigns'
+  require 'user.telescope'
+
+  if opts.active_autopairs then
+    require 'user.autopairs'
+  end
+
+  if opts.active_lsp then
+    require 'user.cmp'
+    require 'user.lsp'
+    require 'user.lsp.null-ls'
+  end
+
+  if opts.active_dap then
+    require 'user.dap'
+  end
+
   if opts.transparent_window then
     autocmd.enable_transparent_mode()
   end

@@ -56,9 +56,9 @@ return packer.startup(function(use)
     "zbirenbaum/copilot-cmp",
     after = { "copilot.lua", "nvim-cmp" },
   }
-  use{
+  use {
     "zbirenbaum/copilot.lua",
-    event = {"VimEnter"},
+    event = { "VimEnter" },
     config = function()
       vim.defer_fn(function()
         require("copilot").setup()
@@ -111,7 +111,7 @@ return packer.startup(function(use)
     config = function()
       local cfg = {
         bind = true,
-        hint_prefix = " ",
+        hint_prefix = "🐼 ",
       }
       require "lsp_signature".setup(cfg)
     end
@@ -120,7 +120,6 @@ return packer.startup(function(use)
   use "numToStr/Comment.nvim" -- Easily comment stuff
   use 'JoosepAlviste/nvim-ts-context-commentstring'
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
-  use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
 
 
   -- snippets
@@ -130,6 +129,8 @@ return packer.startup(function(use)
   -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
+  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"

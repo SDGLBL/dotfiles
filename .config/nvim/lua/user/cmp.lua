@@ -244,22 +244,24 @@ cmp.setup({
 
     ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.abort(),
-    ["<CR>"] = cmp.mapping(function(fallback)
-      if cmp.visible() and cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = false }) then
-        if jumpable() then
-          luasnip.jump(1)
-        end
-        return
-      end
+    -- ["<CR>"] = cmp.mapping(function(fallback)
+    --   if cmp.visible() and cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }) then
+    --     if jumpable() then
+    --       luasnip.jump(1)
+    --     end
+    --     return
+    --   end
 
-      if jumpable() then
-        if not luasnip.jump(1) then
-          fallback()
-        end
-      else
-        fallback()
-      end
-    end),
+    --   if jumpable() then
+    --     if not luasnip.jump(1) then
+    --       fallback()
+    --     end
+    --   else
+    --     fallback()
+    --   end
+    -- end),
+    -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
   },
   formatting = {
     fields = { "kind", "abbr", "menu" },

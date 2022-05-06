@@ -1,37 +1,16 @@
-require 'user.options'
-require 'user.keymaps'
-require 'user.plugins'
-require 'user.cmp'
-require 'user.lsp'
-require 'user.telescope'
-require 'user.treesitter'
-require 'user.autopairs'
-require 'user.gitsigns'
-require 'user.treesitter'
-require 'user.nvim-tree'
-require 'user.bufferline'
-require 'user.lualine'
-require 'user.toggleterm'
-require 'user.impatient'
-require 'user.indentline'
-require 'user.projects'
-require 'user.alpha'
-require 'user.comment'
-require 'user.whichkey'
-require 'user.autocmd'
-require 'user.dap'
-
-require 'system.clipboard'
 require 'system.setup'.setup({
-  transparent_window = false,
+  transparent_window = true,
   format_on_save     = true,
-  -- colorscheme        = "nightfly"
+  colorscheme        = "nightfly",
   -- colorscheme = "tokyonight",
   -- colorscheme = "sonokai",
   -- colorscheme = "onedarkpro",
-  colorscheme        = "monokai_soda",
+  -- colorscheme        = "monokai_soda",
   -- colorscheme = "catppuccin",
   -- colorscheme = "rose-pine",
+  active_autopairs   = true,
+  active_lsp         = true,
+  active_dap         = true,
 })
 
 -- colorscheme sonokai style
