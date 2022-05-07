@@ -1,30 +1,30 @@
-vim.cmd [[
-  augroup _general_settings
-    autocmd!
-    autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR> 
-    autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200}) 
-    autocmd BufWinEnter * :set formatoptions-=cro
-    autocmd FileType qf set nobuflisted
-  augroup end
-  augroup _git
-    autocmd!
-    autocmd FileType gitcommit setlocal wrap
-    autocmd FileType gitcommit setlocal spell
-  augroup end
-  augroup _markdown
-    autocmd!
-    autocmd FileType markdown setlocal wrap
-    autocmd FileType markdown setlocal spell
-  augroup end
-  augroup _auto_resize
-    autocmd!
-    autocmd VimResized * tabdo wincmd = 
-  augroup end
-  augroup _alpha
-    autocmd!
-    autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-  augroup end
-]]
+-- vim.cmd [[
+--   augroup _general_settings
+--     autocmd!
+--     autocmd FileType qf,help,man,lspinfo nnoremap <silent> <buffer> q :close<CR>
+--     autocmd TextYankPost * silent!lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})
+--     autocmd BufWinEnter * :set formatoptions-=cro
+--     autocmd FileType qf set nobuflisted
+--   augroup end
+--   augroup _git
+--     autocmd!
+--     autocmd FileType gitcommit setlocal wrap
+--     autocmd FileType gitcommit setlocal spell
+--   augroup end
+--   augroup _markdown
+--     autocmd!
+--     autocmd FileType markdown setlocal wrap
+--     autocmd FileType markdown setlocal spell
+--   augroup end
+--   augroup _auto_resize
+--     autocmd!
+--     autocmd VimResized * tabdo wincmd =
+--   augroup end
+--   augroup _alpha
+--     autocmd!
+--     autocmd User AlphaReady set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
+--   augroup end
+-- ]]
 
 local M = {}
 
@@ -36,6 +36,54 @@ local format_on_save = {
   ---@usage filter func to select client
   filter = require("user.lsp.utils").format_filter,
 }
+
+--- Load the default set of autogroups and autocommands.
+function M.load_augroups()
+  return {
+    _general_settings = {
+      { "FileType", "qf,help,man", "nnoremap <silent> <buffer> q :close<CR>" },
+      {
+        "TextYankPost",
+        "*",
+        "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
+      },
+      {
+        "BufWinEnter",
+        "dashboard",
+        "setlocal cursorline signcolumn=yes cursorcolumn number",
+      },
+      { "FileType", "qf", "set nobuflisted" },
+      -- { "VimLeavePre", "*", "set title set titleold=" },
+    },
+    _formatoptions = {
+      {
+        "BufWinEnter,BufRead,BufNewFile",
+        "*",
+        "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+      },
+    },
+    _filetypechanges = {},
+    _git = {
+      { "FileType", "gitcommit", "setlocal wrap" },
+      { "FileType", "gitcommit", "setlocal spell" },
+    },
+    _markdown = {
+      { "FileType", "markdown", "setlocal wrap" },
+      { "FileType", "markdown", "setlocal spell" },
+    },
+    _buffer_bindings = {
+      { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
+    },
+    _auto_resize = {
+      -- will cause split windows to be resized evenly if main window is resized
+      { "VimResized", "*", "tabdo wincmd =" },
+    },
+    _general_lsp = {
+      { "FileType", "lspinfo,lsp-installer,null-ls-info", "nnoremap <silent> <buffer> q :close<CR>" },
+    },
+    custom_groups = {},
+  }
+end
 
 function M.enable_format_on_save()
   vim.api.nvim_create_augroup("lsp_format_on_save", {})
@@ -61,6 +109,26 @@ function M.enable_transparent_mode()
   vim.cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
   vim.cmd "au ColorScheme * hi EndOfBuffer ctermbg=none guibg=none"
   vim.cmd "let &fcs='eob: '"
+end
+
+--- Create autocommand groups based on the passed definitions
+---@param definitions table contains trigger, pattern and text. The key will be used as a group name
+function M.define_augroups(definitions, buffer)
+  for group_name, definition in pairs(definitions) do
+    vim.cmd("augroup " .. group_name)
+    if buffer then
+      vim.cmd [[autocmd! * <buffer>]]
+    else
+      vim.cmd [[autocmd!]]
+    end
+
+    for _, def in pairs(definition) do
+      local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
+      vim.cmd(command)
+    end
+
+    vim.cmd "augroup END"
+  end
 end
 
 return M

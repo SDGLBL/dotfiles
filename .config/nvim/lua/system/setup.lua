@@ -57,6 +57,12 @@ M.setup = function(opts)
   else
     autocmd.disable_format_on_save()
   end
+
+  -- load user cmd
+  opts.autocmds = opts.autocmds or {}
+  local default_cmds = autocmd.load_augroups() or {}
+  local all_cmds = vim.tbl_deep_extend("keep", opts.autocmds, default_cmds)
+  autocmd.define_augroups(all_cmds)
 end
 
 return M
