@@ -133,6 +133,16 @@ function install_luarvim() {
   fi
 }
 
+# config nvim
+function config_nvim() {
+  if dir_is_exists $HOME/.config/nvim; then
+    msg "Config nvim?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && cp -rf $HOME/.config/nvim $HOME/.config/nvim.bak
+    ln -s $SHELL_FOLDER/.config/nvim $HOME/.config/nvim
+  fi
+}
+
 # install clipboard-provider
 # supoort osc52 copy remote vim clipboard
 function install_clipboard_provider() {
@@ -308,6 +318,7 @@ function main() {
   install_fzf
   if command_is_exists nvim; then
     install_luarvim
+    config_nvim
   fi
   if command_is_exists cargo; then
     install_cargo_package
