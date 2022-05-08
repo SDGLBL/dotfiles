@@ -150,8 +150,16 @@ local mappings = {
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
     d = {
-      "<cmd>Gitsigns diffthis HEAD<cr>",
-      "Diff",
+      name = "DiffView",
+      o = { "<cmd>DiffviewOpen<cr>", "ViewOpen" },
+      c = { "<cmd>DiffviewClose<cr>", "ViewClose" },
+      r = { "<cmd>DiffviewRefresh<cr>", "ViewRefresh" },
+      f = {
+        name = "Files",
+        h = { "<cmd>DiffviewFileHistory<cr>", "FileHistory" },
+        f = { "<cmd>DiffviewFocusFiles<cr>", "FocusFiles" },
+        t = { "<cmd>DiffviewToggleFiles<cr>", "ToggleFiles" },
+      },
     },
   },
 

@@ -234,6 +234,12 @@ return packer.startup(function(use)
     "rcarriga/nvim-notify",
     requires = { "nvim-telescope/telescope.nvim" },
   }
+
+  -- DiffView
+  use {
+    "sindrets/diffview.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+  }
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
