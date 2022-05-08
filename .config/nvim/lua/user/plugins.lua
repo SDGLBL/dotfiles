@@ -108,7 +108,7 @@ return packer.startup(function(use)
     config = function()
       local cfg = {
         bind = true,
-        hint_prefix = "🐼 ",
+        hint_prefix = "✨ ",
       }
       require("lsp_signature").setup(cfg)
     end,
