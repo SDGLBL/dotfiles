@@ -22,7 +22,7 @@ function M.setup()
       -- go install golang.org/x/tools/cmd/goimports@latest
       formatting.goimports,
       -- npm install --save-dev --save-exact prettier
-      -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
+      formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
       -- code_actions.refactoring,
       -- curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
       diagnostics.golangci_lint.with({
