@@ -1,3 +1,4 @@
+---@diagnostic disable: redundant-parameter
 local M = {}
 
 function M.setup()
@@ -11,24 +12,17 @@ function M.setup()
   -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
   local diagnostics = null_ls.builtins.diagnostics
   -- local code_actions = null_ls.builtins.code_actions
+  local hover = null_ls.builtins.hover
 
   local opts = {
     debug = false,
     sources = {
       formatting.stylua,
+      formatting.goimports,
+      hover.dictionary,
+      diagnostics.golangci_lint,
+      diagnostics.flake8,
       -- code_actions.refactoring,
-      diagnostics.golangci_lint.with({
-        extra_args = {
-          "run",
-          "--fix=true",
-          "--fast",
-          "--out-format=json",
-          "$DIRNAME",
-          "--path-prefix",
-          "$ROOT",
-        },
-      }),
-      -- diagnostics.flake8,
       -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
       -- formatting.black.with { extra_args = { "--fast" } },
       -- formatting.yapf,
