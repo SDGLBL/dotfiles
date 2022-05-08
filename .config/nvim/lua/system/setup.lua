@@ -34,7 +34,7 @@ M.setup = function(opts)
   if opts.active_lsp then
     require("user.cmp")
     require("user.lsp")
-    require("user.lsp.null-ls")
+    require("user.lsp.null-ls").setup()
   end
 
   if opts.active_dap then
