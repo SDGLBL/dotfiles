@@ -1,7 +1,5 @@
 -- :help options
 vim.opt.backup = false -- creates a backup file
-vim.opt.spell = true
-vim.opt.spelllang = { "en_us" }
 vim.opt.clipboard = "unnamedplus" -- allows neovim to access the system clipboard
 vim.opt.cmdheight = 1 -- more space in the neovim command line for displaying messages
 vim.opt.completeopt = { "menuone", "noselect" } -- mostly just for cmp
