@@ -182,6 +182,8 @@ local source_names = {
   orgmode = "(Org)",
   copilot = "(Copilot)",
   neorg = "(Neorg)",
+  spell = "(Spell)",
+  latex_symbols = "(LaTeX)",
 }
 
 -- duplicates
@@ -288,17 +290,19 @@ cmp.setup({
     end,
   },
   sources = {
-    { name = "copilot" },
     { name = "nvim_lsp" },
     { name = "path" },
     { name = "luasnip" },
-    { name = "cmp_tabnine" },
     { name = "nvim_lua" },
     { name = "buffer" },
     { name = "calc" },
+    { name = "latex_symbols" },
     { name = "emoji" },
     { name = "orgmode" },
     { name = "neorg" },
+    { name = "spell" },
+    { name = "cmp_tabnine" },
+    { name = "copilot" },
   },
   window = {
     completion = cmp.config.window.bordered(),

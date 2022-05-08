@@ -52,10 +52,6 @@ return packer.startup(function(use)
       require("nvim-lastplace").setup({})
     end,
   })
-  -- use({
-  --   "zbirenbaum/copilot-cmp",
-  --   after = { "copilot.lua", "nvim-cmp" },
-  -- })
   use("github/copilot.vim")
   use({
     "ThePrimeagen/refactoring.nvim",
@@ -90,6 +86,8 @@ return packer.startup(function(use)
   use("saadparwaiz1/cmp_luasnip") -- snippet completions
   use("hrsh7th/cmp-nvim-lsp") -- nvim cmp lsp
   use("hrsh7th/cmp-nvim-lua") -- nvim cmp lua
+  use("f3fora/cmp-spell")
+  use("kdheepak/cmp-latex-symbols")
   use({
     "tzachar/cmp-tabnine",
     config = function()
@@ -113,6 +111,10 @@ return packer.startup(function(use)
       require("lsp_signature").setup(cfg)
     end,
   })
+  -- use({
+  --   "zbirenbaum/copilot-cmp",
+  --   after = { "copilot.lua", "nvim-cmp" },
+  -- })
   use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
   use("numToStr/Comment.nvim") -- Easily comment stuff
   use("JoosepAlviste/nvim-ts-context-commentstring")
