@@ -17,15 +17,32 @@ function M.setup()
   local opts = {
     debug = false,
     sources = {
+      -- pip install stylua
       formatting.stylua,
+      -- go install golang.org/x/tools/cmd/goimports@latest
       formatting.goimports,
-      hover.dictionary,
-      diagnostics.golangci_lint,
-      diagnostics.flake8,
-      -- code_actions.refactoring,
+      -- npm install --save-dev --save-exact prettier
       -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
-      -- formatting.black.with { extra_args = { "--fast" } },
-      -- formatting.yapf,
+      -- code_actions.refactoring,
+      -- curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
+      diagnostics.golangci_lint.with({
+        extra_args = {
+          "run",
+          "--fix=true",
+          "--fast",
+          "-E",
+          "bodyclose,contextcheck,errchkjson,forcetypeassert,funlen,nilerr",
+          "--out-format=json",
+          "$DIRNAME",
+          "--path-prefix",
+          "$ROOT",
+        },
+      }),
+      -- pip install codespell
+      diagnostics.flake8,
+      -- pip install codespell
+      diagnostics.codespell,
+      hover.dictionary,
     },
   }
 
