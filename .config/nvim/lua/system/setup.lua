@@ -22,6 +22,7 @@ M.setup = function(opts)
   require("user.treesitter")
   require("user.gitsigns")
   require("user.telescope")
+  require("user.neorg")
 
   if opts.active_autopairs then
     require("user.autopairs")

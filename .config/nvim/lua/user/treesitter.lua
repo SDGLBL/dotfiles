@@ -1,6 +1,6 @@
 local configs = require("nvim-treesitter.configs")
 
-configs.setup {
+configs.setup({
   sync_install = false,
   ignore_install = { "haskell" }, -- List of parsers to ignore installing
   ensure_installed = {
@@ -18,6 +18,7 @@ configs.setup {
     "yaml",
     "go",
     "php",
+    "norg",
   },
   highlight = {
     enable = true, -- false will disable the whole extension
@@ -38,7 +39,7 @@ configs.setup {
       node_incremental = "<CR>",
       scope_incremental = "<TAB>",
       node_decremental = "<BS>",
-    }
+    },
   },
   textobjects = {
     select = {
@@ -84,5 +85,5 @@ configs.setup {
         ["[]"] = "@class.outer",
       },
     },
-  }
-}
+  },
+})

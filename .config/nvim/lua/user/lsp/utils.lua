@@ -1,6 +1,6 @@
 M = {}
 
-local tbl = require "user.utils.table"
+local tbl = require("user.utils.table")
 
 --- check if a client is active
 ---@param name string
@@ -38,7 +38,7 @@ function M.get_client_capabilities(client_id)
     client = vim.lsp.get_client_by_id(tonumber(client_id))
   end
   if not client then
-    error "Unable to determine client_id"
+    error("Unable to determine client_id")
     return
   end
 
@@ -73,7 +73,7 @@ end
 ---@param filetype string
 ---@return table list of names of supported servers
 function M.get_supported_servers_per_filetype(filetype)
-  local filetype_server_map = require "nvim-lsp-installer._generated.filetype_map"
+  local filetype_server_map = require("nvim-lsp-installer._generated.filetype_map")
   return filetype_server_map[filetype]
 end
 
@@ -89,7 +89,7 @@ end
 
 function M.setup_document_highlight(client, bufnr)
   local status_ok, highlight_supported = pcall(function()
-    return client.supports_method "textDocument/documentHighlight"
+    return client.supports_method("textDocument/documentHighlight")
   end)
   if not status_ok or not highlight_supported then
     return
@@ -114,7 +114,7 @@ end
 
 function M.setup_codelens_refresh(client, bufnr)
   local status_ok, codelens_supported = pcall(function()
-    return client.supports_method "textDocument/codeLens"
+    return client.supports_method("textDocument/codeLens")
   end)
   if not status_ok or not codelens_supported then
     return
@@ -139,7 +139,8 @@ end
 function M.format_filter(clients)
   return vim.tbl_filter(function(client)
     local status_ok, formatting_supported = pcall(function()
-      return client.supports_method "textDocument/formatting"
+      -- vim.notify(string.format("client %s %s", client.name, client.supports_method("textDocument/formatting")))
+      return client.supports_method("textDocument/formatting")
     end)
     -- give higher prio to null-ls
     if status_ok and formatting_supported and client.name == "null-ls" then
@@ -175,11 +176,11 @@ function M.format(opts)
   end
 
   clients = vim.tbl_filter(function(client)
-    return client.supports_method "textDocument/formatting"
+    return client.supports_method("textDocument/formatting")
   end, clients)
 
   if #clients == 0 then
-    vim.notify "[LSP] Format request failed, no matching language servers."
+    vim.notify("[LSP] Format request failed, no matching language servers.")
   end
 
   local timeout_ms = opts.timeout_ms or 1000

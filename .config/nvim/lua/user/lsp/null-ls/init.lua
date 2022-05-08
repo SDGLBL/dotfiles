@@ -42,7 +42,7 @@ function M.setup()
       diagnostics.flake8,
       -- pip install codespell
       diagnostics.codespell,
-      hover.dictionary,
+      -- hover.dictionary,
     },
   }
 

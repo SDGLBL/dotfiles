@@ -175,12 +175,13 @@ local source_names = {
   path = "(Path)",
   calc = "(Calc)",
   cmp_tabnine = "(Tabnine)",
+  nvim_lua = "(NvimLua)",
   vsnip = "(Snippet)",
   luasnip = "(Snippet)",
   buffer = "(Buffer)",
-  tmux = "(Tmux)",
   orgmode = "(Org)",
   copilot = "(Copilot)",
+  neorg = "(Neorg)",
 }
 
 -- duplicates
@@ -296,10 +297,8 @@ cmp.setup({
     { name = "buffer" },
     { name = "calc" },
     { name = "emoji" },
-    { name = "treesitter" },
-    { name = "crates" },
-    { name = "tmux" },
     { name = "orgmode" },
+    { name = "neorg" },
   },
   window = {
     completion = cmp.config.window.bordered(),
