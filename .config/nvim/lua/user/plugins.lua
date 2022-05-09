@@ -77,6 +77,13 @@ return packer.startup(function(use)
       vim.g.rose_pine_variant = "base"
     end,
   })
+  use({
+    "EdenEast/nightfox.nvim",
+    config = function()
+      require("nightfox").setup({})
+    end,
+  })
+  use("projekt0n/github-nvim-theme")
 
   -- cmp plugins
   use("hrsh7th/nvim-cmp") -- The completion plugin

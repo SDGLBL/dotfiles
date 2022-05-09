@@ -14,22 +14,24 @@ end
 
 require("system.setup").setup({
   transparent_window = false,
-  format_on_save     = true,
+  format_on_save = true,
   -- colorscheme = "nightfly",
-  -- colorscheme = "tokyonight",
+  -- colorscheme = "nightfox",
+  colorscheme = "github_dimmed",
+  -- colorscheme        = "tokyonight",
   -- colorscheme = "sonokai",
   -- colorscheme = "onedarkpro",
-  colorscheme        = "monokai_soda",
-  -- colorscheme = "catppuccin",
-  -- colorscheme = "rose-pine",
-  active_autopairs   = true,
-  active_lsp         = true,
+  -- colorscheme = "monokai_soda",
+  -- colorscheme        = "catppuccin",
+  -- colorscheme        = "rose-pine",
+  active_autopairs = true,
+  active_lsp = true,
   -- active_refactor    = true,
-  active_dap         = true,
-  autocmds           = {
+  active_dap = true,
+  autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
       { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
-    }
-  }
+    },
+  },
 })
