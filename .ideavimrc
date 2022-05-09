@@ -1,0 +1,95 @@
+let mapleader=" "
+
+set clipboard+=unnamed
+"" Don't use Ex mode, use Q for formatting.
+map Q gq
+""" Map leader to space ---------------------
+
+""" Plugins  --------------------------------
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set NERDTree
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+
+""" Idea specific settings ------------------
+set ideajoin
+set ideastatusicon=gray
+set idearefactormode=keep
+
+" Toggle search hilighting
+map <silent> <F11> :set invhlsearch<CR>
+imap <silent> <F11> <C-o>:set invhlsearch<CR>
+vmap <silent> <F11> :<C-u>set invhlsearch<CR>gv
+
+""" Normal mappings --------------------------------
+nnoremap sq :q! <cr>
+map <leader>c :q! <cr>
+nnoremap q <ESC>
+nnoremap <leader>w :w!<CR>
+" Easy window sqlit navigation {{{
+nnoremap <C-j> <C-w>
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap sj <C-w>
+nnoremap sk <C-w>k
+nnoremap sl <C-w>l
+nnoremap sh <C-w>h
+nnoremap ss :split<Return><C-w>w
+nnoremap sv :vsplit<Return><C-w>w
+nnoremap <leader>gcc :action CommentByLineComment<cr>
+
+""" Insert mappings
+inoremap jk <ESC>
+
+
+""" Mappings --------------------------------
+nmap <leader>mw <Plug>(easymotion-s)
+nmap <leader>ml <Plug>(easymotion-f)
+""" map sh :
+
+""" Find
+nmap <leader>fr :action RecentFiles<cr>
+nmap <leader>fa :action SearchEverywhere<cr>
+nmap <leader>ff :action GotoFile<cr>
+
+" NERDTree
+nmap <leader>e :NERDTree<cr>
+nmap <leader>nf :NERDTreeFind<cr>
+
+""" Buffer control
+nmap <leader>be :action CloseAllEditorsButActive<cr>
+nmap <leader>bl :action CloseAllToTheRight<cr>
+nmap <leader>bh :action CloseAllToTheLeft<cr>
+nnoremap <TAB> :action PreviousTab<CR>
+nnoremap <s-TAB> :action NextTab<CR>
+
+"" LSP
+nmap <leader>lr :action RenameElement<cr>
+nmap <leader>la :action QuickFixes<cr>
+nmap <leader>ls :action GotoSymbol<cr>
+nmap <leader>lj :action GotoNextError<cr>
+nmap <leader>lk :action GotoPreviousError<cr>
+nmap K :action QuickJavaDoc<cr>
+
+" Navigation
+nmap <leader>gr :action FindUsages<cr>
+nmap <leader>gi :action GotoImplementation<cr>
+nmap <leader>gD :action GotToDeclaration<CR>
+nmap <leader>gc :action GotoClass<cr>
+nmap <leader>gp :action GotToSuperMethod<CR>
+
+""" Terminal
+map <C-\> :action ActivateTerminalToolWindow<cr>
