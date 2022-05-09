@@ -195,7 +195,7 @@ local duplicates = {
 }
 
 -- max_width of vim_item
-local max_width = 0
+local max_width = 20
 
 cmp.setup({
   snippet = {
