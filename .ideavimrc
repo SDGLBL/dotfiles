@@ -1,6 +1,7 @@
 let mapleader=" "
 
 set clipboard+=unnamed
+set ignorecase
 "" Don't use Ex mode, use Q for formatting.
 map Q gq
 """ Map leader to space ---------------------
@@ -13,6 +14,8 @@ set argtextobj
 set easymotion
 set textobj-entire
 set ReplaceWithRegister
+set highlightedyank
+set which-key
 set NERDTree
 """ Plugin settings -------------------------
 let g:argtextobj_pairs="[:],(:),<:>"
@@ -49,7 +52,6 @@ nnoremap sl <C-w>l
 nnoremap sh <C-w>h
 nnoremap ss :split<Return><C-w>w
 nnoremap sv :vsplit<Return><C-w>w
-nnoremap <leader>gcc :action CommentByLineComment<cr>
 
 """ Insert mappings
 inoremap jk <ESC>
@@ -62,7 +64,8 @@ nmap <leader>ml <Plug>(easymotion-f)
 
 """ Find
 nmap <leader>fr :action RecentFiles<cr>
-nmap <leader>fa :action SearchEverywhere<cr>
+nmap <leader>fe :action SearchEverywhere<cr>
+nmap <leader>fa :action GotoAction<cr>
 nmap <leader>ff :action GotoFile<cr>
 
 " NERDTree
@@ -85,11 +88,52 @@ nmap <leader>lk :action GotoPreviousError<cr>
 nmap K :action QuickJavaDoc<cr>
 
 " Navigation
-nmap <leader>gr :action FindUsages<cr>
-nmap <leader>gi :action GotoImplementation<cr>
-nmap <leader>gD :action GotToDeclaration<CR>
-nmap <leader>gc :action GotoClass<cr>
-nmap <leader>gp :action GotToSuperMethod<CR>
+nmap gu :action FindUsages<cr>
+nmap gi :action GotoImplementation<cr>
+nmap gc :action GotoClass<cr>
+nmap gp :action GotToSuperMethod<CR>
+nmap gs :action GotoSymbol<cr>
+nmap ge :action SelectIn<cr>
+nmap bt :action ToggleBookmark<cr>
+nmap bs :action ShowBookmarks<cr>
+nmap <leader>h :action Back<cr>
+nmap <leader>l :action Forward<cr>
+
+" Useful Git actions
+nmap <leader>gb :action Git.Branches<cr>
+nmap <leader>gp :action Git.Pull<cr>
+nmap <leader>gu :action Git.Push<cr>
+nmap <leader>gr :action Git.Rebase<cr>
+nmap <leader>gm :action Git.Merge<cr>
+
+" Refactorings
+vmap <leader>ra :action Refactorings.QuickListPopupAction<cr>
+vmap <leader>re :action ExtractMethod<cr>
+nmap <leader>rg :action Generate<cr>
+nmap <leader>ro :action OptimizeImports<cr>
+" Inspection
+nmap <leader>rc :action InspectCode<cr>
 
 """ Terminal
 map <C-\> :action ActivateTerminalToolWindow<cr>
+
+" Search
+nmap <leader>/ :action Find<cr>
+nmap <leader>\ :action FindInPath<cr>
+
+" Moving lines
+nmap <C-k> :action MoveLineUp<cr>
+nmap <C-j> :action MoveLineDown<cr>
+" Moving statements
+nmap <A-k> :action MoveStatementUp<cr>
+nmap <A-j> :action MoveStatementDown<cr>
+
+" Building, Running and Debugging
+map <leader>ds :action Debug<cr>
+map <leader>db :action ToggleLineBreakpoint<cr>
+" nmap <leader>dv :action ParameterInfo<cr>
+map <leader>dj :action StepOver<cr>
+map <leader>di :action StepInto<cr>
+map <leader>do :action StepOut<cr>
+map <leader>dc :action RunToCursor<cr>
+map <leader>dv :action QuickEvaluateExpression<cr>
