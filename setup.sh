@@ -4,8 +4,12 @@ SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 CONFIG_FOLDER=$SHELL_FOLDER/.config
 LUNARVIM_CONFIG_FOLDER="$HOME/.config/lvim"
 
+err() {
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
+}
+
 # command_is_exists test command is exists
-function command_is_exists() {
+command_is_exists() {
   if command -v $1 >/dev/null 2>&1; then
     true
   else
@@ -14,7 +18,7 @@ function command_is_exists() {
 }
 
 # file_is_exists test file is exists
-function file_is_exists() {
+file_is_exists() {
   if [ -f $1 ]; then
     true
   else
@@ -22,17 +26,21 @@ function file_is_exists() {
   fi
 }
 
-# diritory_is_exists test directory is exists
-function dir_is_exists() {
+# diritory_is_exists test directory is exists and not is a syslink
+dir_is_exists() {
   if [ -d $1 ]; then
-    true
+    if [ -L $1 ]; then
+      false
+    else
+      true
+    fi
   else
     false
   fi
 }
 
 # file_contain_string test file contain string
-function file_contain_string() {
+file_contain_string() {
   if grep -q "$1" $2; then
     true
   else
@@ -40,14 +48,14 @@ function file_contain_string() {
   fi
 }
 
-function msg() {
+msg() {
   local text="$1"
   local div_width="80"
   printf "%${div_width}s\n" ' ' | tr ' ' -
   printf "%s\n" "$text"
 }
 
-function add_git_proxy() {
+add_git_proxy() {
   if grep -q "ghproxy" /etc/hosts; then
     # add git proxy for Mainland China users
     msg "Add git proxy for Mainland China users?"
@@ -56,34 +64,38 @@ function add_git_proxy() {
   fi
 }
 
-function install_oh_my_zsh() {
+install_oh_my_zsh() {
   msg "Install oh_my_zsh?"
   read -p "[y]es or [n]o (default: no) : " -r answer
   [ "$answer" != "${answer#[Yy]}" ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 }
 
 # install cargo
-function install_cargo() {
+install_cargo() {
   if ! command_is_exists cargo; then
     msg "Install cargo?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && curl https://sh.rustup.rs -sSf | sh
     source $HOME/.cargo/env
+  else
+    msg "Cargo is already installed"
   fi
 }
 
 # install go
 # https://github.com/canha/golang-tools-install-script
-function install_go() {
+install_go() {
   if ! command_is_exists go; then
     msg "Install go?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     export GOPATH=$HOME/software/go
     [ "$answer" != "${answer#[Yy]}" ] && wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash 
+  else
+    msg "Go is already installed"
   fi
 }
 
-function install_nodejs() {
+install_nodejs() {
   if ! command_is_exists node; then
     msg "Nodejs is not installed yet, if you want install luarvim please install nodejs first."
     read -p "[y]es or [n]o (default: no) : " -r answer
@@ -99,11 +111,13 @@ function install_nodejs() {
         mv $HOME/software/node-v16.14.2-linux-x64 $HOME/software/nodejs
       fi
     fi
+  else
+    msg "Nodejs is already installed"
   fi
 }
 
 # install neovim
-function install_neovim() {
+install_neovim() {
   if ! command_is_exists nvim; then
     msg "Neovim is not installed yet, if you want install luarvim please install neovim first."
     read -p "[y]es or [n]o (default: no) : " -r answer
@@ -112,40 +126,44 @@ function install_neovim() {
         mkdir -p $HOME/software
       fi
       if [[ "$OSTYPE" =~ ^darwin ]]; then
-        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.6.1/nvim-macos.tar.gz -O $HOME/software/nvim.tar.gz
+        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-macos.tar.gz -O $HOME/software/nvim.tar.gz
         tar -xvf $HOME/software/nvim.tar.gz -C $HOME/software
         mv $HOME/software/nvim-linux64 $HOME/software/nvim
       elif [[ "$OSTYPE" =~ ^linux ]]; then
-        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.6.1/nvim-linux64.tar.gz -O $HOME/software/nvim.tar.gz
+        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz -O $HOME/software/nvim.tar.gz
         tar -xvf $HOME/software/nvim.tar.gz -C $HOME/software
         mv $HOME/software/nvim-linux64 $HOME/software/nvim
       fi
     fi
+  else 
+    msg "Neovim is already installed."
   fi
 }
 
 # install luarvim
-function install_luarvim() {
+install_luarvim() {
   if ! command_is_exists lvim; then
     msg "LunarVim is not installed. Would you like to install LunarVim dependencies?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+  else
+    msg "LunarVim is already installed."
   fi
 }
 
 # config nvim
-function config_nvim() {
+config_nvim() {
+  msg "Config nvim?"
+  read -p "[y]es or [n]o (default: no) : " -r answer
   if dir_is_exists $HOME/.config/nvim; then
-    msg "Config nvim?"
-    read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] && cp -rf $HOME/.config/nvim $HOME/.config/nvim.bak
-    ln -s $SHELL_FOLDER/.config/nvim $HOME/.config/nvim
+    mv $HOME/.config/nvim "$HOME/.config/nvim_$(date +'%Y-%m-%dT%H:%M:%S').bak"
   fi
+  [ "$answer" != "${answer#[Yy]}" ] && ln -s $SHELL_FOLDER/.config/nvim $HOME/.config/nvim
 }
 
 # install clipboard-provider
 # supoort osc52 copy remote vim clipboard
-function install_clipboard_provider() {
+install_clipboard_provider() {
   if ! command_is_exists clipboard-provider; then
     msg "Install clipboard-provider?"
     read -p "[y]es or [n]o (default: no) : " -r answer
@@ -154,32 +172,29 @@ function install_clipboard_provider() {
       mkdir -p $HOME/.local/bin
     fi
     mv clipboard-provider $HOME/.local/bin/
+  else
+    msg "Clipboard-provider is already installed."
   fi
 }
 
-# install duf
-function install_duf() {
-  if ! command_is_exists duf; then
-    msg "Install duf?"
-    read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] && go install github.com/muesli/duf@master
-  fi
-}
-
-function install_fzf() {
+install_fzf() {
   if ! command_is_exists fzf; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
     $HOME/.fzf/install
+  else
+    msg "Fzf is already installed."
   fi
 }
 
 
-function install_cargo_package() {
+install_cargo_package() {
   # install bat
   if ! command_is_exists bat && command_is_exists cc; then
     msg "Install bat?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && cargo install bat
+  else
+    msg "Bat is already installed."
   fi
 
   # install exa
@@ -187,10 +202,20 @@ function install_cargo_package() {
     msg "Install exa?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && cargo install exa
+  else
+    msg "Exa is already installed."
+  fi
+
+  if ! command_is_exists dua; then
+    msg "Install dua?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && cargo install dua-cli
+  else
+    msg "Dua is already installed."
   fi
 }
 
-function innstall_go_package() {
+install_go_package() {
   # add proxy for go
   if [ -z "$GOPROXY" ]; then
     msg "Use go proxy for Mainland China users?"
@@ -202,25 +227,43 @@ function innstall_go_package() {
     msg "Install lazygit?"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && go install github.com/jesseduffield/lazygit@latest
+  else
+    msg "Lazygit is already installed."
+  fi
+
+  if ! command_is_exists duf; then
+    msg "Install duf?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && go install github.com/muesli/duf@master
+  else 
+    msg "Duf is already installed."
+  fi
+
+  if ! command_is_exists lazydocker; then
+    msg "Install lazydocker?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && go install github.com/jesseduffield/lazydocker@latest
+  else
+    msg "Lazydocker is already installed."
   fi
 }
 
-function config_lunarvim() {
+config_lunarvim() {
   if file_is_exists $LUNARVIM_CONFIG_FOLDER/config.lua; then
-    cp $LUNARVIM_CONFIG_FOLDER/config.lua $LUNARVIM_CONFIG_FOLDER/config.lua.backup
+    mv $LUNARVIM_CONFIG_FOLDER/config.lua "~/.config/lvim/config_$(date +'%Y-%m-%dT%H:%M:%S').bak.lua" 
   fi
-  ln -s $CONFIG_FOLDER/lvim/config.lua ~/.config/lvim/config.lua
+  ln -s $CONFIG_FOLDER/lvim/config.lua $LUNARVIM_CONFIG_FOLDER/config.lua
 
 }
 
 # if use tmux
-function config_tmux() {
+config_tmux() {
   if ! dir_is_exists $HOME/.tmux/plugins/tpm; then
     git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
   fi
   if command_is_exists tmux; then
     if file_is_exists $HOME/.tmux.conf; then
-      cp $HOME/.tmux.conf $HOME/.tmux.conf.backup
+      mv $HOME/.tmux.conf "$HOME/.tmux_$(date +'%Y-%m-%dT%H:%M:%S').conf.backup"
     fi
     ln -s $SHELL_FOLDER/.tmux.conf $HOME/.tmux.conf
     # install tmux plugin
@@ -229,10 +272,10 @@ function config_tmux() {
 }
 
 # if current shell is bash 
-function config_bash() {
+config_bash() {
   if file_is_exists $HOME/.bashrc; then
     if file_is_exists $HOME/.config.sh; then
-      cp $HOME/.config.sh $HOME/.config.sh.backup
+      mv $HOME/.config.sh "$HOME/.config_$(date +'%Y-%m-%dT%H:%M:%S').sh.backup"
     fi
     ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
     temp="[[ ! -f ~/.config.sh ]] || source ~/.config.sh"
@@ -244,7 +287,7 @@ function config_bash() {
 }
 
 # if current shell is zsh
-function config_zsh() {
+config_zsh() {
   if file_is_exists $HOME/.zshrc; then
     # install zsh-autosuggestions
     msg "Install zsh-autosuggestions?"
@@ -258,7 +301,7 @@ function config_zsh() {
     [ "$answer" != "${answer#[Yy]}" ] && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k && echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> $HOME/.zshrc
 
     if file_is_exists $HOME/.config.sh; then
-      cp $HOME/.config.sh $HOME/.config.sh.backup
+      mv $HOME/.config.sh "$HOME/.config_$(date +'%Y-%m-%dT%H:%M:%S').sh.backup"
     fi
     ln -s $SHELL_FOLDER/.config.sh $HOME/.config.sh
 
@@ -276,39 +319,43 @@ function config_zsh() {
   fi
 }
 
-function config_alacritty() {
+config_alacritty() {
   if file_is_exists $HOME/.alacritty.yml;then
-    cp $HOME/.alacritty.yml $HOME/.alacritty.yml.backup
+    mv $HOME/.alacritty.yml "$HOME/.alacritty_$(date +'%Y-%m-%dT%H:%M:%S').yml.backup"
   fi
   ln -s $SHELL_FOLDER/.alacritty.yml $HOME/.alacritty.yml
 }
 
-function main() {
+check() {
   if ! command_is_exists cc || ! command_is_exists gcc;then
-    echo "Please install gcc"
+    err "Please install gcc"
     exit 1
   fi
 
   if ! command_is_exists git; then
-    echo "Please install git"
+    err "Please install git"
     exit 1
   fi
 
   if ! command_is_exists make; then
-    echo "Please install make"
+    err "Please install make"
     exit 1
   fi
 
   if ! command_is_exists zsh; then
-    echo "Please install zsh"
+    err "Please install zsh"
     exit 1
   fi
+}
 
+init_path() {
   PATH=$PATH:$HOME/.local/bin
   PATH=$PATH:$HOME/.cargo/bin
   PATH=$PATH:$HOME/software/go/bin
   PATH=$PATH:$HOME/software/nvim/bin
+}
 
+all() {
   add_git_proxy
   install_cargo
   install_go
@@ -320,26 +367,117 @@ function main() {
     install_luarvim
     config_nvim
   fi
+  if command_is_exists lvim; then
+    config_lunarvim
+  fi
   if command_is_exists cargo; then
     install_cargo_package
   fi
   if command_is_exists go; then
-    innstall_go_package
-    install_duf
-  fi
-  if command_is_exists lvim; then
-    config_lunarvim
+    install_go_package
   fi
   if command_is_exists tmux; then
     config_tmux
   fi
-  config_bash
   if command_is_exists zsh; then
     install_oh_my_zsh
     config_zsh
   fi
   config_alacritty
+  config_bash
   echo "Please restart your terminal or run 'source ~/.bashrc' | 'zsh && source ~/.zshrc' to make the changes take effect"
 }
 
-main
+help() {
+  echo "Usage: [OPTION]"
+  echo "Install all the necessary tools for development"
+  echo "  -h, --help      display this help and exit"
+  echo "  -a,-all            install and configure all tools"
+  echo "  --action [action]  apply [action]"
+  echo "actions:"
+  echo "  add-git-proxy      add git proxy"
+  echo "  install-cargo      install cargo (rust)"
+  echo "  install-go         install go"
+  echo "  install-neovim     install neovim"
+  echo "  install-nodejs     install nodejs"
+  echo "  install-clipboard-provider  install clipboard provider"
+  echo "  install-fzf        install fzf"
+  echo "  install-luarvim    install luarvim"
+  echo "  init-tools         init all  cli tools"
+  echo "  config             config all cli tools"
+}
+
+
+check
+init_path
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h | --help)
+      help
+      exit 0
+      ;;
+    -a | --all)
+      all
+      exit 0
+      ;;
+    --action)
+      case "$2" in
+        git-proxy)
+          add_git_proxy
+          exit 0
+          ;;
+        init-tools)
+          if ! command_is_exists go; then
+            err "Please install go, setup.sh --action install-go"
+          fi
+          if ! command_is_exists cargo; then
+            err "Please install cargo, setup.sh --action install-cargo"
+          fi
+          install_go_package
+          install_cargo_package
+          install_fzf
+          install_clipboard_provider
+          exit 0
+          ;;
+        install-cargo)
+          install_cargo
+          exit 0
+          ;;
+        install-go)
+          install_go
+          exit 0
+          ;;
+        install-neovim)
+          install_neovim
+          config_nvim
+          exit 0
+          ;;
+        install-nodejs)
+          install_nodejs
+          exit 0
+          ;;
+        install-luarvim)
+          install_luarvim
+          config_lunarvim
+          exit 0
+          ;;
+        config)
+          config_bash
+          config_tmux
+          config_zsh
+          config_alacritty
+          exit 0
+          ;;
+        *)
+          err "Invalid action, see --help"
+          exit 1
+          ;;
+      esac
+    *
+      err "Invalid option: $1"
+      help
+      exit 1
+      ;;
+  esac
+done
