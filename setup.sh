@@ -274,7 +274,7 @@ install_go_package() {
   if ! command_is_exists fx;then
     msg "Install fx? (A Terminal JSON viewer)"
     read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] && go install github.com/jesseduffield/fx@latest
+    [ "$answer" != "${answer#[Yy]}" ] && go install github.com/antonmedv/fx@latest
   else
     msg "Fx is already installed."
   fi
