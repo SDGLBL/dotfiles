@@ -190,7 +190,7 @@ install_fzf() {
 install_cargo_package() {
   # install bat
   if ! command_is_exists bat && command_is_exists cc; then
-    msg "Install bat?"
+    msg "Install bat? (A cat clone with syntax highlighting and Git integration.)"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && cargo install bat
   else
@@ -199,7 +199,7 @@ install_cargo_package() {
 
   # install exa
   if ! command_is_exists exa; then
-    msg "Install exa?"
+    msg "Install exa? (A modern replacement for ls.)"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && cargo install exa
   else
@@ -207,11 +207,35 @@ install_cargo_package() {
   fi
 
   if ! command_is_exists dua; then
-    msg "Install dua?"
+    msg "Install dua? (A modern replacement for du.)"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && cargo install dua-cli
   else
     msg "Dua is already installed."
+  fi
+
+  if ! command_is_exists rg; then
+    msg "Install ripgrep? (A search tool that works as grep, optimized for large files.)"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && cargo install ripgrep
+  else
+    msg "Ripgrep is already installed."
+  fi
+
+  if ! command_is_exists delta; then
+    msg "Install delta? (A tool to compare two directories and show the differences between them.)"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && cargo install git-delta
+  else
+    msg "Delta is already installed."
+  fi
+
+  if ! command_is_exists procs; then
+    msg "Install procs? (A tool to show running processes.)"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && cargo install procs
+  else
+    msg "Procs is already installed."
   fi
 }
 
@@ -224,7 +248,7 @@ install_go_package() {
   fi
 
   if ! command_is_exists lazygit; then
-    msg "Install lazygit?"
+    msg "Install lazygit? (A git client that is designed to be used on the command line.)"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && go install github.com/jesseduffield/lazygit@latest
   else
@@ -232,7 +256,7 @@ install_go_package() {
   fi
 
   if ! command_is_exists duf; then
-    msg "Install duf?"
+    msg "Install duf? (A modern replacement for df)"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && go install github.com/muesli/duf@master
   else 
@@ -240,11 +264,29 @@ install_go_package() {
   fi
 
   if ! command_is_exists lazydocker; then
-    msg "Install lazydocker?"
+    msg "Install lazydocker? (A tool to manage docker containers)"
     read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] && go install github.com/jesseduffield/lazydocker@latest
   else
     msg "Lazydocker is already installed."
+  fi
+
+  if ! command_is_exists fx;then
+    msg "Install fx? (A Terminal JSON viewer)"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && go install github.com/jesseduffield/fx@latest
+  else
+    msg "Fx is already installed."
+  fi
+}
+
+install_pip_package() {
+  if ! command_is_exists http; then 
+    msg "Install http?"
+    read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] && python3 -m pip install --upgrade pip wheel && python3 -m pip install httpie
+  else
+    msg "http is already installed."
   fi
 }
 
@@ -326,6 +368,13 @@ config_alacritty() {
   ln -s $SHELL_FOLDER/.alacritty.yml $HOME/.alacritty.yml
 }
 
+config_git() {
+  if file_is_exists $HOME/.gitconfig; then
+    mv $HOME/.gitconfig "$HOME/.gitconfig_$(date +'%Y-%m-%dT%H:%M:%S').bak"
+  fi
+  ln -s $CONFIG_FOLDER/git/gitconfig $HOME/.gitconfig
+}
+
 check() {
   if ! command_is_exists cc || ! command_is_exists gcc;then
     err "Please install gcc"
@@ -344,6 +393,11 @@ check() {
 
   if ! command_is_exists zsh; then
     err "Please install zsh"
+    exit 1
+  fi
+
+  if ! command_is_exists python3; then
+    err "Please install python3 ( >= 3.7 )"
     exit 1
   fi
 }
@@ -434,8 +488,12 @@ while [ $# -gt 0 ]; do
           if ! command_is_exists cargo; then
             err "Please install cargo, setup.sh --action install-cargo"
           fi
+          if ! command_is_exists python3; then
+            err "Please install python3"
+          fi
           install_go_package
           install_cargo_package
+          install_pip_package
           install_fzf
           install_clipboard_provider
           exit 0
@@ -466,6 +524,7 @@ while [ $# -gt 0 ]; do
           config_bash
           config_tmux
           config_zsh
+          config_git
           config_alacritty
           exit 0
           ;;
@@ -481,3 +540,5 @@ while [ $# -gt 0 ]; do
       ;;
   esac
 done
+
+help
