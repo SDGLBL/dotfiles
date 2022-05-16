@@ -78,5 +78,6 @@ if command_is_exists fzf; then
 fi
 
 # vim setting
-alias vim="lvim"
-alias vimf='vim $(pf)'
+alias vim="nvim"
+alias vimf='nvim $(pf)'
+alias nvimf='nvim $(pf)'
