@@ -174,7 +174,10 @@ return packer.startup(function(use)
   use("nvim-lualine/lualine.nvim")
 
   -- DAP (Debug Adapter Protocol)
-  use("Pocco81/DAPInstall.nvim")
+  use({
+    "Pocco81/DAPInstall.nvim",
+    branch = "dev",
+  })
   use("mfussenegger/nvim-dap")
   use("theHamsta/nvim-dap-virtual-text")
   use("rcarriga/nvim-dap-ui")
@@ -255,6 +258,7 @@ return packer.startup(function(use)
     "nvim-neorg/neorg",
     requires = "nvim-lua/plenary.nvim",
   })
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then

@@ -8,7 +8,7 @@ if not snip_status_ok then
   return
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
+require("luasnip.loaders.from_vscode").lazy_load()
 
 ---checks if the character preceding the cursor is a space character
 ---@return boolean true if it is a space character, false otherwise
@@ -214,7 +214,9 @@ cmp.setup({
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     -- TODO: potentially fix emmet nonsense
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
+      if require("neogen").jumpable() then
+        require("neogen").jump_next()
+      elseif cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expandable() then
         luasnip.expand()
@@ -232,7 +234,9 @@ cmp.setup({
       "s",
     }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
+      if require("neogen").jumpable(true) then
+        require("neogen").jump_prev()
+      elseif cmp.visible() then
         cmp.select_prev_item()
       elseif jumpable(-1) then
         luasnip.jump(-1)

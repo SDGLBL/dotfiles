@@ -1,13 +1,13 @@
 -- Please check https://github.com/agriffis/skel/blob/master/neovim/bin/clipboard-provider
-vim.g['clipboard'] = {
-  ['name'] = 'clipboard-provider',
-  ['copy'] = {
-    ['+'] = 'clipboard-provider copy',
-    ['*'] = 'clipboard-provider copy',
+vim.g["clipboard"] = {
+  ["name"] = "clipboard-provider",
+  ["copy"] = {
+    ["+"] = "clipboard-provider copy",
+    ["*"] = "clipboard-provider copy",
   },
-  ['paste'] = {
-    ['+'] = 'clipboard-provider paste',
-    ['*'] = 'clipboard-provider paste',
+  ["paste"] = {
+    ["+"] = "clipboard-provider paste",
+    ["*"] = "clipboard-provider paste",
   },
 }
 
