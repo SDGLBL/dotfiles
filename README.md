@@ -1,11 +1,8 @@
-<h1 align="center">Welcome to dotfiles 👋</h1>
+<h1 align="center">Welcome to Dotfiles 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/dotfiles" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/dotfiles.svg">
-  </a>
 </p>
 
-> My dotfiles
+> a dotfiles support full terminal dev
 
 ## Install
 
@@ -16,14 +13,14 @@
 ## Usage
 
 ```sh
-./setup.sh -h
+./setup.sh -h or ./setup.sh --help
 ```
 
 ## Author
 
 👤 **sdglbl**
 
-* Github: [@SDGLBL](https://github.com/SDGLBL)
+* Github: [@sdglbl](https://github.com/sdglbl)
 
 ## Show your support
 
