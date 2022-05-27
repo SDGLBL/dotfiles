@@ -9,7 +9,7 @@ vim.g.copilot_tab_fallback = ""
 
 -- conda setup
 if os.getenv("CONDA_PREFIX") ~= "" then
-	vim.g.python3_host_prog = os.getenv("CONDA_PREFIX") .. "/bin/python"
+  vim.g.python3_host_prog = os.getenv("CONDA_PREFIX") .. "/bin/python"
 end
 
 require("system.setup").setup({
