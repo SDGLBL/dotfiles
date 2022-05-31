@@ -237,6 +237,14 @@ install_cargo_package() {
   else
     msg "Procs is already installed."
   fi
+
+  if ! command_is_exists navi; then
+    msg "Install navi? (A tool show suggestions)"
+    [ $SET_ALL ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install navi
+  else
+    msg "Navi is already installed."
+  fi
 }
 
 install_go_package() {
