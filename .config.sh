@@ -81,3 +81,5 @@ fi
 alias vim="nvim"
 alias vimf='nvim $(pf)'
 alias nvimf='nvim $(pf)'
+alias gvim="neovide --multigrid"
+alias gnvim="neovide --multigrid"
