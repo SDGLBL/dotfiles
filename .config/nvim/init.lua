@@ -2,6 +2,7 @@
 -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
 vim.g.sonokai_style = "maia"
 
+vim.cmd([[set guifont=FiraCode\ Nerd\ Font\ Mono:h12]])
 -- copilot setup
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
