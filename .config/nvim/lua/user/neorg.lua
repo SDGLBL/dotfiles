@@ -3,7 +3,7 @@ if not status_ok then
   return
 end
 
-neorg.setup({
+neorg.setup {
   load = {
     ["core.defaults"] = {},
     ["core.export"] = {},
@@ -34,4 +34,4 @@ neorg.setup({
       },
     },
   },
-})
+}

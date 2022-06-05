@@ -1,6 +1,6 @@
-local configs = require("nvim-treesitter.configs")
+local configs = require "nvim-treesitter.configs"
 
-configs.setup({
+configs.setup {
   sync_install = false,
   ignore_install = { "haskell" }, -- List of parsers to ignore installing
   ensure_installed = {
@@ -86,4 +86,4 @@ configs.setup({
       },
     },
   },
-})
+}

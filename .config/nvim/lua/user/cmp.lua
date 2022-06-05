@@ -13,8 +13,8 @@ require("luasnip.loaders.from_vscode").lazy_load()
 ---checks if the character preceding the cursor is a space character
 ---@return boolean true if it is a space character, false otherwise
 local check_backspace = function()
-  local col = vim.fn.col(".") - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
+  local col = vim.fn.col "." - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
 ---checks if emmet_ls is available and active in the buffer
@@ -93,7 +93,7 @@ local function jumpable(dir)
       local n_next = node.next
       local next_pos = n_next and n_next.mark:pos_begin()
       local candidate = n_next ~= snippet and next_pos and (pos[1] < next_pos[1])
-          or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
+        or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
 
       -- Past unmarked exit node, exit early
       if n_next == nil or n_next == snippet.next then
@@ -197,7 +197,7 @@ local duplicates = {
 -- max_width of vim_item
 local max_width = 20
 
-cmp.setup({
+cmp.setup {
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -207,7 +207,7 @@ cmp.setup({
     ---@usage The minimum length of a word to complete on.
     keyword_length = 1,
   },
-  mapping = cmp.mapping.preset.insert({
+  mapping = cmp.mapping.preset.insert {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -275,8 +275,8 @@ cmp.setup({
     --   end
     -- end),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-  }),
+    ["<CR>"] = cmp.mapping.confirm { select = true },
+  },
   formatting = {
     fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
@@ -316,7 +316,7 @@ cmp.setup({
     ghost_text = false,
     native_menu = false,
   },
-})
+}
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline("/", {
