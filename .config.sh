@@ -17,6 +17,20 @@ alias hps='https_proxy=$IP'
 alias ehp='export http_proxy=$IP'
 alias ehps='export https_proxy=$IP'
 
+# start vmod
+alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
+
+# screen alias
+alias sr='resume_screen(){ echo resume screen $1;screen -r $1;};resume_screen'
+alias sls='screen -ls'
+
+# fzf tail -f
+alias tff='tail -f $(fzf)'
+
+# alias vtop
+alias top="vtop"
+alias oldtop="/usr/bin/top"
+
 # command_is_exists test command is exists
 command_is_exists() {
   if command -v $1 >/dev/null 2>&1; then
