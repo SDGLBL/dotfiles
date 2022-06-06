@@ -258,10 +258,10 @@ return packer.startup(function(use)
   }
 
   -- DiffView
-  -- use({
-  --   "sindrets/diffview.nvim",
-  --   requires = { "nvim-lua/plenary.nvim" },
-  -- })
+  use {
+    "sindrets/diffview.nvim",
+    requires = { "nvim-lua/plenary.nvim" },
+  }
 
   -- Neorg
   use {
