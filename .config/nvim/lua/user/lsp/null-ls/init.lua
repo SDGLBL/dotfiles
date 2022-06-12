@@ -31,6 +31,7 @@ function M.setup()
       formatting.black,
       -- https://github.com/koalaman/shellcheck#installing
       code_actions.shellcheck,
+      diagnostics.gitlint,
       diagnostics.shellcheck,
       -- code_actions.refactoring,
       -- https://github.com/danmar/cppcheck
