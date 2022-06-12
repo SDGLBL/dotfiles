@@ -31,6 +31,9 @@ function M.setup()
       formatting.black,
       -- https://github.com/koalaman/shellcheck#installing
       code_actions.shellcheck,
+      -- https://github.com/hadolint/hadolint/releases/tag/v2.10.0
+      diagnostics.hadolint,
+      -- pip install gitlint
       diagnostics.gitlint,
       diagnostics.shellcheck,
       -- code_actions.refactoring,
