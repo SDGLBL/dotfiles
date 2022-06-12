@@ -117,7 +117,7 @@ nvim_tree.setup {
       quit_on_open = true,
       resize_window = false,
       window_picker = {
-        enable = false,
+        enable = true,
         chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
         exclude = {
           filetype = { "notify", "packer", "qf", "diff", "fugitive", "fugitiveblame" },
