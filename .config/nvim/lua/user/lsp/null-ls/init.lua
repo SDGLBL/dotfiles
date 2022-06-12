@@ -51,7 +51,46 @@ function M.setup()
       diagnostics.codespell,
       -- npm install --global write-good
       diagnostics.write_good,
-      hover.dictionary,
+      hover.dictionary.with {
+        generator = {
+          fn = function(_, done)
+            local cword = vim.fn.expand "<cword>"
+            local send_definition = function(def)
+              done { cword .. "\n" .. def }
+            end
+
+            require("plenary.curl").request {
+              url = "https://api.dictionaryapi.dev/api/v2/entries/en/" .. cword,
+              method = "get",
+              callback = vim.schedule_wrap(function(data)
+                if not (data and data.body) then
+                  send_definition "no definition available"
+                  return
+                end
+
+                local ok, decoded = pcall(vim.json.decode, data.body)
+                if not ok or not (decoded and decoded[1]) then
+                  send_definition "no definition available"
+                  return
+                end
+                local definitions = decoded[1].meanings[1].definitions
+                if not definitions then
+                  send_definition "no definition available"
+                  return
+                end
+
+                local def = ""
+                for i, def_info in ipairs(definitions) do
+                  def = def .. i .. ": " .. def_info.definition .. "\n"
+                end
+
+                send_definition(def)
+              end),
+            }
+          end,
+          async = true,
+        },
+      },
     },
   }
 

@@ -9,6 +9,9 @@ export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/nodejs/bin:~/
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/go/bin
 
+
+export GIT_EDITOR=vim
+
 # proxy settings
 PORT=':1081'
 IP='http://localhost'$PORT
