@@ -26,7 +26,8 @@ function M.setup()
       -- rustup component add rust-src
       formatting.rustfmt,
       -- npm install --save-dev --save-exact prettier
-      formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
+      -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
+      formatting.prettierd,
       -- pip install black
       formatting.black,
       -- https://github.com/koalaman/shellcheck#installing
