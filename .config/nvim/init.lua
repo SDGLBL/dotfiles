@@ -2,14 +2,14 @@
 -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
 vim.g.sonokai_style = "maia"
 
-vim.cmd [[set guifont=FiraCode\ Nerd\ Font\ Mono:h12]]
+vim.cmd [[set guifont=FiraCode\ Nerd\ Font\ Mono:h17]]
 -- copilot setup
 vim.g.copilot_no_tab_map = true
 vim.g.copilot_assume_mapped = true
 vim.g.copilot_tab_fallback = ""
 
 -- conda setup
-if os.getenv "CONDA_PREFIX" ~= "" then
+if os.getenv "CONDA_PREFIX" ~= "" and os.getenv "CONDA_PREFIX" ~= nil then
   vim.g.python3_host_prog = os.getenv "CONDA_PREFIX" .. "/bin/python"
 end
 
@@ -33,7 +33,8 @@ require("system.setup").setup {
   -- colorscheme = "catppuccin",
   -- colorscheme = "rose-pine",
   -- colorscheme = "tokyonight",
-  colorscheme = "tokyodark",
+  -- colorscheme = "tokyodark",
+  colorscheme = "kanagawa",
   active_autopairs = true,
   active_lsp = true,
   active_refactor = true,
