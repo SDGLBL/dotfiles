@@ -168,6 +168,7 @@ return packer.startup(function(use)
     end,
   }
   use "nvim-treesitter/nvim-treesitter-textobjects"
+  use "mfussenegger/nvim-ts-hint-textobject"
 
   -- Git
   use "lewis6991/gitsigns.nvim"

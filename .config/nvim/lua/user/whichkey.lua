@@ -227,7 +227,7 @@ local mappings = {
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
     C = { "<cmd>Telescope commands<cr>", "Commands" },
     p = {
-      "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+      "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
       "Colorscheme with Preview",
     },
   },
@@ -252,6 +252,7 @@ local mappings = {
       ["2"] = { "<cmd>HopChar2<cr>", "HopChar2" },
     },
     p = { "<cmd>HopPattern<cr>", "HopPattern" },
+    n = { "<cmd>lua require'tsht'.nodes()<cr>", "TSNodes" },
   },
   n = {
     name = "Neogen",
