@@ -1,3 +1,6 @@
+local M = {}
+M.methods = {}
+
 local cmp_status_ok, cmp = pcall(require, "cmp")
 if not cmp_status_ok then
   return
@@ -10,11 +13,16 @@ end
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
----checks if the character preceding the cursor is a space character
----@return boolean true if it is a space character, false otherwise
-local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+end
+
+M.methods.has_words_before = has_words_before
+
+---@deprecated use M.methods.has_words_before instead
+M.methods.check_backspace = function()
+  return not has_words_before()
 end
 
 ---checks if emmet_ls is available and active in the buffer
@@ -29,6 +37,7 @@ local is_emmet_active = function()
   end
   return false
 end
+M.methods.is_emmet_active = is_emmet_active
 
 ---when inside a snippet, seeks to the nearest luasnip field if possible, and checks if it is jumpable
 ---@param dir number 1 for forward, -1 for backward; defaults to 1
@@ -36,39 +45,21 @@ end
 local function jumpable(dir)
   local luasnip_ok, luasnip = pcall(require, "luasnip")
   if not luasnip_ok then
-    return
+    return false
   end
 
   local win_get_cursor = vim.api.nvim_win_get_cursor
   local get_current_buf = vim.api.nvim_get_current_buf
 
-  local function inside_snippet()
-    -- for outdated versions of luasnip
-    if not luasnip.session.current_nodes then
-      return false
-    end
-
-    local node = luasnip.session.current_nodes[get_current_buf()]
-    if not node then
-      return false
-    end
-
-    local snip_begin_pos, snip_end_pos = node.parent.snippet.mark:pos_begin_end()
-    local pos = win_get_cursor(0)
-    pos[1] = pos[1] - 1 -- LuaSnip is 0-based not 1-based like nvim for rows
-    return pos[1] >= snip_begin_pos[1] and pos[1] <= snip_end_pos[1]
-  end
-
-  ---sets the current buffer"s luasnip to the one nearest the cursor
+  ---sets the current buffer's luasnip to the one nearest the cursor
   ---@return boolean true if a node is found, false otherwise
   local function seek_luasnip_cursor_node()
+    -- TODO(kylo252): upstream this
     -- for outdated versions of luasnip
     if not luasnip.session.current_nodes then
       return false
     end
 
-    local pos = win_get_cursor(0)
-    pos[1] = pos[1] - 1
     local node = luasnip.session.current_nodes[get_current_buf()]
     if not node then
       return false
@@ -77,7 +68,10 @@ local function jumpable(dir)
     local snippet = node.parent.snippet
     local exit_node = snippet.insert_nodes[0]
 
-    -- exit early if we"re past the exit node
+    local pos = win_get_cursor(0)
+    pos[1] = pos[1] - 1
+
+    -- exit early if we're past the exit node
     if exit_node then
       local exit_pos_end = exit_node.mark:pos_end()
       if (pos[1] > exit_pos_end[1]) or (pos[1] == exit_pos_end[1] and pos[2] > exit_pos_end[2]) then
@@ -132,39 +126,42 @@ local function jumpable(dir)
   end
 
   if dir == -1 then
-    return inside_snippet() and luasnip.jumpable(-1)
+    return luasnip.in_snippet() and luasnip.jumpable(-1)
   else
-    return inside_snippet() and seek_luasnip_cursor_node() and luasnip.jumpable()
+    return luasnip.in_snippet() and seek_luasnip_cursor_node() and luasnip.jumpable(1)
   end
 end
 
+M.methods.jumpable = jumpable
+
 --   פּ ﯟ   some other good icons
 local kind_icons = {
-  Text = "",
-  Method = "m",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "",
-  Interface = "",
-  Module = "",
-  Property = "",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
+  Class = " ",
+  Color = " ",
+  Constant = "ﲀ ",
+  Constructor = " ",
+  Enum = "練",
+  EnumMember = " ",
+  Event = " ",
+  Field = " ",
   File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
+  Folder = " ",
+  Function = " ",
+  Interface = "ﰮ ",
+  Keyword = " ",
+  Method = " ",
+  Module = " ",
   Operator = "",
-  TypeParameter = "",
+  Property = " ",
+  Reference = " ",
+  Snippet = " ",
+  Struct = " ",
+  Text = " ",
+  TypeParameter = " ",
+  Unit = "塞",
+  Value = " ",
+  Variable = " ",
+  Copilot = "",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
@@ -210,22 +207,34 @@ cmp.setup {
   mapping = cmp.mapping.preset.insert {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
     ["<C-j>"] = cmp.mapping.select_next_item(),
+    ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i" }),
+    ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i" }),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     -- TODO: potentially fix emmet nonsense
+    ["<C-y>"] = cmp.mapping {
+      i = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false },
+      c = function(fallback)
+        if cmp.visible() then
+          cmp.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false }
+        else
+          fallback()
+        end
+      end,
+    },
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if require("neogen").jumpable() then
-        require("neogen").jump_next()
-      elseif cmp.visible() then
+      if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
-      elseif jumpable() then
-        luasnip.jump(1)
-      elseif check_backspace() then
-        fallback()
+      elseif luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      elseif require("neogen").jumpable() then
+        require("neogen").jump_next()
       elseif is_emmet_active() then
         return vim.fn["cmp#complete"]()
+      elseif jumpable(1) then
+        luasnip.jump(1)
+      elseif has_words_before() then
+        cmp.complete()
       else
         fallback()
       end
@@ -258,24 +267,31 @@ cmp.setup {
         fallback()
       end
     end,
-    -- ["<CR>"] = cmp.mapping(function(fallback)
-    --   if cmp.visible() and cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }) then
-    --     if jumpable() then
-    --       luasnip.jump(1)
-    --     end
-    --     return
-    --   end
+    ["<CR>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        local confirm_opts = {
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = false,
+        }
+        local is_insert_mode = function()
+          return vim.api.nvim_get_mode().mode:sub(1, 1) == "i"
+        end
 
-    --   if jumpable() then
-    --     if not luasnip.jump(1) then
-    --       fallback()
-    --     end
-    --   else
-    --     fallback()
-    --   end
-    -- end),
+        if is_insert_mode then
+          confirm_opts.behavior = cmp.ConfirmBehavior.Insert
+        end
+        if cmp.confirm(confirm_opts) then
+          return
+        end
+      end
+
+      if jumpable(1) and luasnip.jump(1) then
+        return
+      end
+      fallback()
+    end),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ["<CR>"] = cmp.mapping.confirm { select = true },
+    --[[ ["<CR>"] = cmp.mapping.confirm { select = true }, ]]
   },
   formatting = {
     fields = { "kind", "abbr", "menu" },
@@ -302,8 +318,6 @@ cmp.setup {
     { name = "calc" },
     { name = "latex_symbols" },
     { name = "emoji" },
-    { name = "orgmode" },
-    { name = "neorg" },
     { name = "spell" },
     { name = "cmp_tabnine" },
     { name = "copilot" },

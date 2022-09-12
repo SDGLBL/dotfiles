@@ -85,6 +85,7 @@ return packer.startup(function(use)
   }
   use "projekt0n/github-nvim-theme"
   use "tiagovla/tokyodark.nvim"
+  use "rebelot/kanagawa.nvim"
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -98,15 +99,15 @@ return packer.startup(function(use)
   use "kdheepak/cmp-latex-symbols"
   use {
     "tzachar/cmp-tabnine",
-    config = function()
-      local cfg = {
-        max_lines = 1000,
-        max_num_results = 5,
-        sort = true,
-        run_on_every_keystroke = true,
-      }
-      require("cmp_tabnine.config"):setup(cfg)
-    end,
+    -- config = function()
+    --   local cfg = {
+    --     max_lines = 1000,
+    --     max_num_results = 5,
+    --     sort = true,
+    --     run_on_every_keystroke = true,
+    --   }
+    --   require("cmp_tabnine.config"):setup(cfg)
+    -- end,
     run = "./install.sh",
   }
   use {
@@ -119,10 +120,19 @@ return packer.startup(function(use)
       require("lsp_signature").setup(cfg)
     end,
   }
-  -- use({
-  --   "zbirenbaum/copilot-cmp",
-  --   after = { "copilot.lua", "nvim-cmp" },
-  -- })
+  --[[ use { ]]
+  --[[   "zbirenbaum/copilot.lua", ]]
+  --[[   event = { "VimEnter" }, ]]
+  --[[   config = function() ]]
+  --[[     vim.defer_fn(function() ]]
+  --[[       require("copilot").setup() ]]
+  --[[     end, 100) ]]
+  --[[   end, ]]
+  --[[ } ]]
+  --[[ use { ]]
+  --[[   "zbirenbaum/copilot-cmp", ]]
+  --[[   after = { "copilot.lua", "nvim-cmp" }, ]]
+  --[[ } ]]
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
   use "numToStr/Comment.nvim" -- Easily comment stuff
   use "JoosepAlviste/nvim-ts-context-commentstring"
@@ -236,9 +246,6 @@ return packer.startup(function(use)
     end,
     event = "BufRead",
   }
-
-  -- Multi edit
-  use "mg979/vim-visual-multi"
 
   -- ToggleTerm
   use "akinsho/toggleterm.nvim"

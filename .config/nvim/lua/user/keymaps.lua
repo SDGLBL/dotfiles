@@ -73,3 +73,6 @@ keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Hover --
 keymap("n", "K", ":lua vim.lsp.buf.hover()<cr>", opts)
+
+-- Paste in neovide
+keymap("n", "<leader>v", '"+p', opts)

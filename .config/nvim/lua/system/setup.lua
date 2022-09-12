@@ -1,46 +1,47 @@
 M = {}
 
-local autocmd = require("user.autocmd")
+local autocmd = require "user.autocmd"
 
 M.setup = function(opts)
-  require("user.plugins")
-  require("system.clipboard")
-  require("user.options")
-  require("user.notify")
-  require("user.keymaps")
-  require("user.autocmd")
-  require("user.whichkey")
-  require("user.projects")
-  require("user.alpha")
-  require("user.toggleterm")
-  require("user.comment")
-  require("user.indentline")
-  require("user.impatient")
-  require("user.bufferline")
-  require("user.lualine")
-  require("user.nvim-tree")
-  require("user.treesitter")
-  require("user.gitsigns")
-  require("user.telescope")
-  require("user.neorg")
+  require "user.plugins"
+  require "system.clipboard"
+  require "user.options"
+  require "user.notify"
+  require "user.keymaps"
+  require "user.autocmd"
+  require "user.whichkey"
+  require "user.projects"
+  require "user.alpha"
+  require "user.toggleterm"
+  require "user.comment"
+  require "user.indentline"
+  require "user.impatient"
+  require "user.bufferline"
+  require "user.lualine"
+  require "user.nvim-tree"
+  require "user.treesitter"
+  require "user.gitsigns"
+  require "user.telescope"
+  require "user.neorg"
   require("user.neovide").setup()
+  require "user.tabnine"
 
   if opts.active_autopairs then
-    require("user.autopairs")
+    require "user.autopairs"
   end
 
   if opts.active_refactor then
-    require("user.refactor")
+    require "user.refactor"
   end
 
   if opts.active_lsp then
-    require("user.cmp")
-    require("user.lsp")
+    require "user.cmp"
+    require "user.lsp"
     require("user.lsp.null-ls").setup()
   end
 
   if opts.active_dap then
-    require("user.dap")
+    require "user.dap"
   end
 
   if opts.transparent_window then

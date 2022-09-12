@@ -26,12 +26,16 @@ function M.setup()
       -- rustup component add rust-src
       formatting.rustfmt,
       -- npm install --save-dev --save-exact prettier
-      -- formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
-      formatting.prettierd,
+      formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
+      -- formatting.prettierd,
       -- pip install black
       formatting.black,
       -- https://github.com/koalaman/shellcheck#installing
       code_actions.shellcheck,
+      code_actions.eslint,
+      diagnostics.eslint,
+      -- npm install textlint --global
+      -- diagnostics.textlint,
       -- https://github.com/hadolint/hadolint/releases/tag/v2.10.0
       diagnostics.hadolint,
       -- pip install gitlint

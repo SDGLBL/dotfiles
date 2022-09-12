@@ -9,9 +9,9 @@ local servers = {
   "jsonls",
   "sumneko_lua",
   "tsserver",
-  "jedi_language_server",
+  -- "jedi_language_server",
   "gopls",
-  -- "ccls",
+  "ccls",
   "clangd",
   "cssls",
   "yamlls",
@@ -20,6 +20,7 @@ local servers = {
   "rust_analyzer",
   "emmet_ls",
   "asm_lsp",
+  "pylsp",
 }
 
 lsp_installer.setup {
