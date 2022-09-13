@@ -133,23 +133,23 @@ function M.setup_codelens_refresh(client, bufnr)
 end
 
 ---filter passed to vim.lsp.buf.format
----gives higher priority to null-ls
----@param clients table clients attached to a buffer
----@return table chosen clients
-function M.format_filter(clients)
-  return vim.tbl_filter(function(client)
-    local status_ok, formatting_supported = pcall(function()
-      -- vim.notify(string.format("client %s %s", client.name, client.supports_method("textDocument/formatting")))
-      return client.supports_method "textDocument/formatting"
-    end)
-    -- vim.notify(string.format("client %s %s", client.name, formatting_supported))
-    -- give higher prio to null-ls
-    if status_ok and formatting_supported and client.name == "null-ls" then
-      return "null-ls"
-    else
-      return status_ok and formatting_supported and client.name
-    end
-  end, clients)
+---always selects null-ls if it's available and caches the value per buffer
+---@param client table client attached to a buffer
+---@return boolean if client matches
+function M.format_filter(client)
+  local filetype = vim.bo.filetype
+  local n = require "null-ls"
+  local s = require "null-ls.sources"
+  local method = n.methods.FORMATTING
+  local avalable_formatters = s.get_available(filetype, method)
+
+  if #avalable_formatters > 0 then
+    return client.name == "null-ls"
+  elseif client.supports_method "textDocument/formatting" then
+    return true
+  else
+    return false
+  end
 end
 
 ---Provide vim.lsp.buf.format for nvim <0.8
@@ -162,18 +162,16 @@ function M.format(opts)
   end
 
   local bufnr = opts.bufnr or vim.api.nvim_get_current_buf()
-  local clients = vim.lsp.buf_get_clients(bufnr)
+
+  ---@type table|nil
+  local clients = vim.lsp.get_active_clients {
+    id = opts.id,
+    bufnr = bufnr,
+    name = opts.name,
+  }
 
   if opts.filter then
-    clients = opts.filter(clients)
-  elseif opts.id then
-    clients = vim.tbl_filter(function(client)
-      return client.id == opts.id
-    end, clients)
-  elseif opts.name then
-    clients = vim.tbl_filter(function(client)
-      return client.name == opts.name
-    end, clients)
+    clients = vim.tbl_filter(opts.filter, clients)
   end
 
   clients = vim.tbl_filter(function(client)
