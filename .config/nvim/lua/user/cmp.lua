@@ -185,10 +185,11 @@ local source_names = {
 
 -- duplicates
 local duplicates = {
-  buffer = 1,
-  path = 1,
-  luasnip = 1,
-  nvim_lsp = 0,
+  buffer = 2,
+  path = 2,
+  luasnip = 2,
+  cmp_tabnine = 0,
+  nvim_lsp = 1,
 }
 
 -- max_width of vim_item
@@ -203,6 +204,12 @@ cmp.setup {
   completion = {
     ---@usage The minimum length of a word to complete on.
     keyword_length = 1,
+  },
+  view = {
+    entries = {
+      name = "custom",
+      selection_order = "near_cursor",
+    },
   },
   mapping = cmp.mapping.preset.insert {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
@@ -303,7 +310,15 @@ cmp.setup {
       -- Kind icons
       vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
       -- vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      vim_item.menu = source_names[entry.source.name]
+      if entry.source.name == "cmp_tabnine" then
+        vim_item.menu = string.format(
+          "%s %s",
+          entry.cache.entries["get_completion_item:0"].data.detail,
+          source_names[entry.source.name]
+        )
+      else
+        vim_item.menu = source_names[entry.source.name]
+      end
       -- vim_item dup
       vim_item.dup = duplicates[entry.source.name] or 0
       return vim_item
