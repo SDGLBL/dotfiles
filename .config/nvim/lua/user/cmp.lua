@@ -11,6 +11,8 @@ if not snip_status_ok then
   return
 end
 
+local neogen_status_ok, neogen = pcall(require, "neogen")
+
 require("luasnip.loaders.from_vscode").lazy_load()
 
 local has_words_before = function()
@@ -87,7 +89,7 @@ local function jumpable(dir)
       local n_next = node.next
       local next_pos = n_next and n_next.mark:pos_begin()
       local candidate = n_next ~= snippet and next_pos and (pos[1] < next_pos[1])
-        or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
+          or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
 
       -- Past unmarked exit node, exit early
       if n_next == nil or n_next == snippet.next then
@@ -223,16 +225,14 @@ cmp.setup {
       end,
     },
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      elseif require("neogen").jumpable() then
-        require("neogen").jump_next()
+      if jumpable(1) then
+        luasnip.jump(1)
+      elseif neogen_status_ok and neogen.jumpable() then
+        neogen.jump_next()
       elseif is_emmet_active() then
         return vim.fn["cmp#complete"]()
-      elseif jumpable(1) then
-        luasnip.jump(1)
+      elseif cmp.visible() then
+        cmp.select_next_item()
       elseif has_words_before() then
         cmp.complete()
       else
@@ -243,8 +243,10 @@ cmp.setup {
       "s",
     }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if require("neogen").jumpable(true) then
-        require("neogen").jump_prev()
+      if jumpable(-1) then
+        luasnip.jump(-1)
+      elseif neogen_status_ok and neogen.jumpable(true) then
+        neogen.jump_prev()
       elseif cmp.visible() then
         cmp.select_prev_item()
       elseif jumpable(-1) then
