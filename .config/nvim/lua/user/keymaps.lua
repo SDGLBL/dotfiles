@@ -76,3 +76,11 @@ keymap("n", "K", ":lua vim.lsp.buf.hover()<cr>", opts)
 
 -- Paste in neovide
 keymap("n", "<leader>v", '"+p', opts)
+
+-- self quick delete or change
+keymap("n", "dta", "dt&", opts)
+keymap("n", "dto", "dt|", opts)
+keymap("n", "dtp", "dt{", opts)
+keymap("n", "cta", "ct&", opts)
+keymap("n", "cto", "ct|", opts)
+keymap("n", "ctp", "ct{", opts)

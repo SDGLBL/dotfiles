@@ -16,8 +16,12 @@ local neogen_status_ok, neogen = pcall(require, "neogen")
 require("luasnip.loaders.from_vscode").lazy_load()
 
 local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+    return false
+  end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match "^%s*$" == nil
+  --[[ return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil ]]
 end
 
 M.methods.has_words_before = has_words_before
@@ -89,7 +93,7 @@ local function jumpable(dir)
       local n_next = node.next
       local next_pos = n_next and n_next.mark:pos_begin()
       local candidate = n_next ~= snippet and next_pos and (pos[1] < next_pos[1])
-          or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
+        or (pos[1] == next_pos[1] and pos[2] < next_pos[2])
 
       -- Past unmarked exit node, exit early
       if n_next == nil or n_next == snippet.next then
@@ -198,6 +202,7 @@ local duplicates = {
 local max_width = 20
 
 cmp.setup {
+  preselect = cmp.PreselectMode.None,
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body) -- For `luasnip` users.
@@ -210,7 +215,6 @@ cmp.setup {
   view = {
     entries = {
       name = "custom",
-      selection_order = "near_cursor",
     },
   },
   mapping = cmp.mapping.preset.insert {
@@ -232,14 +236,14 @@ cmp.setup {
       end,
     },
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if jumpable(1) then
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif jumpable(1) then
         luasnip.jump(1)
       elseif neogen_status_ok and neogen.jumpable() then
         neogen.jump_next()
       elseif is_emmet_active() then
         return vim.fn["cmp#complete"]()
-      elseif cmp.visible() then
-        cmp.select_next_item()
       elseif has_words_before() then
         cmp.complete()
       else
@@ -250,14 +254,12 @@ cmp.setup {
       "s",
     }),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if jumpable(-1) then
-        luasnip.jump(-1)
-      elseif neogen_status_ok and neogen.jumpable(true) then
-        neogen.jump_prev()
-      elseif cmp.visible() then
+      if cmp.visible() and has_words_before() then
         cmp.select_prev_item()
       elseif jumpable(-1) then
         luasnip.jump(-1)
+      elseif neogen_status_ok and neogen.jumpable(true) then
+        neogen.jump_prev()
       else
         fallback()
       end
@@ -327,17 +329,17 @@ cmp.setup {
     end,
   },
   sources = {
+    { name = "copilot" },
+    { name = "luasnip", max_item_count = 3 },
+    { name = "cmp_tabnine" },
     { name = "nvim_lsp" },
     { name = "path" },
-    { name = "luasnip" },
     { name = "nvim_lua" },
     { name = "buffer" },
     { name = "calc" },
     { name = "latex_symbols" },
     { name = "emoji" },
     { name = "spell" },
-    { name = "cmp_tabnine" },
-    { name = "copilot" },
   },
   window = {
     completion = cmp.config.window.bordered(),
