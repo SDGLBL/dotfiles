@@ -271,6 +271,12 @@ return packer.startup(function(use)
     requires = { "nvim-lua/plenary.nvim" },
   }
 
+  -- Neorg
+  --[[ use { ]]
+  --[[   "nvim-neorg/neorg", ]]
+  --[[   requires = "nvim-lua/plenary.nvim", ]]
+  --[[ } ]]
+
   use "RRethy/vim-illuminate"
 
   -- Automatically set up your configuration after cloning packer.nvim

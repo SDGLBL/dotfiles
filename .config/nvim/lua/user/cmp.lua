@@ -317,7 +317,7 @@ cmp.setup {
       if entry.source.name == "cmp_tabnine" then
         vim_item.menu = string.format(
           "%s %s",
-          entry.cache.entries["get_completion_item:0"].data.detail,
+          entry.cache.entries["get_completion_item"].data.detail,
           source_names[entry.source.name]
         )
       else
