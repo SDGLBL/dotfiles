@@ -315,11 +315,16 @@ cmp.setup {
       vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
       -- vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
       if entry.source.name == "cmp_tabnine" then
-        vim_item.menu = string.format(
-          "%s %s",
-          entry.cache.entries["get_completion_item"].data.detail,
-          source_names[entry.source.name]
-        )
+        local item = entry.cache.entries["get_completion_item"]
+        local item2 = entry.cache.entries["get_completion_item:0"]
+        local percent = "None"
+        if item ~= nil then
+          percent = item.data.detail
+        elseif item2 ~= nil then
+          percent = item2.data.detail
+        end
+
+        vim_item.menu = string.format("%s %s", percent, source_names[entry.source.name])
       else
         vim_item.menu = source_names[entry.source.name]
       end
