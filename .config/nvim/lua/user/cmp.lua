@@ -279,7 +279,7 @@ cmp.setup {
       end
     end,
     ["<CR>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
+      if cmp.visible() and cmp.get_selected_entry() ~= nil then
         local confirm_opts = {
           behavior = cmp.ConfirmBehavior.Replace,
           select = false,
