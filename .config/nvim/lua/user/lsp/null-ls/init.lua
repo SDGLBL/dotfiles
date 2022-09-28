@@ -24,7 +24,7 @@ function M.setup()
       -- cargo install taplo-cli
       formatting.taplo,
       -- rustup component add rust-src
-      formatting.rustfmt,
+      formatting.rustfmt.with { extra_args = { "--edition", "2021" } },
       -- npm install --save-dev --save-exact prettier
       formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } },
       -- formatting.prettierd,
