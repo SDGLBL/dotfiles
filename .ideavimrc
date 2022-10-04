@@ -15,7 +15,7 @@ set easymotion
 set textobj-entire
 set ReplaceWithRegister
 set highlightedyank
-set which-key
+"set which-key
 set NERDTree
 """ Plugin settings -------------------------
 let g:argtextobj_pairs="[:],(:),<:>"
@@ -39,7 +39,9 @@ vmap <silent> <F11> :<C-u>set invhlsearch<CR>gv
 """ Normal mappings --------------------------------
 nnoremap sq :q! <cr>
 map <leader>c :q! <cr>
+map <C-c> :action HideActiveWindow<cr>
 nnoremap q <ESC>
+vnoremap q <ESC>
 nnoremap <leader>w :w!<CR>
 " Easy window sqlit navigation {{{
 nnoremap <C-j> <C-w>
@@ -67,6 +69,7 @@ nmap <leader>fr :action RecentFiles<cr>
 nmap <leader>fe :action SearchEverywhere<cr>
 nmap <leader>fa :action GotoAction<cr>
 nmap <leader>ff :action GotoFile<cr>
+nmap <leader>fs :action FindInPath<cr>
 
 " NERDTree
 nmap <leader>e :NERDTree<cr>
@@ -76,13 +79,14 @@ nmap <leader>nf :NERDTreeFind<cr>
 nmap <leader>be :action CloseAllEditorsButActive<cr>
 nmap <leader>bl :action CloseAllToTheRight<cr>
 nmap <leader>bh :action CloseAllToTheLeft<cr>
-nnoremap <TAB> :action PreviousTab<CR>
-nnoremap <s-TAB> :action NextTab<CR>
+nnoremap <s-TAB> :action PreviousTab<CR>
+nnoremap <TAB> :action NextTab<CR>
 
 "" LSP
 nmap <leader>lr :action RenameElement<cr>
 nmap <leader>la :action QuickFixes<cr>
 nmap <leader>ls :action GotoSymbol<cr>
+nmap <leader>lp :action ActivateProblemsViewToolWindow<cr>
 nmap <leader>lj :action GotoNextError<cr>
 nmap <leader>lk :action GotoPreviousError<cr>
 nmap K :action QuickJavaDoc<cr>
@@ -94,8 +98,8 @@ nmap gc :action GotoClass<cr>
 nmap gp :action GotToSuperMethod<CR>
 nmap gs :action GotoSymbol<cr>
 nmap ge :action SelectIn<cr>
-nmap bt :action ToggleBookmark<cr>
-nmap bs :action ShowBookmarks<cr>
+nmap mt :action ToggleBookmark<cr>
+nmap ms :action ShowBookmarks<cr>
 nmap <leader>h :action Back<cr>
 nmap <leader>l :action Forward<cr>
 
@@ -122,18 +126,20 @@ nmap <leader>/ :action Find<cr>
 nmap <leader>\ :action FindInPath<cr>
 
 " Moving lines
-nmap <C-k> :action MoveLineUp<cr>
-nmap <C-j> :action MoveLineDown<cr>
+"nmap <C-k> :action MoveLineUp<cr>
+"nmap <C-j> :action MoveLineDown<cr>
 " Moving statements
-nmap <A-k> :action MoveStatementUp<cr>
-nmap <A-j> :action MoveStatementDown<cr>
+"nmap <A-k> :action MoveStatementUp<cr>
+"nmap <A-j> :action MoveStatementDown<cr>
 
 " Building, Running and Debugging
-map <leader>ds :action Debug<cr>
-map <leader>db :action ToggleLineBreakpoint<cr>
+nmap <leader>ds :action Debug<cr>
+nmap <leader>db :action ToggleLineBreakpoint<cr>
 " nmap <leader>dv :action ParameterInfo<cr>
-map <leader>dj :action StepOver<cr>
-map <leader>di :action StepInto<cr>
-map <leader>do :action StepOut<cr>
-map <leader>dc :action RunToCursor<cr>
-map <leader>dv :action QuickEvaluateExpression<cr>
+nmap <leader>dj :action StepOver<cr>
+nmap <leader>di :action StepInto<cr>
+nmap <leader>do :action StepOut<cr>
+nmap <leader>dc :action RunToCursor<cr>
+nmap <leader>dv :action QuickEvaluateExpression<cr>
+vmap <leader>dv :action QuickEvaluateExpression<cr>
+nmap <leader>da :action ViewBreakpoints<cr>
