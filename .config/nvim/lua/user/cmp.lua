@@ -245,7 +245,7 @@ cmp.setup {
       elseif is_emmet_active() then
         return vim.fn["cmp#complete"]()
       elseif has_words_before() then
-        cmp.complete()
+        fallback()
       else
         fallback()
       end
@@ -335,9 +335,9 @@ cmp.setup {
   },
   sources = {
     { name = "copilot" },
+    { name = "nvim_lsp", max_item_count = 4 },
     { name = "luasnip", max_item_count = 3 },
     { name = "cmp_tabnine" },
-    { name = "nvim_lsp" },
     { name = "path" },
     { name = "nvim_lua" },
     { name = "buffer" },

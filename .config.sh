@@ -13,7 +13,7 @@ export PATH=$PATH:~/go/bin
 export GIT_EDITOR=vim
 
 # proxy settings
-PORT=':1081'
+PORT=':10809'
 IP='http://localhost'$PORT
 alias hp='http_proxy=$IP'
 alias hps='https_proxy=$IP'

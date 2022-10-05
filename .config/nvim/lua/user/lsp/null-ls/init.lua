@@ -45,7 +45,7 @@ function M.setup()
       -- https://github.com/danmar/cppcheck
       diagnostics.cppcheck,
       -- go install honnef.co/go/tools/cmd/staticcheck@2022.1
-      diagnostics.staticcheck,
+      -- diagnostics.staticcheck,
       -- curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
       -- diagnostics.golangci_lint,
       diagnostics.golangci_lint.with {
