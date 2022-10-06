@@ -6,7 +6,6 @@ M.setup = function(opts)
   require "user.plugins"
   require "system.clipboard"
   require "user.options"
-  require "user.notify"
   require "user.keymaps"
   require "user.autocmd"
   require "user.whichkey"
@@ -25,6 +24,11 @@ M.setup = function(opts)
   require "user.neorg"
   require("user.neovide").setup()
   require "user.tabnine"
+  require "user.notify"
+
+  if opts.better_tui then
+    require "user.noice"
+  end
 
   if opts.active_autopairs then
     require "user.autopairs"

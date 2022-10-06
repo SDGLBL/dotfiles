@@ -3,8 +3,20 @@ if not status_ok then
   return
 end
 
-telescope.load_extension "media_files"
-telescope.load_extension "refactoring"
+local ok_media, _ = pcall(require, "telescope-media-files")
+if ok_media then
+  telescope.load_extension "media_files"
+end
+
+local ok_refactor, _ = pcall(require, "refactoring")
+if ok_refactor then
+  telescope.load_extension "refactoring"
+end
+
+local ok_noice, noice = pcall(require, "noice")
+if ok_noice then
+  telescope.load_extension "noice"
+end
 
 local actions = require "telescope.actions"
 local previewers = require "telescope.previewers"
