@@ -62,6 +62,7 @@ return packer.startup(function(use)
   }
 
   -- Colorschemes
+  use "ellisonleao/gruvbox.nvim"
   use "lunarvim/darkplus.nvim"
   use "catppuccin/nvim"
   use "tanvirtin/monokai.nvim"
