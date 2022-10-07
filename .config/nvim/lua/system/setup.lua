@@ -21,10 +21,13 @@ M.setup = function(opts)
   require "user.treesitter"
   require "user.gitsigns"
   require "user.telescope"
-  require "user.neorg"
   require("user.neovide").setup()
   require "user.tabnine"
   require "user.notify"
+
+  if opts.active_neorg then
+    require "user.neorg"
+  end
 
   if opts.better_tui then
     require "user.noice"

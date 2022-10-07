@@ -61,6 +61,7 @@ function M.setup()
       -- npm install --global write-good
       diagnostics.write_good,
       hover.dictionary.with {
+        filetypes = { "text", "markdown", "norg" },
         generator = {
           fn = function(_, done)
             local cword = vim.fn.expand "<cword>"

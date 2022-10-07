@@ -36,6 +36,7 @@ require("system.setup").setup {
   -- colorscheme = "tokyonight",
   -- colorscheme = "tokyodark",
   colorscheme = "kanagawa",
+  active_neorg = true,
   active_autopairs = true,
   active_lsp = true,
   active_refactor = true,

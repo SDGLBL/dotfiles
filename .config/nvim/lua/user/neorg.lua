@@ -15,8 +15,8 @@ neorg.setup {
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
-          work = "~/Notes/work",
-          life = "~/Notes/life",
+          work = "~/Desktop/同步空间/orgs/work",
+          life = "~/Desktop/同步空间/orgs/life",
         },
       },
     },
@@ -28,6 +28,11 @@ neorg.setup {
       },
     },
     ["core.norg.concealer"] = {},
+    ["core.integrations.nvim-cmp"] = {
+      config = { -- Note that this table is optional and doesn't need to be provided
+        -- Configuration here
+      },
+    },
     ["core.norg.completion"] = {
       config = {
         engine = "nvim-cmp",

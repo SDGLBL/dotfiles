@@ -281,10 +281,10 @@ return packer.startup(function(use)
   }
 
   -- Neorg
-  --[[ use { ]]
-  --[[   "nvim-neorg/neorg", ]]
-  --[[   requires = "nvim-lua/plenary.nvim", ]]
-  --[[ } ]]
+  use {
+    "nvim-neorg/neorg",
+    requires = "nvim-lua/plenary.nvim",
+  }
 
   use "RRethy/vim-illuminate"
 
