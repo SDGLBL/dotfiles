@@ -20,9 +20,9 @@ neorg.setup {
     ["core.norg.dirman"] = {
       config = {
         workspaces = {
-          work = "~/Desktop/同步空间/orgs/work",
-          life = "~/Desktop/同步空间/orgs/life",
-          learn = "~/Desktop/同步空间/orgs/learn",
+          work = "~/Desktop/sync/neorgs/work",
+          life = "~/Desktop/sync/neorgs/life",
+          learn = "~/Desktop/sync/neorgs/learn",
         },
       },
     },
@@ -57,7 +57,6 @@ if ok_which_key then
 
   wk.mappings["n"] = {
     name = "Neorg",
-    -- g = { "<cmd>Neogen<cr>", "Neggen" },
     g = {
       name = "GTD",
       e = { "<cmd>Neorg gtd edit<cr>", "Edit" },
