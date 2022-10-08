@@ -22,6 +22,7 @@ vim.g.catppuccin_flavour = "dusk"
 require("system.setup").setup {
   transparent_window = false,
   format_on_save = true,
+  better_fold = true,
   better_tui = false,
   -- colorscheme = "duskfox",
   -- colorscheme = "nightfly",

@@ -66,7 +66,8 @@ if ok_which_key then
     w = {
       name = "Workspaces",
       w = { "<cmd>Neorg workspace work<cr>", "Work" },
-      l = { "<cmd>Neorg workspace life<cr>", "life" },
+      l = { "<cmd>Neorg workspace life<cr>", "Life" },
+      s = { "<cmd>Neorg workspace learn<cr>", "Learn" },
     },
     t = {
       name = "TOC",

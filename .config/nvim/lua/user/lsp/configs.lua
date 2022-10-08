@@ -27,9 +27,15 @@ lsp_installer.setup {
   ensure_installed = servers,
 }
 
+local capabilities = require("user.lsp.handlers").capabilities
+capabilities.textDocument.foldingRange = {
+  dynamicRegistration = false,
+  lineFoldingOnly = true,
+}
+
 local opts = {
   on_attach = require("user.lsp.handlers").on_attach,
-  capabilities = require("user.lsp.handlers").capabilities,
+  capabilities = capabilities,
 }
 
 for _, server in pairs(servers) do

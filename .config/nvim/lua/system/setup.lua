@@ -24,6 +24,10 @@ M.setup = function(opts)
   require "user.tabnine"
   require "user.notify"
 
+  if opts.better_fold then
+    require "user.better_fold"
+  end
+
   if not opts.active_org and opts.active_neorg then
     require "user.neorg"
   end
