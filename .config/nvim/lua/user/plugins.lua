@@ -98,19 +98,19 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-nvim-lua" -- nvim cmp lua
   use "f3fora/cmp-spell"
   use "kdheepak/cmp-latex-symbols"
-  use {
-    "tzachar/cmp-tabnine",
-    -- config = function()
-    --   local cfg = {
-    --     max_lines = 1000,
-    --     max_num_results = 5,
-    --     sort = true,
-    --     run_on_every_keystroke = true,
-    --   }
-    --   require("cmp_tabnine.config"):setup(cfg)
-    -- end,
-    run = "./install.sh",
-  }
+  -- use {
+  --   "tzachar/cmp-tabnine",
+  --   -- config = function()
+  --   --   local cfg = {
+  --   --     max_lines = 1000,
+  --   --     max_num_results = 5,
+  --   --     sort = true,
+  --   --     run_on_every_keystroke = true,
+  --   --   }
+  --   --   require("cmp_tabnine.config"):setup(cfg)
+  --   -- end,
+  --   run = "./install.sh",
+  -- }
   use {
     "ray-x/lsp_signature.nvim",
     config = function()
@@ -121,19 +121,19 @@ return packer.startup(function(use)
       require("lsp_signature").setup(cfg)
     end,
   }
-  --[[ use { ]]
-  --[[   "zbirenbaum/copilot.lua", ]]
-  --[[   event = { "VimEnter" }, ]]
-  --[[   config = function() ]]
-  --[[     vim.defer_fn(function() ]]
-  --[[       require("copilot").setup() ]]
-  --[[     end, 100) ]]
-  --[[   end, ]]
-  --[[ } ]]
-  --[[ use { ]]
-  --[[   "zbirenbaum/copilot-cmp", ]]
-  --[[   after = { "copilot.lua", "nvim-cmp" }, ]]
-  --[[ } ]]
+  -- use {
+  --   "zbirenbaum/copilot.lua",
+  --   event = { "VimEnter" },
+  --   config = function()
+  --     vim.defer_fn(function()
+  --       require("copilot").setup()
+  --     end, 100)
+  --   end,
+  -- }
+  -- use {
+  --   "zbirenbaum/copilot-cmp",
+  --   after = { "copilot.lua", "nvim-cmp" },
+  -- }
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
   use "numToStr/Comment.nvim" -- Easily comment stuff
   use "JoosepAlviste/nvim-ts-context-commentstring"
@@ -196,13 +196,14 @@ return packer.startup(function(use)
   use "nvim-lualine/lualine.nvim"
 
   -- DAP (Debug Adapter Protocol)
-  use {
-    "Pocco81/DAPInstall.nvim",
-    branch = "dev",
-  }
-  use "mfussenegger/nvim-dap"
-  use "theHamsta/nvim-dap-virtual-text"
-  use "rcarriga/nvim-dap-ui"
+  -- use {
+  --   "Pocco81/DAPInstall.nvim",
+  --   branch = "dev",
+  -- }
+
+  -- use "mfussenegger/nvim-dap"
+  -- use "theHamsta/nvim-dap-virtual-text"
+  -- use "rcarriga/nvim-dap-ui"
 
   -- Tmux integration
   use {
@@ -292,6 +293,15 @@ return packer.startup(function(use)
 
   -- better fold
   use { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }
+
+  -- Gopher plugin
+  use {
+    "olexsmir/gopher.nvim",
+    requires = { -- dependencies
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

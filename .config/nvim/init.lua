@@ -42,7 +42,7 @@ require("system.setup").setup {
   active_autopairs = true,
   active_lsp = true,
   active_refactor = true,
-  active_dap = true,
+  active_dap = false,
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
