@@ -143,3 +143,31 @@ local dapvok, dapv = pcall(require, "nvim-dap-virtual-text")
 if dapvok then
   dapv.setup()
 end
+
+local ok_which_key, _ = pcall(require, "which-key")
+
+if ok_which_key then
+  local wk = require "user.whichkey"
+
+  if wk.mappings["d"] ~= nil then
+    return
+  end
+
+  wk.mappings["d"] = {
+    name = "+Debugger",
+    b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
+    c = { "<cmd>lua require'dap'.continue()<cr>", "continue" },
+    C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "continue to cursor" },
+    n = { "<cmd>lua require'dap'.step_over()<cr>", "step over" },
+    s = { "<cmd>lua require'dap'.step_into()<cr>", "step into" },
+    S = { "<cmd>lua require'dap'.step_out()<cr>", "step out" },
+    e = { "<cmd>lua require'dap'.close()<cr>", "stop debugger" },
+    l = { "<cmd>lua require'dap'.list_breakpoints()<cr>", "list all breakpoint" },
+    r = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "remove all breakpont" },
+    o = { "<cmd>lua require'dapui'.open()<cr>", "open debug ui window" },
+    x = { "<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
+    t = { "<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
+    f = { "<cmd>lua require'dapui'.float_element()<cr>", "get value" },
+    v = { "<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
+  }
+end

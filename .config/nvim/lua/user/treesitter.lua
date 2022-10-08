@@ -19,10 +19,11 @@ configs.setup {
     "go",
     "php",
     "norg",
+    "org",
   },
   highlight = {
     enable = true, -- false will disable the whole extension
-    additional_vim_regex_highlighting = true,
+    additional_vim_regex_highlighting = { "org" },
   },
   indent = { enable = true },
   rainbow = { enable = true },

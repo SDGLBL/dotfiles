@@ -286,6 +286,8 @@ return packer.startup(function(use)
     requires = "nvim-lua/plenary.nvim",
   }
 
+  use "nvim-orgmode/orgmode"
+
   use "RRethy/vim-illuminate"
 
   -- Automatically set up your configuration after cloning packer.nvim

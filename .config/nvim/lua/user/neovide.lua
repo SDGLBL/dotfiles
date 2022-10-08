@@ -1,5 +1,2 @@
-M = {}
-M.setup = function()
-  vim.g.neovide_fullscreen = true
-end
-return M
+vim.g.neovide_fullscreen = false
+vim.g.neovide_transparency = 0.9

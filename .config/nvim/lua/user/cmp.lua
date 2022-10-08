@@ -338,6 +338,7 @@ cmp.setup {
     { name = "nvim_lsp", max_item_count = 4 },
     { name = "luasnip", max_item_count = 3 },
     { name = "cmp_tabnine" },
+    { name = "orgmode" },
     { name = "neorg" },
     { name = "path" },
     { name = "nvim_lua" },

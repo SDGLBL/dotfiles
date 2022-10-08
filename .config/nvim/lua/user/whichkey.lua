@@ -3,6 +3,8 @@ if not status_ok then
   return
 end
 
+local M = {}
+
 local setup = {
   plugins = {
     marks = true, -- shows a list of your marks on ' and `
@@ -78,7 +80,7 @@ local opts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 
-local mappings = {
+M.mappings = {
   ["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<CR>', "Comment" },
   ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
@@ -126,12 +128,6 @@ local mappings = {
     S = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
-
-  r = {
-    name = "Refactoring",
-    r = { "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch" },
-  },
-
   g = {
     name = "Git",
     g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
@@ -162,59 +158,6 @@ local mappings = {
       },
     },
   },
-
-  d = {
-    name = "+Debugger",
-    b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
-    c = { "<cmd>lua require'dap'.continue()<cr>", "continue" },
-    C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "continue to cursor" },
-    n = { "<cmd>lua require'dap'.step_over()<cr>", "step over" },
-    s = { "<cmd>lua require'dap'.step_into()<cr>", "step into" },
-    S = { "<cmd>lua require'dap'.step_out()<cr>", "step out" },
-    e = { "<cmd>lua require'dap'.close()<cr>", "stop debugger" },
-    l = { "<cmd>lua require'dap'.list_breakpoints()<cr>", "list all breakpoint" },
-    r = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "remove all breakpont" },
-    o = { "<cmd>lua require'dapui'.open()<cr>", "open debug ui window" },
-    x = { "<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
-    t = { "<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
-    f = { "<cmd>lua require'dapui'.float_element()<cr>", "get value" },
-    v = { "<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
-  },
-
-  l = {
-    name = "LSP",
-    -- a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    a = { "<cmd>Lspsaga code_action<cr>", "Code Action" },
-    A = { "<cmd>Lspsaga range_code_action<cr>", "Range Code Action" },
-    d = {
-      "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>",
-      "Document Diagnostics",
-    },
-    w = {
-      "<cmd>Telescope diagnostics<cr>",
-      "Workspace Diagnostics",
-    },
-    f = { "<cmd>lua vim.lsp.buf.format { async = true }<cr>", "Format" },
-    i = { "<cmd>LspInfo<cr>", "Info" },
-    I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
-    j = {
-      "<cmd>lua vim.diagnostic.goto_next()<CR>",
-      "Next Diagnostic",
-    },
-    k = {
-      "<cmd>lua vim.diagnostic.goto_prev()<cr>",
-      "Prev Diagnostic",
-    },
-    l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-    q = { "<cmd>lua vim.diagnostic.set_loclist()<cr>", "Quickfix" },
-    -- r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    r = { "<cmd>Lspsaga rename<cr>", "Rename" },
-    s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
-    S = {
-      "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
-      "Workspace Symbols",
-    },
-  },
   s = {
     name = "Search",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
@@ -231,7 +174,6 @@ local mappings = {
       "Colorscheme with Preview",
     },
   },
-
   t = {
     name = "Terminal",
     -- n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
@@ -254,10 +196,6 @@ local mappings = {
     p = { "<cmd>HopPattern<cr>", "HopPattern" },
     n = { "<cmd>lua require'tsht'.nodes()<cr>", "TSNodes" },
   },
-  n = {
-    name = "Neogen",
-    g = { "<cmd>Neogen<cr>", "Neggen" },
-  },
 }
 
 local vopts = {
@@ -268,7 +206,8 @@ local vopts = {
   noremap = true, -- use `noremap` when creating keymaps
   nowait = true, -- use `nowait` when creating keymaps
 }
-local vmappings = {
+
+M.vmappings = {
   ["/"] = { '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', "Comment" },
   ["r"] = {
     name = "Refactoring",
@@ -284,5 +223,7 @@ local vmappings = {
 }
 
 which_key.setup(setup)
-which_key.register(mappings, opts)
-which_key.register(vmappings, vopts)
+which_key.register(M.mappings, opts)
+which_key.register(M.vmappings, vopts)
+
+return M

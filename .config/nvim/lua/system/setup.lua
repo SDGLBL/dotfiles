@@ -8,7 +8,6 @@ M.setup = function(opts)
   require "user.options"
   require "user.keymaps"
   require "user.autocmd"
-  require "user.whichkey"
   require "user.projects"
   require "user.alpha"
   require "user.toggleterm"
@@ -21,12 +20,16 @@ M.setup = function(opts)
   require "user.treesitter"
   require "user.gitsigns"
   require "user.telescope"
-  require("user.neovide").setup()
+  require "user.neovide"
   require "user.tabnine"
   require "user.notify"
 
-  if opts.active_neorg then
+  if not opts.active_org and opts.active_neorg then
     require "user.neorg"
+  end
+
+  if not opts.active_neorg and opts.active_org then
+    require "user.orgmode"
   end
 
   if opts.better_tui then
@@ -74,6 +77,9 @@ M.setup = function(opts)
   local default_cmds = autocmd.load_augroups() or {}
   local all_cmds = vim.tbl_deep_extend("keep", opts.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
+
+  -- load user keymaps after plugins loaded
+  require "user.whichkey"
 end
 
 return M
