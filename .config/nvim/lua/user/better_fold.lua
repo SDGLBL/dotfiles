@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-local, unused-function, undefined-field
 local ok, ufo = pcall(require, "ufo")
 if not ok then
   return
@@ -15,7 +16,6 @@ vim.keymap.set("n", "K", function()
   local winid = require("ufo").peekFoldedLinesUnderCursor()
   if not winid then
     -- choose one of coc.nvim and nvim lsp
-    vim.fn.CocActionAsync "definitionHover" -- coc.nvim
     vim.lsp.buf.hover()
   end
 end)
@@ -48,12 +48,28 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
   return newVirtText
 end
 
+local ftMap = {
+  norg = { "treesitter", "indent" },
+}
+
 ufo.setup {
   open_fold_hl_timeout = 20,
   fold_virt_text_handler = handler,
+  provider_selector = function(bufnr, filetype, buftype)
+    -- return a table with string elements: 1st is name of main provider, 2nd is fallback
+    -- return a string type: use ufo inner providers
+    -- return a string in a table: like a string type above
+    -- return empty string '': disable any providers
+    -- return `nil`: use default value {'lsp', 'indent'}
+    -- return a function: it will be involved and expected return `UfoFoldingRange[]|Promise`
+
+    -- if you prefer treesitter provider rather than lsp,
+    -- return ftMap[filetype] or {'treesitter', 'indent'}
+    return ftMap[filetype]
+  end,
 }
 
 -- buffer scope handler
 -- will override global handler if it is existed
 local bufnr = vim.api.nvim_get_current_buf()
-require("ufo").setFoldVirtTextHandler(bufnr, handler)
+ufo.setFoldVirtTextHandler(bufnr, handler)
