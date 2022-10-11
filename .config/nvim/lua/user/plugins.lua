@@ -291,6 +291,13 @@ return packer.startup(function(use)
 
   use "RRethy/vim-illuminate"
 
+  use {
+    "levouh/tint.nvim",
+    config = function()
+      require("tint").setup()
+    end,
+  }
+
   -- better fold
   use { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }
 
