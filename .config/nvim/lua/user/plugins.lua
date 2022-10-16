@@ -90,6 +90,7 @@ return packer.startup(function(use)
   use "projekt0n/github-nvim-theme"
   use "tiagovla/tokyodark.nvim"
   use "rebelot/kanagawa.nvim"
+  use "marko-cerovac/material.nvim"
 
   -- cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin

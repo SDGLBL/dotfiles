@@ -4,12 +4,13 @@ require("system.setup").setup {
   better_fold = true,
   better_tui = false,
   colorscheme_config = {
-    -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa
+    -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
     colorscheme = "kanagawa",
     config = function()
       -- auto change background by time
       vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
       -- colorscheme style
+      vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
       vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
       vim.g.tokyonight_style = "night"
       vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
