@@ -42,6 +42,7 @@ M.setup = function(opts)
   require "user.neovide"
   require "user.tabnine"
   require "user.notify"
+  require "user.markdown_preview"
 
   if opts.active_tint then
     local ok, tint = pcall(require, "tint")
