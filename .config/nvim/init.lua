@@ -1,21 +1,9 @@
 require("system.setup").setup {
-  transparent_window = false,
+  transparent_window = false, -- make background transparent
   format_on_save = true,
   better_fold = true,
   better_tui = false,
-  -- colorscheme = "duskfox",
-  -- colorscheme = "nightfly",
-  -- colorscheme = "nightfox",
-  -- colorscheme = "github_dimmed",
-  -- colorscheme = "tokyonight",
-  -- colorscheme = "sonokai",
-  -- colorscheme = "onedarkpro",
-  -- colorscheme = "monokai_soda",
-  colorscheme = "catppuccin",
-  -- colorscheme = "rose-pine",
-  -- colorscheme = "tokyonight",
-  -- colorscheme = "tokyodark",
-  -- colorscheme = "kanagawa",
+  colorscheme = "catppuccin", -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa
   active_neorg = false,
   active_org = false,
   active_autopairs = true,
