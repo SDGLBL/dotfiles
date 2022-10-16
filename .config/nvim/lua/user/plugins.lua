@@ -64,7 +64,10 @@ return packer.startup(function(use)
   -- Colorschemes
   use "ellisonleao/gruvbox.nvim"
   use "lunarvim/darkplus.nvim"
-  use "catppuccin/nvim"
+  use {
+    "catppuccin/nvim",
+    as = "catppuccin",
+  }
   use "tanvirtin/monokai.nvim"
   use "bluz71/vim-nightfly-guicolors"
   use "folke/tokyonight.nvim"
@@ -291,12 +294,7 @@ return packer.startup(function(use)
 
   use "RRethy/vim-illuminate"
 
-  use {
-    "levouh/tint.nvim",
-    config = function()
-      require("tint").setup()
-    end,
-  }
+  use "levouh/tint.nvim"
 
   -- better fold
   use { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }
@@ -308,6 +306,15 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+  }
+
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function()
+      vim.g.mkdp_filetypes = { "markdown" }
+    end,
+    ft = { "markdown" },
   }
 
   -- Automatically set up your configuration after cloning packer.nvim

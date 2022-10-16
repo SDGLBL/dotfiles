@@ -3,12 +3,6 @@ M = {}
 local autocmd = require "user.autocmd"
 
 M.setup = function(opts)
-  -- colorscheme style
-  vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
-  vim.g.tokyonight_style = "night"
-  vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-  vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-
   -- set guifont
   vim.cmd [[set guifont=FiraCode\ Nerd\ Font\ Mono:h17]]
 
@@ -89,14 +83,24 @@ M.setup = function(opts)
     autocmd.enable_transparent_mode()
   end
 
-  if opts.colorscheme then
-    if opts.colorscheme == "catppuccin" then
+  if opts.colorscheme_config then
+    local colorscheme = opts.colorscheme_config.colorscheme
+    local config = opts.colorscheme_config.config
+
+    if config ~= nil then
+      local ok, _ = pcall(config)
+      if not ok then
+        vim.notify("excuting colorscheme config failed", vim.log.levels.ERROR)
+      end
+    end
+
+    if colorscheme == "catppuccin" then
       require("catppuccin").setup()
     end
 
-    local status_ok, _ = pcall(vim.cmd, "colorscheme " .. opts.colorscheme)
+    local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
     if not status_ok then
-      vim.notify("colorscheme " .. opts.colorscheme .. " not found!")
+      vim.notify("colorscheme " .. colorscheme .. " not found!")
       return
     end
   end
