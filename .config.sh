@@ -100,3 +100,7 @@ alias vimf='nvim $(pf)'
 alias nvimf='nvim $(pf)'
 alias gvim="neovide --multigrid"
 alias gnvim="neovide --multigrid"
+
+# tmux alias
+alias t="tmux"
+alias ta="tmux a"
