@@ -335,8 +335,8 @@ cmp.setup {
   },
   sources = {
     { name = "copilot" },
-    { name = "nvim_lsp", max_item_count = 4 },
-    { name = "luasnip", max_item_count = 3 },
+    { name = "nvim_lsp" },
+    { name = "luasnip" },
     { name = "cmp_tabnine" },
     { name = "orgmode" },
     { name = "neorg" },
