@@ -24,6 +24,13 @@ M.setup = function(opts)
   require "user.tabnine"
   require "user.notify"
 
+  if opts.active_tint then
+    local ok, tint = pcall(require, "tint")
+    if ok then
+      tint.setup {}
+    end
+  end
+
   if opts.better_fold then
     require "user.better_fold"
   end
