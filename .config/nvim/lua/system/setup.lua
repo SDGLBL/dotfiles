@@ -63,6 +63,10 @@ M.setup = function(opts)
   end
 
   if opts.colorscheme then
+    if opts.colorscheme == "catppuccin" then
+      require("catppuccin").setup()
+    end
+
     local status_ok, _ = pcall(vim.cmd, "colorscheme " .. opts.colorscheme)
     if not status_ok then
       vim.notify("colorscheme " .. opts.colorscheme .. " not found!")
