@@ -3,17 +3,8 @@ M = {}
 local autocmd = require "user.autocmd"
 
 M.setup = function(opts)
-  -- set guifont
-  vim.cmd [[set guifont=FiraCode\ Nerd\ Font\ Mono:h17]]
-
-  -- copilot setup
-  vim.g.copilot_no_tab_map = true
-  vim.g.copilot_assume_mapped = true
-  vim.g.copilot_tab_fallback = ""
-
-  -- conda setup
-  if os.getenv "CONDA_PREFIX" ~= "" and os.getenv "CONDA_PREFIX" ~= nil then
-    vim.g.python3_host_prog = os.getenv "CONDA_PREFIX" .. "/bin/python"
+  if opts.pre_hook ~= nil then
+    pcall(opts.pre_hook)
   end
 
   require "user.plugins"
@@ -119,6 +110,10 @@ M.setup = function(opts)
 
   -- load user keymaps after plugins loaded
   require "user.whichkey"
+
+  if opts.after_hook ~= nil then
+    pcall(opts.after_hook)
+  end
 end
 
 return M

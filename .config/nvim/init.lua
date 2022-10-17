@@ -33,4 +33,21 @@ require("system.setup").setup {
       { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
     },
   },
+  pre_hook = function()
+    -- set guifont
+    vim.cmd [[set guifont=firacode\ nerd\ font\ mono:h17]]
+
+    -- copilot setup
+    vim.g.copilot_no_tab_map = true
+    vim.g.copilot_assume_mapped = true
+    vim.g.copilot_tab_fallback = ""
+
+    -- conda setup
+    if os.getenv "conda_prefix" ~= "" and os.getenv "conda_prefix" ~= nil then
+      vim.g.python3_host_prog = os.getenv "conda_prefix" .. "/bin/python"
+    end
+  end,
+  after_hook = function()
+    -- do noting
+  end,
 }
