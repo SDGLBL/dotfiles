@@ -309,13 +309,13 @@ return packer.startup(function(use)
     },
   }
 
+  use "iamcco/markdown-preview.nvim"
   use {
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function()
-      vim.g.mkdp_filetypes = { "markdown" }
+    "SDGLBL/ggl.nvim",
+    config = function()
+      require("ggl").setup {}
     end,
-    ft = { "markdown" },
+    requires = { "rcarriga/nvim-notify" },
   }
 
   -- Automatically set up your configuration after cloning packer.nvim
