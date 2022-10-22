@@ -474,6 +474,11 @@ check() {
     exit 1
   fi
 
+  if ! command_is_exists g++; then
+    err "Please install g++"
+    exit 1
+  fi
+
   if ! command_is_exists git; then
     err "Please install git"
     exit 1
