@@ -60,14 +60,14 @@ add_git_proxy() {
     # add git proxy for Mainland China users
     msg "Add git proxy for Mainland China users?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && printf 'mirror.ghproxy.com github.com\nmirror.ghproxy.com raw.githubusercontent.com\n' | sudo tee -a /etc/hosts
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && printf 'mirror.ghproxy.com github.com\nmirror.ghproxy.com raw.githubusercontent.com\n' | sudo tee -a /etc/hosts
   fi
 }
 
 install_oh_my_zsh() {
   msg "Install oh_my_zsh?"
   [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-  [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 }
 
 # install cargo
@@ -75,7 +75,7 @@ install_cargo() {
   if ! command_is_exists cargo; then
     msg "Install cargo?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && curl https://sh.rustup.rs > rustup-init.sh && chmod +x ./rustup-init.sh && ./rustup-init.sh -y && rm ./rustup-init.sh
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && curl https://sh.rustup.rs > rustup-init.sh && chmod +x ./rustup-init.sh && ./rustup-init.sh -y && rm ./rustup-init.sh
     # shellcheck disable=1090
     source "$HOME"/.cargo/env
   else
@@ -90,7 +90,7 @@ install_go() {
     msg "Install go?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     export GOPATH="$HOME"/software/go
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash 
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && wget -q -O - https://raw.githubusercontent.com/canha/golang-tools-install-script/master/goinstall.sh | bash 
   else
     msg "Go is already installed"
   fi
@@ -100,7 +100,7 @@ install_nodejs() {
   if ! command_is_exists node; then
     msg "Nodejs is not installed yet"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    if [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL"; then
+    if [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL; then
       if ! dir_is_exists "$HOME"/software; then
         mkdir -p "$HOME"/software
       fi
@@ -122,7 +122,7 @@ install_neovim() {
   if ! command_is_exists nvim; then
     msg "Neovim is not installed yet"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    if [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL"; then
+    if [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL; then
       if ! dir_is_exists "$HOME"/software; then
         mkdir -p "$HOME"/software
       fi
@@ -149,7 +149,7 @@ config_nvim() {
   if dir_is_exists "$HOME"/.config/nvim; then
     mv "$HOME"/.config/nvim "$HOME/.config/nvim_$(date +'%Y-%m-%dT%H:%M:%S').bak"
   fi
-  [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && ln -s "$SHELL_FOLDER"/.config/nvim "$HOME"/.config/nvim
+  [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && ln -s "$SHELL_FOLDER"/.config/nvim "$HOME"/.config/nvim
 }
 
 # install clipboard-provider
@@ -187,7 +187,7 @@ install_cargo_package() {
   if ! command_is_exists bat && command_is_exists cc; then
     msg "Install bat? (A cat clone with syntax highlighting and Git integration.)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && cargo install bat
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install bat
   else
     msg "Bat is already installed."
   fi
@@ -196,7 +196,7 @@ install_cargo_package() {
   if ! command_is_exists exa; then
     msg "Install exa? (A modern replacement for ls.)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && cargo install exa
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install exa
   else
     msg "Exa is already installed."
   fi
@@ -204,7 +204,7 @@ install_cargo_package() {
   if ! command_is_exists dua; then
     msg "Install dua? (A modern replacement for du.)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && cargo install dua-cli
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install dua-cli
   else
     msg "Dua is already installed."
   fi
@@ -212,7 +212,7 @@ install_cargo_package() {
   if ! command_is_exists rg; then
     msg "Install ripgrep? (A search tool that works as grep, optimized for large files.)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && cargo install ripgrep
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install ripgrep
   else
     msg "Ripgrep is already installed."
   fi
@@ -220,7 +220,7 @@ install_cargo_package() {
   if ! command_is_exists delta; then
     msg "Install delta? (A tool to compare two directories and show the differences between them.)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && cargo install git-delta
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install git-delta
   else
     msg "Delta is already installed."
   fi
@@ -228,7 +228,7 @@ install_cargo_package() {
   if ! command_is_exists procs; then
     msg "Install procs? (A tool to show running processes.)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && cargo install procs
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install procs
   else
     msg "Procs is already installed."
   fi
@@ -236,7 +236,7 @@ install_cargo_package() {
   if ! command_is_exists navi; then
     msg "Install navi? (A tool show suggestions)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && cargo install navi
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install navi
   else
     msg "Navi is already installed."
   fi
@@ -247,13 +247,13 @@ install_go_package() {
   if [ -z "$GOPROXY" ]; then
     msg "Use go proxy for Mainland China users?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && go env -w GOPROXY=https://goproxy.cn,direct
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go env -w GOPROXY=https://goproxy.cn,direct
   fi
 
   if ! command_is_exists lazygit; then
     msg "Install lazygit? (A git client that is designed to be used on the command line.)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && go install github.com/jesseduffield/lazygit@latest
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go install github.com/jesseduffield/lazygit@latest
   else
     msg "Lazygit is already installed."
   fi
@@ -261,7 +261,7 @@ install_go_package() {
   if ! command_is_exists duf; then
     msg "Install duf? (A modern replacement for df)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && go install github.com/muesli/duf@master
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go install github.com/muesli/duf@master
   else 
     msg "Duf is already installed."
   fi
@@ -269,7 +269,7 @@ install_go_package() {
   if ! command_is_exists lazydocker; then
     msg "Install lazydocker? (A tool to manage docker containers)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && go install github.com/jesseduffield/lazydocker@latest
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go install github.com/jesseduffield/lazydocker@latest
   else
     msg "Lazydocker is already installed."
   fi
@@ -277,7 +277,7 @@ install_go_package() {
   if ! command_is_exists fx;then
     msg "Install fx? (A Terminal JSON viewer)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && go install github.com/antonmedv/fx@latest
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go install github.com/antonmedv/fx@latest
   else
     msg "Fx is already installed."
   fi
@@ -287,7 +287,7 @@ install_pip_package() {
   if ! command_is_exists http; then 
     msg "Install http?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && python3 -m pip install --upgrade pip wheel && python3 -m pip install httpie
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && python3 -m pip install --upgrade pip wheel && python3 -m pip install httpie
   else
     msg "http is already installed."
   fi
@@ -332,15 +332,14 @@ config_zsh() {
     msg "Install zsh-autosuggestions?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     # shellcheck disable=2086
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestionsc && msg "Please add plugins=(zsh-autosuggestions) in ~/.zshrc"
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestionsc && msg "Please add plugins=(zsh-autosuggestions) in ~/.zshrc"
     msg "Install zsh-syntax-highlighting?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     # shellcheck disable=2086
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && msg "Please add plugins=(zsh-syntax-highlighting) in ~/.zshrc"
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && msg "Please add plugins=(zsh-syntax-highlighting) in ~/.zshrc"
     msg "Install powerlevel10k theme?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    # shellcheck disable=2086
-    [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-"$HOME"/.oh-my-zsh/custom}/themes/powerlevel10k && echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> "$HOME"/.zshrc
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-"$HOME"/.oh-my-zsh/custom}/themes/powerlevel10k && echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> "$HOME"/.zshrc
 
     if file_is_exists "$HOME"/.config.sh; then
       mv "$HOME"/.config.sh "$HOME/.config_$(date +'%Y-%m-%dT%H:%M:%S').sh.backup"
@@ -362,7 +361,7 @@ config_zsh() {
     if ! [[ "$SHELL" =~ zsh* ]]; then
       msg "Change shell to zsh?"
       [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-      [ "$answer" != "${answer#[Yy]}" ] || "$SET_ALL" && chsh "$USER" -s "$(command -v zsh)"
+      [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && chsh "$USER" -s "$(command -v zsh)"
     fi
   fi
 }
