@@ -2,7 +2,6 @@
 
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 CONFIG_FOLDER=$SHELL_FOLDER/.config
-LUNARVIM_CONFIG_FOLDER="$HOME/.config/lvim"
 
 err() {
   echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
@@ -97,7 +96,7 @@ install_go() {
 
 install_nodejs() {
   if ! command_is_exists node; then
-    msg "Nodejs is not installed yet, if you want install luarvim please install nodejs first."
+    msg "Nodejs is not installed yet"
     [ $SET_ALL ] && read -p "[y]es or [n]o (default: no) : " -r answer
     if [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL; then
       if ! dir_is_exists $HOME/software; then
@@ -119,18 +118,18 @@ install_nodejs() {
 # install neovim
 install_neovim() {
   if ! command_is_exists nvim; then
-    msg "Neovim is not installed yet, if you want install luarvim please install neovim first."
+    msg "Neovim is not installed yet"
     [ $SET_ALL ] && read -p "[y]es or [n]o (default: no) : " -r answer
     if [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL; then
       if ! dir_is_exists $HOME/software; then
         mkdir -p $HOME/software
       fi
       if [[ "$OSTYPE" =~ ^darwin ]]; then
-        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-macos.tar.gz -O $HOME/software/nvim.tar.gz
+        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.8.1/nvim-macos.tar.gz -O $HOME/software/nvim.tar.gz
         tar -xvf $HOME/software/nvim.tar.gz -C $HOME/software
         mv $HOME/software/nvim-linux64 $HOME/software/nvim
       elif [[ "$OSTYPE" =~ ^linux ]]; then
-        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz -O $HOME/software/nvim.tar.gz
+        wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.8.1/nvim-linux64.tar.gz -O $HOME/software/nvim.tar.gz
         tar -xvf $HOME/software/nvim.tar.gz -C $HOME/software
         mv $HOME/software/nvim-linux64 $HOME/software/nvim
       fi
@@ -140,16 +139,6 @@ install_neovim() {
   fi
 }
 
-# install luarvim
-install_luarvim() {
-  if ! command_is_exists lvim; then
-    msg "LunarVim is not installed. Would you like to install LunarVim dependencies?"
-    [ $SET_ALL ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
-  else
-    msg "LunarVim is already installed."
-  fi
-}
 
 # config nvim
 config_nvim() {
@@ -298,13 +287,6 @@ install_pip_package() {
   fi
 }
 
-config_lunarvim() {
-  if file_is_exists $LUNARVIM_CONFIG_FOLDER/config.lua; then
-    mv $LUNARVIM_CONFIG_FOLDER/config.lua "~/.config/lvim/config_$(date +'%Y-%m-%dT%H:%M:%S').bak.lua" 
-  fi
-  ln -s $CONFIG_FOLDER/lvim/config.lua $LUNARVIM_CONFIG_FOLDER/config.lua
-
-}
 
 # if use tmux
 config_tmux() {
@@ -430,12 +412,6 @@ all() {
   install_nodejs
   install_clipboard_provider
   install_fzf
-  # if command_is_exists nvim; then
-    # install_luarvim
-  # fi
-  if command_is_exists lvim; then
-    config_lunarvim
-  fi
   if command_is_exists cargo; then
     install_cargo_package
   fi
@@ -468,7 +444,6 @@ help() {
   echo "  install-nodejs     install nodejs"
   echo "  install-clipboard-provider  install clipboard provider"
   echo "  install-fzf        install fzf"
-  echo "  install-luarvim    install luarvim"
   echo "  init-tools         init all  cli tools"
   echo "  config             config all cli tools"
 }
@@ -526,11 +501,6 @@ while [ $# -gt 0 ]; do
           ;;
         install-nodejs)
           install_nodejs
-          exit 0
-          ;;
-        install-luarvim)
-          install_luarvim
-          config_lunarvim
           exit 0
           ;;
         config)
