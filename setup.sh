@@ -412,8 +412,6 @@ check() {
       exit 1
     fi
   fi
-
-  fi
 }
 
 init_path() {
