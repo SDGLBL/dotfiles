@@ -240,6 +240,39 @@ install_cargo_package() {
   else
     msg "Navi is already installed."
   fi
+
+  if ! command_is_exists taplo; then
+    msg "Install taplo? (A tool to format json)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && cargo install taplo-cli
+  else
+    msg "Taplo is already installed."
+  fi
+
+  if ! command_is_exists rustfmt; then
+    msg "Install rust_fmt? (A tool to format rust code)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && rustup component add rust-src
+  else
+    msg "Rust_fmt is already installed."
+  fi
+
+
+  if ! command_is_exists prettier; then
+    msg "Install prettier? (A tool to format js code)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && npm install --save-dev --save-exact prettier
+  else
+    msg "Prettier is already installed."
+  fi
+
+  if ! command_is_exists write-good; then
+    msg "Install write-good? (A tool to check grammar)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && npm install --global write-good
+  else
+    msg "Write-good is already installed."
+  fi
 }
 
 install_go_package() {
@@ -281,6 +314,20 @@ install_go_package() {
   else
     msg "Fx is already installed."
   fi
+
+  if ! command_is_exists goimports; then
+    msg "Install goimports? (A tool to format go code)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go install golang.org/x/tools/cmd/goimports@latest
+  else
+    msg "Goimports is already installed."
+  fi
+
+  if ! command_is_exists golangci-lint; then
+    msg "Install golangci-lint? (A tool to lint go code)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)"/bin v1.45.2
+  fi
 }
 
 install_pip_package() {
@@ -291,8 +338,49 @@ install_pip_package() {
   else
     msg "http is already installed."
   fi
+
+  if ! command_is_exists stylua; then
+    msg "Install stylua?"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && pip install stylua
+  else
+    msg "stylua is already installed"
+  fi
+
+  if ! command_is_exists black; then
+    msg "Install black?"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && pip install black
+  else
+    msg "black is already installed"
+  fi
+
+  if ! command_is_exists gitlint; then
+    msg "Install gitlint?"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && pip install gitlint
+  else
+    msg "gitlint is already installed"
+  fi
+
+  if ! command_is_exists codespell; then
+    msg "Install codespell?"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && pip install codespell
+  else
+    msg "codespell is already installed"
+  fi
 }
 
+install_other() {
+  msg "Install other tool by yourself."
+  echp "schellcheck check shell script"
+  echo "schellcheck: https://github.com/koalaman/shellcheck#installing"
+  echo "hadolint check dockerfile"
+  echo "hadolint: https://github.com/hadolint/hadolint/releases/tag/v2.10.0"
+  echo "cppcheck check c/c++ code"
+  echo "cppcheck: https://github.com/danmar/cppcheck"
+}
 
 # if use tmux
 config_tmux() {
@@ -436,6 +524,7 @@ all() {
   install_nodejs
   install_clipboard_provider
   install_fzf
+  install_pip_package
   if command_is_exists cargo; then
     install_cargo_package
   fi
@@ -451,6 +540,7 @@ all() {
   fi
   config_alacritty
   config_bash
+  install_other
   echo "Please restart your terminal or run 'source ~/.bashrc' or 'zsh && source ~/.zshrc' to make the changes take effect"
 }
 
@@ -525,6 +615,10 @@ while [ $# -gt 0 ]; do
           ;;
         install-nodejs)
           install_nodejs
+          exit 0
+          ;;
+        install-formatters-linters)
+          install_pip_package
           exit 0
           ;;
         config)
