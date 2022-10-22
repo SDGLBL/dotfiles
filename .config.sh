@@ -1,11 +1,8 @@
 # add [[ ! -f ~/.config.sh ]] || source ~/.config.sh to .bashrc or .zshrc bottom
 # PATH 
-export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"/home/lijie/.local/share/lunarvim"}"
-export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"/home/lijie/.config/lvim"}"
-export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"/home/lijie/.cache/nvim"}"
 
 export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/nodejs/bin:~/software/gh/bin:~/.go/bin
+export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/node/bin:~/software/gh/bin:~/.go/bin
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/go/bin
 

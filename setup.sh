@@ -107,7 +107,7 @@ install_nodejs() {
       elif [[ "$OSTYPE" =~ ^linux ]]; then
         wget --no-check-certificate https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-x64.tar.xz -O $HOME/software/node-v16.14.2-linux-x64.tar.xz
         tar -xvf $HOME/software/node-v16.14.2-linux-x64.tar.xz -C $HOME/software
-        mv $HOME/software/node-v16.14.2-linux-x64 $HOME/software/nodejs
+        cd $HOME/software && ln -s node-v16.14.2-linux-x64 node
       fi
     fi
   else
@@ -168,8 +168,12 @@ install_clipboard_provider() {
 
 install_fzf() {
   if ! command_is_exists fzf; then
+    if dir_is_exists $HOME/.fzf; then
+      mv $HOME/.fzf "$HOME/.fzf_$(date +'%Y-%m-%dT%H:%M:%S').bak"
+    fi
+
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-    $HOME/.fzf/install -all
+    $HOME/.fzf/install --all
   else
     msg "Fzf is already installed."
   fi
@@ -291,6 +295,7 @@ install_pip_package() {
 # if use tmux
 config_tmux() {
   if ! dir_is_exists $HOME/.tmux/plugins/tpm; then
+    msg "Install tmux plugin manager."
     git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
   fi
   if command_is_exists tmux; then
@@ -342,6 +347,12 @@ config_zsh() {
     if ! file_contain_string "$temp" $HOME/.zshrc; then
       printf "$temp" >> $HOME/.zshrc
     fi
+
+    temp2="plugins=(git)"
+    if file_contain_string "$temp2" $HOME/.zshrc; then
+      sed -i "s/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g" $HOME/.zshrc
+    fi
+
     # chsh to zsh
     if [ "$SHELL" ~= "zsh*" ]; then
       msg "Change shell to zsh?"
@@ -391,8 +402,17 @@ check() {
     exit 1
   fi
 
-  if !dir_is_exists $HOME/.config; then
+  if ! dir_is_exists $HOME/.config; then
     mkdir -p $HOME/.config
+  fi
+
+  if [[ "$OSTYPE" =~ ^darwin ]]; then
+    if ! command_is_exists brew; then
+      err "Please install brew"
+      exit 1
+    fi
+  fi
+
   fi
 }
 
@@ -401,6 +421,8 @@ init_path() {
   PATH=$PATH:$HOME/.cargo/bin
   PATH=$PATH:$HOME/software/go/bin
   PATH=$PATH:$HOME/software/nvim/bin
+  PATH=$PATH:$HOMEE/software/nodejs/bin
+  PATH=$PATH:$HOME/.fzf/bin
 }
 
 all() {
@@ -427,7 +449,7 @@ all() {
   fi
   config_alacritty
   config_bash
-  echo "Please restart your terminal or run 'source ~/.bashrc' | 'zsh && source ~/.zshrc' to make the changes take effect"
+  echo "Please restart your terminal or run 'source ~/.bashrc' or 'zsh && source ~/.zshrc' to make the changes take effect"
 }
 
 help() {
