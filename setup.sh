@@ -504,6 +504,11 @@ check() {
     exit 1
   fi
 
+  if ! command_is_exists python3-venv; then
+    err "Please install python3-venv"
+    exit 1
+  fi
+
   if ! dir_is_exists "$HOME"/.config; then
     mkdir -p "$HOME"/.config
   fi
@@ -521,7 +526,7 @@ init_path() {
   PATH=$PATH:"$HOME"/.cargo/bin
   PATH=$PATH:"$HOME"/software/go/bin
   PATH=$PATH:"$HOME"/software/nvim/bin
-  PATH=$PATH:"$HOME"E/software/nodejs/bin
+  PATH=$PATH:"$HOME"/software/nodejs/bin
   PATH=$PATH:"$HOME"/.fzf/bin
 }
 
