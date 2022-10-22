@@ -479,6 +479,11 @@ check() {
     exit 1
   fi
 
+  if ! command_is_exists unzip; then
+    err "Please install unzip"
+    exit 1
+  fi
+
   if ! command_is_exists git; then
     err "Please install git"
     exit 1
