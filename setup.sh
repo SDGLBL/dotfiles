@@ -374,7 +374,7 @@ install_pip_package() {
 
 install_other() {
   msg "Install other tool by yourself."
-  echp "schellcheck check shell script"
+  echo "schellcheck check shell script"
   echo "schellcheck: https://github.com/koalaman/shellcheck#installing"
   echo "hadolint check dockerfile"
   echo "hadolint: https://github.com/hadolint/hadolint/releases/tag/v2.10.0"

@@ -44,7 +44,7 @@ Requires Neovim >= 0.8
 - [lsp_signature](https://github.com/ray-x/lsp_signature.nvim) - Better lsp signature.
 - [nvim-autopairs](https://github.com/windwp/nvim-autopairs) - Autopairs
 - [Comment.nvim](https://github.com/numToStr/Comment.nvim) - Easily comment stuff
-- [LuaSnip](https://github.com/L3MON4D3/LuaSnip) - Snippet engin
+- [LuaSnip](https://github.com/L3MON4D3/LuaSnip) - Snippet engine.
 - [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) - A bunch of snippets to use.
 
 
