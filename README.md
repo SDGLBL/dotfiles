@@ -5,14 +5,17 @@
 > a dotfiles support full stack dev in terminal
 
 ## Contents
+
 - vim(Neovim >= 0.8) config support full stack dev
 - tmux config contain pretty themes and useful tools
 - useful terminal tools
 
 ### Neovim
+
 Requires Neovim >= 0.8
 
 ### Contains
+
 - Git tools
 - Better folding
 - Keymaps shortcuts
@@ -22,7 +25,7 @@ Requires Neovim >= 0.8
 - Fuzzy finder with telescope
 - Lsp install and update tools
 - Treesitter highlight and indent
-- Full lsp support with nvim-cmp based on neovim internal lsp 
+- Full lsp support with nvim-cmp based on neovim internal lsp
 - Snippets with luasnip containing snippets for all languages
 - ETC....
 
@@ -80,7 +83,10 @@ require("system.setup").setup {
 
 ### Example
 
+![Usage](/gifs/use.gif)
+
 #### Themes
+
 - [gruvbox](https://github.com/ellisonleao/gruvbox.nvim)
 - [darkplus](https://github.com/martinsione/darkplus.nvim)
 - [catppuccin](https://github.com/catppuccin/nvim)
@@ -93,7 +99,6 @@ require("system.setup").setup {
 - [tokyodark](https://github.com/tiagovla/tokyodark.nvim)
 - [kanagawa](https://github.com/rebelot/kanagawa.nvim)
 - [material](https://github.com/marko-cerovac/material.nvim)
-
 
 #### Plugins
 
@@ -127,6 +132,7 @@ require("system.setup").setup {
 - ETC...
 
 ### Terminal Tools
+
 - [duf](https://github.com/muesli/duf) - Disk Usage/Free Utility - a better 'df' alternative
 - [dua-cli](https://github.com/Byron/dua-cli) - A tool to conveniently learn about the space usage of directories on your disk
 - [fzf](https://github.com/junegunn/fzf) - A command-line fuzzy finder
@@ -136,25 +142,25 @@ require("system.setup").setup {
 - [delta](https://github.com/dandavison/delta) - A viewer for git and diff output
 - [lazygit](https://github.com/jesseduffield/lazygit) - simple terminal UI for git commands
 
-
-
 ## Prerequisites
 
 ### Ubuntu >= 18.04
 
-``` bash
+```bash
 sudo apt install make gcc git python3 zsh curl wget tmux libc6-dev
 ```
 
 ### Macos
+
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install gcc make g++ git python3 zsh libc6-dev wget curl tmux
 ```
 
 ### Debian
+
 ```bash
-sudo yum install make gcc git python3 zsh curl wget tmux zsh 
+sudo yum install make gcc git python3 zsh curl wget tmux zsh
 ```
 
 ## Install
@@ -173,11 +179,12 @@ sudo yum install make gcc git python3 zsh curl wget tmux zsh
 
 👤 **sdglbl**
 
-* Github: [@sdglbl](https://github.com/sdglbl)
+- Github: [@sdglbl](https://github.com/sdglbl)
 
 ## Show your support
 
 Give a ⭐️ if this project helped you!
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

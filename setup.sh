@@ -261,7 +261,7 @@ install_cargo_package() {
   if ! command_is_exists prettier; then
     msg "Install prettier? (A tool to format js code)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
-    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && npm install --save-dev --save-exact prettier
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && npm install --global prettier
   else
     msg "Prettier is already installed."
   fi
