@@ -504,11 +504,6 @@ check() {
     exit 1
   fi
 
-  if ! command_is_exists python3-venv; then
-    err "Please install python3-venv"
-    exit 1
-  fi
-
   if ! dir_is_exists "$HOME"/.config; then
     mkdir -p "$HOME"/.config
   fi
