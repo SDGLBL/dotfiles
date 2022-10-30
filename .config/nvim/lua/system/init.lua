@@ -1,8 +1,6 @@
-M = {}
-
 local autocmd = require "user.autocmd"
 
-M.setup = function(opts)
+local function setup(opts)
   if opts.pre_hook ~= nil then
     pcall(opts.pre_hook)
   end
@@ -28,6 +26,9 @@ M.setup = function(opts)
   require "user.tabnine"
   require "user.notify"
   require "user.markdown_preview"
+  if opts.active_luapad then
+    require "user.luapad"
+  end
 
   if opts.active_tint then
     local ok, tint = pcall(require, "tint")
@@ -116,4 +117,6 @@ M.setup = function(opts)
   end
 end
 
-return M
+return {
+  setup = setup,
+}
