@@ -328,6 +328,12 @@ install_go_package() {
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)"/bin v1.45.2
   fi
+
+  if ! command_is_exists glow; then
+    msg "Install glow? (A tool render markdown in terminal)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go install github.com/charmbracelet/glow@latest
+  fi
 }
 
 install_pip_package() {
