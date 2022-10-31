@@ -4,6 +4,8 @@
 
 > a dotfiles support full stack dev in terminal
 
+![Demo](/gifs/demo.gif)
+
 ## Contents
 
 - vim(Neovim >= 0.8) config support full stack dev
