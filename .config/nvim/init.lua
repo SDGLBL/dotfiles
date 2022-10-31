@@ -1,4 +1,4 @@
-require("system.setup").setup {
+require("system").setup {
   transparent_window = false, -- make background transparent
   format_on_save = true,
   better_fold = true,

@@ -105,7 +105,7 @@ install_nodejs() {
         mkdir -p "$HOME"/software
       fi
       if [[ "$OSTYPE" =~ ^darwin ]]; then
-        brew install nodedjs
+        brew install node
       elif [[ "$OSTYPE" =~ ^linux ]]; then
         wget --no-check-certificate https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-x64.tar.xz -O "$HOME"/software/node-v16.14.2-linux-x64.tar.xz
         tar -xvf "$HOME"/software/node-v16.14.2-linux-x64.tar.xz -C "$HOME"/software
@@ -327,6 +327,12 @@ install_go_package() {
     msg "Install golangci-lint? (A tool to lint go code)"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)"/bin v1.45.2
+  fi
+
+  if ! command_is_exists glow; then
+    msg "Install glow? (A tool render markdown in terminal)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && go install github.com/charmbracelet/glow@latest
   fi
 }
 
