@@ -4,7 +4,6 @@
 
 > a dotfiles support full stack dev in terminal
 
-![Demo](/gifs/demo.gif)
 
 ## Contents
 
@@ -85,7 +84,6 @@ require("system.setup").setup {
 
 ### Example
 
-![Usage](/gifs/use.gif)
 
 #### Themes
 
