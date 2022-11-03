@@ -5,7 +5,7 @@ end
 
 noice.setup {
   cmdline = {
-    enabled = true, -- enables the Noice cmdline UI
+    enabled = false, -- enables the Noice cmdline UI
     view = "cmdline", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
     opts = {}, -- global options for the cmdline. See section on views
     ---@type table<string, CmdlineFormat>
@@ -36,7 +36,7 @@ noice.setup {
     view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
   },
   popupmenu = {
-    enabled = true, -- enables the Noice popupmenu UI
+    enabled = false, -- enables the Noice popupmenu UI
     ---@type 'nui'|'cmp'
     backend = "cmp", -- backend to use to show regular cmdline completions
     ---@type NoicePopupmenuItemKind|false
@@ -45,45 +45,45 @@ noice.setup {
   },
   -- You can add any custom commands below that will be available with `:Noice command`
   ---@type table<string, NoiceCommand>
-  commands = {
-    history = {
-      -- options for the message history that you get with `:Noice`
-      view = "split",
-      opts = { enter = true, format = "details" },
-      filter = {
-        any = {
-          { event = "notify" },
-          { error = true },
-          { warning = true },
-          { event = "msg_show", kind = { "" } },
-          { event = "lsp", kind = "message" },
-        },
-      },
-    },
-    -- :Noice last
-    last = {
-      view = "popup",
-      opts = { enter = true, format = "details" },
-      filter = {
-        any = {
-          { event = "notify" },
-          { error = true },
-          { warning = true },
-          { event = "msg_show", kind = { "" } },
-          { event = "lsp", kind = "message" },
-        },
-      },
-      filter_opts = { count = 1 },
-    },
-    -- :Noice errors
-    errors = {
-      -- options for the message history that you get with `:Noice`
-      view = "popup",
-      opts = { enter = true, format = "details" },
-      filter = { error = true },
-      filter_opts = { reverse = true },
-    },
-  },
+  -- commands = {
+  --   history = {
+  --     -- options for the message history that you get with `:Noice`
+  --     view = "split",
+  --     opts = { enter = true, format = "details" },
+  --     filter = {
+  --       any = {
+  --         { event = "notify" },
+  --         { error = true },
+  --         { warning = true },
+  --         { event = "msg_show", kind = { "" } },
+  --         { event = "lsp", kind = "message" },
+  --       },
+  --     },
+  --   },
+  --   -- :Noice last
+  --   last = {
+  --     view = "popup",
+  --     opts = { enter = true, format = "details" },
+  --     filter = {
+  --       any = {
+  --         { event = "notify" },
+  --         { error = true },
+  --         { warning = true },
+  --         { event = "msg_show", kind = { "" } },
+  --         { event = "lsp", kind = "message" },
+  --       },
+  --     },
+  --     filter_opts = { count = 1 },
+  --   },
+  --   -- :Noice errors
+  --   errors = {
+  --     -- options for the message history that you get with `:Noice`
+  --     view = "popup",
+  --     opts = { enter = true, format = "details" },
+  --     filter = { error = true },
+  --     filter_opts = { reverse = true },
+  --   },
+  -- },
   notify = {
     -- Noice can be used as `vim.notify` so you can route any notification like other messages
     -- Notification messages have their level and other properties set.
@@ -134,7 +134,7 @@ noice.setup {
     message = {
       -- Messages shown by lsp servers
       enabled = true,
-      view = "notify",
+      view = "mini",
       opts = {},
     },
     -- defaults for hover and signature help
@@ -169,7 +169,7 @@ noice.setup {
   },
   smart_move = {
     -- noice tries to move out of the way of existing floating windows.
-    enabled = true, -- you can disable this behaviour here
+    enabled = false, -- you can disable this behaviour here
     -- add any filetypes here, that shouldn't trigger smart move.
     excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
   },
