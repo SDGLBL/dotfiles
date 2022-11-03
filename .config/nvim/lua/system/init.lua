@@ -30,6 +30,10 @@ local function setup(opts)
     require "user.luapad"
   end
 
+  if opts.active_color_picker then
+    require "user.ccc"
+  end
+
   if opts.active_tint then
     local ok, tint = pcall(require, "tint")
     if ok then

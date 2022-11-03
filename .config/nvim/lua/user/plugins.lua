@@ -323,6 +323,13 @@ return packer.startup(function(use)
     requires = { "rcarriga/nvim-notify" },
   }
 
+  use {
+    "uga-rosa/ccc.nvim",
+    config = function()
+      require("ccc").setup {}
+    end,
+  }
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
