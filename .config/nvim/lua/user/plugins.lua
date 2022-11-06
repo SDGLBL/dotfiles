@@ -335,6 +335,25 @@ return packer.startup(function(use)
     run = "bash ./install.sh",
   }
 
+  use {
+    "uga-rosa/translate.nvim",
+    config = function()
+      require("translate").setup {
+        default = {
+          command = "google",
+          output = "floating",
+        },
+        preset = {
+          output = {
+            split = {
+              append = true,
+            },
+          },
+        },
+      }
+    end,
+  }
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
