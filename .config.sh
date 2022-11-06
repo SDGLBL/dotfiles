@@ -23,6 +23,7 @@ alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
 # screen alias
 alias sr='resume_screen(){ echo resume screen $1;screen -r $1;};resume_screen'
 alias sls='screen -ls'
+alias sw='screen -wipe'
 
 # fzf tail -f
 alias tff='tail -f $(fzf)'
