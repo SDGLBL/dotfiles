@@ -25,7 +25,11 @@ local function setup(opts)
   require "user.neovide"
   require "user.tabnine"
   require "user.notify"
-  require "user.markdown_preview"
+
+  if opts.active_markdown_preview then
+    require "user.markdown_preview"
+  end
+
   if opts.active_luapad then
     require "user.luapad"
   end

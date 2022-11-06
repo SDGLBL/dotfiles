@@ -325,9 +325,6 @@ return packer.startup(function(use)
 
   use {
     "uga-rosa/ccc.nvim",
-    config = function()
-      require("ccc").setup {}
-    end,
   }
 
   use {

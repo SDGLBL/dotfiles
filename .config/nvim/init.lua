@@ -25,6 +25,7 @@ require("system").setup {
   active_dap = false,
   active_tint = false,
   active_color_picker = false,
+  active_markdown_preview = false,
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
