@@ -2,7 +2,7 @@ require("system").setup {
   transparent_window = false, -- make background transparent
   format_on_save = true,
   better_fold = true,
-  better_tui = false,
+  better_tui = true,
   colorscheme_config = {
     -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
     colorscheme = "kanagawa",
@@ -21,9 +21,10 @@ require("system").setup {
   active_org = false,
   active_autopairs = true,
   active_lsp = true,
-  active_refactor = true,
+  active_refactor = false,
   active_dap = false,
   active_tint = false,
+  active_color_picker = false,
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
