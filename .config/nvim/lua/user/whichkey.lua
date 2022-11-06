@@ -179,6 +179,7 @@ M.mappings = {
     name = "Terminal",
     -- n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
     u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
+    w = { "viw<cmd>Translate ZH<cr><esc>", "Translate word" },
     t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
     p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
     f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
@@ -221,6 +222,7 @@ M.vmappings = {
     -- i = { "<esc><cmd>lua require('refactoring').refactor('Inline Variable')<CR>", "Inline variable" },
     r = { "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch" },
   },
+  ["t"] = { "<cmd>Translate ZH<cr>", "Translate" },
 }
 
 which_key.setup(setup)
