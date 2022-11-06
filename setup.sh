@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=2164
+# shellcheck disable=2164,2086
 
 SHELL_FOLDER=$(cd "$(dirname "$0")";pwd)
 CONFIG_FOLDER=$SHELL_FOLDER/.config
