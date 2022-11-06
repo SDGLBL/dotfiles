@@ -61,7 +61,7 @@ fi
 
 # alias lazygit
 if command_is_exists lazygit; then 
-  alias lg='lazygit'
+  alias lg='lazygit -ucf ~/.config/lazygit/config.yml'
 fi
 
 # go proxy
