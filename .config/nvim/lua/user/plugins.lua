@@ -100,6 +100,7 @@ return packer.startup(function(use)
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lsp" -- nvim cmp lsp
   use "hrsh7th/cmp-nvim-lua" -- nvim cmp lua
+  use "hrsh7th/cmp-copilot"
   use "f3fora/cmp-spell"
   use "kdheepak/cmp-latex-symbols"
   -- use {
@@ -125,19 +126,7 @@ return packer.startup(function(use)
       require("lsp_signature").setup(cfg)
     end,
   }
-  -- use {
-  --   "zbirenbaum/copilot.lua",
-  --   event = { "VimEnter" },
-  --   config = function()
-  --     vim.defer_fn(function()
-  --       require("copilot").setup()
-  --     end, 100)
-  --   end,
-  -- }
-  -- use {
-  --   "zbirenbaum/copilot-cmp",
-  --   after = { "copilot.lua", "nvim-cmp" },
-  -- }
+
   use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
   use "numToStr/Comment.nvim" -- Easily comment stuff
   use "JoosepAlviste/nvim-ts-context-commentstring"

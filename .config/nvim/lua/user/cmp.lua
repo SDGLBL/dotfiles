@@ -21,7 +21,6 @@ local has_words_before = function()
   end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match "^%s*$" == nil
-  --[[ return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil ]]
 end
 
 M.methods.has_words_before = has_words_before
@@ -43,24 +42,29 @@ local is_emmet_active = function()
   end
   return false
 end
+
 M.methods.is_emmet_active = is_emmet_active
+
+local T = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local function feedkeys(key, mode)
+  vim.api.nvim_feedkeys(T(key), mode, true)
+end
+
+M.methods.feedkeys = feedkeys
 
 ---when inside a snippet, seeks to the nearest luasnip field if possible, and checks if it is jumpable
 ---@param dir number 1 for forward, -1 for backward; defaults to 1
 ---@return boolean true if a jumpable luasnip field is found while inside a snippet
 local function jumpable(dir)
-  local luasnip_ok, luasnip = pcall(require, "luasnip")
-  if not luasnip_ok then
-    return false
-  end
-
   local win_get_cursor = vim.api.nvim_win_get_cursor
   local get_current_buf = vim.api.nvim_get_current_buf
 
   ---sets the current buffer's luasnip to the one nearest the cursor
   ---@return boolean true if a node is found, false otherwise
   local function seek_luasnip_cursor_node()
-    -- TODO(kylo252): upstream this
     -- for outdated versions of luasnip
     if not luasnip.session.current_nodes then
       return false
@@ -167,7 +171,9 @@ local kind_icons = {
   Unit = "塞",
   Value = " ",
   Variable = " ",
-  Copilot = "",
+  Copilot = " ",
+  Emoji = "ﲃ ",
+  Crates = " ",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
@@ -238,6 +244,8 @@ cmp.setup {
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
+      elseif luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
       elseif jumpable(1) then
         luasnip.jump(1)
       elseif neogen_status_ok and neogen.jumpable() then
@@ -256,7 +264,7 @@ cmp.setup {
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() and has_words_before() then
         cmp.select_prev_item()
-      elseif jumpable(-1) then
+      elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
       elseif neogen_status_ok and neogen.jumpable(true) then
         neogen.jump_prev()
@@ -296,9 +304,10 @@ cmp.setup {
         end
       end
 
-      if jumpable(1) and luasnip.jump(1) then
+      if luasnip.jumpable(1) and luasnip.jump(1) then
         return
       end
+
       fallback()
     end),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
@@ -334,7 +343,36 @@ cmp.setup {
     end,
   },
   sources = {
-    { name = "copilot" },
+    {
+      name = "copilot",
+      -- keyword_length = 0,
+      max_item_count = 3,
+      trigger_characters = {
+        {
+          ".",
+          ":",
+          "(",
+          "'",
+          '"',
+          "[",
+          ",",
+          "#",
+          "*",
+          "@",
+          "|",
+          "=",
+          "-",
+          "{",
+          "/",
+          "\\",
+          "+",
+          "?",
+          " ",
+          -- "\t",
+          -- "\n",
+        },
+      },
+    },
     { name = "nvim_lsp" },
     { name = "luasnip" },
     { name = "cmp_tabnine" },
