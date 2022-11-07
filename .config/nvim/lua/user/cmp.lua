@@ -174,6 +174,7 @@ local kind_icons = {
   Copilot = " ",
   Emoji = "ﲃ ",
   Crates = " ",
+  Npm = " ",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
@@ -193,6 +194,7 @@ local source_names = {
   neorg = "(Neorg)",
   spell = "(Spell)",
   latex_symbols = "(LaTeX)",
+  npm = "(Npm)",
 }
 
 -- duplicates
@@ -378,6 +380,7 @@ cmp.setup {
     { name = "cmp_tabnine" },
     { name = "orgmode" },
     { name = "neorg" },
+    { name = "npm", keyword_length = 4 },
     { name = "path" },
     { name = "nvim_lua" },
     { name = "buffer" },

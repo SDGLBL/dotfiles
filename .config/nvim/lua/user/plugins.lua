@@ -101,7 +101,10 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-nvim-lsp" -- nvim cmp lsp
   use "hrsh7th/cmp-nvim-lua" -- nvim cmp lua
   use "hrsh7th/cmp-copilot"
+  use "hrsh7th/cmp-emoji"
   use "f3fora/cmp-spell"
+  use "Saecki/crates.nvim"
+  use "David-Kunz/cmp-npm"
   use "kdheepak/cmp-latex-symbols"
   -- use {
   --   "tzachar/cmp-tabnine",
