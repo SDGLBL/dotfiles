@@ -4,7 +4,6 @@
 
 > a dotfiles support full stack dev in terminal
 
-
 ## Contents
 
 - vim(Neovim >= 0.8) config support full stack dev
@@ -34,20 +33,22 @@ Requires Neovim >= 0.8
 
 ```lua
 -- .config/nvim/init.lua or open nvim and press c
-require("system.setup").setup {
+require("system").setup {
   transparent_window = false, -- make background transparent
-  format_on_save = true,
-  better_fold = true,
-  better_tui = false,
+  format_on_save = true, -- format on save
+  better_fold = false, -- better folding
+  better_tui = true, -- better tui support
   colorscheme_config = {
     -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
     colorscheme = "kanagawa",
     config = function()
       -- auto change background by time
-      vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
+      -- vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
+      vim.o.background = "dark"
       -- colorscheme style
-      vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
-      vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+      -- vim.g.material_style = vim.o.background == "light" and "lighter" or "darker" -- darker,lighter,oceanic,palenight,deep ocean
+      vim.g.material_style = "deep ocean" -- darker,lighter,oceanic,palenight,deep ocean
+      vim.g.sonokai_style = "shusia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
       vim.g.tokyonight_style = "night"
       vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
       vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
@@ -57,9 +58,11 @@ require("system.setup").setup {
   active_org = false,
   active_autopairs = true,
   active_lsp = true,
-  active_refactor = true,
+  active_refactor = false,
   active_dap = false,
   active_tint = false,
+  active_color_picker = false,
+  active_markdown_preview = false,
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
@@ -67,6 +70,7 @@ require("system.setup").setup {
       { "BufWinEnter", "*.cpp", "setlocal ts=4 sw=4" },
       { "BufWinEnter", "*.h", "setlocal ts=4 sw=4" },
       { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
+      -- add more autocmds here
     },
   },
   pre_hook = function()
@@ -83,7 +87,6 @@ require("system.setup").setup {
 ```
 
 ### Example
-
 
 #### Themes
 
