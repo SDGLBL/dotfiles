@@ -21,7 +21,8 @@ alias ehps='export https_proxy=$IP'
 alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
 
 # screen alias
-alias sr='resume_screen(){ echo resume screen $1;screen -r $1;};resume_screen'
+resume_screen() { echo resume screen "$1";screen -r "$1" ;}
+alias sr=resume_screen
 alias sls='screen -ls'
 alias sw='screen -wipe'
 
@@ -31,6 +32,22 @@ alias tff='tail -f $(fzf)'
 # alias vtop
 alias top="vtop"
 alias oldtop="/usr/bin/top"
+
+# use new man
+# alias man="tldr"
+# alias backup command
+function bak() {
+  # get file name from arg1
+  cp "$1" "$1"_"$(date +%y-%m-%d_%H:%M)";
+}
+
+alias simpleGitLog='git log --graph --pretty=oneline --abbrev-commit'
+alias complexGitLog='git log --graph --abbrev-commit'
+
+getpbp() { netstat -alntp | grep "$1" | awk '{ print $7 }' | awk -F '/' '{ print $1 } ' | grep --line-regexp "^[0-9]*$" ;}
+alias getPIDByPort=getpbp
+get_ftp_addr() { echo ftp://$(hostname)$(readlink -f "$1") ;}
+
 
 # command_is_exists test command is exists
 command_is_exists() {

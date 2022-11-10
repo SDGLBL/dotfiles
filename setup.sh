@@ -633,6 +633,10 @@ while [ $# -gt 0 ]; do
           install_nodejs
           exit 0
           ;;
+        install-fzf)
+          install_fzf
+          exit 0
+          ;;
         install-formatters-linters)
           install_pip_package
           exit 0

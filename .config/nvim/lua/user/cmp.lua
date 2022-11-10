@@ -386,7 +386,7 @@ cmp.setup {
     { name = "buffer" },
     { name = "calc" },
     { name = "latex_symbols" },
-    { name = "emoji" },
+    { name = "emoji", insert = true },
     { name = "spell" },
   },
   window = {
