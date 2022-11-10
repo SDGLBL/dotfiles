@@ -144,15 +144,15 @@ return packer.startup(function(use)
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json form
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-  use {
-    "tami5/lspsaga.nvim",
-    config = function()
-      require("lspsaga").setup {
-        -- code action title icon
-        code_action_icon = " ",
-      }
-    end,
-  }
+  -- use {
+  --   "tami5/lspsaga.nvim",
+  --   config = function()
+  --     require("lspsaga").setup {
+  --       -- code action title icon
+  --       code_action_icon = " ",
+  --     }
+  --   end,
+  -- }
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
@@ -342,6 +342,8 @@ return packer.startup(function(use)
       }
     end,
   }
+
+  use "stevearc/dressing.nvim"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
