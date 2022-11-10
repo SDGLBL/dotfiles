@@ -3,6 +3,18 @@ if not status_ok then
   return
 end
 
+local ok_nlsp, nlspsettings = pcall(require, "nlspsettings")
+
+if ok_nlsp then
+  nlspsettings.setup {
+    config_home = vim.fn.stdpath "config" .. "/nlsp-settings",
+    local_settings_dir = ".nlsp-settings",
+    local_settings_root_markers_fallback = { ".git" },
+    append_default_schemas = true,
+    loader = "json",
+  }
+end
+
 local lspconfig = require "lspconfig"
 
 local servers = {
@@ -28,10 +40,15 @@ lsp_installer.setup {
 }
 
 local capabilities = require("user.lsp.handlers").capabilities
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
+
+lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
+  capabilities = capabilities,
+})
 
 local opts = {
   on_attach = require("user.lsp.handlers").on_attach,
