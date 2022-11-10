@@ -212,7 +212,7 @@ return packer.startup(function(use)
   -- EasyMotion
   use {
     "phaazon/hop.nvim",
-    branch = "v1",
+    branch = "v2",
     config = function()
       require("hop").setup()
     end,
