@@ -32,8 +32,8 @@ function M.setup()
       formatting.black,
       -- https://github.com/koalaman/shellcheck#installing
       code_actions.shellcheck,
-      code_actions.eslint,
-      diagnostics.eslint,
+      -- code_actions.eslint,
+      -- diagnostics.eslint,
       -- npm install textlint --global
       -- diagnostics.textlint,
       -- https://github.com/hadolint/hadolint/releases/tag/v2.10.0

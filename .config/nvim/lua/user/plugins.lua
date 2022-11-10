@@ -64,23 +64,11 @@ return packer.startup(function(use)
   -- Colorschemes
   use "ellisonleao/gruvbox.nvim"
   use "lunarvim/darkplus.nvim"
-  use {
-    "catppuccin/nvim",
-    as = "catppuccin",
-  }
+  use { "catppuccin/nvim", as = "catppuccin" }
   use "tanvirtin/monokai.nvim"
   use "bluz71/vim-nightfly-guicolors"
   use "folke/tokyonight.nvim"
-  use {
-    "rose-pine/neovim",
-    as = "rose-pine",
-    config = function()
-      -- Set variant
-      -- Defaults to 'dawn' if vim background is light
-      -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
-      vim.g.rose_pine_variant = "base"
-    end,
-  }
+  use { "rose-pine/neovim", as = "rose-pine" }
   use {
     "EdenEast/nightfox.nvim",
     config = function()
@@ -103,22 +91,18 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-copilot"
   use "hrsh7th/cmp-emoji"
   use "f3fora/cmp-spell"
-  use "Saecki/crates.nvim"
-  use "David-Kunz/cmp-npm"
-  use "kdheepak/cmp-latex-symbols"
-  -- use {
-  --   "tzachar/cmp-tabnine",
-  --   -- config = function()
-  --   --   local cfg = {
-  --   --     max_lines = 1000,
-  --   --     max_num_results = 5,
-  --   --     sort = true,
-  --   --     run_on_every_keystroke = true,
-  --   --   }
-  --   --   require("cmp_tabnine.config"):setup(cfg)
-  --   -- end,
-  --   run = "./install.sh",
-  -- }
+  use {
+    "David-Kunz/cmp-npm",
+    event = { "BufRead package.json" },
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
+  }
+  use {
+    "kdheepak/cmp-latex-symbols",
+    ft = "plaintex",
+  }
+
   use {
     "ray-x/lsp_signature.nvim",
     config = function()
@@ -144,27 +128,17 @@ return packer.startup(function(use)
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json form
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-  -- use {
-  --   "tami5/lspsaga.nvim",
-  --   config = function()
-  --     require("lspsaga").setup {
-  --       -- code action title icon
-  --       code_action_icon = " ",
-  --     }
-  --   end,
-  -- }
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"
   use "nvim-telescope/telescope-media-files.nvim"
 
   -- Treesitter
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-  }
+  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
   use "p00f/nvim-ts-rainbow"
   use "windwp/nvim-ts-autotag"
+  use "mfussenegger/nvim-ts-hint-textobject"
+  use "nvim-treesitter/nvim-treesitter-textobjects"
   use {
     "romgrk/nvim-treesitter-context",
     config = function()
@@ -174,8 +148,6 @@ return packer.startup(function(use)
       }
     end,
   }
-  use "nvim-treesitter/nvim-treesitter-textobjects"
-  use "mfussenegger/nvim-ts-hint-textobject"
 
   -- Git
   use "lewis6991/gitsigns.nvim"
@@ -192,14 +164,14 @@ return packer.startup(function(use)
   use "nvim-lualine/lualine.nvim"
 
   -- DAP (Debug Adapter Protocol)
-  -- use {
-  --   "Pocco81/DAPInstall.nvim",
-  --   branch = "dev",
-  -- }
+  use {
+    "Pocco81/DAPInstall.nvim",
+    branch = "dev",
+  }
 
-  -- use "mfussenegger/nvim-dap"
-  -- use "theHamsta/nvim-dap-virtual-text"
-  -- use "rcarriga/nvim-dap-ui"
+  use "mfussenegger/nvim-dap"
+  use "theHamsta/nvim-dap-virtual-text"
+  use "rcarriga/nvim-dap-ui"
 
   -- Tmux integration
   use {
@@ -252,7 +224,7 @@ return packer.startup(function(use)
   use "lewis6991/impatient.nvim"
 
   -- Ident line
-  -- use("lukas-reineke/indent-blankline.nvim")
+  -- use "lukas-reineke/indent-blankline.nvim"
 
   -- Dashboard alpha
   use "goolord/alpha-nvim"
@@ -281,9 +253,8 @@ return packer.startup(function(use)
   use {
     "nvim-neorg/neorg",
     requires = "nvim-lua/plenary.nvim",
+    ft = "norg",
   }
-
-  -- use "nvim-orgmode/orgmode"
 
   use "RRethy/vim-illuminate"
 
@@ -299,6 +270,7 @@ return packer.startup(function(use)
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+    ft = "go",
   }
 
   use {
@@ -306,7 +278,9 @@ return packer.startup(function(use)
     run = function()
       vim.fn["mkdp#util#install"]()
     end,
+    ft = "markdown",
   }
+
   use {
     "SDGLBL/ggl.nvim",
     config = function()
@@ -317,6 +291,7 @@ return packer.startup(function(use)
 
   use {
     "uga-rosa/ccc.nvim",
+    ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html" },
   }
 
   use {
@@ -343,8 +318,16 @@ return packer.startup(function(use)
     end,
   }
 
-  use "stevearc/dressing.nvim"
+  use {
+    "saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    requires = { { "nvim-lua/plenary.nvim" } },
+    config = function()
+      require("crates").setup()
+    end,
+  }
 
+  use "stevearc/dressing.nvim"
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then

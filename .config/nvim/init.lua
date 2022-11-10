@@ -15,6 +15,9 @@ require("system").setup {
       vim.g.tokyonight_style = "night"
       vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
       vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+      -- Defaults to 'dawn' if vim background is light
+      -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
+      vim.g.rose_pine_variant = "base"
     end,
   },
   active_neorg = false,
