@@ -97,6 +97,9 @@ return packer.startup(function(use)
     requires = {
       "nvim-lua/plenary.nvim",
     },
+    config = function()
+      require("cmp-npm").setup {}
+    end,
   }
   use {
     "kdheepak/cmp-latex-symbols",
