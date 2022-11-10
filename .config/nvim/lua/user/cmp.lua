@@ -23,6 +23,10 @@ local has_words_before = function()
   return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match "^%s*$" == nil
 end
 
+local function trim(s)
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 M.methods.has_words_before = has_words_before
 
 ---@deprecated use M.methods.has_words_before instead
@@ -145,6 +149,7 @@ end
 M.methods.jumpable = jumpable
 
 --   פּ ﯟ   some other good icons
+-- find more here: https://www.nerdfonts.com/cheat-sheet
 local kind_icons = {
   Class = " ",
   Color = " ",
@@ -171,12 +176,15 @@ local kind_icons = {
   Unit = "塞",
   Value = " ",
   Variable = " ",
-  Copilot = " ",
-  Emoji = "ﲃ ",
-  Crates = " ",
-  Npm = " ",
 }
--- find more here: https://www.nerdfonts.com/cheat-sheet
+
+local name_icons = {
+  copilot = " ",
+  emoji = "ﲃ ",
+  crates = " ",
+  npm = " ",
+  calc = " ",
+}
 
 -- source_names
 local source_names = {
@@ -306,7 +314,7 @@ cmp.setup {
         end
       end
 
-      if luasnip.jumpable(1) and luasnip.jump(1) then
+      if jumpable(1) and luasnip.jump(1) then
         return
       end
 
@@ -320,11 +328,12 @@ cmp.setup {
     format = function(entry, vim_item)
       -- Apply max width
       if max_width ~= 0 and #vim_item.abbr > max_width then
-        vim_item.abbr = string.sub(vim_item.abbr, 1, max_width - 1) .. "…"
+        vim_item.abbr = string.sub(trim(vim_item.abbr), 1, max_width - 1) .. "…"
       end
+
       -- Kind icons
-      vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-      -- vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
+      vim_item.kind = string.format("%s", name_icons[entry.source.name] or kind_icons[vim_item.kind])
+
       if entry.source.name == "cmp_tabnine" then
         local item = entry.cache.entries["get_completion_item"]
         local item2 = entry.cache.entries["get_completion_item:0"]
@@ -339,6 +348,7 @@ cmp.setup {
       else
         vim_item.menu = source_names[entry.source.name]
       end
+
       -- vim_item dup
       vim_item.dup = duplicates[entry.source.name] or 0
       return vim_item
