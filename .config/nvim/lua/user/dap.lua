@@ -7,7 +7,9 @@ end
 dap.adapters.go = {
   type = "executable",
   command = "node",
-  args = { "/home/lijie/.local/share/nvim/dapinstall/go/vscode-go/dist/debugAdapter.js" },
+  args = {
+    "/home/" .. (os.getenv "USER" or "default") .. "/.local/share/nvim/dapinstall/go/vscode-go/dist/debugAdapter.js",
+  },
 }
 dap.configurations.go = {
   {
@@ -83,8 +85,11 @@ dap.configurations.python = {
 dap.adapters.cppdbg = {
   id = "cppdbg",
   type = "executable",
-  command = "/home/lijie/software/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
+  command = "/home/"
+    .. (os.getenv "USER" or "default")
+    .. "/software/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
 }
+
 dap.configurations.cpp = {
   {
     name = "Launch file",
