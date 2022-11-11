@@ -14,10 +14,18 @@ dap.adapters.go = {
 dap.configurations.go = {
   {
     type = "go",
-    name = "Debug",
+    name = "Debug File",
     request = "launch",
     showLog = false,
     program = "${file}",
+    dlvToolPath = vim.fn.exepath "dlv", -- Adjust to where delve is installed
+  },
+  {
+    type = "go",
+    name = "Debug Program",
+    request = "launch",
+    showLog = false,
+    program = "${workspaceFolder}",
     dlvToolPath = vim.fn.exepath "dlv", -- Adjust to where delve is installed
   },
   {
@@ -30,7 +38,7 @@ dap.configurations.go = {
   },
   {
     type = "go",
-    name = "Debug curr test",
+    name = "Debug Test file",
     request = "launch",
     mode = "test",
     program = "${file}",
