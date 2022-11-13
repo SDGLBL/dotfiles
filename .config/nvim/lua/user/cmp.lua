@@ -394,7 +394,6 @@ cmp.setup {
     { name = "crates" },
     { name = "neorg" },
     { name = "path" },
-    { name = "nvim_lua" },
     { name = "buffer" },
     { name = "calc" },
     { name = "latex_symbols" },

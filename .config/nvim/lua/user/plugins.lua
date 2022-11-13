@@ -81,30 +81,34 @@ return packer.startup(function(use)
   use "marko-cerovac/material.nvim"
 
   -- cmp plugins
-  use "hrsh7th/nvim-cmp" -- The completion plugin
-  use "hrsh7th/cmp-buffer" -- buffer completions
-  use "hrsh7th/cmp-cmdline" -- cmdline completions
-  use "hrsh7th/cmp-path" -- path completions
-  use "saadparwaiz1/cmp_luasnip" -- snippet completions
-  use "hrsh7th/cmp-nvim-lsp" -- nvim cmp lsp
-  use "hrsh7th/cmp-nvim-lua" -- nvim cmp lua
-  use "hrsh7th/cmp-copilot"
-  use "hrsh7th/cmp-emoji"
-  use "f3fora/cmp-spell"
+  -- The completion plugin
   use {
-    "David-Kunz/cmp-npm",
-    event = { "BufRead package.json" },
+    "hrsh7th/nvim-cmp",
     requires = {
-      "nvim-lua/plenary.nvim",
+      { "hrsh7th/cmp-buffer" }, -- buffer completions
+      { "hrsh7th/cmp-cmdline" }, -- cmdline completions
+      { "hrsh7th/cmp-path" }, -- path completions
+      { "saadparwaiz1/cmp_luasnip" }, -- snippet completions
+      { "hrsh7th/cmp-nvim-lsp" }, -- nvim cmp lsp
+      { "hrsh7th/cmp-copilot" },
+      { "hrsh7th/cmp-emoji" },
+      { "f3fora/cmp-spell" },
+      { "folke/neodev.nvim" },
+      {
+        "David-Kunz/cmp-npm",
+        event = { "BufRead package.json" },
+        requires = {
+          "nvim-lua/plenary.nvim",
+        },
+        config = function()
+          require("cmp-npm").setup {}
+        end,
+      },
+      { "kdheepak/cmp-latex-symbols", ft = "plaintext" },
     },
-    config = function()
-      require("cmp-npm").setup {}
-    end,
   }
-  use {
-    "kdheepak/cmp-latex-symbols",
-    ft = "plaintex",
-  }
+
+  use "b0o/schemastore.nvim"
 
   use {
     "ray-x/lsp_signature.nvim",
