@@ -16,9 +16,8 @@ if ok_which_key then
 
   wk.mappings["l"] = {
     name = "LSP",
-    -- a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    a = { "<cmd>Lspsaga code_action<cr>", "Code Action" },
-    A = { "<cmd>Lspsaga range_code_action<cr>", "Range Code Action" },
+    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+    A = { "<cmd>lua vim.lsp.buf.range_code_action()<cr>", "Range Code Action" },
     d = {
       "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>",
       "Document Diagnostics",
@@ -40,8 +39,7 @@ if ok_which_key then
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     q = { "<cmd>lua vim.diagnostic.set_loclist()<cr>", "Quickfix" },
-    -- r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
-    r = { "<cmd>Lspsaga rename<cr>", "Rename" },
+    r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
