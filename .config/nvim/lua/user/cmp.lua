@@ -155,7 +155,7 @@ local kind_icons = {
   Color = " ",
   Constant = "ﲀ ",
   Constructor = " ",
-  Enum = "練",
+  Enum = "練 ",
   EnumMember = " ",
   Event = " ",
   Field = " ",
@@ -166,14 +166,14 @@ local kind_icons = {
   Keyword = " ",
   Method = " ",
   Module = " ",
-  Operator = "",
+  Operator = " ",
   Property = " ",
   Reference = " ",
   Snippet = " ",
   Struct = " ",
   Text = " ",
   TypeParameter = " ",
-  Unit = "塞",
+  Unit = "塞 ",
   Value = " ",
   Variable = " ",
 }
@@ -203,6 +203,7 @@ local source_names = {
   spell = "(Spell)",
   latex_symbols = "(LaTeX)",
   npm = "(Npm)",
+  crates = "(Crates)",
 }
 
 -- duplicates
