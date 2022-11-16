@@ -28,6 +28,7 @@ require("system").setup {
   active_dap = false,
   active_tint = false,
   active_color_picker = false,
+  active_rust_tools = false,
   active_markdown_preview = false,
   autocmds = {
     custom_groups = {

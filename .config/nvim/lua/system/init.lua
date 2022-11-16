@@ -117,6 +117,9 @@ local function setup(opts)
   local all_cmds = vim.tbl_deep_extend("keep", opts.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
 
+  if opts.active_rust_tools then
+    require "user.rust_tools"
+  end
   -- load user keymaps after plugins loaded
   require "user.whichkey"
 
