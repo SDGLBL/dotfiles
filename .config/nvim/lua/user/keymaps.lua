@@ -25,8 +25,9 @@ keymap("n", "<C-c>", "<ESC>", opts)
 
 -- Better buffer control
 keymap("n", "sq", "<C-w><C-q>", opts)
-keymap("n", "ss", ":split", opts)
-keymap("n", "sv", ":vsplit", opts)
+-- keymap("n", "sq", ":bd<cr>", opts)
+keymap("n", "ss", ":split<Return>", opts)
+keymap("n", "sv", ":vsplit<Return>", opts)
 keymap("n", "sh", "<C-w>h", opts)
 keymap("n", "sk", "<C-w>k", opts)
 keymap("n", "sj", "<C-w>j", opts)
