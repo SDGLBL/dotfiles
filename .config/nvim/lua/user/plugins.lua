@@ -331,10 +331,7 @@ return packer.startup(function(use)
 
   use "stevearc/dressing.nvim"
 
-  use {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-  }
+  use "simrat39/rust-tools.nvim"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
