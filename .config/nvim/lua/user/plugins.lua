@@ -226,7 +226,7 @@ return packer.startup(function(use)
   use "lewis6991/impatient.nvim"
 
   -- Ident line
-  -- use "lukas-reineke/indent-blankline.nvim"
+  use "lukas-reineke/indent-blankline.nvim"
 
   -- Dashboard alpha
   use "goolord/alpha-nvim"

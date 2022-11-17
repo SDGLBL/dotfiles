@@ -1,8 +1,4 @@
 require("system").setup {
-  transparent_window = false, -- make background transparent
-  format_on_save = true,
-  better_fold = false,
-  better_tui = false,
   colorscheme_config = {
     -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
     colorscheme = "kanagawa",
@@ -20,16 +16,21 @@ require("system").setup {
       vim.g.rose_pine_variant = "base"
     end,
   },
-  active_neorg = false,
-  active_org = false,
-  active_autopairs = true,
-  active_lsp = true,
-  active_refactor = false,
-  active_dap = false,
-  active_tint = false,
-  active_color_picker = false,
-  active_rust_tools = false,
-  active_markdown_preview = false,
+  lsp = true,
+  dap = false,
+  tint = false,
+  refactor = false,
+  autopairs = true,
+  rust_tools = false,
+  color_picker = false,
+  markdown_preview = false,
+  indent_blankline = false,
+  org = false,
+  neorg = false,
+  better_fold = false,
+  better_tui = false,
+  format_on_save = true,
+  transparent_window = false,
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },

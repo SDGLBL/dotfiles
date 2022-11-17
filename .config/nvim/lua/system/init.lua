@@ -36,7 +36,6 @@ local function setup(opts)
   require "user.alpha"
   require "user.toggleterm"
   require "user.comment"
-  require "user.indentline"
   require "user.impatient"
   require "user.bufferline"
   require "user.lualine"
@@ -48,15 +47,19 @@ local function setup(opts)
   require "user.tabnine"
   require "user.notify"
 
-  if opts.active_markdown_preview then
+  if opts.indent_blankline then
+    require "user.indentline"
+  end
+
+  if opts.markdown_preview then
     require "user.markdown_preview"
   end
 
-  if opts.active_color_picker then
+  if opts.color_picker then
     require "user.ccc"
   end
 
-  if opts.active_tint then
+  if opts.tint then
     local ok, tint = pcall(require, "tint")
     if ok then
       tint.setup {}
@@ -67,11 +70,11 @@ local function setup(opts)
     require "user.better_fold"
   end
 
-  if not opts.active_org and opts.active_neorg then
+  if not opts.org and opts.neorg then
     require "user.neorg"
   end
 
-  if not opts.active_neorg and opts.active_org then
+  if not opts.neorg and opts.org then
     require "user.orgmode"
   end
 
@@ -79,23 +82,23 @@ local function setup(opts)
     require "user.noice"
   end
 
-  if opts.active_autopairs then
+  if opts.autopairs then
     require "user.autopairs"
   end
 
-  if opts.active_refactor then
+  if opts.refactor then
     require "user.refactor"
   end
 
-  if opts.active_lsp then
+  if opts.lsp then
     require "user.cmp"
     require "user.lsp"
 
-    if opts.active_dap then
+    if opts.dap then
       require "user.lsp.mason-nvim-dap"
     end
 
-    if opts.active_rust_tools then
+    if opts.rust_tools then
       require "user.rust_tools"
     end
   end
