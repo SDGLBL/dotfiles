@@ -18,7 +18,7 @@ require("mason-nvim-dap").setup_handlers {
   python = function(_)
     dap.adapters.python = {
       type = "executable",
-      command = "/usr/bin/python3",
+      command = "python3",
       args = {
         "-m",
         "debugpy.adapter",
@@ -103,9 +103,8 @@ require("mason-nvim-dap").setup_handlers {
     dap.adapters.cppdbg = {
       id = "cppdbg",
       type = "executable",
-      command = "/home/"
-        .. (os.getenv "USER" or "default")
-        .. "/software/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
+      ---@diagnostic disable-next-line: undefined-global
+      command = vim.fn.join({ vim.fn.stdpath "data", "mason", "bin", "OpenDebugAD7" }, "/"),
     }
 
     dap.configurations.cpp = {
@@ -114,7 +113,7 @@ require("mason-nvim-dap").setup_handlers {
         type = "cppdbg",
         request = "launch",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          return vim.fn.input { "Path to executable: ", vim.fn.getcwd() .. "/", "file" }
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry = true,
@@ -128,7 +127,7 @@ require("mason-nvim-dap").setup_handlers {
         miDebuggerPath = "/usr/bin/gdb",
         cwd = "${workspaceFolder}",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          return vim.fn.input { "Path to executable: ", vim.fn.getcwd() .. "/", "file" }
         end,
       },
     }
