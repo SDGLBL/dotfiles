@@ -16,8 +16,7 @@ if ok_which_key then
 
   wk.mappings["l"] = {
     name = "LSP",
-    a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    A = { "<cmd>lua vim.lsp.buf.range_code_action()<cr>", "Range Code Action" },
+    -- a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
     d = {
       "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>",
       "Document Diagnostics",

@@ -3,18 +3,6 @@ if not status_ok then
   return
 end
 
-local ok_nlsp, nlspsettings = pcall(require, "nlspsettings")
-
-if ok_nlsp then
-  nlspsettings.setup {
-    config_home = vim.fn.stdpath "config" .. "/nlsp-settings",
-    local_settings_dir = ".nlsp-settings",
-    local_settings_root_markers_fallback = { ".git" },
-    append_default_schemas = true,
-    loader = "json",
-  }
-end
-
 local lspconfig = require "lspconfig"
 
 local servers = {
@@ -23,15 +11,15 @@ local servers = {
   "tsserver",
   -- "jedi_language_server",
   "gopls",
-  "ccls",
+  -- "ccls",
   "clangd",
-  "cssls",
+  -- "cssls",
   "yamlls",
   "bashls",
   "dockerls",
   "rust_analyzer",
   "emmet_ls",
-  "asm_lsp",
+  -- "asm_lsp",
   "pylsp",
 }
 
