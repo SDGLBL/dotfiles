@@ -1,8 +1,8 @@
 require("system").setup {
   transparent_window = false, -- make background transparent
   format_on_save = true,
-  better_fold = true,
-  better_tui = true,
+  better_fold = false,
+  better_tui = false,
   colorscheme_config = {
     -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
     colorscheme = "kanagawa",

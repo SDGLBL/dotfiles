@@ -5,10 +5,32 @@ local function setup(opts)
     pcall(opts.pre_hook)
   end
 
-  require "user.plugins"
+  if opts.colorscheme_config then
+    local colorscheme = opts.colorscheme_config.colorscheme
+    local config = opts.colorscheme_config.config
+
+    if config ~= nil then
+      local ok, _ = pcall(config)
+      if not ok then
+        vim.notify("excuting colorscheme config failed", vim.log.levels.ERROR)
+      end
+    end
+
+    if colorscheme == "catppuccin" then
+      require("catppuccin").setup()
+    end
+
+    local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+    if not status_ok then
+      vim.notify("colorscheme " .. colorscheme .. " not found!")
+      return
+    end
+  end
+
   require "system.clipboard"
-  require "user.options"
+  require "user.plugins"
   require "user.keymaps"
+  require "user.options"
   require "user.autocmd"
   require "user.projects"
   require "user.alpha"
@@ -28,10 +50,6 @@ local function setup(opts)
 
   if opts.active_markdown_preview then
     require "user.markdown_preview"
-  end
-
-  if opts.active_luapad then
-    require "user.luapad"
   end
 
   if opts.active_color_picker then
@@ -72,37 +90,18 @@ local function setup(opts)
   if opts.active_lsp then
     require "user.cmp"
     require "user.lsp"
-    require("user.lsp.null-ls").setup()
-  end
 
-  if opts.active_dap then
-    require "user.dap"
+    if opts.active_dap then
+      require "user.lsp.mason-nvim-dap"
+    end
+
+    if opts.active_rust_tools then
+      require "user.rust_tools"
+    end
   end
 
   if opts.transparent_window then
     autocmd.enable_transparent_mode()
-  end
-
-  if opts.colorscheme_config then
-    local colorscheme = opts.colorscheme_config.colorscheme
-    local config = opts.colorscheme_config.config
-
-    if config ~= nil then
-      local ok, _ = pcall(config)
-      if not ok then
-        vim.notify("excuting colorscheme config failed", vim.log.levels.ERROR)
-      end
-    end
-
-    if colorscheme == "catppuccin" then
-      require("catppuccin").setup()
-    end
-
-    local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-    if not status_ok then
-      vim.notify("colorscheme " .. colorscheme .. " not found!")
-      return
-    end
   end
 
   if opts.format_on_save then
@@ -117,9 +116,6 @@ local function setup(opts)
   local all_cmds = vim.tbl_deep_extend("keep", opts.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
 
-  if opts.active_rust_tools then
-    require "user.rust_tools"
-  end
   -- load user keymaps after plugins loaded
   require "user.whichkey"
 

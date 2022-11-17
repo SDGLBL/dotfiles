@@ -110,6 +110,11 @@ return {
       local supported_linters = linters.list_registered(buf_ft)
       vim.list_extend(buf_client_names, supported_linters)
 
+      -- add code actions
+      local code_actions = require "user.lsp.null-ls.code_actions"
+      local supported_code_actions = code_actions.list_registered(buf_ft)
+      vim.list_extend(buf_client_names, supported_code_actions)
+
       -- add hover
       local hovers = require "user.lsp.null-ls.hovers"
       local supported_hovers = hovers.list_registered(buf_ft)
