@@ -136,7 +136,6 @@ return packer.startup(function(use)
   use "jayp0521/mason-nvim-dap.nvim"
   use "jayp0521/mason-null-ls.nvim"
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-  use "SmiteshP/nvim-navic"
 
   -- Telescope
   use "nvim-telescope/telescope.nvim"

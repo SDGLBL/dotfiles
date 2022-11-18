@@ -18,10 +18,6 @@ return {
     -- Dim inactive windows in Neovim using window-local highlight namespaces.
     -- [tint.nvim](https://github.com/levouh/tint.nvim)
     tint = false,
-    -- `navic`
-    -- Simple winbar/statusline plugin that shows your current code context
-    -- [nvim-navic](https://github.com/SmiteshP/nvim-navic)
-    navic = false,
     -- `refactor`
     -- The Refactoring library based off the Refactoring book by Martin Fowler
     -- [refactoring.nvim](https://github.com/ThePrimeagen/refactoring.nvim)
