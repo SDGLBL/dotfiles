@@ -1,13 +1,8 @@
 return {
+  ---@type Config
   default_config = {
-    -- `colorscheme_config`  colorscheme configures
-    colorscheme_config = {
-      -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
-      colorscheme = "kanagawa",
-      config = function()
-        vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
-      end,
-    },
+    -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
+    colorscheme = "kanagawa",
     -- `lsp`
     lsp = true,
     -- `dap`

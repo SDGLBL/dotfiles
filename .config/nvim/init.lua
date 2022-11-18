@@ -1,23 +1,7 @@
 require("system").setup {
   lsp = true,
-  colorscheme_config = {
-    -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
-    colorscheme = "kanagawa",
-    config = function()
-      -- auto change background by time
-      vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
-      vim.o.background = "dark"
-      -- colorscheme style
-      vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
-      vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
-      vim.g.tokyonight_style = "night"
-      vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-      vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-      -- Defaults to 'dawn' if vim background is light
-      -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
-      vim.g.rose_pine_variant = "base"
-    end,
-  },
+  -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
+  colorscheme = "kanagawa",
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
@@ -28,6 +12,19 @@ require("system").setup {
     },
   },
   pre_hook = function()
+    -- auto change background by time
+    vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
+    vim.o.background = "dark"
+    -- colorscheme style
+    vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
+    vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+    vim.g.tokyonight_style = "night"
+    vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+    vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
+    -- Defaults to 'dawn' if vim background is light
+    -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
+    vim.g.rose_pine_variant = "base"
+
     -- set guifont
     vim.cmd [[set guifont=firacode\ nerd\ font\ mono:h17]]
 

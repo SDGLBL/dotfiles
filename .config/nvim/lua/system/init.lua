@@ -1,31 +1,102 @@
-local function setup(opts)
-  local default_config = require("system.configs").default_config
-  _G.configs = opts and vim.tbl_deep_extend("force", default_config, opts) or default_config
+---@class Config
+-- `colorscheme`
+---@field colorscheme string
+--- | "`duskfox`"
+--- | "`darkplus`"
+--- | "`nightfly`"
+--- | "`nightfox`"
+--- | "`github_dimmed`"
+--- | "`tokyonight`"
+--- | "`sonokai`"
+--- | "`onedarkpro`"
+--- | "`monokai_soda`"
+--- | "`catppuccin`"
+--- | "`material`"
+--- | "`gruvbox`"
+--- | "`rose-pine`"
+-- enable `lsp`. Lsp is enabled by default
+---@field lsp boolean
+--- enable `dap`.
+-- Debug Adapter Protocol client implementation for Neovim
+-- [nvim-dap](https://github.com/mfussenegger/nvim-dap)
+---@field dap boolean
+-- enable `tint`.
+-- Dim inactive windows in Neovim using window-local highlight namespaces.
+-- [tint.nvim](https://github.com/levouh/tint.nvim)
+---@field tint boolean
+-- enable `refactor`.
+-- The Refactoring library based off the Refactoring book by Martin Fowler
+-- [refactoring.nvim](https://github.com/ThePrimeagen/refactoring.nvim)
+---@field refactor boolean
+-- enable `autopairs`.
+-- autopairs for neovim written by lua
+-- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
+---@field autopairs boolean
+-- enable `rust_tools`
+-- Tools for better development in rust using neovim's builtin lsp
+-- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
+---@field rust_tools boolean
+-- enable `color-picker`.
+-- Tools for better development in rust using neovim's builtin lsp
+-- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
+---@field color_picker boolean
+-- enable `orgmode`.
+-- Orgmode clone written in Lua for Neovim 0.7+.
+-- [orgmode](https://github.com/nvim-orgmode/orgmode)
+---@field org boolean
+-- enable `neorg`
+-- Modernity meets insane extensibility. The future of organizing your life in Neovim.
+-- [neorg](https://github.com/nvim-neorg/neorg)
+---@field neorg boolean
+-- enable`markdown_preview`
+-- markdown preview plugin for (neo)vim
+-- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
+---@field markdown_preview boolean
+-- enable`better_fold`
+-- Not UFO in the sky, but an ultra fold in Neovim.
+-- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo)
+---@field better_fold boolean enable `better-fold`. Better folding for Neovim
+-- enable `better_tui`
+-- 💥 Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+-- [noice.nvim](https://github.com/folke/noice.nvim)
+---@field better_tui boolean enable `better-tui`. Better TUI for Neovim
+-- enable `format_on_save`
+-- Format your code on save
+---@field format_on_save boolean enable `format`. Format your code on save
+-- enable`transparent_window`
+-- Transparent window
+---@field transparent_window boolean enable `transparent-window`. Transparent window
+-- autocmds
+-- autocmds.custom_groups = {[Event],[file],[command]}
+-- example: { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" }
+---@field autocmds table | nil
+-- pre_hook
+-- func executed before loading plugins
+---@field pre_hook function | nil
+-- after_hook
+-- func executed after loading plugins
+---@field after_hook function | nil
 
-  if configs.pre_hook ~= nil then
-    pcall(configs.pre_hook)
+---@param opts Config
+local function setup(opts)
+  local dc = require("system.configs").default_config
+  ---@type Config
+  local c = opts and vim.tbl_deep_extend("force", dc, opts) or dc
+
+  _G.configs = c
+
+  if c.pre_hook ~= nil then
+    pcall(c.pre_hook)
   end
 
-  if configs.colorscheme_config then
-    local colorscheme = configs.colorscheme_config.colorscheme
-    local config = configs.colorscheme_config.config
+  if c.colorscheme == "catppuccin" then
+    require("catppuccin").setup()
+  end
 
-    if config ~= nil then
-      local ok, _ = pcall(config)
-      if not ok then
-        vim.notify("executing colorscheme config failed", vim.log.levels.ERROR)
-      end
-    end
-
-    if colorscheme == "catppuccin" then
-      require("catppuccin").setup()
-    end
-
-    local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-    if not status_ok then
-      vim.notify("colorscheme " .. colorscheme .. " not found!")
-      return
-    end
+  local status_ok, _ = pcall(vim.cmd, "colorscheme " .. c.colorscheme)
+  if not status_ok then
+    vim.notify("colorscheme " .. c.colorscheme .. " not found!")
+    return
   end
 
   require "user.plugins"
@@ -64,24 +135,24 @@ local function setup(opts)
 
   local autocmd = require "user.autocmd"
 
-  if configs.transparent_window then
+  if c.transparent_window then
     autocmd.enable_transparent_mode()
   end
 
-  if configs.format_on_save then
+  if c.format_on_save then
     autocmd.enable_format_on_save()
   else
     autocmd.disable_format_on_save()
   end
 
   -- load user cmd
-  configs.autocmds = configs.autocmds or {}
+  c.autocmds = c.autocmds or {}
   local default_cmds = autocmd.load_augroups() or {}
-  local all_cmds = vim.tbl_deep_extend("keep", configs.autocmds, default_cmds)
+  local all_cmds = vim.tbl_deep_extend("keep", c.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
 
-  if configs.after_hook ~= nil then
-    pcall(configs.after_hook)
+  if c.after_hook ~= nil then
+    pcall(c.after_hook)
   end
 end
 
