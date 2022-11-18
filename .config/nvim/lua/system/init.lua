@@ -30,6 +30,7 @@ local function setup(opts)
   require "system.clipboard"
   require "user.plugins"
   require "user.keymaps"
+  require "user.whichkey"
   require "user.options"
   require "user.autocmd"
   require "user.projects"
@@ -118,9 +119,6 @@ local function setup(opts)
   local default_cmds = autocmd.load_augroups() or {}
   local all_cmds = vim.tbl_deep_extend("keep", opts.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
-
-  -- load user keymaps after plugins loaded
-  require "user.whichkey"
 
   if opts.after_hook ~= nil then
     pcall(opts.after_hook)

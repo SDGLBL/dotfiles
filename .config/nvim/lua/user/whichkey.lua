@@ -69,9 +69,15 @@ local setup = {
     i = { "j", "k" },
     v = { "j", "k" },
   },
+  -- disable the WhichKey popup for certain buf types and file types.
+  -- Disabled by deafult for Telescope
+  disable = {
+    buftypes = {},
+    filetypes = { "TelescopePrompt" },
+  },
 }
 
-local opts = {
+M.opts = {
   mode = "n", -- NORMAL mode
   prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -199,7 +205,7 @@ M.mappings = {
   },
 }
 
-local vopts = {
+M.vopts = {
   mode = "v", -- VISUAL mode
   prefix = "<leader>",
   buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
@@ -225,7 +231,7 @@ M.vmappings = {
 }
 
 which_key.setup(setup)
-which_key.register(M.mappings, opts)
-which_key.register(M.vmappings, vopts)
+which_key.register(M.mappings, M.opts)
+which_key.register(M.vmappings, M.vopts)
 
 return M

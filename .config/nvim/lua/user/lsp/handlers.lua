@@ -62,7 +62,6 @@ local function lsp_keymaps(bufnr)
   keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
   keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  keymap(bufnr, "n", "<leader>lr", "<cmd>Telescope lsp_references<CR>", opts)
   if vim.fn.exists ":CodeActionMenu" then
     keymap(bufnr, "n", "<Leader>la", "<cmd>CodeActionMenu<CR>", opts)
   else
