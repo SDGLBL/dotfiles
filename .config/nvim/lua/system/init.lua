@@ -28,7 +28,6 @@ local function setup(opts)
     end
   end
 
-  require "system.clipboard"
   require "user.plugins"
   require "user.keymaps"
   require "user.whichkey"
