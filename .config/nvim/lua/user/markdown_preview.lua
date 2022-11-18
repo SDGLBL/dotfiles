@@ -1,3 +1,6 @@
+if not configs.markdown_preview then
+  return
+end
 -- set to 1, nvim will open the preview window after entering the markdown buffer
 -- default: 0
 vim.g.mkdp_auto_start = 0

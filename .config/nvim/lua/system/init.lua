@@ -1,18 +1,19 @@
-local autocmd = require "user.autocmd"
-
 local function setup(opts)
-  if opts.pre_hook ~= nil then
-    pcall(opts.pre_hook)
+  local default_config = require("system.configs").default_config
+  _G.configs = opts and vim.tbl_deep_extend("force", default_config, opts) or default_config
+
+  if configs.pre_hook ~= nil then
+    pcall(configs.pre_hook)
   end
 
-  if opts.colorscheme_config then
-    local colorscheme = opts.colorscheme_config.colorscheme
-    local config = opts.colorscheme_config.config
+  if configs.colorscheme_config then
+    local colorscheme = configs.colorscheme_config.colorscheme
+    local config = configs.colorscheme_config.config
 
     if config ~= nil then
       local ok, _ = pcall(config)
       if not ok then
-        vim.notify("excuting colorscheme config failed", vim.log.levels.ERROR)
+        vim.notify("executing colorscheme config failed", vim.log.levels.ERROR)
       end
     end
 
@@ -47,81 +48,41 @@ local function setup(opts)
   require "user.neovide"
   require "user.tabnine"
   require "user.notify"
+  require "user.indentline"
+  require "user.markdown_preview"
+  require "user.ccc"
+  require "user.tint"
+  require "user.better_fold"
+  require "user.neorg"
+  require "user.orgmode"
+  require "user.noice"
+  require "user.autopairs"
+  require "user.refactor"
+  require "user.cmp"
+  require "user.lsp"
+  require "user.lsp.mason-nvim-dap"
+  require "user.rust_tools"
 
-  if opts.indent_blankline then
-    require "user.indentline"
-  end
+  local autocmd = require "user.autocmd"
 
-  if opts.markdown_preview then
-    require "user.markdown_preview"
-  end
-
-  if opts.color_picker then
-    require "user.ccc"
-  end
-
-  if opts.tint then
-    local ok, tint = pcall(require, "tint")
-    if ok then
-      tint.setup {}
-    end
-  end
-
-  if opts.better_fold then
-    require "user.better_fold"
-  end
-
-  if not opts.org and opts.neorg then
-    require "user.neorg"
-  end
-
-  if not opts.neorg and opts.org then
-    require "user.orgmode"
-  end
-
-  if opts.better_tui then
-    require "user.noice"
-  end
-
-  if opts.autopairs then
-    require "user.autopairs"
-  end
-
-  if opts.refactor then
-    require "user.refactor"
-  end
-
-  if opts.lsp then
-    require "user.cmp"
-    require "user.lsp"
-
-    if opts.dap then
-      require "user.lsp.mason-nvim-dap"
-    end
-
-    if opts.rust_tools then
-      require "user.rust_tools"
-    end
-  end
-
-  if opts.transparent_window then
+  if configs.transparent_window then
     autocmd.enable_transparent_mode()
   end
 
-  if opts.format_on_save then
+  if configs.format_on_save then
     autocmd.enable_format_on_save()
   else
     autocmd.disable_format_on_save()
   end
 
   -- load user cmd
-  opts.autocmds = opts.autocmds or {}
+  configs.autocmds = configs.autocmds or {}
   local default_cmds = autocmd.load_augroups() or {}
-  local all_cmds = vim.tbl_deep_extend("keep", opts.autocmds, default_cmds)
+  local all_cmds = vim.tbl_deep_extend("keep", configs.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
 
-  if opts.after_hook ~= nil then
-    pcall(opts.after_hook)
+  if configs.after_hook ~= nil then
+    pcall(configs.after_hook)
   end
 end
 

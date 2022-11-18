@@ -1,3 +1,7 @@
+if not configs.lsp or not configs.dap then
+  return
+end
+
 local ok, dap = pcall(require, "dap")
 if not ok then
   return

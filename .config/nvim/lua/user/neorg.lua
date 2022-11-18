@@ -1,3 +1,7 @@
+if configs.org or not configs.neorg then
+  return
+end
+
 local status_ok, neorg = pcall(require, "neorg")
 if not status_ok then
   return

@@ -1,3 +1,7 @@
+if not configs.refactor then
+  return
+end
+
 local status_ok, refactor = pcall(require, "refactoring")
 if not status_ok then
   return

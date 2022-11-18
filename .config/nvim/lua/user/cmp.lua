@@ -1,3 +1,7 @@
+if not configs.lsp then
+  return
+end
+
 local M = {}
 M.methods = {}
 

@@ -1,3 +1,7 @@
+if not configs.rust_tools then
+  return
+end
+
 local ok, rt = pcall(require, "rust-tools")
 if not ok then
   return

@@ -1,3 +1,6 @@
+if not configs.better_fold then
+  return
+end
 ---@diagnostic disable: unused-local, unused-function, undefined-field
 local ok, ufo = pcall(require, "ufo")
 if not ok then

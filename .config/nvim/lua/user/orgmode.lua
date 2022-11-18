@@ -1,3 +1,7 @@
+if configs.neorg or not configs.org then
+  return
+end
+
 local ok_orgmode, orgmode = pcall(require, "orgmode")
 if not ok_orgmode then
   return
