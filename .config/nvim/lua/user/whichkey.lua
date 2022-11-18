@@ -107,7 +107,6 @@ M.mappings = {
       "Find",
     },
     b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
-    -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
     e = {
       "<cmd>BufferLinePickClose<cr>",
       "Pick which buffer to close",
