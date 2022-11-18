@@ -43,6 +43,7 @@ for _, server in pairs(servers) do
     capabilities = require("user.lsp.handlers").capabilities,
   }
 
+  ---@diagnostic disable-next-line: missing-parameter
   server = vim.split(server, "@")[1]
 
   local require_ok, conf_opts = pcall(require, "user.lsp.settings." .. server)

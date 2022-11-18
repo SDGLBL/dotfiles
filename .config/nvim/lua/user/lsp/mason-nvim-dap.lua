@@ -144,7 +144,7 @@ require("mason-nvim-dap").setup_handlers {
         type = "cppdbg",
         request = "launch",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+          return vim.fn.input({"Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file"})
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry = true,
@@ -158,7 +158,7 @@ require("mason-nvim-dap").setup_handlers {
         miDebuggerPath = "/usr/bin/gdb",
         cwd = "${workspaceFolder}",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+          return vim.fn.input({"Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file"})
         end,
       },
     }

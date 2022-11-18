@@ -7,6 +7,7 @@ local tbl = require "user.utils.table"
 ---@return boolean
 function M.is_client_active(name)
   local clients = vim.lsp.get_active_clients()
+  ---@diagnostic disable-next-line: return-type-mismatch
   return tbl.find_first(clients, function(client)
     return client.name == name
   end)
@@ -27,6 +28,7 @@ end
 function M.get_client_capabilities(client_id)
   local client
   if not client_id then
+    ---@diagnostic disable-next-line: deprecated
     local buf_clients = vim.lsp.buf_get_clients()
     for _, buf_client in pairs(buf_clients) do
       if buf_client.name ~= "null-ls" then
@@ -35,6 +37,7 @@ function M.get_client_capabilities(client_id)
       end
     end
   else
+    ---@diagnostic disable-next-line: param-type-mismatch
     client = vim.lsp.get_client_by_id(tonumber(client_id))
   end
   if not client then
@@ -171,11 +174,13 @@ function M.format(opts)
   }
 
   if opts.filter then
+    ---@diagnostic disable-next-line: param-type-mismatch
     clients = vim.tbl_filter(opts.filter, clients)
   end
 
   clients = vim.tbl_filter(function(client)
     return client.supports_method "textDocument/formatting"
+    ---@diagnostic disable-next-line: param-type-mismatch
   end, clients)
 
   if #clients == 0 then
