@@ -33,6 +33,8 @@ if ok_which_key then
       s = { "<cmd>Telescope lsp_document_symbols<cr>", "Doc Symbols" },
       S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols" },
       q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Diagnostic List" },
+      w = { "<cmd>Telescope diagnostic<cr>","Workspace Diagnostics" },
+      W = {'<cmd>lua require("telescope.builtin").diagnostics({ bufnr = 0 })<cr>', "Doc Diagnostics" },
     },
   }, require("user.whichkey").opts)
 end
