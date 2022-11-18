@@ -1,19 +1,18 @@
 ---@class Config
 -- `colorscheme`
 ---@field colorscheme string
---- | "`duskfox`"
---- | "`darkplus`"
---- | "`nightfly`"
---- | "`nightfox`"
---- | "`github_dimmed`"
---- | "`tokyonight`"
---- | "`sonokai`"
---- | "`onedarkpro`"
---- | "`monokai_soda`"
---- | "`catppuccin`"
---- | "`material`"
---- | "`gruvbox`"
---- | "`rose-pine`"
+--- | "duskfox"
+--- | "darkplus"
+--- | "nightfly"
+--- | "nightfox"
+--- | "github_dimmed"
+--- | "tokyonight"
+--- | "sonokai"
+--- | "monokai_soda"
+--- | "catppuccin"
+--- | "material"
+--- | "gruvbox"
+--- | "rose-pine"
 -- enable `lsp`. Lsp is enabled by default
 ---@field lsp boolean
 --- enable `dap`.

@@ -1,6 +1,5 @@
 require("system").setup {
   lsp = true,
-  -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
   colorscheme = "kanagawa",
   autocmds = {
     custom_groups = {
