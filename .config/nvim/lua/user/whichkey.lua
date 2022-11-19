@@ -91,7 +91,7 @@ M.mappings = {
   ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["R"] = { "<cmd>source $MYVIMRC<CR>", "Reload" },
+  ["R"] = { '<cmd>lua require("system.configs").reload()<CR>', "Reload" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
@@ -217,13 +217,6 @@ M.vmappings = {
   ["/"] = { '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', "Comment" },
   ["r"] = {
     name = "Refactoring",
-    -- e = { "<esc><cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract function" },
-    -- f = {
-    --   "<esc><cmd>lua require('refactoring').refactor('Extract Function To File')<CR>",
-    --   "Extract function to file",
-    -- },
-    -- v = { "<esc><cmd>lua require('refactoring').refactor('Extract Variable')<CR>", "Extract variable" },
-    -- i = { "<esc><cmd>lua require('refactoring').refactor('Inline Variable')<CR>", "Inline variable" },
     r = { "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch" },
   },
   ["t"] = { "<cmd>Translate ZH<cr>", "Translate" },

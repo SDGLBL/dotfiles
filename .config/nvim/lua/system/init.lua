@@ -76,9 +76,11 @@
 -- func executed after loading plugins
 ---@field after_hook function | nil
 
+--- system config
 ---@param opts Config
 local function setup(opts)
   local dc = require("system.configs").default_config
+  local require = require("system.configs").reload_module
   ---@type Config
   local c = opts and vim.tbl_deep_extend("force", dc, opts) or dc
 
@@ -92,6 +94,7 @@ local function setup(opts)
     require("catppuccin").setup()
   end
 
+  ---@diagnostic disable-next-line: param-type-mismatch
   local status_ok, _ = pcall(vim.cmd, "colorscheme " .. c.colorscheme)
   if not status_ok then
     vim.notify("colorscheme " .. c.colorscheme .. " not found!")

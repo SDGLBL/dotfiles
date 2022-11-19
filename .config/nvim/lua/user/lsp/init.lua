@@ -31,10 +31,11 @@ if ok_which_key then
       r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
       R = { "<cmd>Telescope lsp_references<cr>", "References" },
       s = { "<cmd>Telescope lsp_document_symbols<cr>", "Doc Symbols" },
-      S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Workspace Symbols" },
+      S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
       q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Diagnostic List" },
-      w = { "<cmd>Telescope diagnostic<cr>","Workspace Diagnostics" },
-      W = {'<cmd>lua require("telescope.builtin").diagnostics({ bufnr = 0 })<cr>', "Doc Diagnostics" },
+      w = { "<cmd>Telescope diagnostic<cr>", "Workspace Diagnostics" },
+      W = { '<cmd>lua require("telescope.builtin").diagnostics({ bufnr = 0 })<cr>', "Doc Diagnostics" },
+      e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
     },
   }, require("user.whichkey").opts)
 end
