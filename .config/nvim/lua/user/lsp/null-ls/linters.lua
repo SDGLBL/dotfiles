@@ -15,7 +15,7 @@ function M.list_registered(filetype)
     vim.list_extend(ret, registered_providers[method2])
   end
   return vim.tbl_map(function(v)
-    return v .. "(聯)"
+    return v .. "()"
   end, ret or {})
 end
 
