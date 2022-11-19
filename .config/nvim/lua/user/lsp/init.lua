@@ -31,6 +31,7 @@ if ok_which_key then
       k = { "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", "Prev Diagnostic" },
       r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
       R = { "<cmd>Telescope lsp_references<cr>", "References" },
+      ["rr"] = { "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch refactoring" },
       s = { "<cmd>Telescope lsp_document_symbols<cr>", "Doc Symbols" },
       S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
       q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Diagnostic List" },

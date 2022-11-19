@@ -14,7 +14,9 @@ function M.list_registered(filetype)
   if registered_providers[method2] then
     vim.list_extend(ret, registered_providers[method2])
   end
-  return ret or {}
+  return vim.tbl_map(function(v)
+    return v .. "(聯)"
+  end, ret or {})
 end
 
 function M.list_supported(filetype)
