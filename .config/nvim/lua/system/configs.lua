@@ -74,6 +74,12 @@ local function reload_module(mod)
 end
 
 local function reload()
+  -- some plugins need reset
+  local wk = require_safe "which-key"
+  if wk ~= nil then
+    wk.reset()
+  end
+
   local init_file_path = fn.join({ fn.stdpath "config", "init.lua" }, "/")
   local ok, err = pcall(dofile, init_file_path)
   if not ok then
