@@ -79,6 +79,7 @@ local function reload()
   if not ok then
     vim.notify("Error reloading init.lua: " .. err, levels.ERROR)
   end
+  vim.notify("Reloaded successfully", levels.INFO)
 end
 
 ---@type Config
