@@ -1,5 +1,4 @@
 require("system").setup {
-  lsp = true,
   colorscheme = "kanagawa",
   autocmds = {
     custom_groups = {
