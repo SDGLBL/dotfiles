@@ -33,46 +33,73 @@ Requires Neovim >= 0.8
 
 ```lua
 -- .config/nvim/init.lua or open nvim and press c
-require("system").setup {
-  transparent_window = false, -- make background transparent
-  format_on_save = true, -- format on save
-  better_fold = false, -- better folding
-  better_tui = true, -- better tui support
-  colorscheme_config = {
-    -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
-    colorscheme = "kanagawa",
-    config = function()
-      -- auto change background by time
-      -- vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
-      vim.o.background = "dark"
-      -- colorscheme style
-      -- vim.g.material_style = vim.o.background == "light" and "lighter" or "darker" -- darker,lighter,oceanic,palenight,deep ocean
-      vim.g.material_style = "deep ocean" -- darker,lighter,oceanic,palenight,deep ocean
-      vim.g.sonokai_style = "shusia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
-      vim.g.tokyonight_style = "night"
-      vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
-      vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
-    end,
-  },
-  active_neorg = false,
-  active_org = false,
-  active_autopairs = true,
-  active_lsp = true,
-  active_refactor = false,
-  active_dap = false,
-  active_tint = false,
-  active_color_picker = false,
-  active_markdown_preview = false,
+require("system").setup {}
+
+```
+
+### Default Configure
+
+```lua
+local default_config = {
+  -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
+  colorscheme = "kanagawa",
+  -- `lsp`
+  lsp = true,
+  -- `dap`
+  -- Debug Adapter Protocol client implementation for Neovim
+  -- [nvim-dap](https://github.com/mfussenegger/nvim-dap)
+  dap = false,
+  -- tint
+  -- Dim inactive windows in Neovim using window-local highlight namespaces.
+  -- [tint.nvim](https://github.com/levouh/tint.nvim)
+  tint = false,
+  -- `refactor`
+  -- The Refactoring library based off the Refactoring book by Martin Fowler
+  -- [refactoring.nvim](https://github.com/ThePrimeagen/refactoring.nvim)
+  refactor = false,
+  -- `autopairs`
+  -- autopairs for neovim written by lua
+  -- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
+  autopairs = true,
+  -- `rust_tools`
+  -- Tools for better development in rust using neovim's builtin lsp
+  -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
+  rust_tools = false,
+  -- `color_picker`
+  -- Super powerful color picker / colorizer plugin.
+  -- [ccc.nvim](https://github.com/uga-rosa/ccc.nvim)
+  color_picker = false,
+  --`markdown_preview`
+  -- markdown preview plugin for (neo)vim
+  -- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
+  markdown_preview = false,
+  -- `org`
+  -- Orgmode clone written in Lua for Neovim 0.7+.
+  -- [orgmode](https://github.com/nvim-orgmode/orgmode)
+  org = false,
+  -- `neorg`
+  -- Modernity meets insane extensibility. The future of organizing your life in Neovim.
+  -- [neorg](https://github.com/nvim-neorg/neorg)
+  neorg = false,
+  -- `better_fold`
+  -- Not UFO in the sky, but an ultra fold in Neovim.
+  -- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo)
+  better_fold = false,
+  -- `better_tui`
+  -- 💥 Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+  -- [noice.nvim](https://github.com/folke/noice.nvim)
+  better_tui = false,
+  -- `format_on_save`
+  -- Format your code on save
+  format_on_save = true,
+  -- `transparent_window`
+  -- Transparent window
+  transparent_window = false,
   autocmds = {
-    custom_groups = {
-      { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
-      { "BufWinEnter", "*.c", "setlocal ts=4 sw=4" },
-      { "BufWinEnter", "*.cpp", "setlocal ts=4 sw=4" },
-      { "BufWinEnter", "*.h", "setlocal ts=4 sw=4" },
-      { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
-      -- add more autocmds here
-    },
+    custom_groups = {},
   },
+  -- `pre_hook`
+  -- execute before loading configs
   pre_hook = function()
     -- conda setup
     if os.getenv "conda_prefix" ~= "" and os.getenv "conda_prefix" ~= nil then
@@ -80,7 +107,7 @@ require("system").setup {
     end
   end,
   after_hook = function()
-    -- do noting
+  -- do noting
   end,
 }
 
