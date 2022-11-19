@@ -69,6 +69,10 @@ require("mason-null-ls").setup_handlers {
     })
   end,
 
+  codespell = function(_, _)
+    null_ls.register(diagnostics.codespell)
+  end,
+
   write_good = function(_, _)
     null_ls.register(diagnostics.write_good)
   end,
