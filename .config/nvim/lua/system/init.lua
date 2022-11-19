@@ -175,7 +175,6 @@ local function setup(opts)
   require "user.refactor"
   require "user.cmp"
   require "user.lsp"
-  require "user.lsp.mason-nvim-dap"
   require "user.rust_tools"
 
   local autocmd = require "user.autocmd"
