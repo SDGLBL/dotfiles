@@ -105,7 +105,9 @@ install_nodejs() {
         mkdir -p "$HOME"/software
       fi
       if [[ "$OSTYPE" =~ ^darwin ]]; then
-        brew install node
+        wget --no-check-certificate https://nodejs.org/dist/v16.14.2/node-v16.14.2-darwin-arm64.tar.xz -O "$HOME"/software/node-v16.14.2-darwin-arm64.tar.xz
+        tar -xvf "$HOME"/software/node-v16.14.2-darwin-arm64.tar.xz -C "$HOME"/software
+        cd "$HOME"/software && ln -s node-v16.14.2-darwin-arm64 node
       elif [[ "$OSTYPE" =~ ^linux ]]; then
         wget --no-check-certificate https://nodejs.org/dist/v16.14.2/node-v16.14.2-linux-x64.tar.xz -O "$HOME"/software/node-v16.14.2-linux-x64.tar.xz
         tar -xvf "$HOME"/software/node-v16.14.2-linux-x64.tar.xz -C "$HOME"/software
