@@ -91,8 +91,6 @@ fi
 # fzf config
 if command_is_exists fzf; then
   export FZF_DEFAULT_OPTS='--preview-window=right:50% --layout=reverse --border'
-  # Use ~~ as the trigger sequence instead of the default **
-  export FZF_COMPLETION_TRIGGER='~~'
 
   # fh - repeat history
   fh() {
