@@ -133,6 +133,8 @@ local function setup(opts)
     pcall(c.pre_hook)
   end
 
+  require "user.plugins"
+
   if c.colorscheme == "catppuccin" then
     require("catppuccin").setup()
   end
@@ -144,7 +146,6 @@ local function setup(opts)
     return
   end
 
-  require "user.plugins"
   require "user.keymaps"
   require "user.whichkey"
   require "user.options"
