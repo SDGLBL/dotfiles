@@ -18,9 +18,13 @@ command_is_exists() {
 }
 
 # file_is_exists test file is exists
-file_is_exists() {
+file_need_back() {
   if [ -f "$1" ]; then
-    true
+    if [ -h "$1" ]; then
+      false
+    else
+      true
+    fi
   else
     false
   fi
@@ -397,7 +401,7 @@ config_tmux() {
     git clone https://github.com/tmux-plugins/tpm "$HOME"/.tmux/plugins/tpm
   fi
   if command_is_exists tmux; then
-    if file_is_exists "$HOME"/.tmux.conf; then
+    if file_need_back "$HOME"/.tmux.conf; then
       mv "$HOME"/.tmux.conf "$HOME/.tmux_$(date +'%Y-%m-%dT%H:%M:%S').conf.backup"
     fi
     ln -s "$SHELL_FOLDER"/.tmux.conf "$HOME"/.tmux.conf
@@ -408,8 +412,8 @@ config_tmux() {
 
 # if current shell is bash 
 config_bash() {
-  if file_is_exists "$HOME"/.bashrc; then
-    if file_is_exists "$HOME"/.config.sh; then
+  if file_need_back "$HOME"/.bashrc; then
+    if file_need_back "$HOME"/.config.sh; then
       mv "$HOME"/.config.sh "$HOME/.config_$(date +'%Y-%m-%dT%H:%M:%S').sh.backup"
     fi
     ln -s "$SHELL_FOLDER"/.config.sh "$HOME"/.config.sh
@@ -423,7 +427,7 @@ config_bash() {
 
 # if current shell is zsh
 config_zsh() {
-  if file_is_exists "$HOME"/.zshrc; then
+  if file_need_back "$HOME"/.zshrc; then
     # install zsh-autosuggestions
     msg "Install zsh-autosuggestions?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
@@ -437,7 +441,7 @@ config_zsh() {
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-"$HOME"/.oh-my-zsh/custom}/themes/powerlevel10k && echo "ZSH_THEME=\"powerlevel10k/powerlevel10k\"" >> "$HOME"/.zshrc
 
-    if file_is_exists "$HOME"/.config.sh; then
+    if file_need_back "$HOME"/.config.sh; then
       mv "$HOME"/.config.sh "$HOME/.config_$(date +'%Y-%m-%dT%H:%M:%S').sh.backup"
     fi
     ln -s "$SHELL_FOLDER"/.config.sh "$HOME"/.config.sh
@@ -463,14 +467,14 @@ config_zsh() {
 }
 
 config_alacritty() {
-  if file_is_exists "$HOME"/.alacritty.yml;then
+  if file_need_back "$HOME"/.alacritty.yml;then
     mv "$HOME"/.alacritty.yml "$HOME/.alacritty_$(date +'%Y-%m-%dT%H:%M:%S').yml.backup"
   fi
   ln -s "$SHELL_FOLDER"/.alacritty.yml "$HOME"/.alacritty.yml
 }
 
 config_git() {
-  if file_is_exists "$HOME"/.gitconfig; then
+  if file_need_back "$HOME"/.gitconfig; then
     mv "$HOME"/.gitconfig "$HOME/.gitconfig_$(date +'%Y-%m-%dT%H:%M:%S').bak"
   fi
   ln -s "$CONFIG_FOLDER"/git/gitconfig "$HOME"/.gitconfig
@@ -526,11 +530,13 @@ check() {
 
 init_path() {
   PATH=$PATH:"$HOME"/.local/bin
+  PATH=$PATH:"$HOME"/.local/share/bin
+  PATH=$PATH:"$HOME"/.local/share/nvim/mason/bin
+  PATH=$PATH:"$HOME"/.fzf/bin
   PATH=$PATH:"$HOME"/.cargo/bin
   PATH=$PATH:"$HOME"/software/go/bin
   PATH=$PATH:"$HOME"/software/nvim/bin
-  PATH=$PATH:"$HOME"/software/nodejs/bin
-  PATH=$PATH:"$HOME"/.fzf/bin
+  PATH=$PATH:"$HOME"/software/node/bin
 }
 
 all() {
