@@ -432,7 +432,7 @@ config_zsh() {
     msg "Install zsh-autosuggestions?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     # shellcheck disable=2086
-    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestionsc && msg "Please add plugins=(zsh-autosuggestions) in ~/.zshrc"
+    [ "$answer" != "${answer#[Yy]}" ] || $SET_ALL && git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions && msg "Please add plugins=(zsh-autosuggestions) in ~/.zshrc"
     msg "Install zsh-syntax-highlighting?"
     [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
     # shellcheck disable=2086
