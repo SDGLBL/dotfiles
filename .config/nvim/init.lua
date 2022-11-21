@@ -1,5 +1,5 @@
 require("system").setup {
-  colorscheme = "kanagawa",
+  colorscheme = "",
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },

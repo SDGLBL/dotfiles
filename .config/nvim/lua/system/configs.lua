@@ -91,7 +91,7 @@ end
 ---@type Config
 local default_config = {
   -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
-  colorscheme = "kanagawa",
+  colorscheme = "",
   -- `lsp`
   lsp = true,
   -- `dap`
