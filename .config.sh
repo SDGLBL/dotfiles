@@ -16,6 +16,7 @@ alias hp='http_proxy=$IP'
 alias hps='https_proxy=$IP'
 alias ehp='export http_proxy=$IP'
 alias ehps='export https_proxy=$IP'
+alias sv2ray='nohup ~/software/v2/v2ray -config ~/software/v2/config.json > ~/v2.log 2>&1 &'
 
 # start vmod
 alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
@@ -46,12 +47,13 @@ alias complexGitLog='git log --graph --abbrev-commit'
 
 getpbp() { netstat -alntp | grep "$1" | awk '{ print $7 }' | awk -F '/' '{ print $1 } ' | grep --line-regexp "^[0-9]*$" ;}
 alias getPIDByPort=getpbp
+# shellcheck disable=2046
 get_ftp_addr() { echo ftp://$(hostname)$(readlink -f "$1") ;}
 
 
 # command_is_exists test command is exists
 command_is_exists() {
-  if command -v $1 >/dev/null 2>&1; then
+  if command -v "$1" >/dev/null 2>&1; then
     true
   else
     false
