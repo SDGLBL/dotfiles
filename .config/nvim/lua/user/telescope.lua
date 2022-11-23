@@ -60,6 +60,7 @@ telescope.setup {
       "--column",
       "--smart-case",
       "--hidden",
+      "-uuu",
       "--glob=!.git/",
     },
 
@@ -130,7 +131,7 @@ telescope.setup {
   },
   pickers = {
     find_files = {
-      find_command = { "fd", "--type=file", "--hidden" },
+      find_command = { "fd", "--type=file", "-HI" },
     },
     live_grep = {
       --@usage don't include the filename in the search results
