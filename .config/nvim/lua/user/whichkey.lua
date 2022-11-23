@@ -134,6 +134,15 @@ M.mappings = {
     S = { "<cmd>PackerStatus<cr>", "Status" },
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
+  v = {
+    name = "DiffView",
+    o = { "<cmd>DiffviewOpen<cr>", "ViewOpen" },
+    c = { "<cmd>DiffviewClose<cr>", "ViewClose" },
+    r = { "<cmd>DiffviewRefresh<cr>", "ViewRefresh" },
+    h = { "<cmd>DiffviewFileHistory<cr>", "FileHistory" },
+    f = { "<cmd>DiffviewFileHistory %<cr>", "Current File FileHistory" },
+    t = { "<cmd>DiffviewToggleFiles<cr>", "ToggleFiles" },
+  },
   g = {
     name = "Git",
     g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
@@ -151,18 +160,6 @@ M.mappings = {
     o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
-    d = {
-      name = "DiffView",
-      o = { "<cmd>DiffviewOpen<cr>", "ViewOpen" },
-      c = { "<cmd>DiffviewClose<cr>", "ViewClose" },
-      r = { "<cmd>DiffviewRefresh<cr>", "ViewRefresh" },
-      f = {
-        name = "Files",
-        h = { "<cmd>DiffviewFileHistory<cr>", "FileHistory" },
-        f = { "<cmd>DiffviewFocusFiles<cr>", "FocusFiles" },
-        t = { "<cmd>DiffviewToggleFiles<cr>", "ToggleFiles" },
-      },
-    },
   },
   s = {
     name = "Search",
