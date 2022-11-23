@@ -134,6 +134,7 @@ local function setup(opts)
   end
 
   require "user.plugins"
+  require "user.impatient"
 
   if c.colorscheme == "catppuccin" then
     require("catppuccin").setup()
@@ -154,7 +155,6 @@ local function setup(opts)
   require "user.alpha"
   require "user.toggleterm"
   require "user.comment"
-  require "user.impatient"
   require "user.bufferline"
   require "user.lualine"
   require "user.nvim-tree"
