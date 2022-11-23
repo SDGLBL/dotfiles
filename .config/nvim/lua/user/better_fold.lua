@@ -53,6 +53,7 @@ end
 
 local ftMap = {
   norg = { "treesitter", "indent" },
+  yaml = { "treesitter", "indent" },
 }
 
 ufo.setup {
