@@ -318,11 +318,6 @@ cmp.setup {
           return
         end
       end
-
-      if jumpable(1) and luasnip.jump(1) then
-        return
-      end
-
       fallback()
     end),
     -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
