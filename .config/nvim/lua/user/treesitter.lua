@@ -55,6 +55,8 @@ configs.setup {
         ["al"] = "@loop.outer",
         ["ip"] = "@parameter.inner",
         ["ap"] = "@parameter.outer",
+        ["id"] = "@conditional.inner",
+        ["ad"] = "@conditional.outer",
       },
     },
     swap = {
