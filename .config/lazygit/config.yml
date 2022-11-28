@@ -53,7 +53,7 @@ git:
   disableForcePushing: false
   parseEmoji: false
 os:
-  editCommand: 'vim' # see 'Configuring File Editing' section
+  editCommand: 'nvim' # see 'Configuring File Editing' section
   # editCommandTemplate: '{{editor}} {{filename}}'
   editCommandTemplate: '{{editor}} +{{line}} {{filename}}'
   openCommand: ''
