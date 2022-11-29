@@ -159,6 +159,14 @@ return packer.startup(function(use)
     end,
   }
 
+  -- nvim-surround
+  use {
+    "kylechui/nvim-surround",
+    config = function()
+      require("nvim-surround").setup {}
+    end,
+  }
+
   -- Git
   use "lewis6991/gitsigns.nvim"
 
