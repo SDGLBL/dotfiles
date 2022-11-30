@@ -2,7 +2,11 @@ require("system").setup {
   colorscheme = "",
   autocmds = {
     custom_groups = {
-      { "BufWinEnter", "*(.go|.c|.cpp|.h|.php)", "setlocal ts=4 sw=4" },
+      { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
+      { "BufWinEnter", "*.c", "setlocal ts=4 sw=4" },
+      { "BufWinEnter", "*.php", "setlocal ts=4 sw=4" },
+      { "BufWinEnter", "*.cpp", "setlocal ts=4 sw=4" },
+      { "BufWinEnter", "*.h", "setlocal ts=4 sw=4" },
     },
   },
   pre_hook = function()

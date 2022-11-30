@@ -114,6 +114,10 @@ local default_config = {
   -- Tools for better development in rust using neovim's builtin lsp
   -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
   rust_tools = false,
+  -- enable `go_tools`
+  -- Tools for better development in go using neovim's builtin lsp
+  -- [gopher.nvim](https://github.com/olexsmir/gopher.nvim)
+  go_tools = false,
   -- `color_picker`
   -- Super powerful color picker / colorizer plugin.
   -- [ccc.nvim](https://github.com/uga-rosa/ccc.nvim)
@@ -130,6 +134,10 @@ local default_config = {
   -- Modernity meets insane extensibility. The future of organizing your life in Neovim.
   -- [neorg](https://github.com/nvim-neorg/neorg)
   neorg = false,
+  -- `indent_blankline`
+  -- Indent guides for Neovim
+  -- [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
+  indent_blankline = false,
   -- `better_fold`
   -- Not UFO in the sky, but an ultra fold in Neovim.
   -- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo)

@@ -36,7 +36,7 @@ packer.init {
       return require("packer.util").float { border = "rounded" }
     end,
   },
-  max_jobs = 10,
+  max_jobs = 30,
 }
 
 -- Install your plugins here
@@ -181,9 +181,16 @@ return packer.startup(function(use)
   -- Lualine
   use "nvim-lualine/lualine.nvim"
 
-  use "mfussenegger/nvim-dap"
-  use "theHamsta/nvim-dap-virtual-text"
-  use "rcarriga/nvim-dap-ui"
+  use {
+    "mfussenegger/nvim-dap",
+    requires = {
+      "theHamsta/nvim-dap-virtual-text",
+      "rcarriga/nvim-dap-ui",
+    },
+    cond = function()
+      return _G.configs.dap
+    end,
+  }
 
   -- Tmux integration
   use {
@@ -236,7 +243,12 @@ return packer.startup(function(use)
   use "lewis6991/impatient.nvim"
 
   -- Ident line
-  use "lukas-reineke/indent-blankline.nvim"
+  use {
+    "lukas-reineke/indent-blankline.nvim",
+    cond = function()
+      return _G.configs.indent_blankline
+    end,
+  }
 
   -- Dashboard alpha
   use "goolord/alpha-nvim"
@@ -253,6 +265,9 @@ return packer.startup(function(use)
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
+    cond = function()
+      return _G.configs.better_tui
+    end,
   }
 
   -- DiffView
@@ -266,11 +281,19 @@ return packer.startup(function(use)
     "nvim-neorg/neorg",
     requires = "nvim-lua/plenary.nvim",
     ft = "norg",
+    cond = function()
+      return _G.configs.neorg
+    end,
   }
 
   use "RRethy/vim-illuminate"
 
-  use "levouh/tint.nvim"
+  use {
+    "levouh/tint.nvim",
+    cond = function()
+      return _G.configs.tint
+    end,
+  }
 
   -- better fold
   use { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }
@@ -283,6 +306,9 @@ return packer.startup(function(use)
       "nvim-treesitter/nvim-treesitter",
     },
     ft = "go",
+    cond = function()
+      return _G.configs.go_tools
+    end,
   }
 
   use {
@@ -291,6 +317,9 @@ return packer.startup(function(use)
       vim.fn["mkdp#util#install"]()
     end,
     ft = "markdown",
+    cond = function()
+      return _G.configs.markdown_preview
+    end,
   }
 
   use {
@@ -304,6 +333,9 @@ return packer.startup(function(use)
   use {
     "uga-rosa/ccc.nvim",
     ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html" },
+    cond = function()
+      return _G.configs.color_picker
+    end,
   }
 
   use {
@@ -334,6 +366,9 @@ return packer.startup(function(use)
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     requires = { { "nvim-lua/plenary.nvim" } },
+    cond = function()
+      return _G.configs.rust_tools
+    end,
     config = function()
       require("crates").setup()
     end,
@@ -341,7 +376,12 @@ return packer.startup(function(use)
 
   use "stevearc/dressing.nvim"
 
-  use "simrat39/rust-tools.nvim"
+  use {
+    "simrat39/rust-tools.nvim",
+    cond = function()
+      return _G.configs.rust_tools
+    end,
+  }
 
   use {
     "weilbith/nvim-code-action-menu",

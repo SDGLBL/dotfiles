@@ -8,6 +8,8 @@ local opts = {
       staticcheck = true,
       analyses = {
         fieldalignment = true,
+        nilness = true,
+        shadow = true,
       },
       allowModfileModifications = true,
       -- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
