@@ -78,6 +78,10 @@
 -- Tools for better development in rust using neovim's builtin lsp
 -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
 ---@field rust_tools boolean
+-- enable `go_tools`
+-- Tools for better development in go using neovim's builtin lsp
+-- [goldsmith.nvim](https://github.com/WhoIsSethDaniel/goldsmith.nvim)
+---@field go_tools boolean
 -- enable `color-picker`.
 -- Tools for better development in rust using neovim's builtin lsp
 -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
@@ -94,6 +98,10 @@
 -- markdown preview plugin for (neo)vim
 -- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
 ---@field markdown_preview boolean
+-- enabled `indent_blankline `
+-- Indent guides for Neovim
+-- [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
+---@field indent_blankline boolean
 -- enable`better_fold`
 -- Not UFO in the sky, but an ultra fold in Neovim.
 -- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo)
@@ -177,6 +185,7 @@ local function setup(opts)
   require "user.cmp"
   require "user.lsp"
   require "user.rust_tools"
+  require "user.go_tools"
 
   local autocmd = require "user.autocmd"
 
