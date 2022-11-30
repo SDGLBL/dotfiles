@@ -52,7 +52,7 @@ M.setup = function()
   })
 end
 
-local function lsp_keymaps(bufnr)
+M.lsp_keymaps = function(bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
   keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
@@ -91,7 +91,7 @@ M.on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
   end
 
-  lsp_keymaps(bufnr)
+  M.lsp_keymaps(bufnr)
 
   local status_ok, illuminate = pcall(require, "illuminate")
   if not status_ok then
