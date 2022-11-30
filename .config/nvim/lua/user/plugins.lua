@@ -300,7 +300,7 @@ return packer.startup(function(use)
 
   -- Gopher plugin
   use {
-    "WhoIsSethDaniel/goldsmith.nvim",
+    "olexsmir/gopher.nvim",
     requires = { -- dependencies
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
