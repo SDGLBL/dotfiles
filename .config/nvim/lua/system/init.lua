@@ -80,7 +80,7 @@
 ---@field rust_tools boolean
 -- enable `go_tools`
 -- Tools for better development in go using neovim's builtin lsp
--- [gopher.nvim](https://github.com/olexsmir/gopher.nvim)
+-- [goldsmith.nvim](https://github.com/WhoIsSethDaniel/goldsmith.nvim)
 ---@field go_tools boolean
 -- enable `color-picker`.
 -- Tools for better development in rust using neovim's builtin lsp
@@ -185,6 +185,7 @@ local function setup(opts)
   require "user.cmp"
   require "user.lsp"
   require "user.rust_tools"
+  require "user.go_tools"
 
   local autocmd = require "user.autocmd"
 

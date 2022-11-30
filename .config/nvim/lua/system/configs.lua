@@ -116,7 +116,7 @@ local default_config = {
   rust_tools = false,
   -- enable `go_tools`
   -- Tools for better development in go using neovim's builtin lsp
-  -- [gopher.nvim](https://github.com/olexsmir/gopher.nvim)
+  -- [goldsmith.nvim](https://github.com/WhoIsSethDaniel/goldsmith.nvim)
   go_tools = false,
   -- `color_picker`
   -- Super powerful color picker / colorizer plugin.
