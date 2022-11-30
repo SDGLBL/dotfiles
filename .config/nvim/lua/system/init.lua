@@ -185,7 +185,6 @@ local function setup(opts)
   require "user.cmp"
   require "user.lsp"
   require "user.rust_tools"
-  require "user.go_tools"
 
   local autocmd = require "user.autocmd"
 
