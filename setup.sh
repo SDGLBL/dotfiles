@@ -263,6 +263,23 @@ install_cargo_package() {
     msg "Rust_fmt is already installed."
   fi
 
+  if ! command_is_exists zoxide; then
+    msg "Install z? (smarter cd command)"
+    [ "$SET_ALL" ] && read -p "[y]es or [n]o (default: no) : " -r answer
+    if [[  "$answer" != "${answer#[Yy]}" || $SET_ALL ]]; then
+      cargo install zoxide
+    fi
+    tmp="eval \"\$(zoxide init zsh)\""
+    if ! file_contain_string "$tmp" "$HOME"/.zshrc; then
+      echo "$tmp" >> "$HOME"/.zshrc
+    fi
+    if ! file_contain_string "$tmp" "$HOME"/.bashrc; then
+      echo "$tmp" >> "$HOME"/.zshrc
+    fi
+  else
+    msg "Z is already installed."
+  fi
+
 
   if ! command_is_exists prettier; then
     msg "Install prettier? (A tool to format js code)"
