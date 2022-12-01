@@ -8,6 +8,9 @@ require("system").setup {
       { "BufWinEnter", "*.cpp", "setlocal ts=4 sw=4" },
       { "BufWinEnter", "*.h", "setlocal ts=4 sw=4" },
     },
+    user_config = {
+      { "BufWritePost", "init.lua", "PackerCompile" },
+    },
   },
   pre_hook = function()
     -- auto change background by time
