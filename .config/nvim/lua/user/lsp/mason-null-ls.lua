@@ -64,7 +64,7 @@ require("mason-null-ls").setup_handlers {
     null_ls.register(diagnostics.golangci_lint.with {
       extra_args = {
         "-E",
-        "errcheck,deadcode,,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr",
+        "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
       },
     })
   end,
