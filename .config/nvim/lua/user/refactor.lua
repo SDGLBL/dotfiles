@@ -7,6 +7,11 @@ if not status_ok then
   return
 end
 
+local ok, telescope = pcall(require, "telescope")
+if ok then
+  telescope.load_extension "refactoring"
+end
+
 refactor.setup {}
 
 local ok_which_key, wk = pcall(require, "which-key")

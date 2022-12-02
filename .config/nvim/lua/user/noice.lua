@@ -7,6 +7,11 @@ if not status_ok then
   return
 end
 
+local ok, telescope = pcall(require, "telescope")
+if ok then
+  telescope.load_extension "noice"
+end
+
 noice.setup {
   cmdline = {
     enabled = false, -- enables the Noice cmdline UI
