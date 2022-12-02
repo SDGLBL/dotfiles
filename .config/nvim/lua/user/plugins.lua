@@ -41,34 +41,79 @@ packer.init {
 
 -- Install your plugins here
 return packer.startup(function(use)
-  -- My plugins here
-  use "wbthomason/packer.nvim" -- Have packer manage itself
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  --- Basic plugins
+  -- Have packer manage itself
+  use "wbthomason/packer.nvim"
+  -- An implementation of the Popup API from vim in Neovim
+  use "nvim-lua/popup.nvim"
+  -- Useful lua functions used ny lots of plugins
+  use "nvim-lua/plenary.nvim"
   use "ahmedkhalf/project.nvim"
   use "folke/which-key.nvim"
+  -- Remember lastplace
   use {
     "ethanholz/nvim-lastplace",
     config = function()
       require("nvim-lastplace").setup {}
     end,
   }
+  -- Github copilot
   use "github/copilot.vim"
+  -- Improve load time
+  use "lewis6991/impatient.nvim"
+  -- ToggleTerm
+  use "akinsho/toggleterm.nvim"
+  -- Dashboard alpha
+  use "goolord/alpha-nvim"
+  -- Notify
   use {
-    "ThePrimeagen/refactoring.nvim",
+    "rcarriga/nvim-notify",
+    requires = { "nvim-telescope/telescope.nvim" },
+  }
+  -- Telescope
+  use "nvim-telescope/telescope.nvim"
+  use "nvim-telescope/telescope-media-files.nvim"
+  -- Treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
     requires = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
+      "p00f/nvim-ts-rainbow",
+      "windwp/nvim-ts-autotag",
+      "mfussenegger/nvim-ts-hint-textobject",
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      {
+        "romgrk/nvim-treesitter-context",
+        config = function()
+          require("treesitter-context").setup {
+            enable = true,
+            throttle = true,
+          }
+        end,
+      },
+      {
+        "ThePrimeagen/refactoring.nvim",
+        config = function()
+          require "user.refactor"
+        end,
+        cond = function()
+          return _G.configs.refactor
+        end,
+      },
     },
   }
 
   -- Colorschemes
-  use "ellisonleao/gruvbox.nvim"
-  use "lunarvim/darkplus.nvim"
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use "tanvirtin/monokai.nvim"
-  use "bluz71/vim-nightfly-guicolors"
   use "folke/tokyonight.nvim"
+  use "rebelot/kanagawa.nvim"
+  use "tanvirtin/monokai.nvim"
+  use "lunarvim/darkplus.nvim"
+  use "tiagovla/tokyodark.nvim"
+  use "ellisonleao/gruvbox.nvim"
+  use "projekt0n/github-nvim-theme"
+  use "marko-cerovac/material.nvim"
+  use "bluz71/vim-nightfly-guicolors"
+  use { "catppuccin/nvim", as = "catppuccin" }
   use { "rose-pine/neovim", as = "rose-pine" }
   use {
     "EdenEast/nightfox.nvim",
@@ -76,25 +121,21 @@ return packer.startup(function(use)
       require("nightfox").setup {}
     end,
   }
-  use "projekt0n/github-nvim-theme"
-  use "tiagovla/tokyodark.nvim"
-  use "rebelot/kanagawa.nvim"
-  use "marko-cerovac/material.nvim"
 
   -- cmp plugins
   -- The completion plugin
   use {
     "hrsh7th/nvim-cmp",
     requires = {
-      { "hrsh7th/cmp-buffer" }, -- buffer completions
-      { "hrsh7th/cmp-cmdline" }, -- cmdline completions
-      { "hrsh7th/cmp-path" }, -- path completions
-      { "saadparwaiz1/cmp_luasnip" }, -- snippet completions
-      { "hrsh7th/cmp-nvim-lsp" }, -- nvim cmp lsp
-      { "hrsh7th/cmp-copilot" },
-      { "hrsh7th/cmp-emoji" },
+      { "hrsh7th/cmp-path" },
       { "f3fora/cmp-spell" },
       { "folke/neodev.nvim" },
+      { "hrsh7th/cmp-emoji" },
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-copilot" },
+      { "hrsh7th/cmp-cmdline" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "saadparwaiz1/cmp_luasnip" },
       {
         "David-Kunz/cmp-npm",
         event = { "BufRead package.json" },
@@ -106,56 +147,51 @@ return packer.startup(function(use)
         end,
       },
       { "kdheepak/cmp-latex-symbols", ft = "plaintext" },
+      { "b0o/schemastore.nvim" },
     },
-  }
-
-  use "b0o/schemastore.nvim"
-
-  use {
-    "ray-x/lsp_signature.nvim",
     config = function()
-      local cfg = {
-        bind = true,
-        wrap = true,
-        hint_prefix = "   ",
-      }
-      require("lsp_signature").setup(cfg)
+      require "user.cmp"
+      require "user.autopairs"
+    end,
+    cond = function()
+      return _G.configs.lsp
     end,
   }
 
-  use "windwp/nvim-autopairs" -- Autopairs, integrates with both cmp and treesitter
-  use "numToStr/Comment.nvim" -- Easily comment stuff
+  use "windwp/nvim-autopairs"
+  use "numToStr/Comment.nvim"
   use "JoosepAlviste/nvim-ts-context-commentstring"
 
-  -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+  -- Snippets
+  use "L3MON4D3/LuaSnip"
+  use "rafamadriz/friendly-snippets"
 
   -- LSP
-  use "neovim/nvim-lspconfig" -- enable LSP
-  use "williamboman/mason.nvim"
-  use "williamboman/mason-lspconfig.nvim"
-  use "jayp0521/mason-nvim-dap.nvim"
-  use "jayp0521/mason-null-ls.nvim"
-  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
-
-  -- Telescope
-  use "nvim-telescope/telescope.nvim"
-  use "nvim-telescope/telescope-media-files.nvim"
-
-  -- Treesitter
-  use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
-  use "p00f/nvim-ts-rainbow"
-  use "windwp/nvim-ts-autotag"
-  use "mfussenegger/nvim-ts-hint-textobject"
-  use "nvim-treesitter/nvim-treesitter-textobjects"
   use {
-    "romgrk/nvim-treesitter-context",
+    "neovim/nvim-lspconfig",
+    requires = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "jayp0521/mason-nvim-dap.nvim",
+      "jayp0521/mason-null-ls.nvim",
+      "jose-elias-alvarez/null-ls.nvim",
+      {
+        "ray-x/lsp_signature.nvim",
+        config = function()
+          local cfg = {
+            bind = true,
+            wrap = true,
+            hint_prefix = " ",
+          }
+          require("lsp_signature").setup(cfg)
+        end,
+      },
+    },
     config = function()
-      require("treesitter-context").setup {
-        enable = true,
-        throttle = true,
-      }
+      require "user.lsp"
+    end,
+    cond = function()
+      return _G.configs.lsp
     end,
   }
 
@@ -236,35 +272,27 @@ return packer.startup(function(use)
     event = "BufRead",
   }
 
-  -- ToggleTerm
-  use "akinsho/toggleterm.nvim"
-
-  -- Improve load time
-  use "lewis6991/impatient.nvim"
-
   -- Ident line
   use {
     "lukas-reineke/indent-blankline.nvim",
+    config = function()
+      require "user.indentline"
+    end,
     cond = function()
       return _G.configs.indent_blankline
     end,
   }
 
-  -- Dashboard alpha
-  use "goolord/alpha-nvim"
-
-  -- Notify
-  use {
-    "rcarriga/nvim-notify",
-    requires = { "nvim-telescope/telescope.nvim" },
-  }
-
+  -- Better tui
   use {
     "folke/noice.nvim",
     requires = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
     },
+    config = function()
+      require "user.noice"
+    end,
     cond = function()
       return _G.configs.better_tui
     end,
@@ -281,6 +309,9 @@ return packer.startup(function(use)
     "nvim-neorg/neorg",
     requires = "nvim-lua/plenary.nvim",
     ft = "norg",
+    config = function()
+      require "user.neorg"
+    end,
     cond = function()
       return _G.configs.neorg
     end,
@@ -290,13 +321,25 @@ return packer.startup(function(use)
 
   use {
     "levouh/tint.nvim",
+    config = function()
+      require "user.tint"
+    end,
     cond = function()
       return _G.configs.tint
     end,
   }
 
   -- better fold
-  use { "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" }
+  use {
+    "kevinhwang91/nvim-ufo",
+    requires = "kevinhwang91/promise-async",
+    config = function()
+      require "user.better_fold"
+    end,
+    cond = function()
+      return _G.configs.better_fold
+    end,
+  }
 
   -- Gopher plugin
   use {
@@ -306,22 +349,30 @@ return packer.startup(function(use)
       "nvim-treesitter/nvim-treesitter",
     },
     ft = "go",
+    config = function()
+      require "user.go_tools"
+    end,
     cond = function()
       return _G.configs.go_tools
     end,
   }
 
+  -- Markdown preview
   use {
     "iamcco/markdown-preview.nvim",
     run = function()
       vim.fn["mkdp#util#install"]()
     end,
     ft = "markdown",
+    config = function()
+      require "user.markdown_preview"
+    end,
     cond = function()
       return _G.configs.markdown_preview
     end,
   }
 
+  -- Generate github repo url link
   use {
     "SDGLBL/ggl.nvim",
     config = function()
@@ -330,19 +381,25 @@ return packer.startup(function(use)
     requires = { "rcarriga/nvim-notify" },
   }
 
+  -- Color picker
   use {
     "uga-rosa/ccc.nvim",
     ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html" },
+    config = function()
+      require "user.ccc"
+    end,
     cond = function()
       return _G.configs.color_picker
     end,
   }
 
+  -- SnipRun
   use {
     "michaelb/sniprun",
     run = "bash ./install.sh",
   }
 
+  -- Translate
   use {
     "uga-rosa/translate.nvim",
     config = function()
@@ -362,27 +419,34 @@ return packer.startup(function(use)
     end,
   }
 
+  -- Crates
   use {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
     requires = { { "nvim-lua/plenary.nvim" } },
-    cond = function()
-      return _G.configs.rust_tools
-    end,
     config = function()
       require("crates").setup()
     end,
-  }
-
-  use "stevearc/dressing.nvim"
-
-  use {
-    "simrat39/rust-tools.nvim",
     cond = function()
       return _G.configs.rust_tools
     end,
   }
 
+  -- Better neovim ui
+  use "stevearc/dressing.nvim"
+
+  -- Rust tools
+  use {
+    "simrat39/rust-tools.nvim",
+    config = function()
+      require "user.rust_tools"
+    end,
+    cond = function()
+      return _G.configs.rust_tools
+    end,
+  }
+
+  -- Better code action menu
   use {
     "weilbith/nvim-code-action-menu",
     cmd = "CodeActionMenu",
