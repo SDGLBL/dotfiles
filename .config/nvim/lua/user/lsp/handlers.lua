@@ -55,20 +55,24 @@ end
 M.lsp_keymaps = function(bufnr)
   local opts = { noremap = true, silent = true }
   local keymap = vim.api.nvim_buf_set_keymap
+
+  if vim.fn.exists ":CodeActionMenu" then
+    keymap(bufnr, "n", "<leader>la", "<cmd>CodeActionMenu<CR>", opts)
+  else
+    keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  end
+
+  if vim.fn.getbufvar(bufnr, "&filetype") == "go" then
+    keymap(bufnr, "n", "<leader>li", "<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>", opts)
+  end
+
   keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
   keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
   keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
   keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
   keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
   keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  if vim.fn.exists ":CodeActionMenu" then
-    keymap(bufnr, "n", "<Leader>la", "<cmd>CodeActionMenu<CR>", opts)
-  else
-    keymap(bufnr, "n", "<Leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  end
   keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)
-  keymap(bufnr, "n", "<leader>li", "<cmd>LspInfo<cr>", opts)
-  keymap(bufnr, "n", "<leader>lI", "<cmd>LspInstallInfo<cr>", opts)
   keymap(bufnr, "n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", opts)
   keymap(bufnr, "n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", opts)
   keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)

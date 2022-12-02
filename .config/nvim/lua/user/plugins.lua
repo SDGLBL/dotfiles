@@ -341,16 +341,28 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Gopher plugin
+  -- Goldsmith pluginplguins
   use {
-    "olexsmir/gopher.nvim",
+    "WhoIsSethDaniel/goldsmith.nvim",
     requires = { -- dependencies
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
     ft = "go",
+    cond = function()
+      return _G.configs.go_tools
+    end,
+  }
+
+  -- GoImpl
+  use {
+    "edolphin-ydf/goimpl.nvim",
+    ft = "go",
     config = function()
-      require "user.go_tools"
+      local ok, telescope = pcall(require, "telescope")
+      if ok then
+        telescope.load_extension "goimpl"
+      end
     end,
     cond = function()
       return _G.configs.go_tools

@@ -172,6 +172,7 @@ local function setup(opts)
   require "user.neovide"
   require "user.tabnine"
   require "user.notify"
+  require "user.go_tools"
 
   local autocmd = require "user.autocmd"
 

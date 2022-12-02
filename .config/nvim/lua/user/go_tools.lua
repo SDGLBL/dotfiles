@@ -33,33 +33,33 @@ goldsmith.config {
     enabled = false,
     highlight = "Comment",
   },
-  -- gopls = {
-  --   config = function()
-  --     return {
-  --       usePlaceholders = false,
-  --       codelenses = {
-  --         gc_details = true,
-  --       },
-  --       analyses = {
-  --         fieldalignment = true,
-  --         nilness = true,
-  --         shadow = true,
-  --       },
-  --       -- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
-  --       hints = {
-  --         assignVariableTypes = true,
-  --         compositeLiteralFields = true,
-  --         compositeLiteralTypes = true,
-  --         constantValues = true,
-  --         functionTypeParameters = true,
-  --         parameterNames = true,
-  --         rangeVariableTypes = true,
-  --       },
-  --       on_attach = function(client, bufnr)
-  --         -- your on_attach
-  --         require("user.lsp.handlers").on_attach(client, bufnr)
-  --       end,
-  --     }
-  --   end,
-  -- },
+  gopls = {
+    config = function()
+      return {
+        usePlaceholders = false,
+        codelenses = {
+          gc_details = true,
+        },
+        analyses = {
+          fieldalignment = true,
+          nilness = true,
+          shadow = true,
+        },
+        -- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        },
+        on_attach = function(client, bufnr)
+          -- your on_attach
+          require("user.lsp.handlers").on_attach(client, bufnr)
+        end,
+      }
+    end,
+  },
 }
