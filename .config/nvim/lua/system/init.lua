@@ -141,6 +141,24 @@ local function setup(opts)
     pcall(c.pre_hook)
   end
 
+  local autocmd = require "user.autocmd"
+
+  if c.transparent_window then
+    autocmd.enable_transparent_mode()
+  end
+
+  if c.format_on_save then
+    autocmd.enable_format_on_save()
+  else
+    autocmd.disable_format_on_save()
+  end
+
+  -- load user cmd
+  c.autocmds = c.autocmds or {}
+  local default_cmds = autocmd.load_augroups() or {}
+  local all_cmds = vim.tbl_deep_extend("keep", c.autocmds, default_cmds)
+  autocmd.define_augroups(all_cmds)
+
   require "user.plugins"
   require "user.impatient"
 
@@ -173,24 +191,6 @@ local function setup(opts)
   require "user.tabnine"
   require "user.notify"
   require "user.go_tools"
-
-  local autocmd = require "user.autocmd"
-
-  if c.transparent_window then
-    autocmd.enable_transparent_mode()
-  end
-
-  if c.format_on_save then
-    autocmd.enable_format_on_save()
-  else
-    autocmd.disable_format_on_save()
-  end
-
-  -- load user cmd
-  c.autocmds = c.autocmds or {}
-  local default_cmds = autocmd.load_augroups() or {}
-  local all_cmds = vim.tbl_deep_extend("keep", c.autocmds, default_cmds)
-  autocmd.define_augroups(all_cmds)
 
   if c.after_hook ~= nil then
     pcall(c.after_hook)
