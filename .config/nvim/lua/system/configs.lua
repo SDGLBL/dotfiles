@@ -126,10 +126,6 @@ local default_config = {
   -- markdown preview plugin for (neo)vim
   -- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
   markdown_preview = false,
-  -- `org`
-  -- Orgmode clone written in Lua for Neovim 0.7+.
-  -- [orgmode](https://github.com/nvim-orgmode/orgmode)
-  org = false,
   -- `neorg`
   -- Modernity meets insane extensibility. The future of organizing your life in Neovim.
   -- [neorg](https://github.com/nvim-neorg/neorg)
