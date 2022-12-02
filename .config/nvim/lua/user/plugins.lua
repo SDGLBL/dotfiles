@@ -100,6 +100,12 @@ return packer.startup(function(use)
           return _G.configs.refactor
         end,
       },
+      {
+        "m-demare/hlargs.nvim",
+        config = function()
+          require("hlargs").setup()
+        end,
+      },
     },
   }
 
