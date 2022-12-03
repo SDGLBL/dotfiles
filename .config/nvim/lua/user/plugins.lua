@@ -456,6 +456,7 @@ return packer.startup(function(use)
   -- Rust tools
   use {
     "simrat39/rust-tools.nvim",
+    ft = "rust",
     config = function()
       require "user.rust_tools"
     end,
