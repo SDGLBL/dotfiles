@@ -169,6 +169,7 @@ local function setup(opts)
     return
   end
 
+  require "user.notify"
   require "user.keymaps"
   require "user.whichkey"
   require "user.options"
@@ -185,7 +186,6 @@ local function setup(opts)
   require "user.telescope"
   require "user.neovide"
   require "user.tabnine"
-  require "user.notify"
   require "user.go_tools"
 
   if c.after_hook ~= nil then
