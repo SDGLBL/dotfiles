@@ -402,7 +402,7 @@ return packer.startup(function(use)
   -- Color picker
   use {
     "uga-rosa/ccc.nvim",
-    ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html" },
+    ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html", "lua" },
     config = function()
       require "user.ccc"
     end,
