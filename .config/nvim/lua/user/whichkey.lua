@@ -95,6 +95,7 @@ M.mappings = {
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
+  ["n"] = { "<cmd>lua require('telescope').extensions.notify.notify()<CR>", "Notifications" },
   ["f"] = {
     "<cmd>Telescope find_files<cr>",
     "Find files",
