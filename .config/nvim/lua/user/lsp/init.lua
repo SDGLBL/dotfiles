@@ -26,6 +26,13 @@ if ok_which_key then
       name = "+LSP",
       a = { code_action, "Code Action" },
       f = { "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", "Format" },
+      g = {
+        Name = "Generate Doc",
+        t = { "<cmd>Neogen type<cr>", "Type doc" },
+        c = { "<cmd>Neogen class<cr>", "Class doc" },
+        f = { "<cmd>Neogen func<cr>", "Func doc" },
+        d = { "<cmd>Neogen file<cr>", "Doc doc" },
+      },
       I = { "<cmd>Telescope lsp_implementations<cr>", "Implementations" },
       j = { "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", "Next Diagnostic" },
       k = { "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", "Prev Diagnostic" },
