@@ -15,6 +15,7 @@ require("mason-null-ls").setup {
     "golangci_lint",
     "codespell",
     "write_good",
+    "shfmt",
   },
   automatic_setup = true,
 }
