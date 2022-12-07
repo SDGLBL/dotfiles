@@ -62,12 +62,21 @@ require("mason-null-ls").setup_handlers {
   end,
 
   golangci_lint = function(_, _)
-    null_ls.register(diagnostics.golangci_lint.with {
-      extra_args = {
-        "-E",
-        "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
-      },
-    })
+    if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") then
+      null_ls.register(diagnostics.golangci_lint.with {
+        extra_args = {
+          "-c",
+          "~/.golangci.yml",
+        },
+      })
+    else
+      null_ls.register(diagnostics.golangci_lint.with {
+        extra_args = {
+          "-E",
+          "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
+        },
+      })
+    end
   end,
 
   codespell = function(_, _)
@@ -76,6 +85,15 @@ require("mason-null-ls").setup_handlers {
 
   write_good = function(_, _)
     null_ls.register(diagnostics.write_good)
+  end,
+
+  golines = function(_, _)
+    null_ls.register(formatting.golines.with {
+      extra_args = {
+        "-m",
+        "163",
+      },
+    })
   end,
 }
 
