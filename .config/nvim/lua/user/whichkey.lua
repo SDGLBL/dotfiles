@@ -159,6 +159,12 @@ M.mappings = {
       "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
       "Undo Stage Hunk",
     },
+    t = {
+      "Toggle",
+      n = { "<cmd>lua require 'gitsigns'.toggle_numhl()<cr>", "Toggle Numhl" },
+      l = { "<cmd>lua require 'gitsigns'.toggle_linehl()<cr>", "Toggle Linehl" },
+      w = { "<cmd>lua require 'gitsigns'.toggle_word_diff()<cr>", "Toggle Word Diff" },
+    },
     o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
