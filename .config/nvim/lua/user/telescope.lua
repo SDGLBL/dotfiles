@@ -17,9 +17,8 @@ telescope.setup {
     prompt_prefix = "🔍 ",
     selection_caret = " ",
     initial_mode = "insert",
-    -- path_display = { "smart" },
+    path_display = { "smart" },
     layout_strategy = "horizontal",
-    -- layout_strategy = "horizontal",
     file_previewer = previewers.vim_buffer_cat.new,
     grep_previewer = previewers.vim_buffer_vimgrep.new,
     qflist_previewer = previewers.vim_buffer_qflist.new,
@@ -27,7 +26,7 @@ telescope.setup {
     generic_sorter = sorters.get_generic_fuzzy_sorter,
 
     layout_config = {
-      width = 0.75,
+      width = 0.8,
       preview_cutoff = 120,
       horizontal = {
         preview_width = function(_, cols, _)
