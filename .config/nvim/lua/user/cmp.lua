@@ -292,7 +292,7 @@ cmp.setup {
     }),
 
     ["<C-Space>"] = cmp.mapping.complete(),
-    ["<C-e>"] = function(fallback)
+    ["<C-s>"] = function(fallback)
       cmp.mapping.abort()
       local copilot_keys = vim.fn["copilot#Accept"]()
       if copilot_keys ~= "" then
