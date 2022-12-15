@@ -138,10 +138,6 @@ local default_config = {
   -- Not UFO in the sky, but an ultra fold in Neovim.
   -- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo)
   better_fold = false,
-  -- `better_tui`
-  -- 💥 Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
-  -- [noice.nvim](https://github.com/folke/noice.nvim)
-  better_tui = false,
   -- `format_on_save`
   -- Format your code on save
   format_on_save = true,

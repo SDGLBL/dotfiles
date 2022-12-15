@@ -289,21 +289,6 @@ return packer.startup(function(use)
     end,
   }
 
-  -- Better tui
-  use {
-    "folke/noice.nvim",
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
-    config = function()
-      require "user.noice"
-    end,
-    cond = function()
-      return _G.configs.better_tui
-    end,
-  }
-
   -- DiffView
   use {
     "sindrets/diffview.nvim",
@@ -469,6 +454,13 @@ return packer.startup(function(use)
   use {
     "weilbith/nvim-code-action-menu",
     cmd = "CodeActionMenu",
+  }
+
+  use {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup {}
+    end,
   }
 
   -- Automatically set up your configuration after cloning packer.nvim

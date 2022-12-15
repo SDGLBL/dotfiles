@@ -57,6 +57,7 @@ configs.setup {
         ["ap"] = "@parameter.outer",
         ["id"] = "@conditional.inner",
         ["ad"] = "@conditional.outer",
+        ["as"] = "@statement.outer",
       },
     },
     swap = {
