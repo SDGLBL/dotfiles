@@ -467,6 +467,15 @@ return packer.startup(function(use)
     end,
   }
 
+  -- Neovim plugin for improved jumplist navigation
+  use {
+    "cbochs/portal.nvim",
+    config = function()
+      vim.keymap.set("n", "<leader>o", require("portal").jump_backward, {})
+      vim.keymap.set("n", "<leader>i", require("portal").jump_forward, {})
+    end,
+  }
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
