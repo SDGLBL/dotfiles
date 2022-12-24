@@ -399,7 +399,7 @@ require("lazy").setup {
     config = function()
       require("neural").setup {
         open_ai = {
-          api_key = _G.configs.openai_key,
+          api_key = "<YOUR OPEN AI API KEY>",
         },
       }
     end,
