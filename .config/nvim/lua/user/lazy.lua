@@ -393,4 +393,19 @@ require("lazy").setup {
       }
     end,
   },
+
+  {
+    "dense-analysis/neural",
+    config = function()
+      require("neural").setup {
+        open_ai = {
+          api_key = _G.configs.openai_key,
+        },
+      }
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "ElPiloto/significant.nvim",
+    },
+  },
 }
