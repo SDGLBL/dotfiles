@@ -285,17 +285,6 @@ require("lazy").setup {
     enabled = _G.configs.better_fold,
   },
 
-  -- Goldsmith pluginplguins
-  {
-    "WhoIsSethDaniel/goldsmith.nvim",
-    dependencies = { -- dependencies
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-    },
-    ft = "go",
-    enabled = _G.configs.go_tools,
-  },
-
   -- GoImpl
   {
     "edolphin-ydf/goimpl.nvim",
@@ -392,10 +381,7 @@ require("lazy").setup {
   },
 
   -- Better code action menu
-  {
-    "weilbith/nvim-code-action-menu",
-    -- build = "CodeActionMenu",
-  },
+  "weilbith/nvim-code-action-menu",
 
   {
     "j-hui/fidget.nvim",

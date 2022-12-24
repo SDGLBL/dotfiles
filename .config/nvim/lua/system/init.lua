@@ -78,10 +78,6 @@
 -- Tools for better development in rust using neovim's builtin lsp
 -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
 ---@field rust_tools boolean
--- enable `go_tools`
--- Tools for better development in go using neovim's builtin lsp
--- [goldsmith.nvim](https://github.com/WhoIsSethDaniel/goldsmith.nvim)
----@field go_tools boolean
 -- enable `color-picker`.
 -- Tools for better development in rust using neovim's builtin lsp
 -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
@@ -183,7 +179,6 @@ local function setup(opts)
   require "user.telescope"
   require "user.neovide"
   require "user.tabnine"
-  require "user.go_tools"
 
   if c.after_hook ~= nil then
     pcall(c.after_hook)
