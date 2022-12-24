@@ -289,6 +289,7 @@ require("lazy").setup {
   {
     "edolphin-ydf/goimpl.nvim",
     ft = "go",
+    build = "go install github.com/josharian/impl@latest",
     config = function()
       local ok, telescope = pcall(require, "telescope")
       if ok then
