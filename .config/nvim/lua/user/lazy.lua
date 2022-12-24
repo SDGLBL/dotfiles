@@ -14,9 +14,6 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup {
-  --- Basic plugins
-  -- Have packer manage itself
-  "wbthomason/packer.nvim",
   -- An implementation of the Popup API from vim in Neovim
   "nvim-lua/popup.nvim",
   -- ful lua functions d ny lots of plugins

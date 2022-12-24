@@ -128,14 +128,6 @@ M.mappings = {
     },
     p = { "<cmd>BufferLineTogglePin<cr>", "Pin current buffer" },
   },
-  p = {
-    name = "Packer",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
-    i = { "<cmd>PackerInstall<cr>", "Install" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
-    u = { "<cmd>PackerUpdate<cr>", "Update" },
-  },
   v = {
     name = "DiffView",
     o = { "<cmd>DiffviewOpen<cr>", "ViewOpen" },

@@ -128,7 +128,6 @@ local default_config = {
 
 #### Plugins
 
-- [packer.nvim](https://github.com/wbthomason/packer.nvim) - A plugin manager for Neovim
 - [project.nvim](https://github.com/ahmedkhalf/project.nvim) - The superior project management solution for neovim.
 - [whick-key](https://github.com/folke/which-key.nvim) - A lua plugin for Neovim 0.5 that displays a popup with possible keybindings of the command you started typing.
 - [nvim-lastplace](https://github.com/ethanholz/nvim-lastplace) - Intelligently reopen files at your last edit position in Vim.
