@@ -407,13 +407,4 @@ require("lazy").setup {
       }
     end,
   },
-
-  -- Neovim plugin for improved jumplist navigation
-  {
-    "cbochs/portal.nvim",
-    config = function()
-      vim.keymap.set("n", "<leader>o", require("portal").jump_backward, {})
-      vim.keymap.set("n", "<leader>i", require("portal").jump_forward, {})
-    end,
-  },
 }
