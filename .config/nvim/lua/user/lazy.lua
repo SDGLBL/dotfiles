@@ -1,83 +1,56 @@
-local fn = vim.fn
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
--- Automatically install packer
-local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-  PACKER_BOOTSTRAP = fn.system {
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system {
     "git",
     "clone",
-    "--depth",
-    "1",
-    "https://github.com/wbthomason/packer.nvim",
-    install_path,
+    "--filter=blob:none",
+    "--single-branch",
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
   }
-  print "Installing packer close and reopen Neovim..."
-  vim.cmd [[packadd packer.nvim]]
 end
 
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]]
+vim.opt.runtimepath:prepend(lazypath)
 
--- Use a protected call so we don"t error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
-
--- Have packer use a popup window
-packer.init {
-  display = {
-    open_fn = function()
-      return require("packer.util").float { border = "rounded" }
-    end,
-  },
-  max_jobs = 30,
-}
-
--- Install your plugins here
-return packer.startup(function(use)
+require("lazy").setup {
   --- Basic plugins
   -- Have packer manage itself
-  use "wbthomason/packer.nvim"
+  "wbthomason/packer.nvim",
   -- An implementation of the Popup API from vim in Neovim
-  use "nvim-lua/popup.nvim"
-  -- Useful lua functions used ny lots of plugins
-  use "nvim-lua/plenary.nvim"
-  use "ahmedkhalf/project.nvim"
-  use "folke/which-key.nvim"
+  "nvim-lua/popup.nvim",
+  -- ful lua functions d ny lots of plugins
+  "nvim-lua/plenary.nvim",
+  "ahmedkhalf/project.nvim",
+  "folke/which-key.nvim",
   -- Remember lastplace
-  use {
+  {
     "ethanholz/nvim-lastplace",
     config = function()
       require("nvim-lastplace").setup {}
     end,
-  }
+  },
   -- Github copilot
-  use "github/copilot.vim"
+  "github/copilot.vim",
   -- Improve load time
-  use "lewis6991/impatient.nvim"
+  "lewis6991/impatient.nvim",
   -- ToggleTerm
-  use "akinsho/toggleterm.nvim"
+  "akinsho/toggleterm.nvim",
   -- Dashboard alpha
-  use "goolord/alpha-nvim"
+  "goolord/alpha-nvim",
   -- Notify
-  use {
+  {
     "rcarriga/nvim-notify",
-    requires = { "nvim-telescope/telescope.nvim" },
-  }
+    dependencies = { "nvim-telescope/telescope.nvim" },
+  },
   -- Telescope
-  use "nvim-telescope/telescope.nvim"
-  use "nvim-telescope/telescope-media-files.nvim"
+  "nvim-telescope/telescope.nvim",
+  "nvim-telescope/telescope-media-files.nvim",
   -- Treesitter
-  use {
+  {
     "nvim-treesitter/nvim-treesitter",
-    run = ":TSUpdate",
-    requires = {
+    build = ":TSUpdate",
+    dependencies = {
       "p00f/nvim-ts-rainbow",
       "windwp/nvim-ts-autotag",
       "mfussenegger/nvim-ts-hint-textobject",
@@ -96,7 +69,7 @@ return packer.startup(function(use)
         config = function()
           require "user.refactor"
         end,
-        cond = function()
+        enabled = function()
           return _G.configs.refactor
         end,
       },
@@ -107,32 +80,31 @@ return packer.startup(function(use)
         end,
       },
     },
-  }
-
+  },
   -- Colorschemes
-  use "folke/tokyonight.nvim"
-  use "rebelot/kanagawa.nvim"
-  use "tanvirtin/monokai.nvim"
-  use "lunarvim/darkplus.nvim"
-  use "tiagovla/tokyodark.nvim"
-  use "ellisonleao/gruvbox.nvim"
-  use "projekt0n/github-nvim-theme"
-  use "marko-cerovac/material.nvim"
-  use "bluz71/vim-nightfly-guicolors"
-  use { "catppuccin/nvim", as = "catppuccin" }
-  use { "rose-pine/neovim", as = "rose-pine" }
-  use {
+  "folke/tokyonight.nvim",
+  "rebelot/kanagawa.nvim",
+  "tanvirtin/monokai.nvim",
+  "lunarvim/darkplus.nvim",
+  "tiagovla/tokyodark.nvim",
+  "ellisonleao/gruvbox.nvim",
+  "projekt0n/github-nvim-theme",
+  "marko-cerovac/material.nvim",
+  "bluz71/vim-nightfly-guicolors",
+  { "catppuccin/nvim", name = "catppuccin" },
+  { "rose-pine/neovim", name = "rose-pine" },
+  {
     "EdenEast/nightfox.nvim",
     config = function()
       require("nightfox").setup {}
     end,
-  }
+  },
 
   -- cmp plugins
   -- The completion plugin
-  use {
+  {
     "hrsh7th/nvim-cmp",
-    requires = {
+    dependencies = {
       { "hrsh7th/cmp-path" },
       { "f3fora/cmp-spell" },
       { "folke/neodev.nvim" },
@@ -145,7 +117,7 @@ return packer.startup(function(use)
       {
         "David-Kunz/cmp-npm",
         event = { "BufRead package.json" },
-        requires = {
+        dependencies = {
           "nvim-lua/plenary.nvim",
         },
         config = function()
@@ -159,23 +131,23 @@ return packer.startup(function(use)
       require "user.cmp"
       require "user.autopairs"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.lsp
     end,
-  }
+  },
 
-  use "windwp/nvim-autopairs"
-  use "numToStr/Comment.nvim"
-  use "JoosepAlviste/nvim-ts-context-commentstring"
+  "windwp/nvim-autopairs",
+  "numToStr/Comment.nvim",
+  "JoosepAlviste/nvim-ts-context-commentstring",
 
   -- Snippets
-  use "L3MON4D3/LuaSnip"
-  use "rafamadriz/friendly-snippets"
+  "L3MON4D3/LuaSnip",
+  "rafamadriz/friendly-snippets",
 
   -- LSP
-  use {
+  {
     "neovim/nvim-lspconfig",
-    requires = {
+    dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "jayp0521/mason-nvim-dap.nvim",
@@ -196,157 +168,157 @@ return packer.startup(function(use)
     config = function()
       require "user.lsp"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.lsp
     end,
-  }
+  },
 
   -- nvim-surround
-  use {
+  {
     "kylechui/nvim-surround",
     config = function()
       require("nvim-surround").setup {}
     end,
-  }
+  },
 
   -- Git
-  use "lewis6991/gitsigns.nvim"
+  "lewis6991/gitsigns.nvim",
 
   -- File tree
-  use "kyazdani42/nvim-web-devicons"
-  use "kyazdani42/nvim-tree.lua"
+  "kyazdani42/nvim-web-devicons",
+  "kyazdani42/nvim-tree.lua",
 
   -- Buffline
-  use "akinsho/bufferline.nvim"
-  use "moll/vim-bbye"
+  "akinsho/bufferline.nvim",
+  "moll/vim-bbye",
 
   -- Lualine
-  use "nvim-lualine/lualine.nvim"
+  "nvim-lualine/lualine.nvim",
 
-  use {
+  {
     "mfussenegger/nvim-dap",
-    requires = {
+    dependencies = {
       "theHamsta/nvim-dap-virtual-text",
       "rcarriga/nvim-dap-ui",
     },
-    cond = function()
+    enabled = function()
       return _G.configs.dap
     end,
-  }
+  },
 
   -- Tmux integration
-  use {
+  {
     "christoomey/vim-tmux-navigator",
     config = function()
       vim.g.tmux_navigator_no_mappings = 1
     end,
-  }
+  },
 
   -- EasyMotion
-  use {
+  {
     "phaazon/hop.nvim",
     branch = "v2",
     config = function()
       require("hop").setup()
     end,
-  }
+  },
 
   -- Show color
-  use {
+  {
     "norcalli/nvim-colorizer.lua",
     config = function()
       require("colorizer").setup()
     end,
-  }
+  },
 
   -- Generate function signatures
-  use {
+  {
     "danymat/neogen",
     config = function()
       require("neogen").setup {}
     end,
     requires = "nvim-treesitter/nvim-treesitter",
-  }
+  },
 
   -- Todo plugin
-  use {
+  {
     "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     config = function()
       require("todo-comments").setup {}
     end,
     event = "BufRead",
-  }
+  },
 
   -- Ident line
-  use {
+  {
     "lukas-reineke/indent-blankline.nvim",
     config = function()
       require "user.indentline"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.indent_blankline
     end,
-  }
+  },
 
   -- DiffView
-  use {
+  {
     "sindrets/diffview.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
-  }
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
   -- Neorg
-  use {
+  {
     "nvim-neorg/neorg",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     ft = "norg",
     config = function()
       require "user.neorg"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.neorg
     end,
-  }
+  },
 
-  use "RRethy/vim-illuminate"
+  "RRethy/vim-illuminate",
 
-  use {
+  {
     "levouh/tint.nvim",
     config = function()
       require "user.tint"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.tint
     end,
-  }
+  },
 
   -- better fold
-  use {
+  {
     "kevinhwang91/nvim-ufo",
-    requires = "kevinhwang91/promise-async",
+    dependencies = "kevinhwang91/promise-async",
     config = function()
       require "user.better_fold"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.better_fold
     end,
-  }
+  },
 
   -- Goldsmith pluginplguins
-  use {
+  {
     "WhoIsSethDaniel/goldsmith.nvim",
-    requires = { -- dependencies
+    dependencies = { -- dependencies
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
     ft = "go",
-    cond = function()
+    enabled = function()
       return _G.configs.go_tools
     end,
-  }
+  },
 
   -- GoImpl
-  use {
+  {
     "edolphin-ydf/goimpl.nvim",
     ft = "go",
     config = function()
@@ -355,55 +327,55 @@ return packer.startup(function(use)
         telescope.load_extension "goimpl"
       end
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.go_tools
     end,
-  }
+  },
 
   -- Markdown preview
-  use {
+  {
     "iamcco/markdown-preview.nvim",
-    run = function()
+    build = function()
       vim.fn["mkdp#util#install"]()
     end,
     ft = "markdown",
     config = function()
       require "user.markdown_preview"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.markdown_preview
     end,
-  }
+  },
 
   -- Generate github repo url link
-  use {
+  {
     "SDGLBL/ggl.nvim",
     config = function()
       require("ggl").setup {}
     end,
     requires = { "rcarriga/nvim-notify" },
-  }
+  },
 
   -- Color picker
-  use {
+  {
     "uga-rosa/ccc.nvim",
     ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html", "lua" },
     config = function()
       require "user.ccc"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.color_picker
     end,
-  }
+  },
 
   -- SnipRun
-  use {
+  {
     "michaelb/sniprun",
-    run = "bash ./install.sh",
-  }
+    build = "bash ./install.sh",
+  },
 
   -- Translate
-  use {
+  {
     "uga-rosa/translate.nvim",
     config = function()
       require("translate").setup {
@@ -420,43 +392,43 @@ return packer.startup(function(use)
         },
       }
     end,
-  }
+  },
 
   -- Crates
-  use {
+  {
     "saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
-    requires = { { "nvim-lua/plenary.nvim" } },
+    dependencies = { { "nvim-lua/plenary.nvim" } },
     config = function()
       require("crates").setup()
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.rust_tools
     end,
-  }
+  },
 
   -- Better neovim ui
-  use "stevearc/dressing.nvim"
+  "stevearc/dressing.nvim",
 
   -- Rust tools
-  use {
+  {
     "simrat39/rust-tools.nvim",
     ft = "rust",
     config = function()
       require "user.rust_tools"
     end,
-    cond = function()
+    enabled = function()
       return _G.configs.rust_tools
     end,
-  }
+  },
 
   -- Better code action menu
-  use {
+  {
     "weilbith/nvim-code-action-menu",
-    cmd = "CodeActionMenu",
-  }
+    -- build = "CodeActionMenu",
+  },
 
-  use {
+  {
     "j-hui/fidget.nvim",
     config = function()
       require("fidget").setup {
@@ -465,11 +437,14 @@ return packer.startup(function(use)
         },
       }
     end,
-  }
+  },
 
-  -- Automatically set up your configuration after cloning packer.nvim
-  -- Put this at the end after all plugins
-  if PACKER_BOOTSTRAP then
-    require("packer").sync()
-  end
-end)
+  -- Neovim plugin for improved jumplist navigation
+  {
+    "cbochs/portal.nvim",
+    config = function()
+      vim.keymap.set("n", "<leader>o", require("portal").jump_backward, {})
+      vim.keymap.set("n", "<leader>i", require("portal").jump_forward, {})
+    end,
+  },
+}

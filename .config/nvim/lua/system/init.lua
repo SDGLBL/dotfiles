@@ -151,7 +151,9 @@ local function setup(opts)
   local all_cmds = vim.tbl_deep_extend("keep", c.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
 
-  require "user.plugins"
+  -- require "user.plugins"
+  require "user.options"
+  require "user.lazy"
   require "user.impatient"
 
   if c.colorscheme == "catppuccin" then
@@ -168,7 +170,6 @@ local function setup(opts)
   require "user.notify"
   require "user.keymaps"
   require "user.whichkey"
-  require "user.options"
   require "user.autocmd"
   require "user.projects"
   require "user.alpha"
