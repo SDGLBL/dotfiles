@@ -66,9 +66,7 @@ require("lazy").setup {
         config = function()
           require "user.refactor"
         end,
-        enabled = function()
-          return _G.configs.refactor
-        end,
+        enabled = _G.configs.refactor,
       },
       {
         "m-demare/hlargs.nvim",
@@ -128,9 +126,7 @@ require("lazy").setup {
       require "user.cmp"
       require "user.autopairs"
     end,
-    enabled = function()
-      return _G.configs.lsp
-    end,
+    enabled = _G.configs.lsp,
   },
 
   "windwp/nvim-autopairs",
@@ -165,9 +161,7 @@ require("lazy").setup {
     config = function()
       require "user.lsp"
     end,
-    enabled = function()
-      return _G.configs.lsp
-    end,
+    enabled = _G.configs.lsp,
   },
 
   -- nvim-surround
@@ -198,9 +192,7 @@ require("lazy").setup {
       "theHamsta/nvim-dap-virtual-text",
       "rcarriga/nvim-dap-ui",
     },
-    enabled = function()
-      return _G.configs.dap
-    end,
+    enabled = _G.configs.dap,
   },
 
   -- Tmux integration
@@ -253,9 +245,7 @@ require("lazy").setup {
     config = function()
       require "user.indentline"
     end,
-    enabled = function()
-      return _G.configs.indent_blankline
-    end,
+    enabled = _G.configs.indent_blankline,
   },
 
   -- DiffView
@@ -272,9 +262,7 @@ require("lazy").setup {
     config = function()
       require "user.neorg"
     end,
-    enabled = function()
-      return _G.configs.neorg
-    end,
+    enabled = _G.configs.neorg,
   },
 
   "RRethy/vim-illuminate",
@@ -284,9 +272,7 @@ require("lazy").setup {
     config = function()
       require "user.tint"
     end,
-    enabled = function()
-      return _G.configs.tint
-    end,
+    enabled = _G.configs.tint,
   },
 
   -- better fold
@@ -296,9 +282,7 @@ require("lazy").setup {
     config = function()
       require "user.better_fold"
     end,
-    enabled = function()
-      return _G.configs.better_fold
-    end,
+    enabled = _G.configs.better_fold,
   },
 
   -- Goldsmith pluginplguins
@@ -309,9 +293,7 @@ require("lazy").setup {
       "nvim-treesitter/nvim-treesitter",
     },
     ft = "go",
-    enabled = function()
-      return _G.configs.go_tools
-    end,
+    enabled = _G.configs.go_tools,
   },
 
   -- GoImpl
@@ -324,9 +306,7 @@ require("lazy").setup {
         telescope.load_extension "goimpl"
       end
     end,
-    enabled = function()
-      return _G.configs.go_tools
-    end,
+    enabled = _G.configs.go_tools,
   },
 
   -- Markdown preview
@@ -339,9 +319,7 @@ require("lazy").setup {
     config = function()
       require "user.markdown_preview"
     end,
-    enabled = function()
-      return _G.configs.markdown_preview
-    end,
+    enabled = _G.configs.markdown_preview,
   },
 
   -- Generate github repo url link
@@ -360,9 +338,7 @@ require("lazy").setup {
     config = function()
       require "user.ccc"
     end,
-    enabled = function()
-      return _G.configs.color_picker
-    end,
+    enabled = _G.configs.color_picker,
   },
 
   -- SnipRun
@@ -399,9 +375,7 @@ require("lazy").setup {
     config = function()
       require("crates").setup()
     end,
-    enabled = function()
-      return _G.configs.rust_tools
-    end,
+    enabled = _G.configs.rust_tools,
   },
 
   -- Better neovim ui
@@ -414,9 +388,7 @@ require("lazy").setup {
     config = function()
       require "user.rust_tools"
     end,
-    enabled = function()
-      return _G.configs.rust_tools
-    end,
+    enabled = _G.configs.rust_tools,
   },
 
   -- Better code action menu
