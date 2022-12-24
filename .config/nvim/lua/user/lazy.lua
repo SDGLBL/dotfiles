@@ -296,7 +296,6 @@ require("lazy").setup {
         telescope.load_extension "goimpl"
       end
     end,
-    enabled = _G.configs.go_tools,
   },
 
   -- Markdown preview
