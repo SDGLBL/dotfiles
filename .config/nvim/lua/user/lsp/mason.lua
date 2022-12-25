@@ -11,6 +11,15 @@ local servers = {
   "pylsp",
 }
 
+-- if use rust-tools then remove rust_analyzer from servers
+if configs.rust_tools then
+  for i, server in ipairs(servers) do
+    if server == "rust_analyzer" then
+      table.remove(servers, i)
+    end
+  end
+end
+
 local settings = {
   ui = {
     border = "rounded",
