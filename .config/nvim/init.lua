@@ -13,6 +13,7 @@ require("system").setup {
     -- auto change background by time
     vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
     vim.o.background = "dark"
+    vim.g.ai_timeout = 50
     -- colorscheme style
     vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
     vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
