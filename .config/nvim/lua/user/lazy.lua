@@ -395,4 +395,24 @@ require("lazy").setup {
   },
 
   "aduros/ai.vim",
+
+  {
+    "anuvyklack/windows.nvim",
+    dependencies = {
+      "anuvyklack/middleclass",
+      "anuvyklack/animation.nvim",
+    },
+    config = function()
+      vim.o.winwidth = 10
+      vim.o.winminwidth = 10
+      vim.o.equalalways = false
+      require("windows").setup {
+        animation = {
+          enable = true,
+          duration = 200,
+          fps = 60,
+        },
+      }
+    end,
+  },
 }
