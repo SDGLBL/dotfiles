@@ -28,7 +28,7 @@ require("lazy").setup {
     end,
   },
   -- Github copilot
-  -- "github/copilot.vim",
+  "github/copilot.vim",
   -- Improve load time
   "lewis6991/impatient.nvim",
   -- ToggleTerm
@@ -414,5 +414,19 @@ require("lazy").setup {
         },
       }
     end,
+  },
+
+  {
+    "jackMort/ChatGPT.nvim",
+    config = function()
+      require("chatgpt").setup {
+        -- optional configuration
+      }
+    end,
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
   },
 }
