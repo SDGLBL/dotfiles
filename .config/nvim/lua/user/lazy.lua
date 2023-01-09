@@ -28,7 +28,7 @@ require("lazy").setup {
     end,
   },
   -- Github copilot
-  "github/copilot.vim",
+  -- "github/copilot.vim",
   -- Improve load time
   "lewis6991/impatient.nvim",
   -- ToggleTerm
@@ -105,7 +105,7 @@ require("lazy").setup {
       { "folke/neodev.nvim" },
       { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-copilot" },
+      -- { "hrsh7th/cmp-copilot" },
       { "hrsh7th/cmp-cmdline" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "saadparwaiz1/cmp_luasnip" },
