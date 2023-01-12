@@ -177,8 +177,8 @@ local function setup(opts)
   require "user.treesitter"
   require "user.gitsigns"
   require "user.telescope"
-  require "user.neovide"
-  require "user.tabnine"
+  -- require "user.neovide"
+  -- require "user.tabnine"
 
   if c.after_hook ~= nil then
     pcall(c.after_hook)
