@@ -25,7 +25,8 @@ require("system").setup {
     vim.g.rose_pine_variant = "base"
 
     -- set guifont
-    vim.cmd [[set guifont=firacode\ nerd\ font\ mono:h17]]
+    -- vim.cmd "[[set guifont=firacode nerd font mono:h17]]"
+    vim.api.nvim_cmd({ cmd = "set", args = "guifont=firacode nerd font mono:h17" }, {})
 
     -- copilot setup
     vim.g.copilot_no_tab_map = true
