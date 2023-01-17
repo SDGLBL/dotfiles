@@ -91,7 +91,7 @@ require("mason-null-ls").setup_handlers {
     null_ls.register(formatting.golines.with {
       extra_args = {
         "-m",
-        "163",
+        "162",
       },
     })
   end,
