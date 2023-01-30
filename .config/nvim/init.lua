@@ -1,5 +1,12 @@
 require("system").setup {
-  colorscheme = "",
+  colorscheme = "catppuccin-mocha",
+  dap = true,
+  -- tint = true,
+  -- refactor = true,
+  -- rust_tools = true,
+  -- better_fold = true,
+  -- indent_blankline = true,
+  -- transparent_window = true,
   autocmds = {
     custom_groups = {
       { "BufWinEnter", "*.go", "setlocal ts=4 sw=4" },
@@ -33,7 +40,7 @@ require("system").setup {
       ["*"] = false,
       ["javascript"] = true,
       ["typescript"] = true,
-      ["lua"] = false,
+      ["lua"] = true,
       ["rust"] = true,
       ["c"] = true,
       ["c#"] = true,

@@ -125,10 +125,6 @@ local function setup(opts)
 
   _G.configs = c
 
-  if c.pre_hook ~= nil then
-    pcall(c.pre_hook)
-  end
-
   local autocmd = require "user.autocmd"
 
   if c.transparent_window then
@@ -147,7 +143,6 @@ local function setup(opts)
   local all_cmds = vim.tbl_deep_extend("keep", c.autocmds, default_cmds)
   autocmd.define_augroups(all_cmds)
 
-  -- require "user.plugins"
   require "user.options"
   require "user.lazy"
   require "user.impatient"
@@ -164,6 +159,14 @@ local function setup(opts)
   end
 
   require "user.notify"
+
+  if c.pre_hook ~= nil then
+    local pre_hook_status, ret = pcall(c.pre_hook)
+    if not pre_hook_status then
+      vim.notify("executed pre_hook failed: " .. vim.inspect(ret))
+    end
+  end
+
   require "user.keymaps"
   require "user.whichkey"
   require "user.autocmd"
@@ -181,7 +184,10 @@ local function setup(opts)
   -- require "user.tabnine"
 
   if c.after_hook ~= nil then
-    pcall(c.after_hook)
+    local after_hook_status, ret = pcall(c.after_hook)
+    if not after_hook_status then
+      vim.notify("executed after_hook failed: " .. vim.inspect(ret))
+    end
   end
 end
 
