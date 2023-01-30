@@ -24,16 +24,22 @@ require("system").setup {
     -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
     vim.g.rose_pine_variant = "base"
 
-    -- set guifont
-    -- vim.cmd "[[set guifont=firacode nerd font mono:h17]]"
-    vim.api.nvim_cmd({ cmd = "set", args = "guifont=firacode nerd font mono:h17" }, {})
-
     -- copilot setup
     vim.g.copilot_no_tab_map = true
     vim.g.copilot_assume_mapped = true
     vim.g.copilot_tab_fallback = ""
     vim.g.copilot_filetypes = {
       ["markdown"] = true,
+      ["*"] = false,
+      ["javascript"] = true,
+      ["typescript"] = true,
+      ["lua"] = false,
+      ["rust"] = true,
+      ["c"] = true,
+      ["c#"] = true,
+      ["c++"] = true,
+      ["go"] = true,
+      ["python"] = true,
     }
 
     -- Please check https://github.com/agriffis/skel/blob/master/neovim/bin/clipboard-provider
@@ -49,6 +55,8 @@ require("system").setup {
         ["*"] = "clipboard-provider paste",
       },
     }
+
+    vim.g.ai_indicator_text = ""
 
     -- Please check https://github.com/equalsraf/win32yank
     -- If you use wsl2 or wsl in windows
