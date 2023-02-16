@@ -6,6 +6,7 @@ end
 require("mason-null-ls").setup {
   ensure_installed = {
     "stylua",
+    "golines",
     "goimports",
     "taplo",
     "rustfmt",
@@ -91,7 +92,7 @@ require("mason-null-ls").setup_handlers {
     null_ls.register(formatting.golines.with {
       extra_args = {
         "-m",
-        "162",
+        "158",
       },
     })
   end,

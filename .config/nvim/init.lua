@@ -38,6 +38,7 @@ require("system").setup {
     vim.g.copilot_filetypes = {
       ["markdown"] = true,
       ["*"] = false,
+      ["json"] = true,
       ["javascript"] = true,
       ["typescript"] = true,
       ["lua"] = true,

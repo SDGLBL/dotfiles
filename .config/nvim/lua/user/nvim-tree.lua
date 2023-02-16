@@ -23,12 +23,12 @@ vim.api.nvim_create_autocmd("BufEnter", {
 nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
-  open_on_setup = false,
-  ignore_ft_on_setup = {
-    "startify",
-    "dashboard",
-    "alpha",
-  },
+  -- open_on_setup = true,
+  -- ignore_ft_on_setup = {
+  --   "startify",
+  --   "dashboard",
+  --   "alpha",
+  -- },
   auto_reload_on_write = true,
   open_on_tab = false,
   hijack_cursor = false,
@@ -48,7 +48,7 @@ nvim_tree.setup {
     ignore_list = {},
   },
   git = {
-    enable = true,
+    enable = false,
     ignore = false,
     timeout = 500,
   },
