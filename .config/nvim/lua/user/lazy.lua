@@ -418,4 +418,11 @@ require("lazy").setup {
       }
     end,
   },
+
+  {
+    "LudoPinelli/comment-box.nvim",
+    config = function()
+      require "user.comment_box"
+    end,
+  },
 }

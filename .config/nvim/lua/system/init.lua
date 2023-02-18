@@ -147,8 +147,13 @@ local function setup(opts)
   require "user.lazy"
   require "user.impatient"
 
-  if c.colorscheme == "catppuccin" then
-    require("catppuccin").setup()
+  -- if colorscheme start with catppuccin, then load catppuccin
+  if c.colorscheme:find "catppuccin" then
+    require("catppuccin").setup {
+      styles = {
+        comments = {},
+      },
+    }
   end
 
   ---@diagnostic disable-next-line: param-type-mismatch
