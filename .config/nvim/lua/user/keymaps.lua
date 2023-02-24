@@ -81,3 +81,8 @@ keymap("n", "dtp", "dt{", opts)
 keymap("n", "cta", "ct&", opts)
 keymap("n", "cto", "ct|", opts)
 keymap("n", "ctp", "ct{", opts)
+
+-- Copilot
+keymap("i", "<C-s>", "<Plug>(copilot-next)", { noremap = false })
+keymap("i", "<C-a>", "<Plug>(copilot-suggest)", { noremap = false })
+keymap("i", "<C-d>", "<Plug>(copilot-dismiss)", { noremap = false })
