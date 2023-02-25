@@ -263,7 +263,6 @@ require("lazy").setup {
   {
     "nvim-neorg/neorg",
     dependencies = "nvim-lua/plenary.nvim",
-    ft = "norg",
     config = function()
       require "user.neorg"
     end,

@@ -39,7 +39,7 @@ local ok_which_key, wk = pcall(require, "which-key")
 
 if ok_which_key then
   wk.register({
-    n = {
+    N = {
       name = "CommentBox",
       a = {
         name = "Adapted",

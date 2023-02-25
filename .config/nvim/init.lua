@@ -48,6 +48,7 @@ require("system").setup {
       ["c++"] = true,
       ["go"] = true,
       ["python"] = true,
+      ["norg"] = true,
     }
 
     -- Please check https://github.com/agriffis/skel/blob/master/neovim/bin/clipboard-provider

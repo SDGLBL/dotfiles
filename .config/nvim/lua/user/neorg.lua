@@ -32,22 +32,14 @@ neorg.setup {
     },
     ["core.norg.journal"] = {},
     ["core.norg.qol.toc"] = {},
-    ["core.gtd.base"] = {
-      config = {
-        workspace = "work",
-      },
-    },
     ["core.norg.concealer"] = {},
-    ["core.integrations.nvim-cmp"] = {
-      config = { -- Note that this table is optional and doesn't need to be provided
-        -- Configuration here
-      },
-    },
     ["core.norg.completion"] = {
       config = {
         engine = "nvim-cmp",
       },
     },
+    ["core.integrations.nvim-cmp"] = {},
+    ["core.integrations.treesitter"] = {},
   },
 }
 
@@ -56,7 +48,6 @@ local ok_which_key, wk = pcall(require, "which-key")
 if ok_which_key then
   wk.register({
     n = {
-
       name = "Neorg",
       g = {
         name = "GTD",

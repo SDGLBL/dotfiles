@@ -391,7 +391,7 @@ cmp.setup {
     -- { name = "orgmode" },
     { name = "npm", keyword_length = 4 },
     { name = "crates" },
-    -- { name = "neorg" },
+    { name = "neorg" },
     { name = "path" },
     { name = "buffer" },
     { name = "calc" },
