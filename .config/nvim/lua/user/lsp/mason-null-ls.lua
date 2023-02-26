@@ -63,7 +63,7 @@ require("mason-null-ls").setup_handlers {
   end,
 
   golangci_lint = function(_, _)
-    if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") then
+    if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
       null_ls.register(diagnostics.golangci_lint.with {
         extra_args = {
           "-c",
@@ -89,12 +89,16 @@ require("mason-null-ls").setup_handlers {
   end,
 
   golines = function(_, _)
-    null_ls.register(formatting.golines.with {
-      extra_args = {
-        "-m",
-        "158",
-      },
-    })
+    if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
+      null_ls.register(formatting.golines.with {
+        extra_args = {
+          "-m",
+          "158",
+        },
+      })
+    else
+      null_ls.register(formatting.golines)
+    end
   end,
 }
 

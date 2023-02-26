@@ -49,12 +49,6 @@ if ok_which_key then
   wk.register({
     n = {
       name = "Neorg",
-      g = {
-        name = "GTD",
-        e = { "<cmd>Neorg gtd edit<cr>", "Edit" },
-        v = { "<cmd>Neorg gtd views<cr>", "Views" },
-        c = { "<cmd>Neorg gtd capture<cr>", "Capture" },
-      },
       w = {
         name = "Workspaces",
         w = { "<cmd>Neorg workspace work<cr>", "Work" },
