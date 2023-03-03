@@ -32,7 +32,6 @@ font:
 
   # Italic font face
   italic:
-    family: FiraCode Nerd Font
     style: Italic
 
   # Bold italic font face
@@ -63,15 +62,11 @@ font:
   #  # Keeping this as half of offset to vertically align the text in cursor
    # y: 7
 
-  # Better font rendering for mac
-  use_thin_strokes: true
-
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
   # When set to `true`, selected text will be copied to the primary clipboard.
   save_to_clipboard: true
-
 
 # Live config reload (changes require restart)
 live_config_reload: true

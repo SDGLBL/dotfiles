@@ -161,7 +161,7 @@ M.mappings = {
     c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
   },
   s = {
-    name = "Search",
+    name = "Search/Session",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
     t = { "<cmd>Telescope live_grep<cr>", "Find Text" },
     c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
@@ -175,6 +175,9 @@ M.mappings = {
       "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
       "Colorscheme with Preview",
     },
+    s = { "<cmd>lua require 'persistence'.load()<cr>", "Session Load Dir" },
+    l = { "<cmd>lua require 'persistence'.load({last = true})<cr>", "Session Load Last" },
+    d = { "<cmd>lua require 'persistence'.stop()<cr>", "Session Save Stop" },
   },
   t = {
     name = "Terminal",
