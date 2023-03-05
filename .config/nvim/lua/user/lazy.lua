@@ -395,6 +395,9 @@ require("lazy").setup {
         text = {
           spinner = "dots", -- animation shown when tasks are ongoing
         },
+        window = {
+          relative = "editor", -- window position
+        },
       }
     end,
   },
