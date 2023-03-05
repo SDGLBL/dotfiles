@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=2164,2086
+# shellcheck disable=2164,2086,1091
 
 SHELL_FOLDER=$(
 	cd "$(dirname "$0")"
@@ -490,6 +490,13 @@ config_alacritty() {
 	ln -s "$SHELL_FOLDER"/.alacritty.yml "$HOME"/.alacritty.yml
 }
 
+config_kitty() {
+	if dir_is_exists "$HOME"/.config/kitty; then
+		mv "$HOME"/.config/kitty "$HOME/.config/kitty_$(date +'%Y-%m-%dT%H:%M:%S').backup"
+	fi
+	ln -s "$SHELL_FOLDER"/config/kitty "$HOME"/.config/kitty
+}
+
 config_git() {
 	if file_need_back "$HOME"/.gitconfig; then
 		mv "$HOME"/.gitconfig "$HOME/.gitconfig_$(date +'%Y-%m-%dT%H:%M:%S').bak"
@@ -580,6 +587,7 @@ all() {
 		config_zsh
 	fi
 	config_alacritty
+	config_kitty
 	config_bash
 	install_other
 	echo "Please restart your terminal or run 'source ~/.bashrc' or 'zsh && source ~/.zshrc' to make the changes take effect"
@@ -671,6 +679,7 @@ while [ $# -gt 0 ]; do
 			config_zsh
 			config_git
 			config_alacritty
+			config_kitty
 			exit 0
 			;;
 		*)
