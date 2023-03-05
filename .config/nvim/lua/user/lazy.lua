@@ -263,6 +263,7 @@ require("lazy").setup {
   {
     "nvim-neorg/neorg",
     dependencies = "nvim-lua/plenary.nvim",
+    ft = "norg",
     config = function()
       require "user.neorg"
     end,
@@ -405,8 +406,8 @@ require("lazy").setup {
       "anuvyklack/animation.nvim",
     },
     config = function()
-      vim.o.winwidth = 10
-      vim.o.winminwidth = 10
+      vim.o.winwidth = 20
+      vim.o.winminwidth = 5
       vim.o.equalalways = false
       require("windows").setup {
         animation = {
@@ -422,6 +423,17 @@ require("lazy").setup {
     "LudoPinelli/comment-box.nvim",
     config = function()
       require "user.comment_box"
+    end,
+  },
+
+  {
+    "krivahtoo/silicon.nvim",
+    build = "./install.sh",
+    config = function()
+      require("silicon").setup {
+        font = "FiraCode Nerd Font Mono",
+        theme = "Monokai Extended",
+      }
     end,
   },
 
