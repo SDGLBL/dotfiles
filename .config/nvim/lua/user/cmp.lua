@@ -67,6 +67,10 @@ M.methods.feedkeys = feedkeys
 ---@param dir number 1 for forward, -1 for backward; defaults to 1
 ---@return boolean true if a jumpable luasnip field is found while inside a snippet
 local function jumpable(dir)
+  if not snip_status_ok then
+    return false
+  end
+
   local win_get_cursor = vim.api.nvim_win_get_cursor
   local get_current_buf = vim.api.nvim_get_current_buf
 
@@ -386,7 +390,19 @@ cmp.setup {
     --   },
     -- },
     { name = "luasnip" },
-    { name = "nvim_lsp" },
+    {
+      name = "nvim_lsp",
+      entry_filter = function(entry, ctx)
+        local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
+        if kind == "Snippet" and ctx.prev_context.filetype == "java" then
+          return false
+        end
+        if kind == "Text" then
+          return false
+        end
+        return true
+      end,
+    },
     -- { name = "cmp_tabnine" },
     -- { name = "orgmode" },
     { name = "npm", keyword_length = 4 },
