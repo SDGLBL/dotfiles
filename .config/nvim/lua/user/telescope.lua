@@ -8,14 +8,19 @@ if ok_media then
   telescope.load_extension "media_files"
 end
 
+local icons_ok, icons = pcall(require, "user.icons")
+if not icons_ok then
+  return
+end
+
 local actions = require "telescope.actions"
 local previewers = require "telescope.previewers"
 local sorters = require "telescope.sorters"
 
 telescope.setup {
   defaults = {
-    prompt_prefix = "🔍 ",
-    selection_caret = " ",
+    prompt_prefix = icons.ui.Telescope .. " ",
+    selection_caret = icons.ui.Forward .. " ",
     initial_mode = "insert",
     -- path_display = { "smart" },
     layout_strategy = "horizontal",

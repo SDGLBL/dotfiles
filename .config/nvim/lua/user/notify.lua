@@ -1,3 +1,8 @@
+local icons_ok, icons = pcall(require, "user.icons")
+if not icons_ok then
+  return
+end
+
 local defaults = {
   active = true,
   on_config_done = nil,
@@ -25,11 +30,11 @@ local defaults = {
 
     ---@usage Icons for the different levels
     icons = {
-      ERROR = "",
-      WARN = "",
-      INFO = "",
-      DEBUG = "",
-      TRACE = "✎",
+      ERROR = icons.diagnostics.Error,
+      WARN = icons.diagnostics.Warning,
+      INFO = icons.diagnostics.Hint,
+      DEBUG = icons.diagnostics.Debug,
+      TRACE = icons.diagnostics.Trace,
     },
   },
 }

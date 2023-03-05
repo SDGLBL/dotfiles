@@ -15,6 +15,11 @@ if not snip_status_ok then
   return
 end
 
+local icons_ok, icons = pcall(require, "user.icons")
+if not icons_ok then
+  return
+end
+
 local neogen_status_ok, neogen = pcall(require, "neogen")
 
 require("luasnip.loaders.from_vscode").lazy_load()
@@ -159,31 +164,40 @@ M.methods.jumpable = jumpable
 --   פּ ﯟ   some other good icons
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 local kind_icons = {
-  Class = " ",
-  Color = " ",
-  Constant = "ﲀ ",
-  Constructor = " ",
-  Enum = "練 ",
-  EnumMember = " ",
-  Event = " ",
-  Field = " ",
-  File = "",
-  Folder = " ",
-  Function = " ",
-  Interface = "ﰮ ",
-  Keyword = " ",
-  Method = " ",
-  Module = " ",
-  Operator = " ",
-  Property = " ",
-  Reference = " ",
-  Snippet = " ",
-  Struct = " ",
-  Text = " ",
-  TypeParameter = " ",
-  Unit = "塞 ",
-  Value = " ",
-  Variable = " ",
+  Array = icons.kind.Array .. " ",
+  Boolean = icons.kind.Boolean,
+  Class = icons.kind.Class .. " ",
+  Color = icons.kind.Color .. " ",
+  Constant = icons.kind.Constant .. " ",
+  Constructor = icons.kind.Constructor .. " ",
+  Enum = icons.kind.Enum .. " ",
+  EnumMember = icons.kind.EnumMember .. " ",
+  Event = icons.kind.Event .. " ",
+  Field = icons.kind.Field .. " ",
+  File = icons.kind.File .. " ",
+  Folder = icons.kind.Folder .. " ",
+  Function = icons.kind.Function .. " ",
+  Interface = icons.kind.Interface .. " ",
+  Key = icons.kind.Key .. " ",
+  Keyword = icons.kind.Keyword .. " ",
+  Method = icons.kind.Method .. " ",
+  Module = icons.kind.Module .. " ",
+  Namespace = icons.kind.Namespace .. " ",
+  Null = icons.kind.Null .. " ",
+  Number = icons.kind.Number .. " ",
+  Object = icons.kind.Object .. " ",
+  Operator = icons.kind.Operator .. " ",
+  Package = icons.kind.Package .. " ",
+  Property = icons.kind.Property .. " ",
+  Reference = icons.kind.Reference .. " ",
+  Snippet = icons.kind.Snippet .. " ",
+  String = icons.kind.String .. " ",
+  Struct = icons.kind.Struct .. " ",
+  Text = icons.kind.Text .. " ",
+  TypeParameter = icons.kind.TypeParameter .. " ",
+  Unit = icons.kind.Unit .. " ",
+  Value = icons.kind.Value .. " ",
+  Variable = icons.kind.Variable .. " ",
 }
 
 local name_icons = {

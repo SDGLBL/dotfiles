@@ -50,7 +50,7 @@ require("mason-null-ls").setup_handlers {
   end,
 
   prettier = function(_, _)
-    null_ls.register(formatting.prettier.with { extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } })
+    null_ls.register(formatting.prettier.with { extra_args = { "--no-semi" } })
   end,
 
   shellcheck = function(_, _)
