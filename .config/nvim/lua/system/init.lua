@@ -140,7 +140,7 @@ local function setup(opts)
   -- load user cmd
   c.autocmds = c.autocmds or {}
   local default_cmds = autocmd.load_augroups() or {}
-  local all_cmds = vim.tbl_deep_extend("keep", c.autocmds, default_cmds)
+  local all_cmds = vim.tbl_deep_extend("keep", default_cmds, c.autocmds)
   autocmd.define_augroups(all_cmds)
 
   require "user.options"
