@@ -126,6 +126,7 @@ M.mappings = {
       "Sort by language",
     },
     p = { "<cmd>BufferLineTogglePin<cr>", "Pin current buffer" },
+    m = { "<cmd>WindowsMaximize<cr>", "Maximize current buffer" },
   },
   v = {
     name = "DiffView",
