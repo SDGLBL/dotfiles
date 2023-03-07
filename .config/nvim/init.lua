@@ -15,7 +15,7 @@ require("system").setup {
         pattern = { "*.go", "*.c", "*.php", "*.cpp", "*.h" },
         desc = "setlocal ts and sw",
         callback = function()
-          vim.cmd [[ setlocal ts=4 sw=4 ]]
+          pcall(vim.cmd, "setlocal ts=4 sw=4")
         end,
       },
     },

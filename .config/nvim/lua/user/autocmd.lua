@@ -29,10 +29,7 @@ function M.load_augroups()
         pattern = { "gitcommit", "markdown" },
         desc = "setlocal wrap and spell",
         callback = function()
-          vim.cmd [[
-            setlocal wrap
-            setlocal spell
-          ]]
+          pcall(vim.cmd, "setlocal wrap", "setlocal spell")
         end,
       },
     },
@@ -101,9 +98,7 @@ function M.load_augroups()
         group = "_filetype_settings",
         pattern = "alpha",
         callback = function()
-          vim.cmd [[
-            set nobuflisted
-          ]]
+          pcall(vim.cmd, "set nobuflisted")
         end,
       },
     },
