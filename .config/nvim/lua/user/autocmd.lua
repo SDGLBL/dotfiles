@@ -9,51 +9,115 @@ local format_on_save = {
   filter = require("user.lsp.utils").format_filter,
 }
 
---- Load the default set of autogroups and autocommands.
 function M.load_augroups()
   return {
-    _general_settings = {
-      { "FileType", "qf,help,man", "nnoremap <silent> <buffer> q :close<CR>" },
+    {
+      "TextYankPost",
       {
-        "TextYankPost",
-        "*",
-        "lua require('vim.highlight').on_yank({higroup = 'Search', timeout = 200})",
-      },
-      {
-        "BufWinEnter",
-        "dashboard",
-        "setlocal cursorline signcolumn=yes cursorcolumn number",
-      },
-      { "FileType", "qf", "set nobuflisted" },
-      -- { "VimLeavePre", "*", "set title set titleold=" },
-    },
-    _formatoptions = {
-      {
-        "BufWinEnter,BufRead,BufNewFile",
-        "*",
-        "setlocal formatoptions-=c formatoptions-=r formatoptions-=o",
+        group = "_general_settings",
+        pattern = "*",
+        desc = "Highlight text on yank",
+        callback = function()
+          vim.highlight.on_yank { higroup = "Search", timeout = 100 }
+        end,
       },
     },
-    _filetypechanges = {},
-    _git = {
-      { "FileType", "gitcommit", "setlocal wrap" },
-      { "FileType", "gitcommit", "setlocal spell" },
+    {
+      "FileType",
+      {
+        group = "_filetype_settings",
+        pattern = { "gitcommit", "markdown" },
+        desc = "setlocal wrap and spell",
+        callback = function()
+          vim.cmd [[
+            setlocal wrap
+            setlocal spell
+          ]]
+        end,
+      },
     },
-    _markdown = {
-      { "FileType", "markdown", "setlocal wrap" },
-      { "FileType", "markdown", "setlocal spell" },
+    {
+      "FileType",
+      {
+        group = "_hide_dap_repl",
+        pattern = "dap-repl",
+        command = "set nobuflisted",
+      },
     },
-    _buffer_bindings = {
-      { "FileType", "floaterm", "nnoremap <silent> <buffer> q :q<CR>" },
+    {
+      "FileType",
+      {
+        group = "_filetype_settings",
+        pattern = { "lua" },
+        desc = "fix gf functionality inside .lua files",
+        callback = function()
+          ---@diagnostic disable: assign-type-mismatch
+          -- credit: https://github.com/sam4llis/nvim-lua-gf
+          vim.opt_local.include = [[\v<((do|load)file|require|reload)[^''"]*[''"]\zs[^''"]+]]
+          vim.opt_local.includeexpr = "substitute(v:fname,'\\.','/','g')"
+          vim.opt_local.suffixesadd:prepend ".lua"
+          vim.opt_local.suffixesadd:prepend "init.lua"
+
+          for _, path in pairs(vim.api.nvim_list_runtime_paths()) do
+            vim.opt_local.path:append(path .. "/lua")
+          end
+        end,
+      },
     },
-    _auto_resize = {
-      -- will cause split windows to be resized evenly if main window is resized
-      { "VimResized", "*", "tabdo wincmd =" },
+    {
+      "FileType",
+      {
+        group = "_buffer_mappings",
+        pattern = {
+          "qf",
+          "help",
+          "man",
+          "floaterm",
+          "lspinfo",
+          "lir",
+          "lsp-installer",
+          "null-ls-info",
+          "tsplayground",
+          "DressingSelect",
+          "Jaq",
+        },
+        callback = function()
+          vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = true })
+          vim.opt_local.buflisted = false
+        end,
+      },
     },
-    _general_lsp = {
-      { "FileType", "lspinfo,lsp-installer,null-ls-info", "nnoremap <silent> <buffer> q :close<CR>" },
+    {
+      "VimResized",
+      {
+        group = "_auto_resize",
+        pattern = "*",
+        command = "tabdo wincmd =",
+      },
     },
-    custom_groups = {},
+    {
+      "FileType",
+      {
+        group = "_filetype_settings",
+        pattern = "alpha",
+        callback = function()
+          vim.cmd [[
+            set nobuflisted
+          ]]
+        end,
+      },
+    },
+    {
+      "FileType",
+      {
+        group = "_filetype_settings",
+        pattern = "lir",
+        callback = function()
+          vim.opt_local.number = false
+          vim.opt_local.relativenumber = false
+        end,
+      },
+    },
   }
 end
 
@@ -73,34 +137,40 @@ function M.disable_format_on_save()
 end
 
 function M.enable_transparent_mode()
-  vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi TelescopeBorder ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi NvimTreeNormal ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi EndOfBuffer ctermbg=none guibg=none"
-  vim.cmd "au ColorScheme * hi TabLine ctermbg=none guibg=none"
-  vim.cmd "let &fcs='eob: '"
+  vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+      local hl_groups = {
+        "Normal",
+        "SignColumn",
+        "NormalNC",
+        "TelescopeBorder",
+        "NvimTreeNormal",
+        "NvimTreeNormalNC",
+        "EndOfBuffer",
+        "MsgArea",
+      }
+      for _, name in ipairs(hl_groups) do
+        vim.cmd(string.format("highlight %s ctermbg=none guibg=none", name))
+      end
+    end,
+  })
+  vim.opt.fillchars = "eob: "
 end
 
 --- Create autocommand groups based on the passed definitions
 ---@param definitions table contains trigger, pattern and text. The key will be used as a group name
-function M.define_augroups(definitions, buffer)
-  for group_name, definition in pairs(definitions) do
-    vim.cmd("augroup " .. group_name)
-    if buffer then
-      vim.cmd [[autocmd! * <buffer>]]
-    else
-      vim.cmd [[autocmd!]]
+function M.define_augroups(definitions)
+  for _, entry in ipairs(definitions) do
+    local event = entry[1]
+    local opts = entry[2]
+    if type(opts.group) == "string" and opts.group ~= "" then
+      local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
+      if not exists then
+        vim.api.nvim_create_augroup(opts.group, {})
+      end
     end
-
-    for _, def in pairs(definition) do
-      local command = table.concat(vim.tbl_flatten { "autocmd", def }, " ")
-      vim.cmd(command)
-    end
-
-    vim.cmd "augroup END"
+    vim.api.nvim_create_autocmd(event, opts)
   end
 end
 

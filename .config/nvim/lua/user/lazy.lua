@@ -438,6 +438,7 @@ require("lazy").setup {
         theme = "Monokai Extended",
       }
     end,
+    enabled = false,
   },
 
   {
