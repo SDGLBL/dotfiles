@@ -62,6 +62,13 @@ msg() {
 	printf "%s\n" "$text"
 }
 
+prepare() {
+	# macos need brew
+	if [[ "$OSTYPE" =~ ^darwin ]]; then
+		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	fi
+}
+
 add_git_proxy() {
 	if grep -q "ghproxy" /etc/hosts; then
 		# add git proxy for Mainland China users
@@ -138,7 +145,7 @@ install_neovim() {
 			if [[ "$OSTYPE" =~ ^darwin ]]; then
 				wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-macos.tar.gz -O "$HOME"/software/nvim.tar.gz
 				tar -xvf "$HOME"/software/nvim.tar.gz -C "$HOME"/software
-				mv "$HOME"/software/nvim-linux64 "$HOME"/software/nvim
+				mv "$HOME"/software/nvim-macos "$HOME"/software/nvim
 			elif [[ "$OSTYPE" =~ ^linux ]]; then
 				wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.tar.gz -O "$HOME"/software/nvim.tar.gz
 				tar -xvf "$HOME"/software/nvim.tar.gz -C "$HOME"/software
@@ -540,6 +547,11 @@ check() {
 		exit 1
 	fi
 
+	if ! command_is_exists wget; then
+		err "Please install wget"
+		exit 1
+	fi
+
 	if ! dir_is_exists "$HOME"/.config; then
 		mkdir -p "$HOME"/.config
 	fi
@@ -600,6 +612,7 @@ help() {
 	echo "  -a,-all            install and configure all tools"
 	echo "  --action [action]  apply [action]"
 	echo "actions:"
+	echo "  prepare            prepare"
 	echo "  add-git-proxy      add git proxy"
 	echo "  install-cargo      install cargo (rust)"
 	echo "  install-go         install go"
@@ -627,6 +640,10 @@ while [ $# -gt 0 ]; do
 		;;
 	--action)
 		case "$2" in
+		prepare)
+			prepare
+			exit 0
+			;;
 		add-git-proxy)
 			add_git_proxy
 			exit 0
