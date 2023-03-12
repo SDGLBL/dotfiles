@@ -443,7 +443,7 @@ require("lazy").setup {
 
   {
     "folke/persistence.nvim",
-    event = { "BufReadPre" }, -- this will only start session saving when an actual file was opened
+    event = { "VimLeavePre" }, -- this will only start session saving when an actual file was opened
     config = function()
       require("persistence").setup()
     end,
