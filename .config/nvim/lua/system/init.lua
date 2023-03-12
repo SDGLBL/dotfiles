@@ -189,6 +189,7 @@ local function setup(opts)
   require "user.treesitter"
   require "user.gitsigns"
   require "user.telescope"
+  require "user.markdown_preview"
   -- require "user.neovide"
   -- require "user.tabnine"
 
