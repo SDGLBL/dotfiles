@@ -438,7 +438,7 @@ require("lazy").setup {
         theme = "Monokai Extended",
       }
     end,
-    enabled = false,
+    enabled = _G.configs.silicon,
   },
 
   {

@@ -86,6 +86,10 @@
 -- Modernity meets insane extensibility. The future of organizing your life in Neovim.
 -- [neorg](https://github.com/nvim-neorg/neorg)
 ---@field neorg boolean
+-- enable `silicon`
+-- Code img generator
+-- [silicon.nvim](https://github.com/Aloxaf/silicon)
+---@field silicon boolean
 -- enable`markdown_preview`
 -- markdown preview plugin for (neo)vim
 -- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)

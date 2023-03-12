@@ -122,6 +122,10 @@ local default_config = {
   -- markdown preview plugin for (neo)vim
   -- [markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)
   markdown_preview = false,
+  -- `silicon`
+  -- Code img generator
+  -- [silicon.nvim](https://github.com/Aloxaf/silicon)
+  silicon = false,
   -- `neorg`
   -- Modernity meets insane extensibility. The future of organizing your life in Neovim.
   -- [neorg](https://github.com/nvim-neorg/neorg)
