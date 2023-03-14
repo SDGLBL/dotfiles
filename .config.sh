@@ -88,6 +88,12 @@ if command_is_exists go; then
 	export GOPROXY=https://goproxy.io,direct
 fi
 
+# GO_FLAGS
+function GO_FLAGS() {
+	flags=("-X" "main.goversion=$(go version)" "-X" "main.buildstamp=$(date -u '+%Y-%m-%d_%I:%M:%S%p')")
+	export flags
+}
+
 # fzf config
 if command_is_exists fzf; then
 	export FZF_DEFAULT_OPTS='--preview-window=right:50% --layout=reverse --border'
