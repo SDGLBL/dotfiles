@@ -65,7 +65,31 @@ msg() {
 prepare() {
 	# macos need brew
 	if [[ "$OSTYPE" =~ ^darwin ]]; then
-		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		msg "macos prepare"
+
+		if ! command_is_exists brew; then
+			/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+		fi
+
+		if file_need_back /opt/homebrew/bin/brew; then
+			msg "homebrew installed"
+			/opt/homebrew/bin/brew install gcc make g++ git python3 zsh libc6-dev wget curl tmux
+		fi
+
+		msg "macos prepare done"
+	elif [[ "$OSTYPE" =~ ^linux ]]; then
+		if grep "Ubuntu" /etc/os-release; then
+			msg "linux prepare"
+
+			sudo apt-get update
+			sudo apt-get install -y gcc make g++ git python3 zsh libc6-dev wget curl tmux
+		elif grep "CentOS" /etc/redhat-release; then
+			msg "linux prepare"
+
+			sudo yum install -y gcc make g++ git python3 zsh libc6-dev wget curl tmux
+		fi
+
+		msg "linux prepare done"
 	fi
 }
 
@@ -576,6 +600,7 @@ init_path() {
 }
 
 all() {
+	prepare
 	add_git_proxy
 	install_cargo
 	install_go
