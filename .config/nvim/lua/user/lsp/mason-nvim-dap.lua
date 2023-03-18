@@ -12,7 +12,7 @@ require("mason-nvim-dap").setup {
   ensure_installed = { "python", "delve" },
 }
 
-require("mason-nvim-dap").setup_handlers {
+local handlers = {
   function(source_name)
     -- all sources with no handler get passed here
     -- Keep original functionality of `automatic_setup = true`
@@ -102,68 +102,125 @@ require("mason-nvim-dap").setup_handlers {
       },
     }
   end,
-
-  cppdbg = function(_)
-    dap.adapters.cppdbg = {
-      id = "cppdbg",
-      type = "executable",
-      ---@diagnostic disable-next-line: undefined-global
-      command = vim.fn.join({ vim.fn.stdpath "data", "mason", "bin", "OpenDebugAD7" }, "/"),
-    }
-
-    dap.configurations.cpp = {
-      {
-        name = "Launch file",
-        type = "cppdbg",
-        request = "launch",
-        program = function()
-          return vim.fn.input { "Path to executable: ", vim.fn.getcwd() .. "/", "file" }
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = true,
-      },
-      {
-        name = "Attach to gdbserver :1234",
-        type = "cppdbg",
-        request = "launch",
-        MIMode = "gdb",
-        miDebuggerServerAddress = "localhost:1234",
-        miDebuggerPath = "/usr/bin/gdb",
-        cwd = "${workspaceFolder}",
-        program = function()
-          return vim.fn.input { "Path to executable: ", vim.fn.getcwd() .. "/", "file" }
-        end,
-      },
-    }
-
-    dap.configurations.c = dap.configurations.cpp
-
-    dap.configurations.rust = {
-      {
-        name = "Launch file",
-        type = "cppdbg",
-        request = "launch",
-        program = function()
-          return vim.fn.input { "Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file" }
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = true,
-      },
-      {
-        name = "Attach to gdbserver :1234",
-        type = "cppdbg",
-        request = "launch",
-        MIMode = "gdb",
-        miDebuggerServerAddress = "localhost:1234",
-        miDebuggerPath = "/usr/bin/gdb",
-        cwd = "${workspaceFolder}",
-        program = function()
-          return vim.fn.input { "Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file" }
-        end,
-      },
-    }
-  end,
 }
+
+local os_type = vim.loop.os_uname().sysname
+
+if os_type ~= nil then
+  if string.find(os_type, "Darwin") then
+    handlers["codelldb"] = function(_)
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          -- CHANGE THIS to your path!
+          command = vim.fn.join({ vim.fn.stdpath "data", "mason", "bin", "codelldb" }, "/"),
+          args = { "--port", "${port}" },
+
+          -- On windows you may have to uncomment this:
+          -- detached = false,
+        },
+      }
+
+      dap.configurations.cpp = {
+        {
+          name = "Launch file",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            ---@diagnostic disable-next-line: redundant-parameter
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
+
+      dap.configurations.c = dap.configurations.cpp
+
+      dap.configurations.rust = {
+        {
+          name = "Launch file",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            ---@diagnostic disable-next-line: redundant-parameter
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
+    end
+  elseif string.find(os_type, "Linux") then
+    handlers["cppdbg "] = function(_)
+      dap.adapters.cppdbg = {
+        id = "cppdbg",
+        type = "executable",
+        ---@diagnostic disable-next-line: undefined-global
+        command = vim.fn.join({ vim.fn.stdpath "data", "mason", "bin", "OpenDebugAD7" }, "/"),
+      }
+
+      dap.configurations.cpp = {
+        {
+          name = "Launch file",
+          type = "cppdbg",
+          request = "launch",
+          program = function()
+            ---@diagnostic disable-next-line: redundant-parameter
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = true,
+        },
+        {
+          name = "Attach to gdbserver :1234",
+          type = "cppdbg",
+          request = "launch",
+          MIMode = "gdb",
+          miDebuggerServerAddress = "localhost:1234",
+          miDebuggerPath = "/usr/bin/gdb",
+          cwd = "${workspaceFolder}",
+          program = function()
+            ---@diagnostic disable-next-line: redundant-parameter
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+        },
+      }
+
+      dap.configurations.c = dap.configurations.cpp
+
+      dap.configurations.rust = {
+        {
+          name = "Launch file",
+          type = "cppdbg",
+          request = "launch",
+          program = function()
+            ---@diagnostic disable-next-line: redundant-parameter
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = true,
+        },
+        {
+          name = "Attach to gdbserver :1234",
+          type = "cppdbg",
+          request = "launch",
+          MIMode = "gdb",
+          miDebuggerServerAddress = "localhost:1234",
+          miDebuggerPath = "/usr/bin/gdb",
+          cwd = "${workspaceFolder}",
+          program = function()
+            ---@diagnostic disable-next-line: redundant-parameter
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+          end,
+        },
+      }
+    end
+  end
+end
+
+require("mason-nvim-dap").setup_handlers(handlers)
 
 local dapui_ok, dapui = pcall(require, "dapui")
 if dapui_ok then
