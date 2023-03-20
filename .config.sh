@@ -9,13 +9,14 @@ export PATH=$PATH:~/go/bin
 export GIT_EDITOR=vim
 
 # proxy settings
-PORT=':10811'
+PORT=':1081'
 IP='http://localhost'$PORT
 alias hp='http_proxy=$IP'
 alias hps='https_proxy=$IP'
 alias ehp='export http_proxy=$IP'
 alias ehps='export https_proxy=$IP'
 alias sv2ray='nohup ~/software/v2/v2ray run ~/software/v2/config.json > ~/.cache/v2.log 2>&1 &'
+alias sxray='nohup ~/software/xray/xray run ~/software/xray/config.json > ~/.cache/xray.log 2>&1 &'
 
 # start vmod
 alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
