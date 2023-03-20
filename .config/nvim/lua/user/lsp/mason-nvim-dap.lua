@@ -153,7 +153,7 @@ if os_type ~= nil then
       }
     end
   elseif string.find(os_type, "Linux") then
-    handlers["cppdbg "] = function(_)
+    handlers["cppdbg"] = function(_)
       dap.adapters.cppdbg = {
         id = "cppdbg",
         type = "executable",
