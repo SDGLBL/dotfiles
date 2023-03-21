@@ -8,6 +8,8 @@ export PATH=$PATH:~/go/bin
 
 export GIT_EDITOR=vim
 
+export LC_CTYPE="UTF-8"
+
 # proxy settings
 PORT=':1081'
 IP='http://localhost'$PORT
