@@ -15,7 +15,6 @@ require("mason-null-ls").setup {
     "hadolint",
     "golangci_lint",
     "codespell",
-    "write_good",
     "shfmt",
   },
   automatic_setup = true,
@@ -82,10 +81,6 @@ require("mason-null-ls").setup_handlers {
 
   codespell = function(_, _)
     null_ls.register(diagnostics.codespell)
-  end,
-
-  write_good = function(_, _)
-    null_ls.register(diagnostics.write_good)
   end,
 
   golines = function(_, _)
