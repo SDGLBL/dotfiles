@@ -167,8 +167,6 @@ local function setup(opts)
     return
   end
 
-  require "user.notify"
-
   if c.pre_hook ~= nil then
     local pre_hook_status, ret = pcall(c.pre_hook)
     if not pre_hook_status then

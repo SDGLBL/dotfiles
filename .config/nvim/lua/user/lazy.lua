@@ -39,6 +39,7 @@ require("lazy").setup {
   {
     "rcarriga/nvim-notify",
     dependencies = { "nvim-telescope/telescope.nvim" },
+    enabled = false,
   },
   -- Telescope
   "nvim-telescope/telescope.nvim",
