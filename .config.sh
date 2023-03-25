@@ -1,3 +1,4 @@
+#!/bin/bash
 # add [[ ! -f ~/.config.sh ]] || source ~/.config.sh to .bashrc or .zshrc bottom
 # PATH
 
@@ -75,7 +76,7 @@ if command_is_exists exa; then
 	alias llt="exa -ll --icons -T -L"
 fi
 
-# support remote ssh copy (neede terminal support osc52)
+# support remote ssh copy (need terminal support osc52)
 # https://github.com/agriffis/skel/blob/master/neovim/bin/clipboard-provider
 if command_is_exists clipboard-provider; then
 	alias clp='clipboard-provider copy'
