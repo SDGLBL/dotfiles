@@ -515,10 +515,10 @@ config_zsh() {
 }
 
 config_alacritty() {
-	if file_need_back "$HOME"/.alacritty.yml; then
-		mv "$HOME"/.alacritty.yml "$HOME/.alacritty_$(date +'%Y-%m-%dT%H:%M:%S').yml.backup"
+	if dir_is_exists "$HOME"/.config/alacritty; then
+		mv "$HOME"/.config/alacritty "$HOME/.config/alacritty_$(date +'%Y-%m-%dT%H:%M:%S').backup"
 	fi
-	ln -s "$SHELL_FOLDER"/.alacritty.yml "$HOME"/.alacritty.yml
+	ln -s "$SHELL_FOLDER"/config/alacritty "$HOME"/.config/alacritty
 }
 
 config_kitty() {
@@ -731,7 +731,6 @@ while [ $# -gt 0 ]; do
 		esac
 		# shellcheck disable=2211
 		*
-		err
 		err "Invalid option: $1"
 		help
 		exit 1
