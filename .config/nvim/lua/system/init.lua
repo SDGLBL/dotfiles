@@ -147,6 +147,13 @@ local function setup(opts)
   local all_cmds = vim.tbl_deep_extend("keep", default_cmds, c.autocmds)
   autocmd.define_augroups(all_cmds)
 
+  if c.pre_hook ~= nil then
+    local pre_hook_status, ret = pcall(c.pre_hook)
+    if not pre_hook_status then
+      vim.notify("executed pre_hook failed: " .. vim.inspect(ret))
+    end
+  end
+
   require "user.options"
   require "user.lazy"
   require "user.impatient"
@@ -165,13 +172,6 @@ local function setup(opts)
   if not status_ok then
     vim.notify("colorscheme " .. c.colorscheme .. " not found!")
     return
-  end
-
-  if c.pre_hook ~= nil then
-    local pre_hook_status, ret = pcall(c.pre_hook)
-    if not pre_hook_status then
-      vim.notify("executed pre_hook failed: " .. vim.inspect(ret))
-    end
   end
 
   require "user.keymaps"

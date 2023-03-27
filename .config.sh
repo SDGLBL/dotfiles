@@ -7,6 +7,13 @@ export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/node/bin:~/so
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/go/bin
 
+# add bin utils on macos
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+	export PATH=/opt/homebrew/opt/binutils/bin:$PATH
+	export LDFLAGS="-L/opt/homebrew/opt/binutils/lib"
+	export CPPFLAGS="-I/opt/homebrew/opt/binutils/include"
+fi
+
 export GIT_EDITOR=vim
 
 export LC_CTYPE="UTF-8"
