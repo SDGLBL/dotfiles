@@ -144,8 +144,12 @@ local function setup(opts)
   -- load user cmd
   c.autocmds = c.autocmds or {}
   local default_cmds = autocmd.load_augroups() or {}
-  local all_cmds = vim.tbl_deep_extend("keep", default_cmds, c.autocmds)
-  autocmd.define_augroups(all_cmds)
+
+  for _, v in pairs(c.autocmds) do
+    table.insert(default_cmds, v)
+  end
+
+  autocmd.define_augroups(default_cmds)
 
   if c.pre_hook ~= nil then
     local pre_hook_status, ret = pcall(c.pre_hook)
