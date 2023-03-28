@@ -19,15 +19,6 @@ require("system").setup {
         end,
       },
     },
-    -- {
-    --   "BufWritePost",
-    --   {
-    --     group = "_file_sync",
-    --     pattern = "*",
-    --     desc = "file_sync",
-    --     command = "SyncUpload",
-    --   },
-    -- },
   },
 
   pre_hook = function()

@@ -449,12 +449,4 @@ require("lazy").setup {
       require("persistence").setup()
     end,
   },
-
-  {
-    "SDGLBL/nvim-sync.nvim",
-    config = function()
-      require("nvim-sync").setup {}
-    end,
-    requires = { "nvim-lua/plenary.nvim" },
-  },
 }
