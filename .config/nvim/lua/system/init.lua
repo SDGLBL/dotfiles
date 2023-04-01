@@ -180,7 +180,6 @@ local function setup(opts)
 
   require "user.keymaps"
   require "user.whichkey"
-  require "user.autocmd"
   require "user.projects"
   require "user.alpha"
   require "user.toggleterm"
