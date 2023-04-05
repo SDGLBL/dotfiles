@@ -22,9 +22,6 @@ require("system").setup {
   },
 
   pre_hook = function()
-    -- auto change background by time
-    vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
-    vim.o.background = "dark"
     vim.g.ai_timeout = 50
     -- colorscheme style
     vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
@@ -88,5 +85,9 @@ require("system").setup {
     -- }
 
     require("system.configs").default_config.pre_hook()
+  end,
+  after_hook = function()
+    -- auto change background by time
+    vim.o.background = require("user.utils.time").is_dark() and "dark" or "light"
   end,
 }
