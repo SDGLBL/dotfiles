@@ -729,8 +729,8 @@ while [ $# -gt 0 ]; do
 			exit 1
 			;;
 		esac
-		# shellcheck disable=2211
-		*
+		;;
+	*)
 		err "Invalid option: $1"
 		help
 		exit 1
