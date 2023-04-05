@@ -421,6 +421,7 @@ require("lazy").setup {
         },
       }
     end,
+    enabled = not vim.g.neovide,
   },
 
   {

@@ -14,6 +14,8 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 	export CPPFLAGS="-I/opt/homebrew/opt/binutils/include"
 fi
 
+export NEOVIDE_MULTIGRID=true
+
 export GIT_EDITOR=vim
 
 export LC_CTYPE="UTF-8"

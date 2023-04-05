@@ -191,7 +191,7 @@ local function setup(opts)
   require "user.gitsigns"
   require "user.telescope"
   require "user.markdown_preview"
-  -- require "user.neovide"
+  require "user.neovide"
   -- require "user.tabnine"
 
   if c.after_hook ~= nil then
