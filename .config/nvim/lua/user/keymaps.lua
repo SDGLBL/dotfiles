@@ -86,3 +86,8 @@ keymap("n", "ctp", "ct{", opts)
 keymap("i", "<C-s>", "<Plug>(copilot-next)", { noremap = false })
 keymap("i", "<C-a>", "<Plug>(copilot-suggest)", { noremap = false })
 keymap("i", "<C-d>", "<Plug>(copilot-dismiss)", { noremap = false })
+
+-- Add <D-v> for neovide
+if vim.g.neovide then
+  keymap("i", "<D-v>", "<C-r>+", opts)
+end
