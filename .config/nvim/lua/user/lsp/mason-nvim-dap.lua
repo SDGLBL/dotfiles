@@ -7,11 +7,6 @@ if not ok then
   return
 end
 
-require("mason-nvim-dap").setup {
-  automatic_setup = true,
-  ensure_installed = { "python", "delve" },
-}
-
 local handlers = {
   function(source_name)
     -- all sources with no handler get passed here
@@ -220,7 +215,11 @@ if os_type ~= nil then
   end
 end
 
-require("mason-nvim-dap").setup_handlers(handlers)
+require("mason-nvim-dap").setup {
+  automatic_setup = true,
+  ensure_installed = { "python", "delve" },
+  handlers = handlers,
+}
 
 local dapui_ok, dapui = pcall(require, "dapui")
 if dapui_ok then

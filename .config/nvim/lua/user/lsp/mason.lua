@@ -3,7 +3,6 @@ local servers = {
   "lua_ls",
   "tsserver",
   "gopls",
-  "yamlls",
   "bashls",
   "dockerls",
   "rust_analyzer",

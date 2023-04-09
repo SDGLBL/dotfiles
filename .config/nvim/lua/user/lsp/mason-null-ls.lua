@@ -3,6 +3,11 @@ if not ok then
   return
 end
 
+local formatting = null_ls.builtins.formatting
+local diagnostics = null_ls.builtins.diagnostics
+local code_actions = null_ls.builtins.code_actions
+local hover = null_ls.builtins.hover
+
 require("mason-null-ls").setup {
   ensure_installed = {
     "stylua",
@@ -18,83 +23,67 @@ require("mason-null-ls").setup {
     "shfmt",
   },
   automatic_setup = true,
-}
-
-local formatting = null_ls.builtins.formatting
-local diagnostics = null_ls.builtins.diagnostics
-local code_actions = null_ls.builtins.code_actions
-local hover = null_ls.builtins.hover
-
-require("mason-null-ls").setup_handlers {
-  function(source_name, methods)
-    -- all sources with no handler get passed here
-    -- Keep original functionality of `automatic_setup = true`
-    require "mason-null-ls.automatic_setup"(source_name, methods)
-  end,
-
-  stylua = function(_, _)
-    null_ls.register(formatting.stylua)
-  end,
-
-  goimports = function(_, _)
-    null_ls.register(formatting.goimports)
-  end,
-
-  taplo = function(_, _)
-    null_ls.register(formatting.taplo)
-  end,
-
-  rustfmt = function(_, _)
-    null_ls.register(formatting.rustfmt.with { extra_args = { "--edition", "2021" } })
-  end,
-
-  prettier = function(_, _)
-    null_ls.register(formatting.prettier.with { extra_args = { "--no-semi" } })
-  end,
-
-  shellcheck = function(_, _)
-    null_ls.register(code_actions.shellcheck)
-    null_ls.register(diagnostics.shellcheck)
-  end,
-
-  hadolint = function(_, _)
-    null_ls.register(diagnostics.hadolint)
-  end,
-
-  golangci_lint = function(_, _)
-    if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
-      null_ls.register(diagnostics.golangci_lint.with {
-        extra_args = {
-          "-c",
-          "~/.golangci.yml",
-        },
-      })
-    else
-      null_ls.register(diagnostics.golangci_lint.with {
-        extra_args = {
-          "-E",
-          "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
-        },
-      })
-    end
-  end,
-
-  codespell = function(_, _)
-    null_ls.register(diagnostics.codespell)
-  end,
-
-  golines = function(_, _)
-    if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
-      null_ls.register(formatting.golines.with {
-        extra_args = {
-          "-m",
-          "158",
-        },
-      })
-    else
-      null_ls.register(formatting.golines)
-    end
-  end,
+  handlers = {
+    function(source_name, methods)
+      -- all sources with no handler get passed here
+      -- Keep original functionality of `automatic_setup = true`
+      require "mason-null-ls.automatic_setup"(source_name, methods)
+    end,
+    stylua = function(_, _)
+      null_ls.register(formatting.stylua)
+    end,
+    goimports = function(_, _)
+      null_ls.register(formatting.goimports)
+    end,
+    taplo = function(_, _)
+      null_ls.register(formatting.taplo)
+    end,
+    rustfmt = function(_, _)
+      null_ls.register(formatting.rustfmt.with { extra_args = { "--edition", "2021" } })
+    end,
+    prettier = function(_, _)
+      null_ls.register(formatting.prettier.with { extra_args = { "--no-semi" } })
+    end,
+    shellcheck = function(_, _)
+      null_ls.register(code_actions.shellcheck)
+      null_ls.register(diagnostics.shellcheck)
+    end,
+    hadolint = function(_, _)
+      null_ls.register(diagnostics.hadolint)
+    end,
+    golangci_lint = function(_, _)
+      if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
+        null_ls.register(diagnostics.golangci_lint.with {
+          extra_args = {
+            "-c",
+            "~/.golangci.yml",
+          },
+        })
+      else
+        null_ls.register(diagnostics.golangci_lint.with {
+          extra_args = {
+            "-E",
+            "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
+          },
+        })
+      end
+    end,
+    codespell = function(_, _)
+      null_ls.register(diagnostics.codespell)
+    end,
+    golines = function(_, _)
+      if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
+        null_ls.register(formatting.golines.with {
+          extra_args = {
+            "-m",
+            "158",
+          },
+        })
+      else
+        null_ls.register(formatting.golines)
+      end
+    end,
+  },
 }
 
 null_ls.register(hover.dictionary.with {
