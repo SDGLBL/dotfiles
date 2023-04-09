@@ -31,7 +31,11 @@ alias sv2ray='nohup ~/software/v2/v2ray run ~/software/v2/config.json > ~/.cache
 alias sxray='nohup ~/software/xray/xray run ~/software/xray/config.json > ~/.cache/xray.log 2>&1 &'
 
 # start vmod
-alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
+if [[ "$OSTYPE" =~ ^darwin ]]; then
+	alias vmod='source ~/.oh-my-zsh/custom/plugins/vi-mode/zsh-vi-mode.zsh'
+else
+	alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
+fi
 
 # screen alias
 resume_screen() {
