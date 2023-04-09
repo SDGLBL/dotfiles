@@ -21,7 +21,7 @@ export GIT_EDITOR=vim
 export LC_CTYPE="UTF-8"
 
 # proxy settings
-PORT=':1081'
+PORT=':7890'
 IP='http://localhost'$PORT
 alias hp='http_proxy=$IP'
 alias hps='https_proxy=$IP'
