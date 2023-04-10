@@ -1,6 +1,3 @@
-local fn = vim.fn
-local levels = vim.log.levels
-
 ---@type Config
 local default_config = {
   -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
