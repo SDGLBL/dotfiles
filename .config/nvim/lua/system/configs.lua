@@ -19,6 +19,10 @@ local default_config = {
   -- The Refactoring library based off the Refactoring book by Martin Fowler
   -- [refactoring.nvim](https://github.com/ThePrimeagen/refactoring.nvim)
   refactor = false,
+  -- `hlargs`.
+  -- Highlight arguments' definitions and usages, using Treesitter
+  -- [hlargs.nvim](https://github.com/m-demare/hlargs.nvim)
+  hlargs = false,
   -- `autopairs`
   -- autopairs for neovim written by lua
   -- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)

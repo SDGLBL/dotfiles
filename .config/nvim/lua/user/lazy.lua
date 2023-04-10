@@ -65,6 +65,7 @@ require("lazy").setup {
         config = function()
           require("hlargs").setup()
         end,
+        enabled = _G.configs.hlargs,
       },
     },
   },

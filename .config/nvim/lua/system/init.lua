@@ -70,6 +70,10 @@
 -- The Refactoring library based off the Refactoring book by Martin Fowler
 -- [refactoring.nvim](https://github.com/ThePrimeagen/refactoring.nvim)
 ---@field refactor boolean
+-- enable `hlargs`.
+-- Highlight arguments' definitions and usages, using Treesitter
+-- [hlargs.nvim](https://github.com/m-demare/hlargs.nvim)
+---@field hlargs boolean
 -- enable `autopairs`.
 -- autopairs for neovim written by lua
 -- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
