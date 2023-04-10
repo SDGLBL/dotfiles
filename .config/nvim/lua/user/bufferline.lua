@@ -92,14 +92,13 @@ bufferline.setup {
   },
   highlights = {
     fill = {
-      fg = { attribute = "fg", highlight = "#ff0000" },
+      fg = { attribute = "fg", highlight = "TabLine" },
       bg = { attribute = "bg", highlight = "TabLine" },
     },
     background = {
       fg = { attribute = "fg", highlight = "TabLine" },
       bg = { attribute = "bg", highlight = "TabLine" },
     },
-
     -- buffer_selected = {
     --   fg = {attribute='fg',highlight='#ff0000'},
     --   bg = {attribute='bg',highlight='#0000ff'},
