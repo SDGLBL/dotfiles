@@ -1,3 +1,6 @@
+-- enable lua loader
+vim.loader.enable()
+
 require("system").setup {
   colorscheme = "catppuccin-mocha",
   dap = true,
