@@ -5,6 +5,17 @@ if not status_cmp_ok then
   return
 end
 
+local status_nlspsettings, nlsp = pcall(require, "nlspsettings")
+if status_nlspsettings then
+  nlsp.setup {
+    config_home = vim.fn.stdpath "config" .. "/nlsp-settings",
+    local_settings_dir = ".nlsp-settings",
+    local_settings_root_markers_fallback = { ".git" },
+    append_default_schemas = true,
+    loader = "json",
+  }
+end
+
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true

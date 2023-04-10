@@ -144,6 +144,7 @@ require("lazy").setup {
       "jayp0521/mason-nvim-dap.nvim",
       "jayp0521/mason-null-ls.nvim",
       "jose-elias-alvarez/null-ls.nvim",
+      "tamago324/nlsp-settings.nvim",
       {
         "ray-x/lsp_signature.nvim",
         config = function()
