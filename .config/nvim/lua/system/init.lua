@@ -191,7 +191,6 @@ local function setup(opts)
   require "user.telescope"
   require "user.markdown_preview"
   require "user.neovide"
-  -- require "user.tabnine"
 
   if c.after_hook ~= nil then
     local after_hook_status, ret = pcall(c.after_hook)
