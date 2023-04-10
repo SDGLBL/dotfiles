@@ -92,7 +92,6 @@ M.mappings = {
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["W"] = { "<cmd>noautocmd w!<CR>", "Save without formatting" },
-  ["R"] = { '<cmd>lua require("system.configs").reload()<CR>', "Reload" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
