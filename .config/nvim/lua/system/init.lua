@@ -123,7 +123,6 @@
 ---@param opts Config
 local function setup(opts)
   local dc = require("system.configs").default_config
-  local require = require("system.configs").reload_module
   ---@type Config
   local c = opts and vim.tbl_deep_extend("force", dc, opts) or dc
 
