@@ -22,7 +22,7 @@ local default_config = {
   -- `hlargs`.
   -- Highlight arguments' definitions and usages, using Treesitter
   -- [hlargs.nvim](https://github.com/m-demare/hlargs.nvim)
-  hlargs = false,
+  hlargs = true,
   -- `autopairs`
   -- autopairs for neovim written by lua
   -- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
