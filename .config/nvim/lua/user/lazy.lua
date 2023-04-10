@@ -35,15 +35,8 @@ require("lazy").setup {
   "akinsho/toggleterm.nvim",
   -- Dashboard alpha
   "goolord/alpha-nvim",
-  -- Notify
-  {
-    "rcarriga/nvim-notify",
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    enabled = false,
-  },
   -- Telescope
   "nvim-telescope/telescope.nvim",
-  "nvim-telescope/telescope-media-files.nvim",
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -176,6 +169,7 @@ require("lazy").setup {
     config = function()
       require("nvim-surround").setup {}
     end,
+    enabled = false,
   },
 
   -- Git
@@ -340,6 +334,7 @@ require("lazy").setup {
   {
     "michaelb/sniprun",
     build = "bash ./install.sh",
+    enabled = false,
   },
 
   -- Translate
@@ -389,6 +384,7 @@ require("lazy").setup {
   -- Better code action menu
   "weilbith/nvim-code-action-menu",
 
+  -- Lsp progress
   {
     "j-hui/fidget.nvim",
     config = function()
@@ -403,6 +399,7 @@ require("lazy").setup {
     end,
   },
 
+  -- Windows animation
   {
     "anuvyklack/windows.nvim",
     dependencies = {
@@ -424,25 +421,16 @@ require("lazy").setup {
     enabled = not vim.g.neovide,
   },
 
+  -- Comment box
   {
     "LudoPinelli/comment-box.nvim",
     config = function()
       require "user.comment_box"
     end,
+    enabled = false,
   },
 
-  {
-    "krivahtoo/silicon.nvim",
-    build = "./install.sh",
-    config = function()
-      require("silicon").setup {
-        font = "FiraCode Nerd Font Mono",
-        theme = "Monokai Extended",
-      }
-    end,
-    enabled = _G.configs.silicon,
-  },
-
+  -- Session saver
   {
     "folke/persistence.nvim",
     event = { "VimLeavePre" }, -- this will only start session saving when an actual file was opened

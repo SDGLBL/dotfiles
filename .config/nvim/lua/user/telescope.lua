@@ -3,11 +3,6 @@ if not status_ok then
   return
 end
 
-local ok_media, _ = pcall(require, "telescope-media-files")
-if ok_media then
-  telescope.load_extension "media_files"
-end
-
 local icons_ok, icons = pcall(require, "user.icons")
 if not icons_ok then
   return
@@ -136,12 +131,6 @@ telescope.setup {
   color_devicons = true,
   set_env = { ["COLORTERM"] = "truecolor" }, -- default = nil,
   extensions = {
-    media_files = {
-      -- filetypes whitelist
-      -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
-      filetypes = { "png", "webp", "jpg", "jpeg" },
-      find_cmd = "rg", -- find command (defaults to `fd`)
-    },
     fzf = {
       fuzzy = true, -- false will only do exact matching
       override_generic_sorter = true, -- override the generic sorter
