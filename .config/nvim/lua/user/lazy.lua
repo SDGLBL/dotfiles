@@ -29,8 +29,6 @@ require("lazy").setup {
   },
   -- Github copilot
   "github/copilot.vim",
-  -- Improve load time
-  "lewis6991/impatient.nvim",
   -- ToggleTerm
   "akinsho/toggleterm.nvim",
   -- Dashboard alpha

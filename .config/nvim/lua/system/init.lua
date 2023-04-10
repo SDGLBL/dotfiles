@@ -159,7 +159,6 @@ local function setup(opts)
 
   require "user.options"
   require "user.lazy"
-  require "user.impatient"
 
   -- if colorscheme start with catppuccin, then load catppuccin
   if c.colorscheme:find "catppuccin" then
