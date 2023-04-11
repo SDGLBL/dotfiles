@@ -40,9 +40,6 @@ local plugins = {
       },
       {
         "ThePrimeagen/refactoring.nvim",
-        config = function()
-          require "user.refactor"
-        end,
         enabled = _G.configs.refactor,
       },
       {
@@ -116,10 +113,6 @@ local plugins = {
       { "kdheepak/cmp-latex-symbols", ft = "plaintext" },
       { "b0o/schemastore.nvim" },
     },
-    config = function()
-      require "user.cmp"
-      require "user.autopairs"
-    end,
     enabled = _G.configs.lsp,
   },
 
@@ -158,9 +151,6 @@ local plugins = {
         end,
       },
     },
-    config = function()
-      require "user.lsp"
-    end,
     enabled = _G.configs.lsp,
   },
 
@@ -243,9 +233,6 @@ local plugins = {
   -- Ident line
   {
     "lukas-reineke/indent-blankline.nvim",
-    config = function()
-      require "user.indentline"
-    end,
     enabled = _G.configs.indent_blankline,
   },
 
@@ -260,9 +247,6 @@ local plugins = {
     "nvim-neorg/neorg",
     dependencies = "nvim-lua/plenary.nvim",
     ft = "norg",
-    config = function()
-      require "user.neorg"
-    end,
     enabled = _G.configs.neorg,
   },
 
@@ -270,9 +254,6 @@ local plugins = {
 
   {
     "levouh/tint.nvim",
-    config = function()
-      require "user.tint"
-    end,
     enabled = _G.configs.tint,
   },
 
@@ -280,9 +261,6 @@ local plugins = {
   {
     "kevinhwang91/nvim-ufo",
     dependencies = "kevinhwang91/promise-async",
-    config = function()
-      require "user.better_fold"
-    end,
     enabled = _G.configs.better_fold,
   },
 
@@ -306,9 +284,6 @@ local plugins = {
       vim.fn["mkdp#util#install"]()
     end,
     ft = "markdown",
-    config = function()
-      require "user.markdown_preview"
-    end,
     enabled = _G.configs.markdown_preview,
   },
 
@@ -325,9 +300,6 @@ local plugins = {
   {
     "uga-rosa/ccc.nvim",
     ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html", "lua" },
-    config = function()
-      require "user.ccc"
-    end,
     enabled = _G.configs.color_picker,
   },
 
@@ -376,9 +348,6 @@ local plugins = {
   {
     "simrat39/rust-tools.nvim",
     ft = "rust",
-    config = function()
-      require "user.rust_tools"
-    end,
     enabled = _G.configs.rust_tools,
   },
 

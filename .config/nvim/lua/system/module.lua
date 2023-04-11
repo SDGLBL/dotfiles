@@ -138,7 +138,7 @@ local function reload()
   end
 
   if #Config.to_clean > 0 then
-    lazy.clean { wait = true, show = true }
+    lazy.clean { wait = true }
   end
 
   -- if colorscheme start with catppuccin, then load catppuccin
@@ -170,6 +170,16 @@ local function reload()
   reload_module "user.gitsigns"
   reload_module "user.telescope"
   reload_module "user.markdown_preview"
+  reload_module "user.lsp"
+  reload_module "user.cmp"
+  reload_module "user.refactor"
+  reload_module "user.autopairs"
+  reload_module "user.indentline"
+  reload_module "user.rust_tools"
+  reload_module "user.ccc"
+  reload_module "user.tint"
+  reload_module "user.neorg"
+  reload_module "user.better_fold"
   reload_module "user.neovide"
 
   if c.after_hook ~= nil then

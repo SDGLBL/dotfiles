@@ -197,6 +197,16 @@ local function setup(opts)
   require "user.gitsigns"
   require "user.telescope"
   require "user.markdown_preview"
+  require "user.lsp"
+  require "user.cmp"
+  require "user.refactor"
+  require "user.autopairs"
+  require "user.indentline"
+  require "user.rust_tools"
+  require "user.ccc"
+  require "user.tint"
+  require "user.neorg"
+  require "user.better_fold"
   require "user.neovide"
 
   if c.after_hook ~= nil then

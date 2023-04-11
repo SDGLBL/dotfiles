@@ -1,3 +1,7 @@
+if not configs.lsp then
+  return
+end
+
 if not configs.autopairs then
   return
 end
