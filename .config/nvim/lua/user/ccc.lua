@@ -8,8 +8,3 @@ if not ok then
 end
 
 ccc.setup {}
-
-local ok_which_key, wk = pcall(require, "which-key")
-if ok_which_key then
-  wk.register({ C = { "<cmd>CccPick<cr>", "Color picker" } }, require("user.whichkey").opts)
-end

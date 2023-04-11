@@ -92,6 +92,7 @@ M.mappings = {
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["W"] = { "<cmd>noautocmd w!<CR>", "Save without formatting" },
+  ["R"] = { '<cmd>lua require("system.module").reload()<CR>', "Save without formatting" },
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
@@ -224,5 +225,78 @@ M.vmappings = {
 which_key.setup(setup)
 which_key.register(M.mappings, M.opts)
 which_key.register(M.vmappings, M.vopts)
+
+local c = _G.configs
+local wk = which_key
+
+-- setup dap keymaps
+if c.dap then
+  wk.register({
+    d = {
+      name = "+Debugger",
+      b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "toggle breakpoint" },
+      c = { "<cmd>lua require'dap'.continue()<cr>", "continue" },
+      C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "continue to cursor" },
+      j = { "<cmd>lua require'dap'.step_over()<cr>", "step over" },
+      s = { "<cmd>lua require'dap'.step_into()<cr>", "step into" },
+      S = { "<cmd>lua require'dap'.step_out()<cr>", "step out" },
+      e = { "<cmd>lua require'dap'.close()<cr>", "stop debugger" },
+      l = { "<cmd>lua require'dap'.list_breakpoints()<cr>", "list all breakpoint" },
+      r = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "remove all breakpont" },
+      o = { "<cmd>lua require'dapui'.open()<cr>", "open debug ui window" },
+      x = { "<cmd>lua require'dapui'.close()<cr>", "close debug ui window" },
+      t = { "<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
+      f = { "<cmd>lua require'dapui'.float_element()<cr>", "get value" },
+      v = { "<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
+    },
+  }, M.opts)
+end
+
+if c.color_picker then
+  wk.register({ C = { "<cmd>CccPick<cr>", "Color picker" } }, M.opts)
+end
+
+if c.markdown_preview then
+  wk.register({
+    p = {
+      name = "MarkdownPreview",
+      p = { "<cmd>MarkdownPreview<cr>", "Preview" },
+      s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
+      t = { "<cmd>MarkdownPreviewToggle<cr>", "Toggle" },
+    },
+  }, M.opts)
+end
+
+if c.neorg then
+  wk.register({
+    n = {
+      name = "Neorg",
+      w = {
+        name = "Workspaces",
+        w = { "<cmd>Neorg workspace work<cr>", "Work" },
+        l = { "<cmd>Neorg workspace life<cr>", "Life" },
+        s = { "<cmd>Neorg workspace learn<cr>", "Learn" },
+      },
+      t = {
+        name = "TOC",
+        c = { "<cmd>Neorg toc close<cr>", "Close TOC" },
+        i = { "<cmd>Neorg toc inline<cr>", "Inline TOC" },
+        s = { "<cmd>Neorg toc split<cr>", "Split TOC" },
+        t = { "<cmd>Neorg toc toqflist<cr>", "Toqflist TOC" },
+      },
+      r = { "<cmd>Neorg return<cr>", "Return" },
+      j = { "<cmd>Neorg journal<cr>", "Journal" },
+    },
+  }, M.opts)
+end
+
+if c.refactor then
+  wk.register({
+    r = {
+      name = "Refactoring",
+      r = { "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch" },
+    },
+  }, M.opts)
+end
 
 return M

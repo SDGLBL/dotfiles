@@ -132,6 +132,10 @@ local function setup(opts)
 
   _G.configs = c
 
+  if vim.g.loaded then
+    return
+  end
+
   local autocmds = require "user.autocmds"
 
   if c.transparent_window then
@@ -201,6 +205,8 @@ local function setup(opts)
       vim.notify("executed after_hook failed: " .. vim.inspect(ret))
     end
   end
+
+  vim.g.loaded = true
 end
 
 return {

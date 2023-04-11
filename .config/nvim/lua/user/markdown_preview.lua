@@ -99,16 +99,3 @@ vim.g.mkdp_filetypes = { "markdown" }
 -- set default theme (dark or light)
 -- By default the theme is define according to the preferences of the system
 vim.g.mkdp_theme = require("user.utils.time").is_dark() and "dark" or "light"
-
-local ok_which_key, wk = pcall(require, "which-key")
-
-if ok_which_key then
-  wk.register({
-    p = {
-      name = "MarkdownPreview",
-      p = { "<cmd>MarkdownPreview<cr>", "Preview" },
-      s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
-      t = { "<cmd>MarkdownPreviewToggle<cr>", "Toggle" },
-    },
-  }, require("user.whichkey").opts)
-end
