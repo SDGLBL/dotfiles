@@ -4,6 +4,7 @@ local plugins = {
   -- ful lua functions d ny lots of plugins
   "nvim-lua/plenary.nvim",
   "ahmedkhalf/project.nvim",
+  "xiyaowong/transparent.nvim",
   "folke/which-key.nvim",
   -- Remember lastplace
   {

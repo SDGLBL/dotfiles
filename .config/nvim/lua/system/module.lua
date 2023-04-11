@@ -88,10 +88,6 @@ local function reload()
   local c = _G.configs
   local autocmds = reload_module "user.autocmds"
 
-  if c.transparent_window then
-    autocmds.enable_transparent_mode()
-  end
-
   if c.format_on_save then
     autocmds.enable_format_on_save()
   else
@@ -141,6 +137,15 @@ local function reload()
     lazy.clean { wait = true }
   end
 
+  local ok_tran, tran = pcall(require, "transparent")
+  if ok_tran then
+    if c.transparent_window then
+      tran.toggle(true)
+    else
+      tran.toggle(false)
+    end
+  end
+
   -- if colorscheme start with catppuccin, then load catppuccin
   if c.colorscheme:find "catppuccin" then
     require("catppuccin").setup {
@@ -173,7 +178,6 @@ local function reload()
   reload_module "user.lsp"
   reload_module "user.cmp"
   reload_module "user.refactor"
-  reload_module "user.autopairs"
   reload_module "user.indentline"
   reload_module "user.rust_tools"
   reload_module "user.ccc"

@@ -138,10 +138,6 @@ local function setup(opts)
 
   local autocmds = require "user.autocmds"
 
-  if c.transparent_window then
-    autocmds.enable_transparent_mode()
-  end
-
   if c.format_on_save then
     autocmds.enable_format_on_save()
   else
@@ -167,6 +163,15 @@ local function setup(opts)
 
   require "user.options"
   require "user.lazy"
+
+  local ok, tran = pcall(require, "transparent")
+  if ok then
+    if c.transparent_window then
+      tran.toggle(true)
+    else
+      tran.toggle(false)
+    end
+  end
 
   -- if colorscheme start with catppuccin, then load catppuccin
   if c.colorscheme:find "catppuccin" then

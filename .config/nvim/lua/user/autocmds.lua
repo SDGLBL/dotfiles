@@ -131,28 +131,6 @@ function M.disable_format_on_save()
   pcall(vim.api.nvim_del_augroup_by_name, "lsp_format_on_save")
 end
 
-function M.enable_transparent_mode()
-  vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = function()
-      local hl_groups = {
-        "Normal",
-        "SignColumn",
-        "NormalNC",
-        "TelescopeBorder",
-        "NvimTreeNormal",
-        "NvimTreeNormalNC",
-        "EndOfBuffer",
-        "MsgArea",
-      }
-      for _, name in ipairs(hl_groups) do
-        vim.cmd(string.format("highlight %s ctermbg=none guibg=none", name))
-      end
-    end,
-  })
-  vim.opt.fillchars = "eob: "
-end
-
 --- Create autocommand groups based on the passed definitions
 ---@param definitions table contains trigger, pattern and text. The key will be used as a group name
 function M.define_augroups(definitions)
