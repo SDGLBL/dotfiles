@@ -405,6 +405,7 @@ local plugins = {
     config = function()
       require("transparent").setup {
         extra_groups = {
+          "SignColumn",
           "TelescopeBorder",
           "NvimTreeNormal",
           "NvimTreeNormalNC",
