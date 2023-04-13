@@ -87,7 +87,7 @@ M.opts = {
 }
 
 M.mappings = {
-  ["/"] = { '<cmd>lua require("Comment.api").toggle_current_linewise()<CR>', "Comment" },
+  ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment" },
   ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
