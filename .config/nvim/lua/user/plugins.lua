@@ -1,6 +1,4 @@
 local plugins = {
-  -- An implementation of the Popup API from vim in Neovim
-  "nvim-lua/popup.nvim",
   -- ful lua functions d ny lots of plugins
   "nvim-lua/plenary.nvim",
   "ahmedkhalf/project.nvim",
