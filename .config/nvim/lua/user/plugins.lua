@@ -215,7 +215,6 @@ local plugins = {
     config = function()
       require("neogen").setup {}
     end,
-    requires = "nvim-treesitter/nvim-treesitter",
   },
 
   -- Todo plugin
@@ -291,7 +290,6 @@ local plugins = {
     config = function()
       require("ggl").setup {}
     end,
-    requires = { "rcarriga/nvim-notify" },
   },
 
   -- Color picker
