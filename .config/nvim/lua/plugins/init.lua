@@ -4,6 +4,7 @@ return {
   "stevearc/dressing.nvim",
   "nvim-tree/nvim-web-devicons",
   "weilbith/nvim-code-action-menu",
+
   {
     "RRethy/vim-illuminate",
     event = "VeryLazy",
@@ -175,10 +176,25 @@ return {
     enabled = not vim.g.neovide,
   },
   {
-    "folke/persistence.nvim",
+    "olimorris/persisted.nvim",
     event = "BufReadPre",
-    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals" } },
-    config = true,
+    config = function()
+      require("persisted").setup {
+        use_git_branch = true,
+        should_autosave = function()
+          -- do not autosave if the alpha dashboard is the current filetype
+          if vim.bo.filetype == "alpha" then
+            return false
+          end
+          return true
+        end,
+      }
+
+      local ok, telescope = pcall(require, "telescope")
+      if ok then
+        telescope.load_extension "persisted"
+      end
+    end,
   },
   {
     "xiyaowong/transparent.nvim",
