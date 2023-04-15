@@ -2,6 +2,12 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
+    dependencies = {
+      "debugloop/telescope-undo.nvim",
+      config = function()
+        require("telescope").load_extension "undo"
+      end,
+    },
     config = function()
       local icons = require "utils.icons"
       local actions = require "telescope.actions"
@@ -135,6 +141,13 @@ return {
           },
           persisted = {
             layout_config = { width = 0.55, height = 0.55 },
+          },
+          undo = {
+            side_by_side = true,
+            layout_strategy = "vertical",
+            layout_config = {
+              preview_height = 0.8,
+            },
           },
         },
       }

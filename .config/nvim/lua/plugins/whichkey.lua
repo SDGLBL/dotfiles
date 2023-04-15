@@ -136,6 +136,7 @@ return {
           L = { "<cmd>SessionLoadLast<cr>", "Load Last Session" },
           d = { "<cmd>SessionDelete<cr>", "Del Cur Session" },
         },
+        u = { "<cmd>Telescope undo<cr>", "Undo" },
       }
 
       local vopts = {
