@@ -27,6 +27,13 @@ local function toggle_transparent(c)
   if ok then
     if c.transparent_window then
       tran.toggle(true)
+
+      local notify_ok, notify = pcall(require, "notify")
+      if notify_ok then
+        notify.setup {
+          background_colour = "#000000",
+        }
+      end
     else
       tran.toggle(false)
     end
