@@ -208,9 +208,16 @@ return {
       -- triggers CursorHold event faster
       vim.opt.updatetime = 200
 
+      local icons = require "utils.icons"
+
       require("barbecue").setup {
         create_autocmd = false, -- prevent barbecue from updating itself automatically
         kinds = require("utils.icons").kind,
+        symbols = {
+          modified = "●",
+          ellipsis = "…",
+          separator = icons.ui.ChevronRight,
+        },
       }
 
       vim.api.nvim_create_autocmd({
