@@ -139,7 +139,6 @@ alias nvimf='nvim $(pf)'
 alias gvim="neovide --multigrid"
 alias gnvim="neovide --multigrid"
 alias chadvim="NVIM_APPNAME=nvchad_nvim nvim"
-alias nnvim="NVIM_APPNAME=new_nvim nvim"
 
 # tmux alias
 alias t="tmux"

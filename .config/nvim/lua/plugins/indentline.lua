@@ -1,7 +1,7 @@
 return {
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufReadPre",
+    event = { "BufReadPost", "BufNewFile" },
     enabled = configs.indent_blankline,
     config = function()
       if not configs.indent_blankline then

@@ -1,6 +1,7 @@
 return {
   {
     "akinsho/bufferline.nvim",
+    event = "VeryLazy",
     config = function()
       local bufferline = require "bufferline"
 
