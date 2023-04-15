@@ -176,7 +176,8 @@ return {
   },
   {
     "folke/persistence.nvim",
-    event = { "VimLeavePre" }, -- this will only start session saving when an actual file was opened
+    event = "BufReadPre",
+    opts = { options = { "buffers", "curdir", "tabpages", "winsize", "help", "globals" } },
     config = true,
   },
   {

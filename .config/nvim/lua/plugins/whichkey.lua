@@ -92,7 +92,7 @@ return {
           c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
         },
         s = {
-          name = "Search/Session",
+          name = "Search",
           b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
           t = { "<cmd>Telescope live_grep<cr>", "Find Text" },
           c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
@@ -106,9 +106,6 @@ return {
             "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
             "Colorscheme with Preview",
           },
-          s = { "<cmd>lua require 'persistence'.load()<cr>", "Session Load Dir" },
-          l = { "<cmd>lua require 'persistence'.load({last = true})<cr>", "Session Load Last" },
-          d = { "<cmd>lua require 'persistence'.stop()<cr>", "Session Save Stop" },
         },
         t = {
           name = "Terminal",
@@ -131,6 +128,12 @@ return {
           ["2"] = { "<cmd>HopChar2<cr>", "HopChar2" },
           p = { "<cmd>HopPattern<cr>", "HopPattern" },
           n = { "<cmd>lua require'tsht'.nodes()<cr>", "TSNodes" },
+        },
+        p = {
+          name = "Session",
+          s = { "<cmd>lua require 'persistence'.load()<cr>", "Restore Session" },
+          l = { "<cmd>lua require 'persistence'.load({last = true})<cr>", "Restore Last Session" },
+          d = { "<cmd>lua require 'persistence'.stop()<cr>", "Don't Save Current Session" },
         },
       }
 
@@ -315,6 +318,47 @@ return {
             r = { "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Switch" },
           },
         }, opts)
+      end
+
+      if c.lsp then
+        local code_action = "<cmd>lua vim.lsp.buf.code_action()<cr>"
+
+        if vim.fn.exists ":CodeActionMenu" then
+          code_action = "<cmd>CodeActionMenu<cr>"
+        end
+
+        local km = {
+          l = {
+            name = "+LSP",
+            a = { code_action, "Code Action" },
+            f = { "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", "Format" },
+            g = {
+              Name = "Generate Doc",
+              t = { "<cmd>Neogen type<cr>", "Type doc" },
+              c = { "<cmd>Neogen class<cr>", "Class doc" },
+              f = { "<cmd>Neogen func<cr>", "Func doc" },
+              d = { "<cmd>Neogen file<cr>", "Doc doc" },
+            },
+            I = { "<cmd>Telescope lsp_implementations<cr>", "Implementations" },
+            j = { "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", "Next Diagnostic" },
+            k = { "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", "Prev Diagnostic" },
+            r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+            R = { "<cmd>Telescope lsp_references<cr>", "References" },
+            s = { "<cmd>Telescope lsp_document_symbols<cr>", "Doc Symbols" },
+            S = { "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", "Workspace Symbols" },
+            q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Diagnostic List" },
+            w = { "<cmd>Telescope diagnostics<cr>", "Workspace Diagnostics" },
+            W = { '<cmd>lua require("telescope.builtin").diagnostics({ bufnr = 0 })<cr>', "Doc Diagnostics" },
+            e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
+          },
+        }
+
+        if configs.refactor then
+          km["l"]["c"] =
+            { "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Choose refactoring" }
+        end
+
+        wk.register(km, opts)
       end
     end,
   },
