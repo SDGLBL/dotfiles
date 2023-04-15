@@ -12,6 +12,11 @@ local function diff_source()
   end
 end
 
+local icons_ok, icons = pcall(require, "user.icons")
+local icon_ternary = function(T, F)
+  return icons_ok and T or F
+end
+
 return {
   mode = {
     function()
@@ -23,7 +28,7 @@ return {
   },
   branch = {
     "b:gitsigns_head",
-    icon = " ",
+    icon = icon_ternary(" " .. icons.git.Branch, " "),
     color = { gui = "bold" },
     cond = conditions.hide_in_width,
   },
@@ -35,7 +40,11 @@ return {
   diff = {
     "diff",
     source = diff_source,
-    symbols = { added = "  ", modified = " ", removed = " " },
+    symbols = {
+      added = icon_ternary(" " .. icons.git.BoldLineAdded .. " ", "  "),
+      modified = icon_ternary(icons.git.BoldLineModified .. " ", " "),
+      removed = icon_ternary(icons.git.BoldLineRemoved .. " ", " "),
+    },
     diff_color = {
       added = { fg = colors.green },
       modified = { fg = colors.yellow },
@@ -49,11 +58,11 @@ return {
       if vim.bo.filetype == "python" then
         local venv = os.getenv "CONDA_DEFAULT_ENV"
         if venv then
-          return string.format("  (%s)", utils.env_cleanup(venv))
+          return string.format(" " .. icon_ternary(icons.lang.python, "") .. " (%s)", utils.env_cleanup(venv))
         end
         venv = os.getenv "VIRTUAL_ENV"
         if venv then
-          return string.format("  (%s)", utils.env_cleanup(venv))
+          return string.format(" " .. icon_ternary(icons.lang.python, "") .. " (%s)", utils.env_cleanup(venv))
         end
         return ""
       end
@@ -65,14 +74,19 @@ return {
   diagnostics = {
     "diagnostics",
     sources = { "nvim_diagnostic" },
-    symbols = { error = " ", warn = " ", info = " ", hint = " " },
+    symbols = {
+      error = icon_ternary(icons.diagnostics.BoldError .. " ", " "),
+      warn = icon_ternary(icons.diagnostics.BoldWarning .. " ", " "),
+      info = icon_ternary(icons.diagnostics.BoldInformation .. " ", " "),
+      hint = icon_ternary(icons.diagnostics.BoldHint .. " ", " "),
+    },
     cond = conditions.hide_in_width,
   },
   treesitter = {
     function()
       local b = vim.api.nvim_get_current_buf()
       if next(vim.treesitter.highlighter.active[b]) then
-        return ""
+        return icon_ternary(icons.ui.Tree, "")
       end
       return ""
     end,

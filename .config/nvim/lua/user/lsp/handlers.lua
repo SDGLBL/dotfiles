@@ -16,16 +16,21 @@ if status_nlspsettings then
   }
 end
 
+local icons_ok, icons = pcall(require, "user.icons")
+local icon_ternary = function(T, F)
+  return icons_ok and T or F
+end
+
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 M.setup = function()
   local signs = {
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
+    { name = "DiagnosticSignError", text = icon_ternary(icons.diagnostics.BoldError, "") },
+    { name = "DiagnosticSignWarn", text = icon_ternary(icons.diagnostics.BoldWarning, "") },
+    { name = "DiagnosticSignHint", text = icon_ternary(icons.diagnostics.BoldInformation, "") },
+    { name = "DiagnosticSignInfo", text = icon_ternary(icons.diagnostics.BoldQuestion, "") },
   }
 
   for _, sign in ipairs(signs) do

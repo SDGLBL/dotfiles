@@ -19,13 +19,18 @@ if configs.rust_tools then
   end
 end
 
+local icons_ok, icons = pcall(require, "user.icons")
+local icon_ternary = function(T, F)
+  return icons_ok and T or F
+end
+
 local settings = {
   ui = {
     border = "rounded",
     icons = {
-      package_installed = "✓",
-      package_pending = "➜",
-      package_uninstalled = "✗",
+      package_installed = icon_ternary(icons.ui.Check, "✓"),
+      package_pending = icon_ternary(icons.ui.CloudDownload, "➜"),
+      package_uninstalled = icon_ternary(icons.ui.Close, "✗"),
     },
   },
   log_level = vim.log.levels.INFO,
