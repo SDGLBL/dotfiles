@@ -139,7 +139,11 @@ alias nvimf='nvim $(pf)'
 alias gvim="neovide --multigrid"
 alias gnvim="neovide --multigrid"
 alias chadvim="NVIM_APPNAME=nvchad_nvim nvim"
+alias nnvim="NVIM_APPNAME=new_nvim nvim"
 
 # tmux alias
 alias t="tmux"
 alias ta="tmux a"
+
+# go debug prefix
+alias debug_prefix="GOMAXPROCS=1 GODEBUG=schedtrace=1000,scheddetail=1 mygo run"

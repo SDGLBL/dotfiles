@@ -1,0 +1,120 @@
+local M = {}
+
+local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status_cmp_ok then
+  return
+end
+
+local status_nlspsettings, nlsp = pcall(require, "nlspsettings")
+if status_nlspsettings then
+  nlsp.setup {
+    config_home = vim.fn.stdpath "config" .. "/nlsp-settings",
+    local_settings_dir = ".nlsp-settings",
+    local_settings_root_markers_fallback = { ".git" },
+    append_default_schemas = true,
+    loader = "json",
+  }
+end
+
+local icons = require "utils.icons"
+
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
+M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+M.setup = function()
+  local signs = {
+    { name = "DiagnosticSignError", text = icons.diagnostics.BoldError },
+    { name = "DiagnosticSignWarn", text = icons.diagnostics.BoldWarning },
+    { name = "DiagnosticSignHint", text = icons.diagnostics.BoldInformation },
+    { name = "DiagnosticSignInfo", text = icons.diagnostics.BoldQuestion },
+  }
+
+  for _, sign in ipairs(signs) do
+    vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
+  end
+
+  local config = {
+    -- disable virtual text
+    virtual_text = true,
+    -- show signs
+    signs = {
+      active = signs,
+    },
+    update_in_insert = true,
+    underline = true,
+    severity_sort = true,
+    float = {
+      focusable = true,
+      style = "minimal",
+      border = "rounded",
+      source = "always",
+      header = "",
+      prefix = "",
+    },
+  }
+
+  vim.diagnostic.config(config)
+
+  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+    border = "rounded",
+  })
+
+  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+    border = "rounded",
+  })
+end
+
+M.lsp_keymaps = function(bufnr)
+  local opts = { noremap = true, silent = true }
+  local keymap = vim.api.nvim_buf_set_keymap
+
+  if vim.fn.exists ":CodeActionMenu" then
+    keymap(bufnr, "n", "<leader>la", "<cmd>CodeActionMenu<CR>", opts)
+  else
+    keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  end
+
+  if vim.fn.getbufvar(bufnr, "&filetype") == "go" then
+    keymap(bufnr, "n", "<leader>li", "<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>", opts)
+  end
+
+  keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+  keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
+  keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", opts)
+  keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", opts)
+  keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+  keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)
+  keymap(bufnr, "n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", opts)
+  keymap(bufnr, "n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", opts)
+  keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+  keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
+
+  vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format({ async = true })' ]]
+end
+
+M.on_attach = function(client, bufnr)
+  -- because tsserver formatting always timeout
+  if client.name == "tsserver" then
+    client.server_capabilities.documentFormattingProvider = false
+  end
+
+  if client.name == "sumneko_lua" then
+    client.server_capabilities.documentFormattingProvider = false
+  end
+
+  if client.name == "intelephense" then
+    client.server_capabilities.documentFormattingProvider = false
+  end
+
+  M.lsp_keymaps(bufnr)
+
+  local status_ok, illuminate = pcall(require, "illuminate")
+  if not status_ok then
+    return
+  end
+  illuminate.on_attach(client)
+end
+
+return M

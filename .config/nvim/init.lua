@@ -1,15 +1,16 @@
 -- enable lua loader
 vim.loader.enable()
 
-require("system").setup {
+require("configs").setup {
   colorscheme = "catppuccin-mocha",
   dap = true,
   -- tint = true,
   -- refactor = true,
   -- rust_tools = true,
   -- better_fold = true,
-  -- indent_blankline = true,
-  -- transparent_window = true,
+  indent_blankline = true,
+  -- markdown_preview = true,
+  transparent_window = true,
   autocmds = {
     {
       "BufWinEnter",
