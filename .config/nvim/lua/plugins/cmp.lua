@@ -1,7 +1,7 @@
 return {
   {
     "hrsh7th/nvim-cmp",
-    event = "VeryLazy",
+    event = "InsertEnter",
     dependencies = {
       { "hrsh7th/cmp-path" },
       { "f3fora/cmp-spell" },
@@ -21,31 +21,26 @@ return {
         end,
       },
       { "kdheepak/cmp-latex-symbols", ft = "plaintext" },
+      {
+        "L3MON4D3/LuaSnip",
+        dependencies = {
+          "rafamadriz/friendly-snippets",
+          config = function()
+            require("luasnip.loaders.from_vscode").lazy_load()
+          end,
+        },
+        event = "VeryLazy",
+        config = function()
+          require("luasnip.loaders.from_snipmate").lazy_load()
+        end,
+      },
     },
     enabled = configs.lsp,
-    config = function()
-      if not configs.lsp then
-        return
-      end
-
-      local M = {}
-      M.methods = {}
-
-      local cmp_status_ok, cmp = pcall(require, "cmp")
-      if not cmp_status_ok then
-        return
-      end
-
-      local snip_status_ok, luasnip = pcall(require, "luasnip")
-      if not snip_status_ok then
-        return
-      end
-
+    opts = function()
+      local cmp = require "cmp"
       local icons = require "utils.icons"
-
+      local snip_status_ok, luasnip = pcall(require, "luasnip")
       local neogen_status_ok, neogen = pcall(require, "neogen")
-
-      require("luasnip.loaders.from_vscode").lazy_load()
 
       local has_words_before = function()
         if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
@@ -57,13 +52,6 @@ return {
 
       local function trim(s)
         return (s:gsub("^%s*(.-)%s*$", "%1"))
-      end
-
-      M.methods.has_words_before = has_words_before
-
-      ---@deprecated use M.methods.has_words_before instead
-      M.methods.check_backspace = function()
-        return not has_words_before()
       end
 
       ---checks if emmet_ls is available and active in the buffer
@@ -78,18 +66,6 @@ return {
         end
         return false
       end
-
-      M.methods.is_emmet_active = is_emmet_active
-
-      local T = function(str)
-        return vim.api.nvim_replace_termcodes(str, true, true, true)
-      end
-
-      local function feedkeys(key, mode)
-        vim.api.nvim_feedkeys(T(key), mode, true)
-      end
-
-      M.methods.feedkeys = feedkeys
 
       ---when inside a snippet, seeks to the nearest luasnip field if possible, and checks if it is jumpable
       ---@param dir number 1 for forward, -1 for backward; defaults to 1
@@ -182,8 +158,6 @@ return {
         end
       end
 
-      M.methods.jumpable = jumpable
-
       --   פּ ﯟ   some other good icons
       -- find more here: https://www.nerdfonts.com/cheat-sheet
       local kind_icons = {
@@ -263,7 +237,7 @@ return {
       -- max_width of vim_item
       local max_width = 20
 
-      cmp.setup {
+      return {
         preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(args)
@@ -300,7 +274,7 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
+            elseif snip_status_ok and luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
             elseif jumpable(1) then
               luasnip.jump(1)
@@ -320,7 +294,7 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() and has_words_before() then
               cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
+            elseif snip_status_ok and luasnip.jumpable(-1) then
               luasnip.jump(-1)
             elseif neogen_status_ok and neogen.jumpable(true) then
               neogen.jump_prev()
@@ -440,8 +414,6 @@ return {
               return true
             end,
           },
-          -- { name = "cmp_tabnine" },
-          -- { name = "orgmode" },
           { name = "npm", keyword_length = 4 },
           { name = "crates" },
           { name = "neorg" },
@@ -461,6 +433,11 @@ return {
           native_menu = false,
         },
       }
+    end,
+    config = function(_, opts)
+      local cmp = require "cmp"
+
+      cmp.setup(opts)
 
       -- Use buffer source for `/` (if you enabled `native_menu`, this won"t work anymore).
       cmp.setup.cmdline("/", {
