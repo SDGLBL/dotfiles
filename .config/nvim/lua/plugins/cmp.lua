@@ -9,7 +9,6 @@ return {
       { "hrsh7th/cmp-buffer" },
       -- { "hrsh7th/cmp-copilot" },
       { "hrsh7th/cmp-cmdline" },
-      { "hrsh7th/cmp-nvim-lsp" },
       { "saadparwaiz1/cmp_luasnip" },
       {
         "David-Kunz/cmp-npm",
@@ -22,7 +21,6 @@ return {
         end,
       },
       { "kdheepak/cmp-latex-symbols", ft = "plaintext" },
-      { "b0o/schemastore.nvim" },
     },
     enabled = configs.lsp,
     config = function()

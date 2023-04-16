@@ -13,7 +13,11 @@ end
 
 vim.opt.runtimepath:prepend(lazypath)
 
-require("lazy").setup("plugins", {
+require("lazy").setup {
+  spec = {
+    { import = "plugins" },
+    { import = "plugins.extras.lang" },
+  },
   defaults = { lazy = false, version = nil },
   install = { missing = true, colorscheme = { "tokyonight", "gruvbox" } },
   checker = { enabled = true },
@@ -31,6 +35,6 @@ require("lazy").setup("plugins", {
       },
     },
   },
-})
+}
 
 vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })

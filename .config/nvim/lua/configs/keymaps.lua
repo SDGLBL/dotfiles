@@ -87,10 +87,6 @@ keymap("i", "<C-s>", "<Plug>(copilot-next)", { noremap = false })
 keymap("i", "<C-a>", "<Plug>(copilot-suggest)", { noremap = false })
 keymap("i", "<C-d>", "<Plug>(copilot-dismiss)", { noremap = false })
 
--- Hop
-keymap("n", "1", ":HopChar1<cr>", opts)
-keymap("n", "2", ":HopChar2<cr>", opts)
-
 -- Add <D-v> for neovide
 if vim.g.neovide then
   keymap("i", "<D-v>", "<C-r>+", opts)

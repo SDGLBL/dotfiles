@@ -41,30 +41,44 @@ lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_c
   on_new_config = make_on_new_config(lspconfig.util.default_config.on_new_config),
 })
 
-local opts = {
-  settings = {
-    Lua = {
-      telemetry = {
-        enable = false,
-      },
-      diagnostics = {
-        globals = { "vim" },
-      },
-      runtime = {
-        version = "LuaJIT",
-        special = {
-          reload = "require",
+return {
+
+  -- add lua to treesitter
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if type(opts.ensure_installed) == "table" then
+        vim.list_extend(opts.ensure_installed, { "lua" })
+      end
+    end,
+  },
+
+  -- correctly setup lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      -- make sure mason installs the server
+      servers = {
+        lua_ls = {
+          settings = {
+            Lua = {
+              telemetry = {
+                enable = false,
+              },
+              diagnostics = {
+                globals = { "vim" },
+              },
+              runtime = {
+                version = "LuaJIT",
+                special = {
+                  reload = "require",
+                },
+              },
+              workspace = default_workspace,
+            },
+          },
         },
       },
-      -- workspace = {
-      --   library = {
-      --     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-      --     [vim.fn.stdpath("config") .. "/lua"] = true,
-      --   },
-      -- },
-      workspace = default_workspace,
     },
   },
 }
-
-return opts

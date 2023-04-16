@@ -1,5 +1,5 @@
 return {
-  setup = function()
+  setup = function(opts)
     local ok, null_ls = pcall(require, "null-ls")
     if not ok then
       return
@@ -11,19 +11,7 @@ return {
     local hover = null_ls.builtins.hover
 
     require("mason-null-ls").setup {
-      ensure_installed = {
-        "stylua",
-        "golines",
-        "goimports",
-        "taplo",
-        "rustfmt",
-        "prettier",
-        "shellcheck",
-        "hadolint",
-        "golangci_lint",
-        "codespell",
-        "shfmt",
-      },
+      ensure_installed = opts.ensure_installed,
       automatic_setup = true,
       handlers = {
         function(source_name, methods)
@@ -129,6 +117,10 @@ return {
         async = true,
       },
     })
+
+    for _, source in ipairs(opts.sources) do
+      null_ls.register(source)
+    end
 
     null_ls.setup()
   end,

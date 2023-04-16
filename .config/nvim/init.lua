@@ -6,9 +6,9 @@ require("configs").setup {
   dap = true,
   -- tint = true,
   -- refactor = true,
-  -- rust_tools = true,
+  rust_tools = true,
   -- better_fold = true,
-  indent_blankline = true,
+  -- indent_blankline = true,
   -- markdown_preview = true,
   transparent_window = true,
   autocmds = {

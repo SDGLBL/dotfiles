@@ -1,29 +1,16 @@
 return {
-  setup = function()
-    local servers = {
-      "jsonls",
-      "lua_ls",
-      "tsserver",
-      "gopls",
-      "bashls",
-      "dockerls",
-      "rust_analyzer",
-      "emmet_ls",
-      "pylsp",
-    }
-
-    -- if use rust-tools then remove rust_analyzer from servers
-    if configs.rust_tools then
-      for i, server in ipairs(servers) do
-        if server == "rust_analyzer" then
-          table.remove(servers, i)
-        end
-      end
-    end
-
+  setup = function(opts)
+    local servers = opts.servers
     local icons = require "utils.icons"
 
-    local settings = {
+    if vim.tbl_contains(vim.tbl_keys(servers), "rust-analyzer") then
+      servers["rust_analyzer"] = servers["rust-analyzer"]
+      servers["rust-analyzer"] = nil
+    end
+
+    local server_names = vim.tbl_keys(servers)
+
+    require("mason").setup {
       ui = {
         border = "rounded",
         icons = {
@@ -36,34 +23,87 @@ return {
       max_concurrent_installers = 4,
     }
 
-    require("mason").setup(settings)
     require("mason-lspconfig").setup {
-      ensure_installed = servers,
+      ensure_installed = server_names,
       automatic_installation = true,
     }
 
-    local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
-    if not lspconfig_status_ok then
-      return
-    end
+    local lspconfig = require "lspconfig"
 
-    local opts = {}
-
-    for _, server in pairs(servers) do
-      opts = {
-        on_attach = require("plugins.lsp.handlers").on_attach,
-        capabilities = require("plugins.lsp.handlers").capabilities,
-      }
-
-      ---@diagnostic disable-next-line: missing-parameter
-      server = vim.split(server, "@")[1]
-
-      local require_ok, conf_opts = pcall(require, "plugins.lsp.settings." .. server)
-      if require_ok then
-        opts = vim.tbl_deep_extend("force", conf_opts, opts)
+    local lsp_keymaps = function(client, bufnr)
+      if client.name == "null-ls" or client.name == "copilot" then
+        return
       end
 
-      lspconfig[server].setup(opts)
+      local keymaps_opts = { noremap = true, silent = true }
+      local keymap = vim.api.nvim_buf_set_keymap
+
+      if vim.fn.exists ":CodeActionMenu" then
+        keymap(bufnr, "n", "<leader>la", "<cmd>CodeActionMenu<CR>", keymaps_opts)
+      else
+        keymap(bufnr, "n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", keymaps_opts)
+      end
+
+      if client.name == "rust_analyzer" then
+        keymap(bufnr, "n", "K", "<cmd>RustHoverActions<CR>", keymaps_opts)
+      else
+        keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", keymaps_opts)
+      end
+
+      if vim.fn.getbufvar(bufnr, "&filetype") == "go" then
+        keymap(bufnr, "n", "<leader>li", "<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>", keymaps_opts)
+      end
+
+      keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", keymaps_opts)
+      keymap(bufnr, "n", "gd", "<cmd>Telescope lsp_definitions<CR>", keymaps_opts)
+      keymap(bufnr, "n", "gr", "<cmd>Telescope lsp_references<CR>", keymaps_opts)
+      keymap(bufnr, "n", "gI", "<cmd>Telescope lsp_implementations<CR>", keymaps_opts)
+      keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", keymaps_opts)
+      keymap(bufnr, "n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", keymaps_opts)
+      keymap(bufnr, "n", "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", keymaps_opts)
+      keymap(bufnr, "n", "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", keymaps_opts)
+      keymap(bufnr, "n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", keymaps_opts)
+      keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", keymaps_opts)
+
+      vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format({ async = true })' ]]
+    end
+
+    require("utils.lsp").on_attach(function(client, buffer)
+      -- because tsserver formatting always timeout
+      if client.name == "tsserver" then
+        client.server_capabilities.documentFormattingProvider = false
+      end
+
+      if client.name == "sumneko_lua" then
+        client.server_capabilities.documentFormattingProvider = false
+      end
+
+      if client.name == "intelephense" then
+        client.server_capabilities.documentFormattingProvider = false
+      end
+
+      lsp_keymaps(client, buffer)
+    end)
+
+    local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+    if status_cmp_ok then
+      capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+    end
+
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+    local server_opts = {}
+
+    for server_name, server in pairs(servers) do
+      if server ~= nil then
+        server_opts = {
+          capabilities = require("plugins.lsp.handlers").capabilities,
+        }
+
+        lspconfig[server_name].setup(vim.tbl_deep_extend("force", server, server_opts))
+      end
     end
   end,
 }

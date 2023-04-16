@@ -6,10 +6,6 @@ return {
   "weilbith/nvim-code-action-menu",
 
   {
-    "RRethy/vim-illuminate",
-    event = "VeryLazy",
-  },
-  {
     "github/copilot.vim",
     event = "VeryLazy",
   },
@@ -203,6 +199,7 @@ return {
         extra_groups = {
           "SignColumn",
           "TelescopeBorder",
+          "TelescopeNormal",
           "NvimTreeNormal",
           "NvimTreeNormalNC",
           "MsgArea",
