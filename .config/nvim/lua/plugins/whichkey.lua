@@ -19,6 +19,10 @@ return {
         ["q"] = { "<cmd>q!<CR>", "Quit" },
         ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
         ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
+        ["f"] = {
+          "<cmd>Telescope find_files<cr>",
+          "Find files",
+        },
         b = {
           name = "Buffers",
           j = { "<cmd>BufferLinePick<cr>", "Jump" },
