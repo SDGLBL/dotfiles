@@ -11,6 +11,12 @@ return {
       "williamboman/mason-lspconfig.nvim",
       "jayp0521/mason-nvim-dap.nvim",
       {
+        "ray-x/lsp_signature.nvim",
+        opts = {
+          hint_prefix = require("utils.icons").diagnostics.BoldHint .. " ",
+        },
+      },
+      {
         "RRethy/vim-illuminate",
         event = "VeryLazy",
         config = function()
