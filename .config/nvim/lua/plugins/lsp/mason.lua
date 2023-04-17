@@ -3,13 +3,6 @@ return {
     local servers = opts.servers
     local icons = require "utils.icons"
 
-    if vim.tbl_contains(vim.tbl_keys(servers), "rust-analyzer") then
-      servers["rust_analyzer"] = servers["rust-analyzer"]
-      servers["rust-analyzer"] = nil
-    end
-
-    local server_names = vim.tbl_keys(servers)
-
     require("mason").setup {
       ui = {
         border = "rounded",
@@ -24,7 +17,9 @@ return {
     }
 
     require("mason-lspconfig").setup {
-      ensure_installed = server_names,
+      ensure_installed = vim.tbl_map(function(value)
+        return value:gsub("-", "_")
+      end, vim.tbl_keys(servers)),
       automatic_installation = true,
     }
 
@@ -97,6 +92,8 @@ return {
     local server_opts = {}
 
     for server_name, server in pairs(servers) do
+      server_name = server_name:gsub("-", "_")
+
       if server ~= nil then
         server_opts = {
           capabilities = require("plugins.lsp.handlers").capabilities,
