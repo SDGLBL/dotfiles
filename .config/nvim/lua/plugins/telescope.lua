@@ -8,13 +8,13 @@ return {
         require("telescope").load_extension "undo"
       end,
     },
-    config = function()
+    opts = function()
       local icons = require "utils.icons"
       local actions = require "telescope.actions"
       local previewers = require "telescope.previewers"
       local sorters = require "telescope.sorters"
 
-      require("telescope").setup {
+      return {
         defaults = {
           prompt_prefix = icons.ui.Telescope .. " ",
           selection_caret = icons.ui.Forward .. " ",
@@ -151,6 +151,9 @@ return {
           },
         },
       }
+    end,
+    config = function(_, opts)
+      require("telescope").setup(opts)
     end,
   },
 }

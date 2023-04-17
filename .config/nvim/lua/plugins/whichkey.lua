@@ -7,14 +7,7 @@ return {
 
       local icons = require "utils.icons"
 
-      local opts = {
-        mode = "n",
-        prefix = "<leader>",
-        buffer = nil,
-        silent = true,
-        noremap = true,
-        nowait = true,
-      }
+      local opts = require("configs.whichkey").opts
 
       local mappings = {
         ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment" },
@@ -26,10 +19,6 @@ return {
         ["q"] = { "<cmd>q!<CR>", "Quit" },
         ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
         ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
-        ["f"] = {
-          "<cmd>Telescope find_files<cr>",
-          "Find files",
-        },
         b = {
           name = "Buffers",
           j = { "<cmd>BufferLinePick<cr>", "Jump" },
@@ -139,14 +128,7 @@ return {
         u = { "<cmd>Telescope undo<cr>", "Undo" },
       }
 
-      local vopts = {
-        mode = "v",
-        prefix = "<leader>",
-        buffer = nil,
-        silent = true,
-        noremap = true,
-        nowait = true,
-      }
+      local vopts = require("configs.whichkey").vopts
 
       local vmappings = {
         ["/"] = { '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', "Comment" },

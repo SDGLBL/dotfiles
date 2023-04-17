@@ -98,4 +98,41 @@ return {
       require("plugins.lsp.mason-null-ls").setup(opts)
     end,
   },
+
+  {
+    "glepnir/lspsaga.nvim",
+    event = "LspAttach",
+    config = function()
+      require("lspsaga").setup {}
+
+      -- set keymaps
+      require("utils.lsp").on_attach(function(_, bufnr)
+        local keymaps_opts = { noremap = true, silent = true }
+        local keymap = vim.api.nvim_buf_set_keymap
+
+        keymap(bufnr, "n", "gh", "<cmd>Lspsaga lsp_finder<CR>", keymaps_opts)
+        keymap(bufnr, "n", "gp", "<cmd>Lspsaga peek_definition<CR>", keymaps_opts)
+        keymap(bufnr, "n", "gd", "<cmd>Lspsaga goto_definition<CR>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>la", "<cmd>Lspsaga code_action<CR>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lr", "<cmd>Lspsaga rename<CR>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lo", "<cmd>Lspsaga outline<cr>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lj", "<cmd>Lspsaga diagnostic_jump_next<cr>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", keymaps_opts)
+
+        local wk_ok, wk = pcall(require, "which-key")
+
+        if wk_ok then
+          wk.register({
+            ["gh"] = "LSP Finder",
+            ["gp"] = "LSP Peek",
+            ["gd"] = "LSP Goto",
+            ["<leader>l"] = {
+              name = "LSP",
+              o = "Outline",
+            },
+          }, require("configs.whichkey").opts_with_buffer(bufnr))
+        end
+      end)
+    end,
+  },
 }
