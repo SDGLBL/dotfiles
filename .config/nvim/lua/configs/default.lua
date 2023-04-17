@@ -82,6 +82,10 @@
 -- Tools for better development in rust using neovim's builtin lsp
 -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
 ---@field rust_tools boolean
+-- enable `go.nvim`
+-- Tools for better development in golang using neovim's builtin lsp
+-- [go.nvim](https://github.com/ray-x/go.nvim)
+---@field go_tools boolean
 -- enable `color-picker`.
 -- Tools for better development in rust using neovim's builtin lsp
 -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
@@ -153,6 +157,10 @@ return {
   -- Tools for better development in rust using neovim's builtin lsp
   -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
   rust_tools = false,
+  -- `go_tools`
+  -- Tools for better development in golang using neovim's builtin lsp
+  -- [go.nvim](https://github.com/ray-x/go.nvim)
+  go_tools = false,
   -- `color_picker`
   -- Super powerful color picker / colorizer plugin.
   -- [ccc.nvim](https://github.com/uga-rosa/ccc.nvim)

@@ -42,4 +42,15 @@ return {
       },
     },
   },
+
+  {
+    "ray-x/go.nvim",
+    event = "VeryLazy",
+    ft = { "go", "gomod" },
+    -- if you need to install/update all binaries
+    build = ':lua require("go.install").update_all_sync()',
+    enabled = configs.go_tools,
+    dependencies = "ray-x/guihua.lua",
+    config = true,
+  },
 }
