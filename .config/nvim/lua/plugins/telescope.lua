@@ -19,7 +19,7 @@ return {
           prompt_prefix = icons.ui.Telescope .. " ",
           selection_caret = icons.ui.Forward .. " ",
           initial_mode = "insert",
-          path_display = { "smart" },
+          -- path_display = { "smart" },
           layout_strategy = "horizontal",
           file_previewer = previewers.vim_buffer_cat.new,
           grep_previewer = previewers.vim_buffer_vimgrep.new,
