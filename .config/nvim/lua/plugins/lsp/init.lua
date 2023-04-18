@@ -119,19 +119,15 @@ return {
         keymap(bufnr, "n", "<leader>lj", "<cmd>Lspsaga diagnostic_jump_next<cr>", keymaps_opts)
         keymap(bufnr, "n", "<leader>lk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", keymaps_opts)
 
-        local wk_ok, wk = pcall(require, "which-key")
-
-        if wk_ok then
-          wk.register({
-            ["gh"] = "LSP Finder",
-            ["gp"] = "LSP Peek",
-            ["gd"] = "LSP Goto",
-            ["<leader>l"] = {
-              name = "LSP",
-              o = "Outline",
-            },
-          }, require("configs.whichkey").opts_with_buffer(bufnr))
-        end
+        require("utils.whichkey").register {
+          ["gh"] = "LSP Finder",
+          ["gp"] = "LSP Peek",
+          ["gd"] = "LSP Goto",
+          ["<leader>l"] = {
+            name = "LSP",
+            o = "Outline",
+          },
+        }
       end)
     end,
   },

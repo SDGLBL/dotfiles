@@ -37,4 +37,12 @@ require("lazy").setup {
   },
 }
 
-vim.keymap.set("n", "<leader>z", "<cmd>:Lazy<cr>", { desc = "Plugin Manager" })
+require("utils.whichkey").register {
+  z = {
+    name = "Lazy",
+    i = { "<cmd>:Lazy install<cr>", "Install" },
+    u = { "<cmd>:Lazy update<cr>", "Update" },
+    c = { "<cmd>:Lazy clean<cr>", "Clean" },
+    p = { "<cmd>:Lazy profile<cr>", "Profile" },
+  },
+}

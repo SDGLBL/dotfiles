@@ -7,7 +7,7 @@ return {
 
       local icons = require "utils.icons"
 
-      local opts = require("configs.whichkey").opts
+      local opts = require("utils.whichkey").opts
 
       local mappings = {
         ["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment" },
@@ -132,7 +132,7 @@ return {
         u = { "<cmd>Telescope undo<cr>", "Undo" },
       }
 
-      local vopts = require("configs.whichkey").vopts
+      local vopts = require("utils.whichkey").vopts
 
       local vmappings = {
         ["/"] = { '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', "Comment" },
