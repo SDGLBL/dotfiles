@@ -115,7 +115,7 @@ return {
         local keymap = vim.api.nvim_buf_set_keymap
 
         keymap(bufnr, "n", "gh", "<cmd>Lspsaga lsp_finder<CR>", keymaps_opts)
-        keymap(bufnr, "n", "gp", "<cmd>Lspsaga preview_definition<CR>", keymaps_opts)
+        keymap(bufnr, "n", "gp", "<cmd>Lspsaga peek_definition<CR>", keymaps_opts)
         keymap(bufnr, "n", "gd", "<cmd>Lspsaga goto_definition<CR>", keymaps_opts)
         keymap(bufnr, "n", "<leader>la", "<cmd>Lspsaga code_action<CR>", keymaps_opts)
         keymap(bufnr, "n", "<leader>lr", "<cmd>Lspsaga rename<CR>", keymaps_opts)
