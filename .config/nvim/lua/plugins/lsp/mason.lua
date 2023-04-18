@@ -96,7 +96,7 @@ return {
 
       if server ~= nil then
         server_opts = {
-          capabilities = require("plugins.lsp.handlers").capabilities,
+          capabilities = capabilities,
         }
 
         lspconfig[server_name].setup(vim.tbl_deep_extend("force", server, server_opts))
