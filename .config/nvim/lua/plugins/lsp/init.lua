@@ -122,6 +122,8 @@ return {
         keymap(bufnr, "n", "<leader>lj", "<cmd>Lspsaga diagnostic_jump_next<cr>", keymaps_opts)
         keymap(bufnr, "n", "<leader>lk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", keymaps_opts)
         keymap(bufnr, "n", "<leader>lo", "<cmd>Lspsaga outline<cr>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lci", "<cmd>Lspsaga incoming_calls<cr>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lco", "<cmd>Lspsaga outgoing_calls<cr>", keymaps_opts)
 
         require("utils.whichkey").register_with_buffer({
           ["gh"] = "LSP Finder",
@@ -129,7 +131,12 @@ return {
           ["gd"] = "LSP Goto",
           ["<leader>l"] = {
             name = "LSP",
-            o = { "<cmd>Lspsaga outline<cr>", "Outline" },
+            o = "Outline",
+            c = {
+              name = "Calls",
+              i = "Incoming Calls",
+              o = "Outgoing Calls",
+            },
           },
         }, bufnr)
       end)
