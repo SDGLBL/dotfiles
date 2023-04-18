@@ -111,16 +111,24 @@ return {
           return
         end
 
+        local keymaps_opts = { noremap = true, silent = true }
+        local keymap = vim.api.nvim_buf_set_keymap
+
+        keymap(bufnr, "n", "gh", "<cmd>Lspsaga lsp_finder<CR>", keymaps_opts)
+        keymap(bufnr, "n", "gp", "<cmd>Lspsaga preview_definition<CR>", keymaps_opts)
+        keymap(bufnr, "n", "gd", "<cmd>Lspsaga goto_definition<CR>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>la", "<cmd>Lspsaga code_action<CR>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lr", "<cmd>Lspsaga rename<CR>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lj", "<cmd>Lspsaga diagnostic_jump_next<cr>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", keymaps_opts)
+        keymap(bufnr, "n", "<leader>lo", "<cmd>Lspsaga outline<cr>", keymaps_opts)
+
         require("utils.whichkey").register_with_buffer({
-          ["gh"] = { "<cmd>Lspsaga lsp_finder<CR>", "LSP Finder" },
-          ["gp"] = { "<cmd>Lspsaga preview_definition<CR>", "LSP Preview" },
-          ["gd"] = { "<cmd>Lspsaga goto_definition<CR>", "LSP Goto" },
+          ["gh"] = "LSP Finder",
+          ["gp"] = "LSP Preview",
+          ["gd"] = "LSP Goto",
           ["<leader>l"] = {
             name = "LSP",
-            a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
-            r = { "<cmd>Lspsaga rename<CR>", "Rename" },
-            j = { "<cmd>Lspsaga diagnostic_jump_next<cr>", "Next Diagnostic" },
-            k = { "<cmd>Lspsaga diagnostic_jump_prev<cr>", "Prev Diagnostic" },
             o = { "<cmd>Lspsaga outline<cr>", "Outline" },
           },
         }, bufnr)
