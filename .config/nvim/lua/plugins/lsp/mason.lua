@@ -23,8 +23,6 @@ return {
       automatic_installation = true,
     }
 
-    local lspconfig = require "lspconfig"
-
     local lsp_keymaps = function(client, bufnr)
       if client.name == "null-ls" or client.name == "copilot" then
         return
@@ -89,6 +87,17 @@ return {
 
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+    local handlers = {
+      -- The first entry (without a key) will be the default handler
+      -- and will be called for each installed server that doesn't have
+      -- a dedicated handler.
+      function(server_name) -- default handler (optional)
+        require("lspconfig")[server_name].setup {
+          capabilities = capabilities,
+        }
+      end,
+    }
+
     local server_opts = {}
 
     for server_name, server in pairs(servers) do
@@ -99,8 +108,12 @@ return {
           capabilities = capabilities,
         }
 
-        lspconfig[server_name].setup(vim.tbl_deep_extend("force", server, server_opts))
+        handlers[server_name] = function()
+          require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", server, server_opts))
+        end
       end
     end
+
+    require("mason-lspconfig").setup_handlers(handlers)
   end,
 }
