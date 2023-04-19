@@ -17,10 +17,11 @@ require("lazy").setup {
   spec = {
     { import = "plugins" },
     { import = "plugins.extras.lang" },
+    { import = "plugins.extras.pde" },
   },
   defaults = { lazy = false, version = nil },
   install = { missing = true, colorscheme = { "tokyonight", "gruvbox" } },
-  checker = { enabled = false },
+  checker = { enabled = true },
   performance = {
     rtp = {
       disabled_plugins = {
