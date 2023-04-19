@@ -5,11 +5,19 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     enabled = configs.lsp,
     dependencies = {
-      "folke/neodev.nvim",
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "jayp0521/mason-nvim-dap.nvim",
+      {
+        "folke/neodev.nvim",
+        opts = { experimental = { pathStrict = true } },
+      },
+      {
+        "folke/neoconf.nvim",
+        cmd = "Neoconf",
+        config = true,
+      },
       {
         "ray-x/lsp_signature.nvim",
         opts = {

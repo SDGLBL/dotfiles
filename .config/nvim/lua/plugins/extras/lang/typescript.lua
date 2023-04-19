@@ -14,8 +14,11 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = { "jose-elias-alvarez/typescript.nvim" },
+    ---@class PluginLspOpts
     opts = {
       -- make sure mason installs the server
+      -- LSP Server Settings
+      ---@type lspconfig.options
       servers = {
         ---@type lspconfig.options.tsserver
         tsserver = {

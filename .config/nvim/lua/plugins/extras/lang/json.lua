@@ -16,8 +16,11 @@ return {
       "b0o/SchemaStore.nvim",
       version = false, -- last release is way too old
     },
+    ---@class PluginLspOpts
     opts = {
       -- make sure mason installs the server
+      -- LSP Server Settings
+      ---@type lspconfig.options
       servers = {
         jsonls = {
           -- lazy-load schemastore when needed

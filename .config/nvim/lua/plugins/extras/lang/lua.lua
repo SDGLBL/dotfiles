@@ -56,8 +56,11 @@ return {
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
+    ---@class PluginLspOpts
     opts = {
       -- make sure mason installs the server
+      -- LSP Server Settings
+      ---@type lspconfig.options
       servers = {
         lua_ls = {
           settings = {
