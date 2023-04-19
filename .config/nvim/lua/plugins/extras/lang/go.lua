@@ -1,5 +1,4 @@
 return {
-
   -- add go to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -55,5 +54,18 @@ return {
     enabled = configs.go_tools,
     dependencies = "ray-x/guihua.lua",
     config = true,
+  },
+
+  -- add go impl support
+  {
+    "edolphin-ydf/goimpl.nvim",
+    ft = "go",
+    build = "go install github.com/josharian/impl@latest",
+    config = function()
+      local ok, telescope = pcall(require, "telescope")
+      if ok then
+        telescope.load_extension "goimpl"
+      end
+    end,
   },
 }

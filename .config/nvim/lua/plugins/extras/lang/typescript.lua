@@ -1,5 +1,4 @@
 return {
-
   -- add typescript to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -49,6 +48,18 @@ return {
     "jose-elias-alvarez/null-ls.nvim",
     opts = function(_, opts)
       table.insert(opts.sources, require "typescript.extensions.null-ls.code-actions")
+    end,
+  },
+
+  -- color picker
+  {
+    "uga-rosa/ccc.nvim",
+    ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html", "lua" },
+    enabled = configs.color_picker,
+    config = function(_, opts)
+      require("ccc").setup {}
+
+      require("utils.whichkey").register({ C = { "<cmd>CccPick<cr>", "Color picker" } }, opts)
     end,
   },
 }
