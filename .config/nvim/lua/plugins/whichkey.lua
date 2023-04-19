@@ -85,7 +85,7 @@ return {
           c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
         },
         s = {
-          name = "Search",
+          name = "Search/Session",
           b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
           t = { "<cmd>Telescope live_grep<cr>", "Find Text" },
           c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
@@ -95,6 +95,10 @@ return {
           R = { "<cmd>Telescope registers<cr>", "Registers" },
           k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
           C = { "<cmd>Telescope commands<cr>", "Commands" },
+          s = { "<cmd>SessionSave<cr>", "Save Session" },
+          l = { "<cmd>SessionLoad<cr>", "Load Session" },
+          L = { "<cmd>SessionLoadLast<cr>", "Load Last Session" },
+          d = { "<cmd>SessionDelete<cr>", "Del Cur Session" },
           p = {
             "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
             "Colorscheme with Preview",
@@ -121,13 +125,6 @@ return {
           ["2"] = { "<cmd>HopChar2<cr>", "HopChar2" },
           p = { "<cmd>HopPattern<cr>", "HopPattern" },
           n = { "<cmd>lua require'tsht'.nodes()<cr>", "TSNodes" },
-        },
-        p = {
-          name = "Session",
-          s = { "<cmd>SessionSave<cr>", "Save Session" },
-          l = { "<cmd>SessionLoad<cr>", "Load Session" },
-          L = { "<cmd>SessionLoadLast<cr>", "Load Last Session" },
-          d = { "<cmd>SessionDelete<cr>", "Del Cur Session" },
         },
         u = { "<cmd>Telescope undo<cr>", "Undo" },
       }
@@ -257,44 +254,6 @@ return {
             t = { "<cmd>lua require'dapui'.toggle()<cr>", "toggle debug ui window" },
             f = { "<cmd>lua require'dapui'.float_element()<cr>", "get value" },
             v = { "<cmd>lua require'dapui'.eval(nil,{enter=true})<cr>", "eval value" },
-          },
-        }, opts)
-      end
-
-      if c.color_picker then
-        wk.register({ C = { "<cmd>CccPick<cr>", "Color picker" } }, opts)
-      end
-
-      if c.markdown_preview then
-        wk.register({
-          p = {
-            name = "MarkdownPreview",
-            p = { "<cmd>MarkdownPreview<cr>", "Preview" },
-            s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
-            t = { "<cmd>MarkdownPreviewToggle<cr>", "Toggle" },
-          },
-        }, opts)
-      end
-
-      if c.neorg then
-        wk.register({
-          n = {
-            name = "Neorg",
-            w = {
-              name = "Workspaces",
-              w = { "<cmd>Neorg workspace work<cr>", "Work" },
-              l = { "<cmd>Neorg workspace life<cr>", "Life" },
-              s = { "<cmd>Neorg workspace learn<cr>", "Learn" },
-            },
-            t = {
-              name = "TOC",
-              c = { "<cmd>Neorg toc close<cr>", "Close TOC" },
-              i = { "<cmd>Neorg toc inline<cr>", "Inline TOC" },
-              s = { "<cmd>Neorg toc split<cr>", "Split TOC" },
-              t = { "<cmd>Neorg toc toqflist<cr>", "Toqflist TOC" },
-            },
-            r = { "<cmd>Neorg return<cr>", "Return" },
-            j = { "<cmd>Neorg journal<cr>", "Journal" },
           },
         }, opts)
       end

@@ -9,6 +9,19 @@ return {
     end,
   },
 
+  -- add support edit markdown codeblock
+  {
+    "AckslD/nvim-FeMaco.lua",
+    ft = { "markdown" },
+    opts = {},
+  },
+
+  -- add support generate markdown toc
+  {
+    "mzlogin/vim-markdown-toc",
+    ft = { "markdown" },
+  },
+
   {
     "iamcco/markdown-preview.nvim",
     build = function()
@@ -118,6 +131,16 @@ return {
       -- set default theme (dark or light)
       -- By default the theme is define according to the preferences of the system
       vim.g.mkdp_theme = require("utils.time").is_dark() and "dark" or "light"
+
+      require("utils.whichkey").register {
+        p = {
+          name = "Markdown",
+          p = { "<cmd>MarkdownPreview<cr>", "Preview" },
+          s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
+          t = { "<cmd>MarkdownPreviewToggle<cr>", "Toggle" },
+          e = { "<cmd>FeMaco<cr>", "Edit Code Block" },
+        },
+      }
     end,
   },
 }

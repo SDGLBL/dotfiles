@@ -49,6 +49,29 @@ return {
         ["core.integrations.treesitter"] = {},
       },
     },
-    config = true,
+    config = function(_, opts)
+      require("neorg").setip(opts)
+
+      require("utils.whichkey").register {
+        n = {
+          name = "Neorg",
+          w = {
+            name = "Workspaces",
+            w = { "<cmd>Neorg workspace work<cr>", "Work" },
+            l = { "<cmd>Neorg workspace life<cr>", "Life" },
+            s = { "<cmd>Neorg workspace learn<cr>", "Learn" },
+          },
+          t = {
+            name = "TOC",
+            c = { "<cmd>Neorg toc close<cr>", "Close TOC" },
+            i = { "<cmd>Neorg toc inline<cr>", "Inline TOC" },
+            s = { "<cmd>Neorg toc split<cr>", "Split TOC" },
+            t = { "<cmd>Neorg toc toqflist<cr>", "Toqflist TOC" },
+          },
+          r = { "<cmd>Neorg return<cr>", "Return" },
+          j = { "<cmd>Neorg journal<cr>", "Journal" },
+        },
+      }
+    end,
   },
 }

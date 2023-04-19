@@ -18,6 +18,7 @@ require("lazy").setup {
     { import = "plugins" },
     { import = "plugins.extras.lang" },
     { import = "plugins.extras.pde" },
+    { import = "plugins.extras.pde.note" },
   },
   defaults = { lazy = false, version = nil },
   install = { missing = true, colorscheme = { "tokyonight", "gruvbox" } },
