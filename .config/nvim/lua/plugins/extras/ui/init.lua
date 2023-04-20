@@ -68,6 +68,8 @@ return {
           "SignColumn",
           "TelescopeBorder",
           "TelescopeNormal",
+          "FloatBorder",
+          "NormalFloat",
           "NvimTreeNormal",
           "NvimTreeNormalNC",
           "MsgArea",
