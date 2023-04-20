@@ -273,14 +273,10 @@ return {
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif snip_status_ok and luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            elseif jumpable(1) then
+            elseif snip_status_ok and luasnip.jumpable(1) then
               luasnip.jump(1)
             elseif neogen_status_ok and neogen.jumpable() then
               neogen.jump_next()
-            elseif is_emmet_active() then
-              return vim.fn["cmp#complete"]()
             elseif has_words_before() then
               fallback()
             else
@@ -291,7 +287,7 @@ return {
             "s",
           }),
           ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
+            if cmp.visible() then
               cmp.select_prev_item()
             elseif snip_status_ok and luasnip.jumpable(-1) then
               luasnip.jump(-1)
@@ -304,7 +300,6 @@ return {
             "i",
             "s",
           }),
-
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-l>"] = function(fallback)
             cmp.mapping.abort()
