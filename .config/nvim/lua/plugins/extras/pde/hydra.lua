@@ -119,7 +119,7 @@ local function dap_menu()
     -- stylua: ignore
     heads = {
       { "C", function() dap.set_breakpoint(vim.fn.input "[Condition] > ") end, desc = "Conditional Breakpoint", },
-      { "E", function() dapui.eval(nil,{enter=true}) end, desc = "Evaluate Input", },
+      { "E", function() dapui.eval(vim.fn.input "[Expression] > ",{}) end, desc = "Evaluate Input", },
       { "R", function() dap.run_to_cursor() end, desc = "Run to Cursor", },
       { "S", function() dap_widgets.scopes() end, desc = "Scopes", },
       { "U", function() dapui.toggle() end, desc = "Toggle UI", },
@@ -127,7 +127,7 @@ local function dap_menu()
       { "b", function() dap.step_back() end, desc = "Step Back", },
       { "c", function() dap.continue() end, desc = "Continue", },
       { "d", function() dap.disconnect() end, desc = "Disconnect", },
-      { "e", function() dapui.eval() end, mode = {"n", "v"}, desc = "Evaluate", },
+      { "e", function() dapui.eval(nil,{enter=true}) end, mode = {"n", "v"}, desc = "Evaluate", },
       { "g", function() dap.session() end, desc = "Get Session", },
       { "h", function() dap_widgets.hover() end, desc = "Hover Variables", },
       { "i", function() dap.step_into() end, desc = "Step Into", },
