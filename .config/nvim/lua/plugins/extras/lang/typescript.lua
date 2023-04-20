@@ -56,10 +56,12 @@ return {
     "uga-rosa/ccc.nvim",
     ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html", "lua" },
     enabled = configs.color_picker,
-    config = function(_, opts)
+    config = function(_, _)
       require("ccc").setup {}
 
-      require("utils.whichkey").register({ C = { "<cmd>CccPick<cr>", "Color picker" } }, opts)
+      require("utils.whichkey").register {
+        C = { "<cmd>CccPick<cr>", "Color picker" },
+      }
     end,
   },
 }
