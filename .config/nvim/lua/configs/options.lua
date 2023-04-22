@@ -36,7 +36,7 @@ vim.opt.autochdir = true -- change working directory to the directory of the fil
 vim.opt.spell = false
 vim.opt.spelllang = { "en_us" }
 vim.wo.cursorline = true -- highlight the current line
--- vim.opt.guifont = "monospace:h17" -- the font used in graphical neovim applications
+vim.opt.guifont = "FiraCode Nerd Font:h16" -- the font used in graphical neovim applications
 
 vim.opt.shortmess:append "c"
 
