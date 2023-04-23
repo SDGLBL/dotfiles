@@ -22,7 +22,7 @@ return {
       "windwp/nvim-ts-autotag",
       "mfussenegger/nvim-ts-hint-textobject",
       "nvim-treesitter/nvim-treesitter-textobjects",
-      -- "romgrk/nvim-treesitter-context",
+      "romgrk/nvim-treesitter-context",
     },
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
