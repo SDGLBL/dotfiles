@@ -170,6 +170,7 @@ return {
     "ThePrimeagen/refactoring.nvim",
     event = "VeryLazy",
     enabled = configs.refactor,
+    dependencies = { "nvim-telescope/telescope.nvim" },
     config = function()
       if not configs.refactor then
         return
