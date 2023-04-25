@@ -11,7 +11,7 @@ return {
       end,
     },
     config = function(_, opts)
-      vim.g.db_ui_save_location = vim.fn.stdpath "config" .. require("plenary.path").path.sep .. "db_ui"
+      vim.g.db_ui_save_location = vim.fn.stdpath "cache" .. require("plenary.path").path.sep .. "db_ui"
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = {
