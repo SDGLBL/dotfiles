@@ -16,7 +16,7 @@ fi
 
 export NEOVIDE_MULTIGRID=true
 
-export GIT_EDITOR=vim
+export GIT_EDITOR=nvim
 
 export LC_CTYPE="UTF-8"
 
