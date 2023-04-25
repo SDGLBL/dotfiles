@@ -3,10 +3,6 @@ return {
   "nvim-lua/plenary.nvim",
 
   {
-    "github/copilot.vim",
-    event = "VeryLazy",
-  },
-  {
     "ethanholz/nvim-lastplace",
     config = true,
   },

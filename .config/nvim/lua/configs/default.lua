@@ -212,27 +212,6 @@ return {
     -- @usage 'base' | 'moon' | 'dawn' | 'rose-pine[-moon][-dawn]'
     vim.g.rose_pine_variant = "base"
 
-    -- copilot setup
-    vim.g.copilot_no_tab_map = true
-    vim.g.copilot_assume_mapped = true
-    vim.g.copilot_tab_fallback = ""
-    vim.g.copilot_filetypes = {
-      ["json"] = true,
-      ["javascript"] = true,
-      ["javascriptreact"] = true,
-      ["typescript"] = true,
-      ["typescriptreact"] = true,
-      ["lua"] = true,
-      ["rust"] = true,
-      ["c"] = true,
-      ["c#"] = true,
-      ["c++"] = true,
-      ["go"] = true,
-      ["python"] = true,
-      ["norg"] = true,
-      ["sh"] = true,
-    }
-
     -- Please check https://github.com/agriffis/skel/blob/master/neovim/bin/clipboard-provider
     -- This maybe cause stuck on macos platform, if you don't need clipboard, please comment it
     vim.g["clipboard"] = {
