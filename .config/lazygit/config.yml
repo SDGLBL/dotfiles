@@ -188,13 +188,18 @@ keybinding:
     init: "i"
     update: "u"
     bulkMenu: "b"
-# customCommands:
-#   - key: 'P'
-#     command: 'git push origin HEAD:refs/for/{{index .PromptResponses 0}}'
-#     context: 'global'
-#     loadingText: 'pushing'
-#     prompts:
-#     - type: 'input'
-#       title: 'which branch do you want to push to?'
-#       initialValue: "{{.CheckedOutBranch.Name}}"
-#     description:  'push to origin refs'
+customCommands:
+  #   - key: 'P'
+  #     command: 'git push origin HEAD:refs/for/{{index .PromptResponses 0}}'
+  #     context: 'global'
+  #     loadingText: 'pushing'
+  #     prompts:
+  #     - type: 'input'
+  #       title: 'which branch do you want to push to?'
+  #       initialValue: "{{.CheckedOutBranch.Name}}"
+  #     description:  'push to origin refs'
+  - key: "Z"
+    command: "git cz"
+    context: "files"
+    loadingText: "opening commitizen commit tool"
+    subprocess: true
