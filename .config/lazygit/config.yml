@@ -203,3 +203,8 @@ customCommands:
     context: "files"
     loadingText: "opening commitizen commit tool"
     subprocess: true
+  - key: "E"
+    command: "git commit --edit"
+    context: "files"
+    loadingText: "edit commit"
+    subprocess: true
