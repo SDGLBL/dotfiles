@@ -47,6 +47,20 @@ return {
       vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 
       local Terminal = require("toggleterm.terminal").Terminal
+      local git_commit = Terminal:new {
+        cmd = "git cz",
+        dir = "git_dir",
+        hidden = true,
+        direction = "float",
+        float_opts = {
+          border = "double",
+        },
+      }
+
+      function _GIT_COMMIT_TOGGLE()
+        git_commit:toggle()
+      end
+
       local lazygit = Terminal:new {
         cmd = "lazygit -ucf ~/.config/lazygit/config.yml",
         hidden = true,
