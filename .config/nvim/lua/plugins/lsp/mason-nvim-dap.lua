@@ -9,6 +9,17 @@ return {
       return
     end
 
+    local function input_args()
+      ---@diagnostic disable-next-line: redundant-parameter
+      local args = vim.fn.input("Arguments: ", "", "file")
+
+      if args ~= "" then
+        return vim.split(args, " ")
+      else
+        return {}
+      end
+    end
+
     local handlers = {
       function(source_name)
         -- all sources with no handler get passed here
@@ -33,6 +44,7 @@ return {
             name = "Launch file",
             justMyCode = false,
             program = "${file}",
+            args = input_args,
             pythonPath = function()
               local cwd = vim.fn.getcwd()
               if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
@@ -65,6 +77,7 @@ return {
             name = "Debug File",
             request = "launch",
             program = "${file}",
+            args = input_args,
             dlvToolPath = vim.fn.exepath "dlv",
           },
           {
@@ -72,6 +85,7 @@ return {
             name = "Debug Program",
             request = "launch",
             program = "${workspaceFolder}",
+            args = input_args,
             dlvToolPath = vim.fn.exepath "dlv",
           },
           {
@@ -80,6 +94,7 @@ return {
             request = "launch",
             mode = "test",
             program = "${file}",
+            args = input_args,
             dlvToolPath = vim.fn.exepath "dlv",
           },
           {
@@ -88,6 +103,7 @@ return {
             request = "launch",
             mode = "test",
             program = "${workspaceFolder}",
+            args = input_args,
             dlvToolPath = vim.fn.exepath "dlv",
           },
           {
@@ -128,6 +144,7 @@ return {
                 ---@diagnostic disable-next-line: redundant-parameter
                 return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
               end,
+              args = input_args,
               cwd = "${workspaceFolder}",
               stopOnEntry = false,
             },
@@ -144,6 +161,7 @@ return {
                 ---@diagnostic disable-next-line: redundant-parameter
                 return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
               end,
+              args = input_args,
               cwd = "${workspaceFolder}",
               stopOnEntry = false,
             },
@@ -167,6 +185,7 @@ return {
                 ---@diagnostic disable-next-line: redundant-parameter
                 return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
               end,
+              args = input_args,
               cwd = "${workspaceFolder}",
               stopOnEntry = true,
             },
@@ -182,6 +201,7 @@ return {
                 ---@diagnostic disable-next-line: redundant-parameter
                 return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
               end,
+              args = input_args,
             },
           }
 
@@ -196,6 +216,7 @@ return {
                 ---@diagnostic disable-next-line: redundant-parameter
                 return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
               end,
+              args = input_args,
               cwd = "${workspaceFolder}",
               stopOnEntry = true,
             },
@@ -211,6 +232,7 @@ return {
                 ---@diagnostic disable-next-line: redundant-parameter
                 return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
               end,
+              args = input_args,
             },
           }
         end
@@ -225,12 +247,12 @@ return {
 
     local dapui_ok, dapui = pcall(require, "dapui")
     if dapui_ok then
-      dapui.setup()
+      dapui.setup {}
     end
 
     local dapvok, dapv = pcall(require, "nvim-dap-virtual-text")
     if dapvok then
-      dapv.setup()
+      dapv.setup {}
     end
   end,
 }
