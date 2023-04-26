@@ -99,7 +99,11 @@ return {
     "glepnir/lspsaga.nvim",
     event = "LspAttach",
     config = function()
-      require("lspsaga").setup {}
+      require("lspsaga").setup {
+        lightbulb = {
+          enable = false,
+        },
+      }
 
       -- set keymaps
       require("utils.lsp").on_attach(function(client, bufnr)
