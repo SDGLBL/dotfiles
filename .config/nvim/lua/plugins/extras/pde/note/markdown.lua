@@ -12,6 +12,7 @@ return {
   -- add support edit markdown codeblock
   {
     "AckslD/nvim-FeMaco.lua",
+    enabled = configs.markdown_preview,
     ft = { "markdown" },
     opts = {},
   },
@@ -19,6 +20,7 @@ return {
   -- add support generate markdown toc
   {
     "mzlogin/vim-markdown-toc",
+    enabled = configs.markdown_preview,
     ft = { "markdown" },
   },
 
