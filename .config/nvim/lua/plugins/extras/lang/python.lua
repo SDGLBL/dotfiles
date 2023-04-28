@@ -18,13 +18,7 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
-        pylsp = {
-          settings = {
-            analysis = {
-              typeCheckingMode = "true",
-            },
-          },
-        },
+        pyright = {},
       },
     },
   },
