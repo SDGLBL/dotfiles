@@ -33,7 +33,6 @@ return {
         "org",
         "css",
         "vim",
-        "yaml",
         "bash",
         "html",
         "yaml",
