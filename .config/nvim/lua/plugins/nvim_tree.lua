@@ -30,18 +30,20 @@ return {
           start_telescope "live_grep"
         end
 
+        local function opts(desc)
+          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+        end
+
         api.config.mappings.default_on_attach(bufnr)
 
-        require("utils.whichkey").register_with_buffer({
-          l = { api.node.open.edit, "Open" },
-          o = { api.node.open.edit, "Open" },
-          ["<CR>"] = { api.node.open.edit, "Open" },
-          v = { api.node.open.vertical, "Open: Vertical Split" },
-          h = { api.node.navigate.parent_close, "Close Directory" },
-          C = { api.tree.change_root_to_node, "CD" },
-          gtg = { telescope_live_grep, "Telescope Live Grep" },
-          gtf = { telescope_find_files, "Telescope Find File" },
-        }, bufnr)
+        vim.keymap.set("n", "l", api.node.open.edit, opts "Open")
+        vim.keymap.set("n", "o", api.node.open.edit, opts "Open")
+        vim.keymap.set("n", "<CR>", api.node.open.edit, opts "Open")
+        vim.keymap.set("n", "v", api.node.open.vertical, opts "Open: Vertical Split")
+        vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
+        vim.keymap.set("n", "C", api.tree.change_root_to_node, opts "CD")
+        vim.keymap.set("n", "gtg", telescope_live_grep, opts "Telescope Live Grep")
+        vim.keymap.set("n", "gtf", telescope_find_files, opts "Telescope Find File")
       end
 
       nvim_tree.setup {
