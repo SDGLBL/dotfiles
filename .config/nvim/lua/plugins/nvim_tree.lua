@@ -5,6 +5,45 @@ return {
       local nvim_tree = require "nvim-tree"
       local icons = require "utils.icons"
 
+      local function start_telescope(telescope_mode)
+        local node = require("nvim-tree.lib").get_node_at_cursor()
+        if not node then
+          return
+        end
+
+        local abspath = node.link_to or node.absolute_path
+        local is_folder = node.open ~= nil
+        local basedir = is_folder and abspath or vim.fn.fnamemodify(abspath, ":h")
+        require("telescope.builtin")[telescope_mode] {
+          cwd = basedir,
+        }
+      end
+
+      local function on_attach(bufnr)
+        local api = require "nvim-tree.api"
+
+        local function telescope_find_files(_)
+          start_telescope "find_files"
+        end
+
+        local function telescope_live_grep(_)
+          start_telescope "live_grep"
+        end
+
+        api.config.mappings.default_on_attach(bufnr)
+
+        require("utils.whichkey").register_with_buffer({
+          l = { api.node.open.edit, "Open" },
+          o = { api.node.open.edit, "Open" },
+          ["<CR>"] = { api.node.open.edit, "Open" },
+          v = { api.node.open.vertical, "Open: Vertical Split" },
+          h = { api.node.navigate.parent_close, "Close Directory" },
+          C = { api.tree.change_root_to_node, "CD" },
+          gtg = { telescope_live_grep, "Telescope Live Grep" },
+          gtf = { telescope_find_files, "Telescope Find File" },
+        }, bufnr)
+      end
+
       nvim_tree.setup {
         auto_reload_on_write = false,
         disable_netrw = false,
@@ -16,10 +55,16 @@ return {
         prefer_startup_root = false,
         sync_root_with_cwd = true,
         reload_on_bufenter = false,
-        respect_buf_cwd = false,
-        on_attach = "disable",
+        respect_buf_cwd = true,
+        on_attach = on_attach,
         remove_keymaps = false,
         select_prompts = false,
+        update_focused_file = {
+          enable = true,
+          debounce_delay = 5,
+          update_root = true,
+          ignore_list = {},
+        },
         view = {
           adaptive_size = false,
           centralize_selection = false,
@@ -107,12 +152,6 @@ return {
         hijack_directories = {
           enable = false,
           auto_open = true,
-        },
-        update_focused_file = {
-          enable = true,
-          debounce_delay = 15,
-          update_root = true,
-          ignore_list = {},
         },
         diagnostics = {
           enable = false,

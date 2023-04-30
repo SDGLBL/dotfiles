@@ -32,7 +32,6 @@ vim.opt.signcolumn = "yes" -- always show the sign column, otherwise it would sh
 vim.opt.wrap = false -- display lines as one long line
 vim.opt.scrolloff = 8 -- is one of my fav
 vim.opt.sidescrolloff = 8
-vim.opt.autochdir = true -- change working directory to the directory of the file being edited
 vim.opt.spell = false
 vim.opt.spelllang = { "en_us" }
 vim.wo.cursorline = true -- highlight the current line
