@@ -6,10 +6,7 @@ local method = null_ls.methods.CODE_ACTION
 
 function M.list_registered(filetype)
   local registered_providers = services.list_registered_providers_names(filetype)
-  local ret = registered_providers[method] or {}
-  return vim.tbl_map(function(v)
-    return v .. "()"
-  end, ret)
+  return registered_providers[method] or {}
 end
 
 function M.setup(actions_configs)

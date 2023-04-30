@@ -188,4 +188,11 @@ return {
     graphql = "",
     sql = "",
   },
+  lsp = {
+    Formatter = "",
+    Linter = "",
+    CodeAction = "",
+    CodeLens = "",
+    Hover = "",
+  },
 }

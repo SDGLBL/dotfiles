@@ -103,13 +103,19 @@ return {
         end
         return msg
       end
+
       local buf_ft = vim.bo.filetype
       local buf_client_names = {}
+      local copilot_active = false
 
       -- add client
       for _, client in pairs(buf_clients) do
-        if client.name ~= "null-ls" then
+        if client.name ~= "null-ls" and client.name ~= "copilot" then
           table.insert(buf_client_names, client.name)
+        end
+
+        if client.name == "copilot" then
+          copilot_active = true
         end
       end
 
@@ -133,7 +139,38 @@ return {
       local supported_hovers = hovers.list_registered(buf_ft)
       vim.list_extend(buf_client_names, supported_hovers)
 
-      return "[" .. table.concat(buf_client_names, ", ") .. "]"
+      local unique_client_names = vim.fn.uniq(buf_client_names)
+
+      for i, client_name in ipairs(unique_client_names) do
+        local cn_icons = {}
+
+        if vim.tbl_contains(supported_formatters, client_name) then
+          table.insert(cn_icons, icons.lsp.Formatter)
+        end
+
+        if vim.tbl_contains(supported_linters, client_name) then
+          table.insert(cn_icons, icons.lsp.Linter)
+        end
+
+        if vim.tbl_contains(supported_code_actions, client_name) then
+          table.insert(cn_icons, icons.lsp.CodeAction)
+        end
+
+        if vim.tbl_contains(supported_hovers, client_name) then
+          table.insert(cn_icons, icons.lsp.Hover)
+        end
+
+        if #cn_icons > 0 then
+          unique_client_names[i] = client_name .. " " .. table.concat(cn_icons, "|")
+        end
+      end
+      local language_servers = "[" .. table.concat(unique_client_names, ", ") .. "]"
+
+      if copilot_active then
+        language_servers = language_servers .. "%#SLCopilot#" .. " " .. icons.git.Octoface .. "%*"
+      end
+
+      return language_servers
     end,
     color = { gui = "bold" },
     cond = conditions.hide_in_width,
