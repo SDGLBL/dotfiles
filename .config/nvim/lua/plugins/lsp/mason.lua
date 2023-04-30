@@ -76,7 +76,7 @@ return {
       end
 
       lsp_keymaps(client, buffer)
-    end)
+    end, { group = "_lsp_keymaps", desc = "init lsp keymaps" })
 
     local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
     local capabilities = vim.lsp.protocol.make_client_capabilities()

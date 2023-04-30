@@ -30,7 +30,7 @@ return {
         config = function()
           require("utils.lsp").on_attach(function(client, _)
             require("illuminate").on_attach(client)
-          end)
+          end, { group = "_illuminate_attach", desc = "attach illuminate" })
         end,
       },
     },
@@ -140,7 +140,7 @@ return {
             },
           },
         }, bufnr)
-      end)
+      end, { group = "_lspsaga_keymaps", desc = "init lspsaga keymaps" })
     end,
   },
 

@@ -51,7 +51,7 @@ return {
               -- stylua: ignore
               vim.keymap.set("n", "<leader>cR", "<cmd>TypescriptRenameFile<CR>", { desc = "Rename File", buffer = buffer })
             end
-          end)
+          end, { group = "_tsserver_keymaps", desc = "init tsserver keymaps" })
           require("typescript").setup { server = opts }
           return true
         end,

@@ -164,15 +164,50 @@ function M.format(opts)
   end
 end
 
+--   vararg table:
+--     • group (string|integer) optional: autocommand group name or
+--       id to match against.
+--     • pattern (string|array) optional: pattern(s) to match
+--       literally |autocmd-pattern|.
+--     • buffer (integer) optional: buffer number for buffer-local
+--       autocommands |autocmd-buflocal|. Cannot be used with
+--       {pattern}.
+--     • desc (string) optional: description (for documentation and
+--       troubleshooting).
+--     • command (string) optional: Vim command to execute on event.
+--       Cannot be used with {callback}
+--     • once (boolean) optional: defaults to false. Run the
+--       autocommand only once |autocmd-once|.
+--     • nested (boolean) optional: defaults to false. Run nested
+--       autocommands |autocmd-nested|.
 ---@param on_attach fun(client, buffer)
-function M.on_attach(on_attach)
-  vim.api.nvim_create_autocmd("LspAttach", {
+---@vararg table
+---@return nil
+function M.on_attach(on_attach, ...)
+  local opts = {
     callback = function(args)
+      if args == nil or args.data == nil then
+        return
+      end
+
       local buffer = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
       on_attach(client, buffer)
     end,
-  })
+  }
+
+  if select("#", ...) > 0 then
+    opts = vim.tbl_extend("force", opts, ...)
+  end
+
+  if type(opts.group) == "string" and opts.group ~= "" then
+    local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
+    if not exists then
+      vim.api.nvim_create_augroup(opts.group, {})
+    end
+  end
+
+  vim.api.nvim_create_autocmd("LspAttach", opts)
 end
 
 return M
