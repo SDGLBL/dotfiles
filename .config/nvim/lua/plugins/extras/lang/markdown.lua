@@ -9,6 +9,20 @@ return {
     end,
   },
 
+  -- correctly setup lspconfig
+  {
+    "neovim/nvim-lspconfig",
+    ---@class PluginLspOpts
+    opts = {
+      -- make sure mason installs the server
+      -- LSP Server Settings
+      ---@type lspconfig.options
+      servers = {
+        marksman = {},
+      },
+    },
+  },
+
   -- add support edit markdown codeblock
   {
     "AckslD/nvim-FeMaco.lua",
