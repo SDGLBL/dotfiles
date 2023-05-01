@@ -11,7 +11,16 @@ return {
       "jayp0521/mason-nvim-dap.nvim",
       {
         "folke/neodev.nvim",
-        opts = { experimental = { pathStrict = true } },
+        opts = {
+          library = {
+            plugins = {
+              "plenary.nvim",
+              "telescope.nvim",
+              -- "nvim-treesitter",
+              -- "LuaSnip",
+            },
+          },
+        },
       },
       {
         "folke/neoconf.nvim",
