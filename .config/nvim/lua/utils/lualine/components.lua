@@ -139,7 +139,15 @@ return {
       local supported_hovers = hovers.list_registered(buf_ft)
       vim.list_extend(buf_client_names, supported_hovers)
 
-      local unique_client_names = vim.fn.uniq(buf_client_names)
+      local hash = {}
+      local unique_client_names = {}
+
+      for _, v in ipairs(buf_client_names) do
+        if not hash[v] then
+          unique_client_names[#unique_client_names + 1] = v -- you could print here instead of saving to result table if you wanted
+          hash[v] = true
+        end
+      end
 
       for i, client_name in ipairs(unique_client_names) do
         local cn_icons = {}
