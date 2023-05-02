@@ -135,7 +135,9 @@ fi
 # vim setting
 alias vim="nvim"
 alias vimf='nvim $(pf)'
+alias vf='nvim $(pf)'
 alias nvimf='nvim $(pf)'
+alias nvf='nvim $(pf)'
 alias gvim="neovide --multigrid"
 alias gnvim="neovide --multigrid"
 alias chadvim="NVIM_APPNAME=nvchad_nvim nvim"
