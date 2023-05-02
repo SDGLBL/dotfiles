@@ -20,6 +20,7 @@ return {
     dependencies = {
       "p00f/nvim-ts-rainbow",
       "windwp/nvim-ts-autotag",
+      "andymass/vim-matchup",
       "mfussenegger/nvim-ts-hint-textobject",
       "nvim-treesitter/nvim-treesitter-textobjects",
       {
