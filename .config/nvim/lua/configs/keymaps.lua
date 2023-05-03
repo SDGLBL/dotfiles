@@ -83,8 +83,20 @@ keymap("n", "cto", "ct|", opts)
 keymap("n", "ctp", "ct{", opts)
 
 -- Copilot
-keymap("i", "<C-s>", "<Plug>(copilot-next)", { noremap = false })
-keymap("i", "<C-a>", "<Plug>(copilot-suggest)", { noremap = false })
+keymap("i", "<C-s>", "<Plug>(copilot-next)", {
+  noremap = false,
+  callback = function()
+    require("cmp").mapping.abort()(function() end)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-next)", true, true, true), "m", true)
+  end,
+})
+keymap("i", "<C-a>", "", {
+  noremap = false,
+  callback = function()
+    require("cmp").mapping.abort()(function() end)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-suggest)", true, true, true), "m", true)
+  end,
+})
 keymap("i", "<C-d>", "<Plug>(copilot-dismiss)", { noremap = false })
 
 -- Add <D-v> for neovide
