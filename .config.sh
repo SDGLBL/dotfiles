@@ -111,6 +111,10 @@ function GO_FLAGS() {
 	export flags
 }
 
+if command_is_exists bat; then
+	alias cat="bat"
+fi
+
 # fzf config
 if command_is_exists fzf; then
 	export FZF_DEFAULT_OPTS='--preview-window=right:50% --layout=reverse --border'
