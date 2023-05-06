@@ -71,7 +71,7 @@ return {
     ---@param opts PluginLspOpts
     config = function(_, opts)
       require("plugins.lsp.mason").setup(opts)
-      require("plugins.lsp.handlers").setup()
+      require("plugins.lsp.diagnostics").setup()
       require("plugins.lsp.mason-nvim-dap").setup()
     end,
   },
