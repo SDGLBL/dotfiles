@@ -10,6 +10,10 @@ return {
       { "hrsh7th/cmp-cmdline" },
       { "saadparwaiz1/cmp_luasnip" },
       {
+        "roobert/tailwindcss-colorizer-cmp.nvim",
+        config = true,
+      },
+      {
         "David-Kunz/cmp-npm",
         event = { "BufRead package.json" },
         dependencies = {
@@ -360,7 +364,8 @@ return {
 
             -- vim_item dup
             vim_item.dup = duplicates[entry.source.name] or 0
-            return vim_item
+
+            return require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
           end,
         },
         sources = {

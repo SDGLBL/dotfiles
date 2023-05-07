@@ -1,7 +1,6 @@
 return {
   "stevearc/dressing.nvim",
   "weilbith/nvim-code-action-menu",
-  "norcalli/nvim-colorizer.lua",
 
   -- windows tint
   {
