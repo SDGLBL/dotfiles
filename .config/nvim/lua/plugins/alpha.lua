@@ -7,6 +7,8 @@ return {
 
       local dashboard = require "alpha.themes.dashboard"
 
+      local icons = require "utils.icons"
+
       dashboard.section.header.val = {
         [[                               __                ]],
         [[  ___     ___    ___   __  __ /\_\    ___ ___    ]],
@@ -17,13 +19,13 @@ return {
       }
 
       dashboard.section.buttons.val = {
-        dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
-        dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-        dashboard.button("p", "  Find project", ":Telescope projects <CR>"),
-        dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
-        dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
-        dashboard.button("c", "  Configuration", ":e " .. vim.fn.stdpath "config" .. "/init.lua <CR>"),
-        dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+        dashboard.button("f", icons.ui.FindFile .. "  Find file", ":Telescope find_files <CR>"),
+        dashboard.button("e", icons.ui.File .. "  New file", ":ene <BAR> startinsert <CR>"),
+        dashboard.button("p", icons.ui.Project .. "  Find project", ":Telescope projects <CR>"),
+        dashboard.button("r", icons.ui.History .. "  Recently used files", ":Telescope oldfiles <CR>"),
+        dashboard.button("t", icons.ui.FindText .. "  Find text", ":Telescope live_grep <CR>"),
+        dashboard.button("c", icons.ui.Gear .. "  Configuration", ":e " .. vim.fn.stdpath "config" .. "/init.lua <CR>"),
+        dashboard.button("q", icons.ui.SignOut .. "  Quit Neovim", ":qa<CR>"),
       }
 
       dashboard.section.footer.opts.hl = "Type"
