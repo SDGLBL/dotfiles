@@ -24,7 +24,7 @@ vim.opt.writebackup = true -- if a file is being edited by another program (or w
 vim.opt.expandtab = true -- convert tabs to spaces
 vim.opt.shiftwidth = 2 -- the number of spaces inserted for each indentation
 vim.opt.tabstop = 2 -- insert 2 spaces for a tab
-vim.opt.cursorline = false -- highlight the current line
+vim.opt.cursorline = true -- highlight the current line
 vim.opt.number = true -- set numbered lines
 vim.opt.relativenumber = false -- set relative numbered lines
 vim.opt.numberwidth = 1 -- set number column width to 2 {default 4}
@@ -34,7 +34,6 @@ vim.opt.scrolloff = 8 -- is one of my fav
 vim.opt.sidescrolloff = 8
 vim.opt.spell = false
 vim.opt.spelllang = { "en_us" }
-vim.wo.cursorline = true -- highlight the current line
 vim.opt.guifont = "FiraCode Nerd Font:h16" -- the font used in graphical neovim applications
 
 vim.opt.shortmess:append "c"
