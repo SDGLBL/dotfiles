@@ -200,4 +200,21 @@ return {
       refactor.setup {}
     end,
   },
+
+  -- inlay hint support
+  {
+    "lvimuser/lsp-inlayhints.nvim",
+    branch = "anticonceal",
+    config = function()
+      require("lsp-inlayhints").setup {}
+
+      require("utils.lsp").on_attach(function(client, bufnr)
+        if client.name == "copilot" or client.name == "null-ls" then
+          return
+        end
+
+        require("lsp-inlayhints").on_attach(client, bufnr)
+      end, { group = "_lsp_inlayhints", desc = "init lspsaga keymaps" })
+    end,
+  },
 }
