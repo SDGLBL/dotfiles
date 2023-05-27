@@ -55,7 +55,11 @@ return {
     build = ':lua require("go.install").update_all_sync()',
     enabled = configs.go_tools,
     dependencies = "ray-x/guihua.lua",
-    config = true,
+    opts = {
+      lsp_inlay_hints = {
+        enable = false,
+      },
+    },
   },
 
   -- add go impl support
