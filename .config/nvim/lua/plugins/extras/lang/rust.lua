@@ -20,31 +20,36 @@ return {
       servers = {
         ["rust-analyzer"] = {
           settings = {
-            imports = {
-              granularity = {
-                group = "module",
+            ["rust-analyzer"] = {
+              imports = {
+                granularity = {
+                  group = "module",
+                },
+                prefix = "self",
               },
-              prefix = "self",
-            },
-            cargo = {
-              buildScripts = {
+              cargo = {
+                buildScripts = {
+                  enable = true,
+                },
+              },
+              procMacro = {
                 enable = true,
               },
+              inlayHints = {
+                enable = true,
+                chainingHints = true,
+                maxLength = 25,
+                parameterHints = true,
+                typeHints = true,
+                typeHintsWithVariable = true,
+                closureCaptureHints = true,
+                closingBraceHints = true,
+                discriminantHints = true,
+                typeHintsSeparator = "‣",
+                hideNamedConstructorHints = true,
+                chainingHintsSeparator = "‣",
+              },
             },
-            procMacro = {
-              enable = true,
-            },
-            -- inlayHints = {
-            --   enable = true,
-            --   chainingHints = true,
-            --   maxLength = 25,
-            --   parameterHints = true,
-            --   typeHints = true,
-            --   hideNamedConstructorHints = false,
-            --   typeHintsSeparator = "‣",
-            --   typeHintsWithVariable = true,
-            --   chainingHintsSeparator = "‣",
-            -- },
           },
         },
       },
