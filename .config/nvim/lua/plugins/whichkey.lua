@@ -298,6 +298,7 @@ return {
             w = { "<cmd>Telescope diagnostics<cr>", "Workspace Diagnostics" },
             W = { '<cmd>lua require("telescope.builtin").diagnostics({ bufnr = 0 })<cr>', "Doc Diagnostics" },
             e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
+            h = { ":lua require('lsp-inlayhints').toggle()<cr>", "Toggle InlayHints" },
           },
         }
 
