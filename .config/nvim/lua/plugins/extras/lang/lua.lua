@@ -22,7 +22,7 @@ return {
           settings = {
             Lua = {
               completion = {
-                callSnippet = "Replace",
+                callSnippet = "Insert",
               },
               workspace = {
                 checkThirdParty = false,
@@ -32,5 +32,18 @@ return {
         },
       },
     },
+  },
+
+  -- tdd support
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/neotest-plenary",
+    },
+    opts = function(_, opts)
+      vim.list_extend(opts.adapters, {
+        require "neotest-plenary",
+      })
+    end,
   },
 }
