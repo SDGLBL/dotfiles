@@ -77,6 +77,9 @@ function M.load_augroups()
           "tsplayground",
           "DressingSelect",
           "Jaq",
+          "neotest-output",
+          "neotest-summary",
+          "OverseerList",
         },
         callback = function()
           vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = true })
