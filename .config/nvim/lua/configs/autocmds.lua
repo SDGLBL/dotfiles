@@ -80,6 +80,7 @@ function M.load_augroups()
           "neotest-output",
           "neotest-summary",
           "OverseerList",
+          "dropbar_menu",
         },
         callback = function()
           vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = true })

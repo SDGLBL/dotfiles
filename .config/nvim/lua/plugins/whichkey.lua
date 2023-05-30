@@ -153,6 +153,7 @@ return {
           ["2"] = { "<cmd>HopChar2<cr>", "HopChar2" },
           p = { "<cmd>HopPattern<cr>", "HopPattern" },
           n = { "<cmd>lua require'tsht'.nodes()<cr>", "TSNodes" },
+          b = { "<cmd>lua require('dropbar.api').pick()<cr>", "DropBar" },
         },
         u = { "<cmd>Telescope undo<cr>", "Undo" },
       }

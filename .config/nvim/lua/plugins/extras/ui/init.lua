@@ -1,6 +1,7 @@
 return {
   "stevearc/dressing.nvim",
   "weilbith/nvim-code-action-menu",
+  "Bekaboo/dropbar.nvim",
 
   -- windows tint
   {
