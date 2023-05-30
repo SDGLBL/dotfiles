@@ -9,6 +9,7 @@ return {
     "projekt0n/github-nvim-theme",
     "marko-cerovac/material.nvim",
     "bluz71/vim-nightfly-guicolors",
+    "felipeagc/fleet-theme-nvim",
     {
       "catppuccin/nvim",
       name = "catppuccin",
