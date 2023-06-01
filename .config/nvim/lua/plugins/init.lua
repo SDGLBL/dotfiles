@@ -1,6 +1,7 @@
 return {
   "moll/vim-bbye",
   "nvim-lua/plenary.nvim",
+  "famiu/bufdelete.nvim",
 
   {
     "wintermute-cell/gitignore.nvim",
