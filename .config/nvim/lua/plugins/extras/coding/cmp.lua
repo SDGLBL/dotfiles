@@ -377,9 +377,6 @@ return {
               if kind == "Snippet" and ctx.prev_context.filetype == "java" then
                 return false
               end
-              if kind == "Text" then
-                return false
-              end
               return true
             end,
           },
