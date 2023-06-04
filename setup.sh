@@ -167,11 +167,11 @@ install_neovim() {
 				mkdir -p "$HOME"/software
 			fi
 			if [[ "$OSTYPE" =~ ^darwin ]]; then
-				wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-macos.tar.gz -O "$HOME"/software/nvim.tar.gz
+				wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.9.0/nvim-macos.tar.gz -O "$HOME"/software/nvim.tar.gz
 				tar -xvf "$HOME"/software/nvim.tar.gz -C "$HOME"/software
 				mv "$HOME"/software/nvim-macos "$HOME"/software/nvim
 			elif [[ "$OSTYPE" =~ ^linux ]]; then
-				wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.tar.gz -O "$HOME"/software/nvim.tar.gz
+				wget --no-check-certificate https://github.com/neovim/neovim/releases/download/v0.9.0/nvim-linux64.tar.gz -O "$HOME"/software/nvim.tar.gz
 				tar -xvf "$HOME"/software/nvim.tar.gz -C "$HOME"/software
 				mv "$HOME"/software/nvim-linux64 "$HOME"/software/nvim
 			fi
