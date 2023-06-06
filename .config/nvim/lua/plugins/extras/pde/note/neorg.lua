@@ -12,7 +12,6 @@ return {
   {
     "nvim-neorg/neorg",
     dependencies = "nvim-lua/plenary.nvim",
-    ft = "norg",
     enabled = configs.neorg,
     opts = {
       load = {
@@ -28,7 +27,7 @@ return {
             zen_mode = "zen-mode",
           },
         },
-        ["core.norg.dirman"] = {
+        ["core.dirman"] = {
           config = {
             workspaces = {
               work = "~/Desktop/sync/neorgs/work",
@@ -37,10 +36,10 @@ return {
             },
           },
         },
-        ["core.norg.journal"] = {},
-        ["core.norg.qol.toc"] = {},
-        ["core.norg.concealer"] = {},
-        ["core.norg.completion"] = {
+        ["core.journal"] = {},
+        ["core.qol.toc"] = {},
+        ["core.concealer"] = {},
+        ["core.completion"] = {
           config = {
             engine = "nvim-cmp",
           },
@@ -50,7 +49,7 @@ return {
       },
     },
     config = function(_, opts)
-      require("neorg").setip(opts)
+      require("neorg").setup(opts)
 
       require("utils.whichkey").register {
         n = {
