@@ -18,6 +18,7 @@ return {
     event = "BufReadPre",
     config = true,
   },
+
   {
     "sindrets/diffview.nvim",
     cmd = {
@@ -30,6 +31,7 @@ return {
     },
     config = true,
   },
+
   {
     "mfussenegger/nvim-dap",
     event = "VeryLazy",
@@ -39,34 +41,40 @@ return {
     },
     enabled = configs.dap,
   },
+
   {
     "christoomey/vim-tmux-navigator",
     config = function()
       vim.g.tmux_navigator_no_mappings = 1
     end,
   },
+
   {
     "phaazon/hop.nvim",
     event = "VeryLazy",
     branch = "v2",
     config = true,
   },
+
   {
     "danymat/neogen",
     event = "VeryLazy",
     config = true,
   },
+
   {
     "folke/todo-comments.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     event = "BufRead",
     config = true,
   },
+
   {
     "SDGLBL/ggl.nvim",
     cmd = { "GLineLink", "GPermaLink" },
     config = true,
   },
+
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
@@ -74,6 +82,7 @@ return {
       require("lualine").setup(require("utils.lualine.styles").styles.lvim)
     end,
   },
+
   {
     "uga-rosa/translate.nvim",
     event = "VeryLazy",
@@ -93,6 +102,7 @@ return {
       }
     end,
   },
+
   {
     "olimorris/persisted.nvim",
     event = "BufReadPre",
