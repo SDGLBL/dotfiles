@@ -5,7 +5,7 @@ local M = {}
 -- @return boolean
 function M.is_dark(sunrise, sunset)
   sunrise = sunrise or 7
-  sunset = sunset or 18
+  sunset = sunset or 19
 
   local hour = tonumber(os.date "%H")
   return hour < sunrise or hour > sunset
