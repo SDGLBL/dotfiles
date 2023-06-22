@@ -76,6 +76,17 @@ return {
       if ok then
         telescope.load_extension "goimpl"
       end
+
+      require("utils.lsp").on_attach(function(_, bufnr)
+        local map = function(mode, lhs, rhs, desc)
+          if desc then
+            desc = desc
+          end
+          vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
+        end
+
+        map("n", "<leader>li", "<cmd>lua require'telescope'.extensions.goimpl.goimpl{}<CR>", "Impl Interface")
+      end)
     end,
   },
 

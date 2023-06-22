@@ -1,0 +1,13 @@
+return {
+  on_attach = function(client, bufnr)
+    if client.name == "copilot" or client.name == "null-ls" then
+      return
+    end
+
+    if not client.supports_method "textDocument/inlayHint" then
+      return
+    end
+
+    vim.lsp.buf.inlay_hint(bufnr, true)
+  end,
+}
