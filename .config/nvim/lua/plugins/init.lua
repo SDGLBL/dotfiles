@@ -165,5 +165,6 @@ return {
       { "<leader>mn", "<cmd>lua require'tsht'.nodes()<cr>", desc = "TSNodes" },
       { "<leader>mb", "<cmd>lua require('dropbar.api').pick()<cr>", desc = "DropBar" },
     },
+    config = true,
   },
 }

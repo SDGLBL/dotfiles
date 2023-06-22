@@ -137,7 +137,7 @@ return {
   -- `lsp`
   lsp = true,
   -- `jupyter`
-  jupyter = true,
+  jupyter = false,
   -- `dap`
   -- Debug Adapter Protocol client implementation for Neovim
   -- [nvim-dap](https://github.com/mfussenegger/nvim-dap)
