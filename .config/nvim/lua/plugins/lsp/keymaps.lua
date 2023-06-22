@@ -25,7 +25,7 @@ function M.on_attach(client, buffer)
   self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
   self:map(
     "<leader>la",
-    vim.fn.exists ":CodeActionMenu" and "CodeActionMenu" or vim.lsp.buf.code_action,
+    vim.fn.exists ":CodeActionMenu" == 1 and "CodeActionMenu" or vim.lsp.buf.code_action,
     { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" }
   )
 
@@ -38,7 +38,7 @@ function M.on_attach(client, buffer)
   self:map("<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
   self:map("<leader>lq", vim.diagnostic.setloclist, { desc = "Toggle Inline Diagnostics" })
 
-  self:map("K", vim.fn.exists ":RustRunnables" and "RustRunnables" or vim.lsp.buf.hover, { desc = "Hover" })
+  self:map("K", vim.fn.exists ":RustRunnables" == 1 and "RustRunnables" or vim.lsp.buf.hover, { desc = "Hover" })
 end
 
 function M.new(client, buffer)
