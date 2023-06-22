@@ -107,6 +107,7 @@ return {
   {
     "glepnir/lspsaga.nvim",
     event = "LspAttach",
+    enabled = false,
     dependencies = { "neovim/nvim-lspconfig" },
     config = function()
       require("lspsaga").setup {
@@ -208,6 +209,7 @@ return {
   {
     "lvimuser/lsp-inlayhints.nvim",
     branch = "anticonceal",
+    enabled = false,
     config = function()
       require("lsp-inlayhints").setup {}
 

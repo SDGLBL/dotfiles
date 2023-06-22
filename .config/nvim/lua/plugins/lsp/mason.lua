@@ -61,7 +61,19 @@ return {
       vim.cmd [[ command! Format execute 'lua vim.lsp.buf.format({ async = true })' ]]
     end
 
-    require("utils.lsp").on_attach(function(client, buffer)
+    local inlay_hint = function(client, bufnr)
+      if client.name == "copilot" or client.name == "null-ls" then
+        return
+      end
+
+      if not client.supports_method "textDocument/inlayHint" then
+        return
+      end
+
+      vim.lsp.buf.inlay_hint(bufnr, true)
+    end
+
+    require("utils.lsp").on_attach(function(client, bufnr)
       -- because tsserver formatting always timeout
       if client.name == "tsserver" then
         client.server_capabilities.documentFormattingProvider = false
@@ -75,7 +87,8 @@ return {
         client.server_capabilities.documentFormattingProvider = false
       end
 
-      lsp_keymaps(client, buffer)
+      lsp_keymaps(client, bufnr)
+      inlay_hint(client, bufnr)
     end, { group = "_lsp_keymaps", desc = "init lsp keymaps" })
 
     local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
