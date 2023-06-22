@@ -141,6 +141,8 @@ return {
     },
     opts = {},
     config = function(_, opts)
+      opts.setup = opts.setup == nil and {} or opts.setup
+
       require("nvim-dap-virtual-text").setup {
         commented = true,
       }

@@ -180,7 +180,7 @@ end
 --       autocommand only once |autocmd-once|.
 --     • nested (boolean) optional: defaults to false. Run nested
 --       autocommands |autocmd-nested|.
----@param on_attach fun(client, buffer)
+---@param on_attach fun(client, bufnr)
 ---@vararg table
 ---@return nil
 function M.on_attach(on_attach, ...)
@@ -190,9 +190,9 @@ function M.on_attach(on_attach, ...)
         return
       end
 
-      local buffer = args.buf
+      local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
-      on_attach(client, buffer)
+      on_attach(client, bufnr)
     end,
   }
 

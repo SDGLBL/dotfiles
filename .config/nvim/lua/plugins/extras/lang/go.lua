@@ -1,3 +1,7 @@
+if not configs.go then
+  return
+end
+
 return {
   -- add go to treesitter
   {

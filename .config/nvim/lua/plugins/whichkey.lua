@@ -7,8 +7,8 @@ return {
     keys = {
       { "<leader>/", "<Plug>(comment_toggle_linewise_current)", desc = "Comment" },
       { "<leader>a", "<cmd>Alpha<cr>", desc = "Alpha" },
-      { "<leader>W", "<cmd>w!<CR>", desc = "Save" },
-      { "<leader>w", "<cmd>noautocmd w!<CR>", desc = "NoAC Save" },
+      { "<leader>w", "<cmd>w!<CR>", desc = "Save" },
+      { "<leader>W", "<cmd>noautocmd w!<CR>", desc = "NoAC Save" },
       { "<leader>R", '<cmd>lua require("configs").reload()<CR>', desc = "Reload" },
       { "<leader>q", "<cmd>q!<CR>", desc = "Quit" },
       { "<leader>h", "<cmd>nohlsearch<CR>", desc = "No Highlight" },

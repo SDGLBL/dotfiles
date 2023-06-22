@@ -17,9 +17,7 @@ return {
     }
 
     require("mason-lspconfig").setup {
-      ensure_installed = vim.tbl_map(function(value)
-        return value:gsub("-", "_")
-      end, vim.tbl_keys(servers)),
+      ensure_installed = servers,
       automatic_installation = true,
     }
 
@@ -113,16 +111,24 @@ return {
 
     local server_opts = {}
 
-    for server_name, server in pairs(servers) do
-      server_name = server_name:gsub("-", "_")
-
+    for name, server in pairs(servers) do
       if server ~= nil then
-        server_opts = {
+        server_opts = vim.tbl_deep_extend("force", {
           capabilities = capabilities,
-        }
+        }, server)
 
-        handlers[server_name] = function()
-          require("lspconfig")[server_name].setup(vim.tbl_deep_extend("force", server, server_opts))
+        handlers[name] = function()
+          if opts.setup[name] ~= nil then
+            if opts.setup[name](name,server_opts) then
+              return
+            end
+          elseif opts.setup["*"] then
+            if opts.setup["*"](name,server_opts) then
+              return
+            end
+          end
+
+          require("lspconfig")[name].setup(server_opts)
         end
       end
     end

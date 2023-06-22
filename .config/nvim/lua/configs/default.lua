@@ -81,17 +81,14 @@
 -- autopairs for neovim written by lua
 -- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
 ---@field autopairs boolean
--- enable `rust_tools`
--- Tools for better development in rust using neovim's builtin lsp
--- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
----@field rust_tools boolean
--- enable `go.nvim`
--- Tools for better development in golang using neovim's builtin lsp
--- [go.nvim](https://github.com/ray-x/go.nvim)
----@field go_tools boolean
+-- enable `rust`
+-- rust support for neovim
+---@field rust boolean
+-- enable `go`
+-- go support for neovim
+---@field go boolean
 -- enable `color-picker`.
 -- Tools for better development in rust using neovim's builtin lsp
--- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
 ---@field color_picker boolean
 -- enable `neorg`
 -- Modernity meets insane extensibility. The future of organizing your life in Neovim.
@@ -158,14 +155,12 @@ return {
   -- autopairs for neovim written by lua
   -- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
   autopairs = true,
-  -- `rust_tools`
-  -- Tools for better development in rust using neovim's builtin lsp
-  -- [rust-tools.nvim](https://github.com/simrat39/rust-tools.nvim)
-  rust_tools = false,
-  -- `go_tools`
-  -- Tools for better development in golang using neovim's builtin lsp
-  -- [go.nvim](https://github.com/ray-x/go.nvim)
-  go_tools = false,
+  -- `rust`
+  -- rust support for neovim
+  rust = true,
+  -- `go`
+  -- go support for neovim
+  go = true,
   -- `color_picker`
   -- Super powerful color picker / colorizer plugin.
   -- [ccc.nvim](https://github.com/uga-rosa/ccc.nvim)
