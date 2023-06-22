@@ -12,10 +12,10 @@ return {
       { "<leader>R", '<cmd>lua require("configs").reload()<CR>', desc = "Reload" },
       { "<leader>q", "<cmd>q!<CR>", desc = "Quit" },
       { "<leader>h", "<cmd>nohlsearch<CR>", desc = "No Highlight" },
-      { "<leader>i", "<cmd>:Lazy install<cr>", "Install" },
-      { "<leader>u", "<cmd>:Lazy update<cr>", "Update" },
-      { "<leader>c", "<cmd>:Lazy clean<cr>", "Clean" },
-      { "<leader>p", "<cmd>:Lazy profile<cr>", "Profile" },
+      { "<leader>zi", "<cmd>:Lazy install<cr>", "Install" },
+      { "<leader>zu", "<cmd>:Lazy update<cr>", "Update" },
+      { "<leader>zc", "<cmd>:Lazy clean<cr>", "Clean" },
+      { "<leader>zp", "<cmd>:Lazy profile<cr>", "Profile" },
     },
     opts = {
       setup = {
