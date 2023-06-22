@@ -30,6 +30,11 @@ return {
       { "<leader>sR", "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
       { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      {
+        "<leader>sp",
+        "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
+        desc = "Colorscheme with Preview",
+      },
     },
     opts = function()
       local icons = require "utils.icons"
