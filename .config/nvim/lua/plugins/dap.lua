@@ -140,7 +140,7 @@ return {
       },
     },
     opts = {},
-    config = function(_, opts)
+    config = function(plugin, opts)
       opts.setup = opts.setup == nil and {} or opts.setup
 
       require("nvim-dap-virtual-text").setup {
@@ -160,24 +160,14 @@ return {
         dapui.close()
       end
 
-      local handlers = {
-        function(source_name)
-          -- all sources with no handler get passed here
-          -- Keep original functionality of `automatic_setup = true`
-          require "mason-nvim-dap.automatic_setup"(source_name)
-        end,
+      require("mason-nvim-dap").setup {
+        automatic_setup = true,
       }
 
       -- set up debugger
-      for k, v in pairs(opts.setup) do
-        handlers[k] = v
+      for k, _ in pairs(opts.setup) do
+        opts.setup[k](plugin, opts)
       end
-
-      require("mason-nvim-dap").setup {
-        automatic_setup = true,
-        ensure_installed = { "python", "delve" },
-        handlers = handlers,
-      }
     end,
   },
 }

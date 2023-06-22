@@ -23,7 +23,9 @@ return {
         "folke/neodev.nvim",
         opts = {
           library = {
+            types = true,
             plugins = {
+              "neotest",
               "plenary.nvim",
               "telescope.nvim",
               -- "nvim-treesitter",
