@@ -75,6 +75,72 @@ return {
     end,
   },
 
+  -- go debug
+  {
+    "mfussenegger/nvim-dap",
+    opts = {
+      setup = {
+        delve = function(_)
+          local dap = require "dap"
+          local input_args = require("utils").input_args
+
+          dap.adapters.go = {
+            type = "server",
+            port = "${port}",
+            executable = {
+              command = "dlv",
+              args = { "dap", "-l", "127.0.0.1:${port}" },
+            },
+          }
+
+          dap.configurations.go = {
+            {
+              type = "go",
+              name = "Debug File",
+              request = "launch",
+              program = "${file}",
+              args = input_args,
+              dlvToolPath = vim.fn.exepath "dlv",
+            },
+            {
+              type = "go",
+              name = "Debug Program",
+              request = "launch",
+              program = "${workspaceFolder}",
+              args = input_args,
+              dlvToolPath = vim.fn.exepath "dlv",
+            },
+            {
+              type = "go",
+              name = "Debug Test file",
+              request = "launch",
+              mode = "test",
+              program = "${file}",
+              args = input_args,
+              dlvToolPath = vim.fn.exepath "dlv",
+            },
+            {
+              type = "go",
+              name = "Debug test",
+              request = "launch",
+              mode = "test",
+              program = "${workspaceFolder}",
+              args = input_args,
+              dlvToolPath = vim.fn.exepath "dlv",
+            },
+            {
+              type = "go",
+              name = "Attach",
+              request = "attach",
+              processId = require("dap.utils").pick_process,
+              dlvToolPath = vim.fn.exepath "dlv",
+            },
+          }
+        end,
+      },
+    },
+  },
+
   -- tdd support
   {
     "nvim-neotest/neotest",
