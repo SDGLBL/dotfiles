@@ -1,5 +1,16 @@
 return {
   {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      defaults = {
+        ["<leader>t"] = { name = "+Test" },
+        ["<leader>tt"] = { name = "+Overseer" },
+      },
+    },
+  },
+
+  {
     "vim-test/vim-test",
     opts = {
       setup = {},

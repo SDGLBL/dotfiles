@@ -1,7 +1,6 @@
 return {
   "moll/vim-bbye",
   "nvim-lua/plenary.nvim",
-  "famiu/bufdelete.nvim",
 
   {
     "wintermute-cell/gitignore.nvim",
@@ -20,40 +19,10 @@ return {
   },
 
   {
-    "sindrets/diffview.nvim",
-    cmd = {
-      "DiffviewOpen",
-      "DiffviewClose",
-      "DiffviewRefresh",
-      "DiffviewToggleFiles",
-      "DiffviewFocusFiles",
-      "DiffviewFileHistory ",
-    },
-    config = true,
-  },
-
-  {
-    "mfussenegger/nvim-dap",
-    event = "VeryLazy",
-    dependencies = {
-      "theHamsta/nvim-dap-virtual-text",
-      "rcarriga/nvim-dap-ui",
-    },
-    enabled = configs.dap,
-  },
-
-  {
     "christoomey/vim-tmux-navigator",
     config = function()
       vim.g.tmux_navigator_no_mappings = 1
     end,
-  },
-
-  {
-    "phaazon/hop.nvim",
-    event = "VeryLazy",
-    branch = "v2",
-    config = true,
   },
 
   {
@@ -106,6 +75,23 @@ return {
   {
     "olimorris/persisted.nvim",
     event = "BufReadPre",
+    dependencies = {
+      {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+          defaults = {
+            ["<leader>s"] = { name = "+Search/Session" },
+          },
+        },
+      },
+    },
+    keys = {
+      { "<leader>ss", "<cmd>SessionSave<cr>", desc = "Save session" },
+      { "<leader>sl", "<cmd>SessionLoad<cr>", desc = "Load session" },
+      { "<leader>sL", "<cmd>SessionLoadLast<cr>", desc = "Load last session" },
+      { "<leader>sd", "<cmd>SessionDelete<cr>", desc = "Del cur session" },
+    },
     config = function()
       require("persisted").setup {
         use_git_branch = true,
@@ -143,6 +129,41 @@ return {
         end,
         desc = "Split the object under cursor",
       },
+    },
+  },
+
+  {
+    "famiu/bufdelete.nvim",
+    keys = {
+      { "<leader>c", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
+    },
+  },
+
+  {
+    "phaazon/hop.nvim",
+    event = "VeryLazy",
+    branch = "v2",
+    dependencies = {
+      {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+          defaults = {
+            ["<leader>m"] = { name = "+Hop" },
+          },
+        },
+      },
+    },
+    keys = {
+      { "<leader>mw", "<cmd>HopWord<cr>", desc = "HopWord" },
+      { "<leader>ml", "<cmd>HopLine<cr>", desc = "HopLine" },
+      { "<leader>ma", "<cmd>HopAnywhere<cr>", desc = "HopAnywhere" },
+      { "<leader>mv", "<cmd>HopVertical<cr>", desc = "HopVertical" },
+      { "<leader>mc", "<cmd>HopChar1<cr>", desc = "HopChar1" },
+      { "<leader>m2", "<cmd>HopChar2<cr>", desc = "HopChar2" },
+      { "<leader>mp", "<cmd>HopPattern<cr>", desc = "HopPattern" },
+      { "<leader>mn", "<cmd>lua require'tsht'.nodes()<cr>", desc = "TSNodes" },
+      { "<leader>mb", "<cmd>lua require('dropbar.api').pick()<cr>", desc = "DropBar" },
     },
   },
 }

@@ -1,5 +1,15 @@
 return {
   {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      defaults = {
+        ["<leader>s"] = { name = "+Search/Session" },
+      },
+    },
+  },
+
+  {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     dependencies = {
@@ -7,6 +17,19 @@ return {
       config = function()
         require("telescope").load_extension "undo"
       end,
+    },
+    keys = {
+      { "<leader>f", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
+      { "<leader>su", "<cmd>Telescope undo<cr>", desc = "Undo" },
+      { "<leader>sb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
+      { "<leader>st", "<cmd>Telescope live_grep<cr>", desc = "Find Text" },
+      { "<leader>sc", "<cmd>Telescope colorscheme<cr>", desc = "Colorscheme" },
+      { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Find Help" },
+      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+      { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File" },
+      { "<leader>sR", "<cmd>Telescope registers<cr>", desc = "Registers" },
+      { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
+      { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
     },
     opts = function()
       local icons = require "utils.icons"

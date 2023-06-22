@@ -1,7 +1,27 @@
 return {
   {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      defaults = {
+        -- ["<leader>t"] = { name = "+Terminal" },
+      },
+    },
+  },
+
+  {
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
+    keys = {
+      -- { "<leader>tn", "<cmd>lua _NODE_TOGGLE()<cr>", desc = "Node" },
+      -- { "<leader>tu", "<cmd>lua _NCDU_TOGGLE()<cr>", desc = "NCDU" },
+      -- { "<leader>tw", "viw<cmd>Translate ZH<cr><esc>", desc = "Translate word" },
+      -- { "<leader>tt", "<cmd>lua _HTOP_TOGGLE()<cr>", desc = "Htop" },
+      -- { "<leader>tp", "<cmd>lua _PYTHON_TOGGLE()<cr>", desc = "Python" },
+      -- { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Float" },
+      -- { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "Horizontal" },
+      -- { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical" },
+    },
     config = function()
       local toggleterm = require "toggleterm"
 

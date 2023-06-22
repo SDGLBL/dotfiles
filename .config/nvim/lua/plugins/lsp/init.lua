@@ -1,4 +1,15 @@
 return {
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      defaults = {
+        ["<leader>l"] = { name = "+LSP" },
+        ["<leader>lg"] = { name = "+Generate Doc" },
+      },
+    },
+  },
+
   -- lsp setting
   {
     "neovim/nvim-lspconfig",
@@ -8,7 +19,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "jayp0521/mason-nvim-dap.nvim",
       {
         "folke/neodev.nvim",
         opts = {
@@ -43,6 +53,41 @@ return {
         end,
       },
     },
+    keys = {
+      {
+        "<leader>la",
+        function()
+          local code_action = "<cmd>lua vim.lsp.buf.code_action()<cr>"
+          if vim.fn.exists ":CodeActionMenu" then
+            code_action = "<cmd>CodeActionMenu<cr>"
+          end
+
+          code_action()
+        end,
+        desc = "Code Action",
+      },
+      { "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", desc = "Format" },
+      { "<leader>lI", "<cmd>Telescope lsp_implementations<cr>", desc = "Implementations" },
+      { "<leader>lj", "<cmd>lua vim.diagnostic.goto_next({buffer=0})<cr>", desc = "Next Diagnostic" },
+      { "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev({buffer=0})<cr>", desc = "Prev Diagnostic" },
+      { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename" },
+      { "<leader>lR", "<cmd>Telescope lsp_references<cr>", desc = "References" },
+      { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Doc Symbols" },
+      { "<leader>lS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Workspace Symbols" },
+      { "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "Diagnostic List" },
+      { "<leader>lw", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
+      {
+        "<leader>lW",
+        '<cmd>lua require(desc ="telescope.builtin").diagnostics({ bufnr = 0 })<cr>',
+        "Doc Diagnostics",
+      },
+      { "<leader>le", "<cmd>Telescope quickfix<cr>", desc = "Telescope Quickfix" },
+      { "<leader>lh", ":lua require('lsp-inlayhints').toggle()<cr>", desc = "Toggle InlayHints" },
+      { "<leader>lgt", "<cmd>Neogen type<cr>", desc = "Type doc" },
+      { "<leader>lgc", "<cmd>Neogen class<cr>", desc = "Class doc" },
+      { "<leader>lgf", "<cmd>Neogen func<cr>", desc = "Func doc" },
+      { "<leader>lgd", "<cmd>Neogen file<cr>", desc = "Doc doc" },
+    },
     ---@class PluginLspOpts
     opts = {
       -- options for vim.lsp.buf.format
@@ -72,7 +117,6 @@ return {
     config = function(_, opts)
       require("plugins.lsp.mason").setup(opts)
       require("plugins.lsp.diagnostics").setup()
-      require("plugins.lsp.mason-nvim-dap").setup()
     end,
   },
 
@@ -189,6 +233,19 @@ return {
     event = "VeryLazy",
     enabled = configs.refactor,
     dependencies = { "nvim-telescope/telescope.nvim" },
+    keys = {
+      {
+        "<leader>r",
+        "<esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+        mode = "v",
+        desc = "Refactor",
+      },
+      {
+        "<leader>lc",
+        "<cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+        desc = "Choose refactoring",
+      },
+    },
     config = function()
       if not configs.refactor then
         return

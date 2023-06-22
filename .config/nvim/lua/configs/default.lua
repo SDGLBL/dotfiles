@@ -59,6 +59,9 @@
 -- enable `lsp`. Lsp is enabled by default
 ---@field lsp boolean
 --- enable `dap`.
+-- enable `jupyter`.
+---@field jupyter boolean
+--- enable `dap`.
 -- Debug Adapter Protocol client implementation for Neovim
 -- [nvim-dap](https://github.com/mfussenegger/nvim-dap)
 ---@field dap boolean
@@ -133,6 +136,8 @@ return {
   colorscheme = "",
   -- `lsp`
   lsp = true,
+  -- `jupyter`
+  jupyter = true,
   -- `dap`
   -- Debug Adapter Protocol client implementation for Neovim
   -- [nvim-dap](https://github.com/mfussenegger/nvim-dap)

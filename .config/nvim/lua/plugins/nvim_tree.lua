@@ -1,6 +1,9 @@
 return {
   {
     "kyazdani42/nvim-tree.lua",
+    keys = {
+      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
+    },
     config = function()
       local nvim_tree = require "nvim-tree"
       local icons = require "utils.icons"
