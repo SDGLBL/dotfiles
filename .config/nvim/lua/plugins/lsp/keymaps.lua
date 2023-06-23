@@ -25,7 +25,7 @@ function M.on_attach(client, buffer)
   self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
   self:map(
     "<leader>la",
-    vim.fn.exists ":CodeActionMenu" == 1 and "CodeActionMenu" or vim.lsp.buf.code_action,
+    vim.fn.exists ":CodeActionMenu" ~= 0 and "CodeActionMenu" or vim.lsp.buf.code_action,
     { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" }
   )
 
@@ -38,7 +38,17 @@ function M.on_attach(client, buffer)
   self:map("<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
   self:map("<leader>lq", vim.diagnostic.setloclist, { desc = "Toggle Inline Diagnostics" })
 
-  self:map("K", vim.fn.exists ":RustRunnables" == 1 and "RustRunnables" or vim.lsp.buf.hover, { desc = "Hover" })
+  -- get filetype from buffer id
+  ---@diagnostic disable-next-line: redundant-parameter
+  if vim.api.nvim_buf_get_option(buffer, "filetype") == "rust" then
+    self:map(
+      "K",
+      vim.fn.exists ":RustHoverActions" ~= 0 and "RustHoverActions" or vim.lsp.buf.hover,
+      { desc = "Hover" }
+    )
+  else
+    self:map("K", vim.lsp.buf.hover, { desc = "Hover" })
+  end
 end
 
 function M.new(client, buffer)
