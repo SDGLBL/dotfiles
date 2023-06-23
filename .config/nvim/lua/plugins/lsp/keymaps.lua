@@ -8,11 +8,7 @@ function M.on_attach(client, buffer)
   self:map("gI", "Telescope lsp_implementations", { desc = "Goto Implementation" })
   self:map("gb", "Telescope lsp_type_definitions", { desc = "Goto Type Definition" })
   self:map("<leader>lw", "Telescope diagnostics", { desc = "Workspace Diagnostics" })
-  self:map(
-    "<leader>lW",
-    'lua require(desc ="telescope.builtin").diagnostics({ bufnr = 0 })',
-    { desc = "Doc Diagnostics" }
-  )
+  self:map("<leader>lW", 'lua require("telescope.builtin").diagnostics({ bufnr = 0 })', { desc = "Doc Diagnostics" })
   self:map("<leader>lj", vim.diagnostic.goto_next, { desc = "Go To Next Diagnostic" })
   self:map("<leader>lk", vim.diagnostic.goto_prev, { desc = "Go To Prev Diagnostic" })
   self:map("gb", "Telescope lsp_type_definitions", { desc = "Goto Type Definition" })
