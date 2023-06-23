@@ -87,14 +87,14 @@ return {
         function()
           require("dap").list_breakpoints()
         end,
-        desc = "list all breakpoint",
+        desc = "List all breakpoint",
       },
       {
         "<leader>dr",
         function()
           require("dap").clear_breakpoints()
         end,
-        desc = "remove all breakpont",
+        desc = "Remove all breakpont",
       },
       {
         "<leader>dh",
@@ -115,28 +115,42 @@ return {
         function()
           require("dapui").close()
         end,
-        desc = "close debug ui window",
+        desc = "Close debug ui window",
       },
       {
         "<leader>dt",
         function()
           require("dapui").toggle()
         end,
-        desc = "toggle debug ui window",
+        desc = "Toggle debug ui window",
       },
       {
         "<leader>df",
         function()
           require("dapui").float_element()
         end,
-        desc = "get value",
+        desc = "Get value",
       },
       {
         "<leader>dv",
         function()
           require("dapui").eval(nil, { enter = true })
         end,
-        desc = "eval value",
+        desc = "Eval value",
+      },
+      {
+        "<leader>dd",
+        function()
+          require("dap").disconnect()
+        end,
+        desc = "Disconnect",
+      },
+      {
+        "<leader>dg",
+        function()
+          require("dap").session()
+        end,
+        desc = "Get session",
       },
     },
     opts = {},
