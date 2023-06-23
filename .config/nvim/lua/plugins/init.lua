@@ -155,7 +155,7 @@ return {
         event = "VeryLazy",
         opts = {
           defaults = {
-            ["<leader>m"] = { name = "+Hop" },
+            ["<leader>m"] = { name = "+Move" },
           },
         },
       },
