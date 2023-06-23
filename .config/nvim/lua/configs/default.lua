@@ -87,6 +87,9 @@
 -- enable `go`
 -- go support for neovim
 ---@field go boolean
+-- enable `typescript`
+-- typescript support for neovim
+---@field typescript boolean
 -- enable `color-picker`.
 -- Tools for better development in rust using neovim's builtin lsp
 ---@field color_picker boolean
@@ -157,10 +160,13 @@ return {
   autopairs = true,
   -- `rust`
   -- rust support for neovim
-  rust = true,
+  rust = false,
   -- `go`
   -- go support for neovim
-  go = true,
+  go = false,
+  -- `typescript`
+  -- typescript support for neovim
+  typescript = false,
   -- `color_picker`
   -- Super powerful color picker / colorizer plugin.
   -- [ccc.nvim](https://github.com/uga-rosa/ccc.nvim)
