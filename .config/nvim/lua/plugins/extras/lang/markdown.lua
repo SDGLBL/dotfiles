@@ -1,4 +1,18 @@
+if not configs.markdown_preview then
+  return
+end
+
 return {
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    opts = {
+      defaults = {
+        ["<leader>p"] = { name = "+Markdown" },
+      },
+    },
+  },
+
   -- add json to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -45,6 +59,12 @@ return {
     end,
     ft = "markdown",
     enabled = configs.markdown_preview,
+    keys = {
+      { "<leader>pp", "<cmd>MarkdownPreview<cr>", desc = "Preview" },
+      { "<leader>ps", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop" },
+      { "<leader>pt", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle" },
+      { "<leader>pe", "<cmd>FeMaco<cr>", desc = "Edit Code Block" },
+    },
     config = function()
       if not configs.markdown_preview then
         return
@@ -147,16 +167,6 @@ return {
       -- set default theme (dark or light)
       -- By default the theme is define according to the preferences of the system
       vim.g.mkdp_theme = require("utils.time").is_dark() and "dark" or "light"
-
-      require("utils.whichkey").register {
-        p = {
-          name = "Markdown",
-          p = { "<cmd>MarkdownPreview<cr>", "Preview" },
-          s = { "<cmd>MarkdownPreviewStop<cr>", "Stop" },
-          t = { "<cmd>MarkdownPreviewToggle<cr>", "Toggle" },
-          e = { "<cmd>FeMaco<cr>", "Edit Code Block" },
-        },
-      }
     end,
   },
 }
