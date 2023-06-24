@@ -146,6 +146,43 @@ return {
   },
 
   {
+    "SDGLBL/hapigo.nvim",
+    dependencies = {
+      {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {
+          vdefaults = {
+            ["<leader>c"] = { name = "+Copy" },
+          },
+        },
+      },
+    },
+    cmd = {
+      "HapigoAPPSerchWord",
+      "HapigoAPPSerch",
+      "HapigoFileSerchWord",
+      "HapigoFileSerch",
+      "HapigoClipboardSerchWord",
+      "HapigoClipboardSerch",
+      "HapigoTranslateWord",
+      "HapigoTranslate",
+    },
+    keys = {
+      {
+        "<leader>cs",
+        function()
+          local text = require("hapigo.config").config.visual_text()
+          vim.fn.setreg("+", text)
+        end,
+        mode = "v",
+        desc = "Join By Space",
+      },
+    },
+    config = true,
+  },
+
+  {
     "phaazon/hop.nvim",
     event = "VeryLazy",
     branch = "v2",

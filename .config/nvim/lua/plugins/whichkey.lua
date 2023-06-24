@@ -73,14 +73,20 @@ return {
         },
       },
       defaults = {
-        mode = { "n", "v" },
+        mode = { "n" },
         ["<leader>z"] = { name = "+Lazy" },
+        ["<leader>j"] = { name = "+SwapNext" },
+        ["<leader>k"] = { name = "+SwapPrev" },
+      },
+      vdefaults = {
+        mode = { "v" },
       },
     },
     config = function(_, opts)
       local wk = require "which-key"
       wk.setup(opts.setup)
       wk.register(opts.defaults)
+      wk.register(opts.vdefaults)
     end,
   },
 }
