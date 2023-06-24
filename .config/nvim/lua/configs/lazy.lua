@@ -41,13 +41,3 @@ require("lazy").setup {
     },
   },
 }
-
--- require("utils.whichkey").register {
---   z = {
---     name = "Lazy",
---     i = { "<cmd>:Lazy install<cr>", "Install" },
---     u = { "<cmd>:Lazy update<cr>", "Update" },
---     c = { "<cmd>:Lazy clean<cr>", "Clean" },
---     p = { "<cmd>:Lazy profile<cr>", "Profile" },
---   },
--- }
