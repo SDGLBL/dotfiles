@@ -1,5 +1,5 @@
 if not configs.markdown_preview then
-  return
+  return {}
 end
 
 return {
