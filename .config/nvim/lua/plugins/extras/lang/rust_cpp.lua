@@ -1,5 +1,5 @@
 if not configs.rust then
-  return
+  return {}
 end
 
 local function get_codelldb()

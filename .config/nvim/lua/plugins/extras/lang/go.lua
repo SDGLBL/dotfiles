@@ -1,5 +1,5 @@
 if not configs.go then
-  return
+  return {}
 end
 
 return {

@@ -1,5 +1,5 @@
 if not configs.typescript then
-  return
+  return {}
 end
 
 return {
