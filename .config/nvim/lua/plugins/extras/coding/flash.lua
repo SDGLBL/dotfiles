@@ -15,26 +15,6 @@ return {
         desc = "Flash",
       },
       {
-        "sa",
-        mode = { "n", "x", "o" },
-        function()
-          require("flash").jump {
-            search = { forward = true, wrap = false, multi_window = false },
-          }
-        end,
-        desc = "Flash After",
-      },
-      {
-        "sb",
-        mode = { "n", "x", "o" },
-        function()
-          require("flash").jump {
-            search = { forward = false, wrap = false, multi_window = false },
-          }
-        end,
-        desc = "Flash After",
-      },
-      {
         "S",
         mode = { "n", "o", "x" },
         function()
