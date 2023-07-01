@@ -25,7 +25,7 @@ require("lazy").setup {
   defaults = { lazy = false, version = nil },
   install = { missing = true, colorscheme = { "tokyonight", "gruvbox" } },
   -- checker = { enabled = true },
-  concurrency = 10,
+  concurrency = 30,
   performance = {
     rtp = {
       disabled_plugins = {

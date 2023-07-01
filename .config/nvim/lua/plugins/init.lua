@@ -210,4 +210,30 @@ return {
     },
     config = true,
   },
+
+  {
+    "gbprod/yanky.nvim",
+    keys = {
+      { "p", "<Plug>(YankyPutAfter)", desc = "PutAfter", mode = { "n", "v" } },
+      { "P", "<Plug>(YankyPutBefore)", desc = "PutBefore", mode = { "n", "v" } },
+      { "gp", "<Plug>(YankyGPutAfter)", desc = "GPutAfter", mode = { "n", "v" } },
+      { "gP", "<Plug>(YankyGPutBefore)", desc = "GPutBefore", mode = { "n", "v" } },
+      { "<c-n>", "<Plug>(YankyCycleForward)", desc = "CycleForward", mode = { "n" } },
+      { "<c-p>", "<Plug>(YankyCycleBackward)", desc = "CycleBackward", mode = { "n" } },
+    },
+    config = function()
+      require("yanky").setup {
+        highlight = {
+          on_put = false,
+          on_yank = false,
+          timer = 500,
+        },
+      }
+
+      local ok, telescope = pcall(require, "telescope")
+      if ok then
+        require("telescope").load_extension "yank_history"
+      end
+    end,
+  },
 }
