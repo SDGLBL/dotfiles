@@ -1,6 +1,9 @@
 return {
   "stevearc/dressing.nvim",
-  "Bekaboo/dropbar.nvim",
+  {
+    "Bekaboo/dropbar.nvim",
+    enabled = false,
+  },
 
   {
     "weilbith/nvim-code-action-menu",
