@@ -43,7 +43,7 @@ return {
         persist_size = true,
         -- float
         direction = "float",
-        close_on_exit = true,
+        close_on_exit = false,
         shell = vim.o.shell,
         float_opts = {
           border = "curved",

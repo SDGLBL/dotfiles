@@ -16,7 +16,7 @@ return {
     dependencies = {
       "rcarriga/nvim-dap-ui",
       "jayp0521/mason-nvim-dap.nvim",
-      "theHamsta/nvim-dap-virtual-text",
+      -- "theHamsta/nvim-dap-virtual-text",
     },
     keys = {
       {
@@ -157,9 +157,12 @@ return {
     config = function(plugin, opts)
       opts.setup = opts.setup == nil and {} or opts.setup
 
-      require("nvim-dap-virtual-text").setup {
-        commented = true,
-      }
+      local ok, dapv = pcall(require, "nvim-dap-virtual-text")
+      if ok then
+        dapv.setup {
+          commented = true,
+        }
+      end
 
       local dap, dapui = require "dap", require "dapui"
       dapui.setup {}
