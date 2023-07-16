@@ -87,6 +87,9 @@
 -- enable `go`
 -- go support for neovim
 ---@field go boolean
+----- enable `flutter`
+-- flutter support for neovim
+---@field flutter boolean
 -- enable `typescript`
 -- typescript support for neovim
 ---@field typescript boolean
@@ -164,6 +167,9 @@ return {
   -- `go`
   -- go support for neovim
   go = false,
+  -- `flutter`
+  -- flutter support for neovim
+  flutter = false,
   -- `typescript`
   -- typescript support for neovim
   typescript = false,
