@@ -15,7 +15,7 @@ require("configs").setup {
       "BufWinEnter",
       {
         group = "_filetype_settings",
-        pattern = { "*.go", "*.c", "*.php", "*.cpp", "*.h" },
+        pattern = { "*.go", "*.php", "*.h" },
         desc = "setlocal ts and sw",
         callback = function()
           pcall(vim.cmd, "setlocal ts=4 sw=4")

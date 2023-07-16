@@ -129,7 +129,6 @@ return {
         "rustfmt",
         "prettier",
         "shellcheck",
-        "hadolint",
         "golangci_lint",
         "codespell",
         "shfmt",

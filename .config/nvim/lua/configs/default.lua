@@ -90,6 +90,18 @@
 ----- enable `flutter`
 -- flutter support for neovim
 ---@field flutter boolean
+----- enable `vue`
+-- vue support for neovim
+---@field vue boolean
+----- enable `cpp`
+-- cpp support for neovim
+---@field cpp boolean
+----- enable `docker`
+-- docker support for neovim
+---@field docker boolean
+----- enable `java`
+-- java support for neovim
+---@field java boolean
 -- enable `typescript`
 -- typescript support for neovim
 ---@field typescript boolean
@@ -173,6 +185,18 @@ return {
   -- `typescript`
   -- typescript support for neovim
   typescript = false,
+  -- `docker`
+  -- docker support for neovim
+  docker = true,
+  -- `cpp`
+  -- cpp support for neovim
+  cpp = false,
+  -- `vue`
+  -- vue support for neovim
+  vue = false,
+  -- `java`
+  -- java support for neovim
+  java = false,
   -- `color_picker`
   -- Super powerful color picker / colorizer plugin.
   -- [ccc.nvim](https://github.com/uga-rosa/ccc.nvim)

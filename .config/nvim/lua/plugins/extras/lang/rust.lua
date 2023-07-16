@@ -139,18 +139,20 @@ return {
   },
 
   {
-    "saecki/crates.nvim",
-    event = { "BufRead Cargo.toml" },
-    dependencies = { { "nvim-lua/plenary.nvim" } },
-    config = function()
-      require("crates").setup {
-        null_ls = {
-          enabled = true,
-          name = "crates.nvim",
-        },
-      }
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      {
+        "Saecki/crates.nvim",
+        event = { "BufRead Cargo.toml" },
+        config = true,
+      },
+    },
+    opts = function(_, opts)
+      local cmp = require "cmp"
+      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
+        { name = "crates" },
+      }))
     end,
-    enabled = configs.rust,
   },
 
   -- rust debug

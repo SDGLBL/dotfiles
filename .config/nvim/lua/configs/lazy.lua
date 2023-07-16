@@ -17,9 +17,9 @@ require("lazy").setup {
   spec = {
     { import = "plugins" },
     { import = "plugins.extras.ui" },
-    { import = "plugins.extras.pde" },
-    { import = "plugins.extras.lang" },
     { import = "plugins.extras.coding" },
+    { import = "plugins.extras.lang" },
+    { import = "plugins.extras.pde" },
     { import = "plugins.extras.pde.note" },
   },
   defaults = { lazy = false, version = nil },

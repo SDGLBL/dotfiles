@@ -241,6 +241,9 @@ return {
       local max_width = 20
 
       return {
+        sorting = {
+          comparators = {},
+        },
         preselect = cmp.PreselectMode.None,
         snippet = {
           expand = function(args)
@@ -381,7 +384,6 @@ return {
             end,
           },
           { name = "npm", keyword_length = 4 },
-          { name = "crates" },
           { name = "neorg" },
           { name = "path" },
           { name = "buffer" },
