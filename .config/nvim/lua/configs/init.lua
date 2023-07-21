@@ -88,6 +88,11 @@ local function reload()
   local wk = require "which-key"
   if wk ~= nil then
     wk.reset()
+
+    local opts = require("plugins.lsp.utils").opts "which-key.nvim"
+    wk.setup(opts.setup)
+    wk.register(opts.defaults)
+    wk.register(opts.vdefaults)
   end
 
   local fn = vim.fn
