@@ -2,7 +2,6 @@ return {
   {
     "github/copilot.vim",
     event = "VeryLazy",
-    enabled = false,
     keys = {
       {
         "<C-s>",
