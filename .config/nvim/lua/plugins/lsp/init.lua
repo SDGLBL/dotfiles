@@ -123,7 +123,7 @@ return {
       sources = {},
       ensure_installed = {
         "stylua",
-        "golines",
+        -- "golines",
         "goimports",
         "taplo",
         "rustfmt",

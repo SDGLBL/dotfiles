@@ -8,6 +8,25 @@ return {
       { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-cmdline" },
+      {
+        "zbirenbaum/copilot-cmp",
+        dependencies = {
+          "zbirenbaum/copilot.lua",
+          cmd = "Copilot",
+          event = "InsertEnter",
+          config = function()
+            require("copilot").setup {
+              suggestion = { enabled = false },
+              panel = { enabled = false },
+            }
+          end,
+        },
+        config = function()
+          require("copilot_cmp").setup()
+          vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+        end,
+      },
+
       { "saadparwaiz1/cmp_luasnip" },
       {
         "roobert/tailwindcss-colorizer-cmp.nvim",
@@ -242,7 +261,22 @@ return {
 
       return {
         sorting = {
-          comparators = {},
+          priority_weight = 2,
+          comparators = {
+            require("copilot_cmp.comparators").prioritize,
+
+            -- Below is the default comparitor list and order for nvim-cmp
+            cmp.config.compare.offset,
+            -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.locality,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
         },
         preselect = cmp.PreselectMode.None,
         snippet = {
@@ -278,14 +312,12 @@ return {
             end,
           },
           ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
             elseif snip_status_ok and luasnip.jumpable(1) then
               luasnip.jump(1)
             elseif neogen_status_ok and neogen.jumpable() then
               neogen.jump_next()
-            elseif has_words_before() then
-              fallback()
             else
               fallback()
             end
@@ -373,6 +405,7 @@ return {
         },
         sources = {
           { name = "luasnip" },
+          { name = "copilot", group_index = 2 },
           {
             name = "nvim_lsp",
             entry_filter = function(entry, ctx)
