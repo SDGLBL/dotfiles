@@ -66,7 +66,9 @@ return {
             null_ls.register(formatting.golines.with {
               extra_args = {
                 "-m",
-                "158",
+                "80",
+                "--base-formatter",
+                "gofmt",
               },
             })
           else
