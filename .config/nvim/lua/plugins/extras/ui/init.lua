@@ -88,6 +88,7 @@ return {
   -- ui transparent support
   {
     "xiyaowong/transparent.nvim",
+    enabled = not vim.g.neovide,
     config = function()
       require("transparent").setup {
         extra_groups = {
