@@ -279,5 +279,24 @@ return {
   after_hook = function()
     -- auto change background by time
     vim.o.background = require("utils.time").is_dark() and "dark" or "light"
+
+    if vim.g.neovide then
+      -- Helper function for transparency formatting
+      local alpha = function()
+        ---@diagnostic disable-next-line: ambiguity-1
+        return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
+      end
+
+      vim.g.neovide_transparency = 0.0
+      vim.g.transparency = 0.85
+      vim.g.neovide_background_color = "#000000" .. alpha()
+      vim.g.neovide_theme = "auto"
+      vim.g.neovide_refresh_rate = 120
+      vim.g.neovide_input_macos_alt_is_meta = false
+
+      vim.g.neovide_floating_blur = 60
+
+      vim.opt.cmdheight = 0
+    end
   end,
 }
