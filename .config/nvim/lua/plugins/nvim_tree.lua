@@ -45,8 +45,8 @@ return {
         vim.keymap.set("n", "v", api.node.open.vertical, opts "Open: Vertical Split")
         vim.keymap.set("n", "h", api.node.navigate.parent_close, opts "Close Directory")
         vim.keymap.set("n", "C", api.tree.change_root_to_node, opts "CD")
-        vim.keymap.set("n", "gtg", telescope_live_grep, opts "Telescope Live Grep")
-        vim.keymap.set("n", "gtf", telescope_find_files, opts "Telescope Find File")
+        vim.keymap.set("n", "<leader>st", telescope_live_grep, opts "Telescope Live Grep")
+        vim.keymap.set("n", "<leader>f", telescope_find_files, opts "Telescope Find File")
       end
 
       nvim_tree.setup {
