@@ -44,7 +44,7 @@ return {
       { "<leader>ttq", "<cmd>OverseerQuickAction<cr>", desc = "Quick Action" },
       { "<leader>ttr", "<cmd>OverseerRun<cr>", desc = "Run" },
       { "<leader>tts", "<cmd>OverseerSaveBundle<cr>", desc = "Save Bundle" },
-      { "<leader>ttt", "<cmd>OverseerToggle<cr>", desc = "Toggle" },
+      { "<leader>ttt", "<cmd>OverseerToggle rights<cr>", desc = "Toggle" },
     },
     opts = {},
   },
