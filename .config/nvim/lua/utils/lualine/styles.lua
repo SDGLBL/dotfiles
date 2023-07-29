@@ -88,6 +88,7 @@ M.styles.lvim = {
     },
     lualine_x = {
       components.diagnostics,
+      components.overseer,
       components.treesitter,
       components.lsp,
       components.filetype,

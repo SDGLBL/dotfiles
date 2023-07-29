@@ -206,6 +206,7 @@ return {
     cond = conditions.hide_in_width,
   },
   filetype = { "filetype", cond = conditions.hide_in_width },
+  overseer = { "overseer" },
   scrollbar = {
     function()
       local current_line = vim.fn.line "."
