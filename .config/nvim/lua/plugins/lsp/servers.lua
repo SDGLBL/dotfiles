@@ -35,7 +35,7 @@ local function lsp_init()
         active = signs,
       },
       underline = true,
-      update_in_insert = true,
+      update_in_insert = false,
       severity_sort = true,
       float = {
         focusable = true,
