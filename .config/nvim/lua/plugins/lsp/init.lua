@@ -142,7 +142,6 @@ return {
   {
     "glepnir/lspsaga.nvim",
     event = "LspAttach",
-    enabled = false,
     dependencies = { "neovim/nvim-lspconfig" },
     config = function()
       require("lspsaga").setup {
@@ -160,19 +159,24 @@ return {
           return
         end
 
-        local keymaps_opts = { noremap = true, silent = true }
-        local keymap = vim.api.nvim_buf_set_keymap
+        local self = require("plugins.lsp.keymaps").new(client, bufnr)
 
-        keymap(bufnr, "n", "gh", "<cmd>Lspsaga lsp_finder<CR>", keymaps_opts)
-        keymap(bufnr, "n", "gp", "<cmd>Lspsaga peek_definition<CR>", keymaps_opts)
-        keymap(bufnr, "n", "gd", "<cmd>Lspsaga goto_definition<CR>", keymaps_opts)
-        keymap(bufnr, "n", "<leader>la", "<cmd>Lspsaga code_action<CR>", keymaps_opts)
-        keymap(bufnr, "n", "<leader>lr", "<cmd>Lspsaga rename<CR>", keymaps_opts)
-        keymap(bufnr, "n", "<leader>lj", "<cmd>Lspsaga diagnostic_jump_next<cr>", keymaps_opts)
-        keymap(bufnr, "n", "<leader>lk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", keymaps_opts)
-        keymap(bufnr, "n", "<leader>lo", "<cmd>Lspsaga outline<cr>", keymaps_opts)
-        keymap(bufnr, "n", "<leader>lci", "<cmd>Lspsaga incoming_calls<cr>", keymaps_opts)
-        keymap(bufnr, "n", "<leader>lco", "<cmd>Lspsaga outgoing_calls<cr>", keymaps_opts)
+        self:map("gh", "Lspsaga finder", { desc = "Lspsaga finder" })
+        self:map("gp", "Lspsaga peek_definition", { desc = "Lspsaga peek_definition" })
+        self:map("gd", "Lspsaga goto_definition", { desc = "Lspsaga goto_definition" })
+        self:map(
+          "<leader>la",
+          "Lspsaga code_action",
+          { desc = "Lspsaga code_action", mode = { "n", "v" }, has = "codeAction" }
+        )
+        self:map("<leader>lr", "Lspsaga rename", { desc = "Lspsaga rename" })
+        self:map("<leader>lj", "Lspsaga diagnostic_jump_next", { desc = "Lspsaga diagnostic_jump_next" })
+        self:map("<leader>lk", "Lspsaga diagnostic_jump_prev", { desc = "Lspsaga diagnostic_jump_prev" })
+        self:map("<leader>lW", "Lspsaga show_line_diagnostics", { desc = "Lspsaga show_line_diagnostics" })
+        self:map("<leader>lw", "Lspsaga show_workspace_diagnostics", { desc = "Lspsaga show_workspace_diagnostics" })
+        self:map("<leader>lo", "Lspsaga outline", { desc = "Lspsaga outline" })
+        self:map("<leader>lci", "Lspsaga incoming_calls", { desc = "Lspsaga incoming_calls" })
+        self:map("<leader>lco", "Lspsaga outgoing_calls", { desc = "Lspsaga outgoing_calls" })
       end, { group = "_lspsaga_keymaps", desc = "init lspsaga keymaps" })
     end,
   },

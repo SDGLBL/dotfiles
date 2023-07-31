@@ -1,6 +1,10 @@
 local M = {}
 
 function M.on_attach(client, buffer)
+  if client.name == "copilot" or client.name == "null-ls" then
+    return
+  end
+
   local self = M.new(client, buffer)
 
   self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
