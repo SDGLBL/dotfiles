@@ -66,6 +66,12 @@ return {
   -- dynamic windows
   {
     "anuvyklack/windows.nvim",
+    keys = {
+      { "<C-w>z", "<cmd>WindowsMaximize<cr>", desc = "WindowsMaximize" },
+      { "<C-w>_", "<cmd>WindowsMaximizeVertically<cr>", desc = "WindowsMaximizeVertically" },
+      { "<C-w>|", "<cmd>WindowsMaximizeHorizontally<cr>", desc = "WindowsMaximizeHorizontally" },
+      { "<C-w>=", "<cmd>WindowsEqualize<cr>", desc = "WindowsEqualize" },
+    },
     dependencies = {
       "anuvyklack/middleclass",
       "anuvyklack/animation.nvim",
@@ -74,11 +80,16 @@ return {
       vim.o.winwidth = 20
       vim.o.winminwidth = 5
       vim.o.equalalways = false
+
       require("windows").setup {
         animation = {
           enable = true,
           duration = 200,
           fps = 60,
+        },
+        ignore = { --			  |windows.ignore|
+          buftype = { "quickfix" },
+          filetype = { "NvimTree", "neo-tree", "undotree", "gundo", "sagaoutline" },
         },
       }
     end,
