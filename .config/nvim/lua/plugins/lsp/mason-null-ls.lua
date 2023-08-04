@@ -47,6 +47,8 @@ return {
               extra_args = {
                 "-c",
                 "~/.golangci.yml",
+                "-m",
+                "95",
               },
             })
           else

@@ -296,7 +296,7 @@ return {
 
       vim.g.neovide_floating_blur = 60
 
-      vim.opt.cmdheight = 0
+      -- vim.opt.cmdheight = 0
 
       vim.o.background = "dark"
     end
