@@ -1,12 +1,13 @@
 let mapleader=" "
 
-set clipboard+=unnamed
+""" set clipboard+=unnamed
 set ignorecase
 "" Don't use Ex mode, use Q for formatting.
 map Q gq
 """ Map leader to space ---------------------
 
 """ Plugins  --------------------------------
+set sneak
 set surround
 set multiple-cursors
 set commentary
@@ -54,6 +55,7 @@ nnoremap sl <C-w>l
 nnoremap sh <C-w>h
 nnoremap ss :split<Return><C-w>w
 nnoremap sv :vsplit<Return><C-w>w
+nmap <leader>q :q <cr>
 
 """ Insert mappings
 inoremap jk <ESC>
@@ -65,14 +67,14 @@ nmap <leader>ml <Plug>(easymotion-f)
 """ map sh :
 
 """ Find
+nmap <leader>f :action GotoFile<cr>
 nmap <leader>fr :action RecentFiles<cr>
 nmap <leader>fe :action SearchEverywhere<cr>
 nmap <leader>fa :action GotoAction<cr>
-nmap <leader>ff :action GotoFile<cr>
 nmap <leader>fs :action FindInPath<cr>
 
 " NERDTree
-nmap <leader>e :NERDTree<cr>
+nmap <leader>e :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFind<cr>
 
 """ Buffer control
