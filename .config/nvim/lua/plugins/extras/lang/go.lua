@@ -26,6 +26,18 @@ return {
           settings = {
             gopls = {
               usePlaceholders = false,
+              codelenses = {
+                generate = true,
+                gc_details = true,
+                regenerate_cgo = true,
+                run_govulncheck = true,
+                test = true,
+                tidy = true,
+                upgrade_dependency = true,
+              },
+              analyses = {
+                unreachable = true,
+              },
               -- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
               hints = {
                 assignVariableTypes = true,
