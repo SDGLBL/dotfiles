@@ -47,8 +47,6 @@ return {
               extra_args = {
                 "-c",
                 "~/.golangci.yml",
-                "-m",
-                "95",
               },
             })
           else
@@ -67,8 +65,8 @@ return {
           if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
             null_ls.register(formatting.golines.with {
               extra_args = {
-                -- "-m",
-                -- "95",
+                "-m",
+                "95",
                 "--base-formatter",
                 "gofmt",
               },
