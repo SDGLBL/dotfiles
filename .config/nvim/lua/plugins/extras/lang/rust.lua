@@ -139,14 +139,24 @@ return {
   },
 
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      {
-        "Saecki/crates.nvim",
-        event = { "BufRead Cargo.toml" },
-        config = true,
+    "Saecki/crates.nvim",
+    event = { "BufRead Cargo.toml" },
+    opts = {
+      null_ls = {
+        enabled = true,
+        name = "crates.nvim",
+      },
+      popup = {
+        border = "rounded",
       },
     },
+    config = function(_, opts)
+      require("crates").setup(opts)
+    end,
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
     opts = function(_, opts)
       local cmp = require "cmp"
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {
