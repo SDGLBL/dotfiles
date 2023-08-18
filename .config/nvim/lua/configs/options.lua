@@ -34,7 +34,7 @@ vim.opt.scrolloff = 8 -- is one of my fav
 vim.opt.sidescrolloff = 8
 vim.opt.spell = false
 vim.opt.spelllang = { "en_us" }
-vim.opt.guifont = "FiraCode Nerd Font:h16" -- the font used in graphical neovim applications
+vim.opt.guifont = "FiraCode Nerd Font:h17" -- the font used in graphical neovim applications
 
 vim.opt.shortmess:append "c"
 
