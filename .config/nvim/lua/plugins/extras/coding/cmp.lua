@@ -322,7 +322,9 @@ return {
             elseif neogen_status_ok and neogen.jumpable() then
               neogen.jump_next()
             else
-              fallback()
+              -- input a tab symbol
+              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
+              -- fallback()
             end
           end, {
             "i",
