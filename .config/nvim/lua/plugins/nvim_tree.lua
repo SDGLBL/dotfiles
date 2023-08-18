@@ -1,6 +1,6 @@
 return {
   {
-    "kyazdani42/nvim-tree.lua",
+    "nvim-tree/nvim-tree.lua",
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
     },
@@ -50,19 +50,10 @@ return {
       end
 
       nvim_tree.setup {
-        auto_reload_on_write = false,
-        disable_netrw = false,
-        hijack_cursor = false,
         hijack_netrw = true,
-        hijack_unnamed_buffer_when_opening = false,
         sort_by = "name",
-        root_dirs = {},
-        prefer_startup_root = false,
         sync_root_with_cwd = true,
-        reload_on_bufenter = false,
         on_attach = on_attach,
-        remove_keymaps = false,
-        select_prompts = false,
         update_focused_file = {
           enable = true,
           debounce_delay = 5,
@@ -70,37 +61,11 @@ return {
           ignore_list = {},
         },
         view = {
-          adaptive_size = false,
-          centralize_selection = false,
           width = 30,
-          hide_root_folder = false,
-          side = "left",
-          preserve_window_proportions = false,
-          number = false,
-          relativenumber = false,
           signcolumn = "yes",
-          mappings = {
-            custom_only = false,
-            list = {},
-          },
-          float = {
-            enable = false,
-            quit_on_focus_loss = true,
-            open_win_config = {
-              relative = "editor",
-              border = "rounded",
-              width = 30,
-              height = 30,
-              row = 1,
-              col = 1,
-            },
-          },
         },
         renderer = {
-          add_trailing = false,
-          group_empty = false,
           highlight_git = true,
-          full_name = false,
           highlight_opened_files = "none",
           root_folder_label = ":t",
           indent_width = 2,
@@ -154,11 +119,10 @@ return {
           symlink_destination = true,
         },
         hijack_directories = {
-          enable = false,
           auto_open = true,
         },
         diagnostics = {
-          enable = false,
+          enable = true,
           show_on_dirs = false,
           show_on_open_dirs = true,
           debounce_delay = 50,
