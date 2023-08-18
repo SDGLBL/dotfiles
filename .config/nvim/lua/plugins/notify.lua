@@ -3,6 +3,15 @@ return {
     "rcarriga/nvim-notify",
     enabled = true,
     event = "VeryLazy",
+    keys = {
+      {
+        "<leader>un",
+        function()
+          require("notify").dismiss { silent = true, pending = true }
+        end,
+        desc = "Dismiss all Notifications",
+      },
+    },
     config = function()
       local icons = require "utils.icons"
 
