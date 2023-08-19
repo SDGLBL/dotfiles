@@ -42,6 +42,7 @@ keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 -- Navigate buffers
 keymap("n", "<TAB>", ":bnext<CR>", opts)
 keymap("n", "<S-Tab>", ":bprevious<CR>", opts)
+keymap("n", "<C-t>", ":tabnext<CR>", opts)
 
 -- Insert --
 -- Press jk fast to enter normal mode from insert mode
