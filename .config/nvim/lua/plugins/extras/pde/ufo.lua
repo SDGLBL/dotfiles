@@ -44,7 +44,7 @@ return {
     dependencies = {
       "kevinhwang91/promise-async",
     },
-    enabled = configs.better_fold,
+    enabled = configs.ufo,
     keys = {
       { "zc" },
       { "zo" },

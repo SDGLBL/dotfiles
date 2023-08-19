@@ -124,10 +124,10 @@
 -- Indent guides for Neovim
 -- [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
 ---@field indent_blankline boolean
--- enable`better_fold`
+-- enable`ufo`
 -- Not UFO in the sky, but an ultra fold in Neovim.
 -- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo)
----@field better_fold boolean enable `better-fold`. Better folding for Neovim
+---@field ufo boolean enable `better-fold`. Better folding for Neovim
 -- enable `format_on_save`
 -- Format your code on save
 ---@field format_on_save boolean enable `format`. Format your code on save
@@ -217,10 +217,10 @@ return {
   -- Indent guides for Neovim
   -- [indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim)
   indent_blankline = false,
-  -- `better_fold`
+  -- `ufo`
   -- Not UFO in the sky, but an ultra fold in Neovim.
   -- [nvim-ufo](https://github.com/kevinhwang91/nvim-ufo)
-  better_fold = false,
+  ufo = false,
   -- `format_on_save`
   -- Format your code on save
   format_on_save = true,
