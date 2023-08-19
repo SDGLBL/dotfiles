@@ -81,7 +81,17 @@ return {
         telescope.load_extension "goimpl"
       end
 
-      require("utils.lsp").on_attach(function(_, bufnr)
+      require("utils.lsp").on_attach(function(client, bufnr)
+        if client.name == "copilot" or client.name == "null-ls" then
+          return
+        end
+
+        -- get bufnr filetype
+        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+        if ft ~= "go" then
+          return
+        end
+
         local map = function(mode, lhs, rhs, desc)
           if desc then
             desc = desc
