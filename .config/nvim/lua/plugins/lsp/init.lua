@@ -155,10 +155,6 @@ return {
 
       -- set keymaps
       require("utils.lsp").on_attach(function(client, bufnr)
-        if client.name == "copilot" or client.name == "null-ls" then
-          return
-        end
-
         local self = require("plugins.lsp.keymaps").new(client, bufnr)
 
         self:map("gh", "Lspsaga finder", { desc = "Lspsaga finder" })

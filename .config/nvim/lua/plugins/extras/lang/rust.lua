@@ -1,3 +1,4 @@
+---@diagnostic disable: assign-type-mismatch
 if not configs.rust then
   return {}
 end

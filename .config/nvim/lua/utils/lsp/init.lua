@@ -192,6 +192,15 @@ function M.on_attach(on_attach, ...)
 
       local bufnr = args.buf
       local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+      if client == nil then
+        return
+      end
+
+      if client.name == "copilot" or client.name == "null-ls" then
+        return
+      end
+
       on_attach(client, bufnr)
     end,
   }
