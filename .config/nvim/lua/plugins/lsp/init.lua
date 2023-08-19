@@ -163,7 +163,7 @@ return {
 
         self:map("gh", "Lspsaga finder", { desc = "Lspsaga finder" })
         self:map("gp", "Lspsaga peek_definition", { desc = "Lspsaga peek_definition" })
-        self:map("gd", "Lspsaga goto_definition", { desc = "Lspsaga goto_definition" })
+        -- self:map("gd", "Lspsaga goto_definition", { desc = "Lspsaga goto_definition" })
         self:map(
           "<leader>la",
           "Lspsaga code_action",
