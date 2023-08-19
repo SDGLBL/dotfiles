@@ -145,30 +145,14 @@ local function repl_menu()
 
   local hint = [[
  ^
- _e_: Execute Cell
- _i_ Insert Cell
- _j_: Next Cell
- _k_: Previous Cell
- _r_: Insert Markdown Cell
- _x_: Delete Cell
+ _e_: Execute Cell   _i_: Insert Cell   _j_: Next Cell
+ _k_: Previous Cell   _r_: Insert Markdown Cell   _x_: Delete Cell
  ^
- _s_: Send Motion
- _l_: Send Line
- _t_: Send Until Cursor
- _f_: Send File
+ _s_: Send Motion   _l_: Send Line   _t_: Send Until Cursor   _f_: Send File
  ^
- _R_: Show REPL
- _C_: Close REPL
- _S_: Restart REPL
- _F_: Focus
- _H_: Hide
+ _R_: Show REPL   _C_: Close REPL   _S_: Restart REPL   _F_: Focus   _H_: Hide
  ^
- _c_: Clear
- _L_: Clear Highlight
- _<CR>_: ENTER
- _I_: Interrupt
- ^
- ^ ^  _q_: Quit 
+ _c_: Clear   _L_: Clear Highlight   _<CR>_: ENTER   _I_: Interrupt   ^ ^  _q_: Quit 
 ]]
 
   return {
@@ -179,7 +163,7 @@ local function repl_menu()
       invoke_on_body = true,
       hint = {
         border = "rounded",
-        position = "bottom-left",
+        position = "top",
       },
     },
     mode = "n",
