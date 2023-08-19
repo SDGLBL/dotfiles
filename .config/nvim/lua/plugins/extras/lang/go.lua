@@ -81,7 +81,7 @@ return {
         telescope.load_extension "goimpl"
       end
 
-      require("utils.lsp").on_attach(function(client, bufnr)
+      require("utils.lsp").on_attach(function(_, bufnr)
         -- get bufnr filetype
         local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
         if ft ~= "go" then

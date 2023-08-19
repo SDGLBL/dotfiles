@@ -6,17 +6,15 @@ local tbl = require "utils.table"
 ---@param name string
 ---@return boolean
 function M.is_client_active(name)
-  local clients = vim.lsp.get_active_clients()
-  ---@diagnostic disable-next-line: return-type-mismatch
-  return tbl.find_first(clients, function(client)
-    return client.name == name
-  end)
+  local clients = vim.lsp.get_clients { name = name }
+  return #clients > 0
 end
 
 function M.get_active_clients_by_ft(filetype)
   local matches = {}
-  local clients = vim.lsp.get_active_clients()
+  local clients = vim.lsp.get_clients()
   for _, client in pairs(clients) do
+    ---@diagnostic disable-next-line: undefined-field
     local supported_filetypes = client.config.filetypes or {}
     if client.name ~= "null-ls" and vim.tbl_contains(supported_filetypes, filetype) then
       table.insert(matches, client)
@@ -28,7 +26,7 @@ end
 function M.get_client_capabilities(client_id)
   local client
   if not client_id then
-    local buf_clients = vim.lsp.get_active_clients { bufnr = 0 }
+    local buf_clients = vim.lsp.get_clients { bufnr = 0 }
     for _, buf_client in pairs(buf_clients) do
       if buf_client.name ~= "null-ls" then
         client = buf_client

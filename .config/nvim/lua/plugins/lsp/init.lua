@@ -187,10 +187,11 @@ return {
             return true
           end
 
-          local clients = vim.lsp.get_active_clients { bufnr = bufnr }
+          local clients = vim.lsp.get_clients { bufnr = bufnr }
 
           for _, c in pairs(clients) do
             local caps = c.server_capabilities
+            ---@diagnostic disable-next-line: need-check-nil
             if c.name ~= "null-ls" and caps.semanticTokensProvider and caps.semanticTokensProvider.full then
               vim.b.semantic_tokens = true
               return vim.b.semantic_tokens
