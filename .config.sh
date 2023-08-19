@@ -4,6 +4,7 @@
 
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/node/bin:~/software/gh/bin:~/.go/bin
+export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
 export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/go/bin
 
@@ -152,3 +153,4 @@ alias ta="tmux a"
 
 # go debug prefix
 alias debug_prefix="GOMAXPROCS=1 GODEBUG=schedtrace=1000,scheddetail=1 mygo run"
+alias dlv="dlv --init ~/go/bin/dlv_config.init"
