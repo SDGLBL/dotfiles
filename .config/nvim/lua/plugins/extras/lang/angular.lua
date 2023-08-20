@@ -1,5 +1,5 @@
 if not configs.angular then
-  return
+  return {}
 end
 
 return {
