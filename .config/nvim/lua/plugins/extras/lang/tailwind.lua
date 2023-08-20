@@ -1,3 +1,7 @@
+if not configs.tailwind then
+  return {}
+end
+
 return {
   {
     "neovim/nvim-lspconfig",
@@ -18,6 +22,7 @@ return {
       },
     },
   },
+
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
