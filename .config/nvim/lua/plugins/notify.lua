@@ -17,7 +17,9 @@ return {
 
       local defaults = {
         ---@usage Animation style one of { "fade", "slide", "fade_in_slide_out", "static" }
-        stages = "static",
+        stages = "fade_in_slide_out",
+
+        fps = 60,
 
         ---@usage Function called when a new window is opened, use for changing win settings/config
         on_open = nil,
