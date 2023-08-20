@@ -99,6 +99,33 @@
 ----- enable `docker`
 -- docker support for neovim
 ---@field docker boolean
+--- enable `angular`
+--- angular support for neovim
+---@field angular  boolean,
+--- enable `csharp`
+--- csharp support for neovim
+---@field csharp  boolean,
+--- enable `elixir`
+--- elixir support for neovim
+---@field elixir  boolean,
+--- enable `jujia`
+--- jujia support for neovim
+---@field jujia  boolean,
+--- enable `kotlin`
+--- kotlin support for neovim
+---@field kotlin  boolean,
+--- enable `r`
+--- r support for neovim
+---@field r  boolean,
+--- enable `ruby`
+--- ruby support for neovim
+---@field ruby  boolean,
+--- enable `scala`
+--- scala support for neovim
+---@field scala  boolean,
+--- enable `tailwind`
+--- tailwind support for neovim
+---@field tailwind  boolean,
 ----- enable `java`
 -- java support for neovim
 ---@field java boolean
@@ -182,6 +209,33 @@ return {
   -- `flutter`
   -- flutter support for neovim
   flutter = false,
+  -- `angular`
+  -- angular support for neovim
+  angular = false,
+  -- `csharp`
+  -- csharp support for neovim
+  csharp = false,
+  -- `elixir`
+  -- elixir support for neovim
+  elixir = false,
+  -- `jujia`
+  -- jujia support for neovim
+  jujia = false,
+  -- `kotlin`
+  -- kotlin support for neovim
+  kotlin = false,
+  -- `ruby`
+  -- ruby support for neovim
+  ruby = false,
+  -- `r`
+  -- r support for neovim
+  r = false,
+  -- `scala`
+  -- scala support for neovim
+  scala = false,
+  -- `tailwind`
+  -- tailwind support for neovim
+  tailwind = false,
   -- `typescript`
   -- typescript support for neovim
   typescript = false,
