@@ -82,10 +82,7 @@ return {
       ---@return boolean true if available, false otherwise
       local is_emmet_active = function()
         local clients = vim.lsp.get_clients { name = "emmet_ls" }
-
-        if #clients > 0 then
-          return true
-        end
+        return #clients > 0
       end
 
       ---when inside a snippet, seeks to the nearest luasnip field if possible, and checks if it is jumpable
@@ -321,7 +318,7 @@ return {
             else
               -- input a tab symbol
               vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
-              -- fallback()
+              fallback()
             end
           end, {
             "i",
@@ -406,7 +403,6 @@ return {
           end,
         },
         sources = {
-          { name = "luasnip" },
           { name = "copilot", group_index = 2 },
           {
             name = "nvim_lsp",
@@ -418,6 +414,7 @@ return {
               return true
             end,
           },
+          { name = "luasnip" },
           { name = "npm", keyword_length = 4 },
           { name = "neorg" },
           { name = "path" },
