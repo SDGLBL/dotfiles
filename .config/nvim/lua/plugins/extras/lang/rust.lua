@@ -1,4 +1,3 @@
----@diagnostic disable: assign-type-mismatch
 if not configs.rust then
   return {}
 end
@@ -58,17 +57,32 @@ return {
               },
               inlayHints = {
                 enable = true,
-                chainingHints = true,
                 maxLength = 25,
-                parameterHints = true,
-                typeHints = true,
                 typeHintsWithVariable = true,
-                closureCaptureHints = true,
-                closingBraceHints = true,
-                discriminantHints = true,
-                typeHintsSeparator = "‣",
-                hideNamedConstructorHints = true,
-                chainingHintsSeparator = "‣",
+                bindingModeHints = {
+                  enable = true,
+                },
+                chainingHints = {
+                  enable = true,
+                },
+                parameterHints = {
+                  enable = true,
+                },
+                typeHints = {
+                  enable = true,
+                },
+                closureCaptureHints = {
+                  enable = true,
+                },
+                closingBraceHints = {
+                  enable = true,
+                },
+                closureReturnTypeHints = {
+                  enable = "always",
+                },
+                discriminantHints = {
+                  enable = "always",
+                },
               },
             },
           },

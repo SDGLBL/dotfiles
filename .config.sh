@@ -154,3 +154,8 @@ alias ta="tmux a"
 # go debug prefix
 alias debug_prefix="GOMAXPROCS=1 GODEBUG=schedtrace=1000,scheddetail=1 mygo run"
 alias dlv="dlv --init ~/go/bin/dlv_config.init"
+
+export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=/opt/homebrew/Cellar/x86_64-unknown-linux-gnu/11.2.0_1/bin/x86_64-linux-gnu-gcc
+export CC_x86_64_unknown_linux_gnu=/opt/homebrew/Cellar/x86_64-unknown-linux-gnu/11.2.0_1/bin/x86_64-linux-gnu-gcc
+export CXX_x86_64_unknown_linux_gnu=/opt/homebrew/Cellar/x86_64-unknown-linux-gnu/11.2.0_1/bin/x86_64-linux-gnu-g++
+export AR_x86_64_unknown_linux_gnu=/opt/homebrew/Cellar/x86_64-unknown-linux-gnu/11.2.0_1/bin/x86_64-linux-gnu-ar
