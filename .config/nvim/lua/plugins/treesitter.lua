@@ -58,6 +58,7 @@ return {
     },
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
+    ---@class TSConfig
     opts = {
       ensure_installed = {
         "c",
