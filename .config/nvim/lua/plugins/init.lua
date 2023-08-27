@@ -242,11 +242,11 @@ return {
     opts = { rename_files = false },
     keys = {
       {
-        "<leader>h",
+        "<leader>lR",
         function()
           require("replacer").run()
         end,
-        desc = "run replacer.nvim",
+        desc = "Replace",
       },
     },
   },
