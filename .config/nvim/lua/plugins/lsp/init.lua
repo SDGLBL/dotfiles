@@ -171,7 +171,7 @@ return {
         -- self:map("<leader>lW", "Lspsaga show_line_diagnostics", { desc = "Lspsaga show_line_diagnostics" })
         -- self:map("<leader>lw", "Lspsaga show_workspace_diagnostics", { desc = "Lspsaga show_workspace_diagnostics" })
         self:map("<leader>lo", "Lspsaga outline", { desc = "Lspsaga outline" })
-        self:map("<leader>lc", vim.lsp.codelens.run, { desc = "Codelenses" })
+        -- self:map("<leader>lc", vim.lsp.codelens.run, { desc = "Codelenses" })
       end, { group = "_lspsaga_keymaps", desc = "init lspsaga keymaps" })
     end,
   },

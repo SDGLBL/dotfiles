@@ -84,6 +84,9 @@
 -- enable `rust`
 -- rust support for neovim
 ---@field rust boolean
+-- enable `nix`
+-- nix support for neovim
+---@field nix boolean
 -- enable `go`
 -- go support for neovim
 ---@field go boolean
@@ -203,6 +206,9 @@ return {
   -- `rust`
   -- rust support for neovim
   rust = false,
+  -- `nix`
+  -- nix support for neovim
+  nix = false,
   -- `go`
   -- go support for neovim
   go = false,
