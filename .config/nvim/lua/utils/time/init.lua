@@ -4,7 +4,7 @@ local M = {}
 -- @param sunset number sunset time in hours default 18
 -- @return boolean
 function M.is_dark(sunrise, sunset)
-  sunrise = sunrise or 7
+  sunrise = sunrise or 6
   sunset = sunset or 19
 
   local hour = tonumber(os.date "%H")

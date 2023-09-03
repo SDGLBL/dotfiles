@@ -37,9 +37,7 @@ return {
       {
         "David-Kunz/cmp-npm",
         event = { "BufRead package.json" },
-        dependencies = {
-          "nvim-lua/plenary.nvim",
-        },
+        dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
           require("cmp-npm").setup {}
         end,
@@ -47,14 +45,12 @@ return {
       { "kdheepak/cmp-latex-symbols", ft = "plaintext" },
       {
         "L3MON4D3/LuaSnip",
-        dependencies = {
-          "rafamadriz/friendly-snippets",
-          config = function()
-            require("luasnip.loaders.from_vscode").lazy_load()
-          end,
-        },
+        build = "make install_jsregexp",
+        dependencies = { "rafamadriz/friendly-snippets" },
         event = "VeryLazy",
         config = function()
+          require("luasnip.loaders.from_vscode").lazy_load()
+          require("luasnip.loaders.from_vscode").load { paths = { "vscode-snippets" } }
           require("luasnip.loaders.from_snipmate").lazy_load()
         end,
       },
