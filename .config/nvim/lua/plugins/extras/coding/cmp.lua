@@ -49,8 +49,8 @@ return {
         dependencies = { "rafamadriz/friendly-snippets" },
         event = "VeryLazy",
         config = function()
-          require("luasnip.loaders.from_vscode").lazy_load()
-          require("luasnip.loaders.from_vscode").load { paths = { "vscode-snippets" } }
+          require("luasnip.loaders.from_vscode").lazy_load { exclude = { "rust" } }
+          require("luasnip.loaders.from_vscode").lazy_load { paths = { "./vscode-snippets" } }
           require("luasnip.loaders.from_snipmate").lazy_load()
         end,
       },
