@@ -1,7 +1,0 @@
-{
-  "lspconfig": {
-    "yamlls": {
-      "yaml.keyOrdering": false
-    }
-  }
-}
