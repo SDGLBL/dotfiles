@@ -56,6 +56,9 @@ local function lsp_init()
 
   -- Signature help configuration
   -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, config.float)
+
+  -- Enable rounded borders in :LspInfo window.
+  require("lspconfig.ui.windows").default_options.border = "rounded"
 end
 
 function M.setup(_, opts)
