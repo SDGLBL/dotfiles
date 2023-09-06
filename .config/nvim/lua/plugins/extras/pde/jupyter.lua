@@ -1,6 +1,6 @@
--- if not configs.jupyter then
---   return
--- end
+if not configs.jupyter then
+  return {}
+end
 
 local CELL_MARKER_COLOR = "#C5C5C5"
 local CELL_MARKER = "^# %%%%"

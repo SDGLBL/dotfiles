@@ -12,6 +12,7 @@ return {
   {
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
+    commit = "12cba0a",
     keys = {
       -- { "<leader>tn", "<cmd>lua _NODE_TOGGLE()<cr>", desc = "Node" },
       -- { "<leader>tu", "<cmd>lua _NCDU_TOGGLE()<cr>", desc = "NCDU" },

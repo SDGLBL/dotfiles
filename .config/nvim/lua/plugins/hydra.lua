@@ -152,8 +152,10 @@ return {
       Hydra(gitsigns_menu())
       Hydra(dap_menu())
 
-      for s, _ in pairs(opts.specs) do
-        Hydra(opts.specs[s]())
+      if opts.specs then
+        for s, _ in pairs(opts.specs) do
+          Hydra(opts.specs[s]())
+        end
       end
     end,
   },
