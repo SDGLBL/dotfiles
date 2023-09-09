@@ -59,7 +59,12 @@ return {
           end
         end,
         codespell = function(_, _)
-          null_ls.register(diagnostics.codespell)
+          null_ls.register(diagnostics.codespell.with {
+            extra_args = {
+              "-T",
+              vim.fn.stdpath "config" .. "/codespell-ignore-words",
+            },
+          })
         end,
         golines = function(_, _)
           if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then

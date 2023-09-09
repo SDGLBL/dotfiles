@@ -18,13 +18,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      -- "p00f/nvim-ts-rainbow",
       "windwp/nvim-ts-autotag",
       "andymass/vim-matchup",
       "mfussenegger/nvim-ts-hint-textobject",
       "nvim-treesitter/nvim-treesitter-textobjects",
       {
-
         "romgrk/nvim-treesitter-context",
         enabled = not vim.g.neovide,
       },
@@ -36,7 +34,7 @@ return {
 
           vim.g.rainbow_delimiters = {
             strategy = {
-              [""] = rainbow_delimiters.strategy["local"],
+              [""] = rainbow_delimiters.strategy["global"],
               vim = rainbow_delimiters.strategy["local"],
             },
             query = {
