@@ -129,6 +129,15 @@ return {
       null_ls.register(source)
     end
 
-    null_ls.setup()
+    null_ls.setup {
+      should_attach = function(bufnr)
+        -- get filetype
+        local should_not_attach_fts = {
+          "NvimTree",
+        }
+        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+        return not vim.tbl_contains(should_not_attach_fts, ft)
+      end,
+    }
   end,
 }
