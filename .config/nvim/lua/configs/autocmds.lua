@@ -144,6 +144,17 @@ function M.load_augroups()
         end,
       },
     },
+    {
+      { "BufRead" },
+      {
+        group = "_set_filetype",
+        callback = function()
+          if vim.fn.expand "%:t" == "gitconfig" or vim.fn.expand "%:t" == ".gitconfig" then
+            vim.bo.filetype = "toml"
+          end
+        end,
+      },
+    },
   }
 end
 
