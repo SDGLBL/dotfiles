@@ -1,5 +1,22 @@
 local M = {}
 
+local function show_documentation()
+  local filetype = vim.bo.filetype
+  if vim.tbl_contains({ "vim", "help" }, filetype) then
+    vim.cmd("h " .. vim.fn.expand "<cword>")
+  elseif vim.tbl_contains({ "man" }, filetype) then
+    vim.cmd("Man " .. vim.fn.expand "<cword>")
+  elseif vim.tbl_contains({ "rust" }, filetype) then
+    require("rust-tools").hover_actions.hover_actions()
+  elseif vim.fn.expand "%:t" == "Cargo.toml" and require("crates").popup_available() then
+    require("crates").show_popup()
+  else
+    vim.lsp.buf.hover()
+  end
+end
+
+vim.keymap.set("n", "K", show_documentation, { silent = true })
+
 function M.on_attach(client, buffer)
   if client.name == "copilot" or client.name == "null-ls" then
     return
@@ -43,18 +60,7 @@ function M.on_attach(client, buffer)
   self:map("<leader>ls", require("telescope.builtin").lsp_document_symbols, { desc = "Document Symbols" })
   self:map("<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
   self:map("<leader>lq", vim.diagnostic.setloclist, { desc = "Toggle Inline Diagnostics" })
-
-  -- get filetype from buffer id
-  ---@diagnostic disable-next-line: redundant-parameter
-  if vim.api.nvim_buf_get_option(buffer, "filetype") == "rust" then
-    self:map(
-      "K",
-      vim.fn.exists ":RustHoverActions" ~= 0 and "RustHoverActions" or vim.lsp.buf.hover,
-      { desc = "Hover" }
-    )
-  else
-    self:map("K", vim.lsp.buf.hover, { desc = "Hover" })
-  end
+  self:map("K", show_documentation, { desc = "Hover" })
 end
 
 function M.new(client, buffer)
