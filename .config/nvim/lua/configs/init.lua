@@ -47,7 +47,7 @@ local function setup(opts)
   _G.configs = c
 
   if c.pre_hook ~= nil then
-    local pre_hook_status, ret = pcall(c.pre_hook)
+    local pre_hook_status, ret = pcall(c.pre_hook, c)
     if not pre_hook_status then
       vim.notify("executed pre_hook failed: " .. vim.inspect(ret))
     end
@@ -62,18 +62,11 @@ local function setup(opts)
 
   require "configs.lazy"
 
-  ---@diagnostic disable-next-line: param-type-mismatch
-  local status_ok, _ = pcall(vim.cmd, "colorscheme " .. c.colorscheme)
-  if not status_ok then
-    vim.notify("colorscheme " .. c.colorscheme .. " not found!")
-    return
-  end
-
   autocmds_setup(c)
   toggle_transparent(c)
 
   if c.after_hook ~= nil then
-    local after_hook_status, ret = pcall(c.after_hook)
+    local after_hook_status, ret = pcall(c.after_hook, c)
     if not after_hook_status then
       vim.notify("executed after_hook failed: " .. vim.inspect(ret))
     end

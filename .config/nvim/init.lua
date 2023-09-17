@@ -2,7 +2,8 @@
 vim.loader.enable()
 
 require("configs").setup {
-  colorscheme = "catppuccin-mocha",
+  dark_colorscheme = "rose-pine-moon",
+  light_colorscheme = "catppuccin-latte",
   dap = true,
   -- tint = true,
   -- refactor = true,

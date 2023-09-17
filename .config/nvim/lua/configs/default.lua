@@ -1,6 +1,6 @@
 ---@class Config
--- `colorscheme`
----@field colorscheme string
+-- `dark_colorscheme`
+---@field dark_colorscheme string
 --- | "default"
 --- | "zellner"
 --- | "torte"
@@ -14,6 +14,69 @@
 --- | "slate"
 --- | "shine"
 --- | "rose-pine"
+--- | "rose-pine-main"
+--- | "rose-pine-dawn"
+--- | "rose-pine-moon"
+--- | "ron"
+--- | "quiet"
+--- | "duskfox"
+--- | "dayfox"
+--- | "dawnfox"
+--- | "darkplus"
+--- | "darkblue"
+--- | "catppuccin-mocha"
+--- | "catppuccin-macchiato"
+--- | "catppuccin-latte"
+--- | "catppuccin-frappe"
+--- | "carbonfox"
+--- | "blue"
+--- | "peachpuff"
+--- | "pablo"
+--- | "nordfox"
+--- | "nightfly"
+--- | "nightfox"
+--- | "murphy"
+--- | "morning"
+--- | "darkplus"
+--- | "monokai_soda"
+--- | "monokai_ristretto"
+--- | "monokai_pro"
+--- | "lunaperche"
+--- | "koehler"
+--- | "kanagawa"
+--- | "industry"
+--- | "habamax"
+--- | "github_dimmed"
+--- | "github_dark"
+--- | "github_dark_default"
+--- | "github_dark_colorblind"
+--- | "github_light"
+--- | "github_light_default"
+--- | "github_light_colorblind"
+--- | "evening"
+--- | "elfoard"
+--- | "desert"
+--- | "material"
+--- | "gruvbox"
+--- | "delek"
+-- `light_colorscheme`
+---@field light_colorscheme string
+--- | "default"
+--- | "zellner"
+--- | "torte"
+--- | "tokyonight-storm"
+--- | "tokyonight-night"
+--- | "tokyonight-moon"
+--- | "tokyonight-day"
+--- | "tokyodark"
+--- | "terafox"
+--- | "sonokai"
+--- | "slate"
+--- | "shine"
+--- | "rose-pine"
+--- | "rose-pine-main"
+--- | "rose-pine-dawn"
+--- | "rose-pine-moon"
 --- | "ron"
 --- | "quiet"
 --- | "duskfox"
@@ -292,7 +355,8 @@ return {
   },
   -- `pre_hook`
   -- execute before loading configs
-  pre_hook = function()
+  --- @param c Config
+  pre_hook = function(c)
     -- conda setup
     if os.getenv "conda_prefix" ~= "" and os.getenv "conda_prefix" ~= nil then
       vim.g.python3_host_prog = os.getenv "conda_prefix" .. "/bin/python"
@@ -336,9 +400,26 @@ return {
     --   },
     -- }
   end,
-  after_hook = function()
+  -- `after_hook`
+  --- @param c Config
+  after_hook = function(c)
+    local colorscheme = ""
+
+    if require("utils.time").is_dark() then
+      colorscheme = c.dark_colorscheme
+    else
+      colorscheme = c.light_colorscheme
+    end
+
+    ---@diagnostic disable-next-line: param-type-mismatch
+    local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+    if not status_ok then
+      vim.notify("colorscheme " .. colorscheme .. " not found!")
+      return
+    end
+
     -- auto change background by time
-    vim.o.background = require("utils.time").is_dark() and "dark" or "light"
+    -- vim.o.background = require("utils.time").is_dark() and "dark" or "light"
 
     if vim.g.neovide then
       -- Helper function for transparency formatting
@@ -362,3 +443,4 @@ return {
     end
   end,
 }
+
