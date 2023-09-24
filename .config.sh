@@ -5,7 +5,7 @@
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/node/bin:~/software/gh/bin:~/.go/bin
 export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
-export PATH=$PATH:~/.cargo/bin
+# export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/go/bin
 
 # add bin utils on macos
