@@ -11,6 +11,18 @@ return {
   },
 
   {
+    "emmanueltouzery/agitator.nvim",
+    event = "VeryLazy",
+    keys = {
+      { "<leader>gtb", "<cmd>lua require 'agitator'.git_blame_toggle()<cr>", desc = "Toggle Side Blame" },
+      { "<leader>gtt", "<cmd>lua require 'agitator'.git_time_machine()<cr>", desc = "Toggle Time Machine" },
+    },
+    config = function()
+      require "agitator"
+    end,
+  },
+
+  {
     "lewis6991/gitsigns.nvim",
     event = "VeryLazy",
     keys = {
