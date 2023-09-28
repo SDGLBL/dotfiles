@@ -139,7 +139,7 @@ return {
               },
               -- hover_actions = { border = "solid" },
               on_initialized = function()
-                vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+                vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
                   pattern = { "*.rs" },
                   callback = function()
                     vim.lsp.codelens.refresh()
