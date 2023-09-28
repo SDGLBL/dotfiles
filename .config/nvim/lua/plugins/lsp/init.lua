@@ -255,4 +255,10 @@ return {
       end, { group = "_lsp_inlayhints", desc = "init lspsaga keymaps" })
     end,
   },
+
+  {
+    "Wansmer/symbol-usage.nvim",
+    event = "LspAttach",
+    opts = {},
+  },
 }
