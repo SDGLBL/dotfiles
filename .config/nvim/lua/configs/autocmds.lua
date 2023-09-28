@@ -149,8 +149,11 @@ function M.load_augroups()
       {
         group = "_set_filetype",
         callback = function()
-          if vim.fn.expand "%:t" == "gitconfig" or vim.fn.expand "%:t" == ".gitconfig" then
+          local file_name = vim.fn.expand "%:t"
+          if file_name == "gitconfig" or file_name == ".gitconfig" then
             vim.bo.filetype = "toml"
+          elseif file_name == ".envrc" then
+            vim.bo.filetype = "sh"
           end
         end,
       },
