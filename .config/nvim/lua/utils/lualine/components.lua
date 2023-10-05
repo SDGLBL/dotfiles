@@ -130,14 +130,14 @@ return {
       vim.list_extend(buf_client_names, supported_linters)
 
       -- add code actions
-      local code_actions = require "utils.null-ls.code_actions"
-      local supported_code_actions = code_actions.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_code_actions)
+      -- local code_actions = require "utils.null-ls.code_actions"
+      -- local supported_code_actions = code_actions.list_registered(buf_ft)
+      -- vim.list_extend(buf_client_names, supported_code_actions)
 
       -- add hover
-      local hovers = require "utils.null-ls.hovers"
-      local supported_hovers = hovers.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_hovers)
+      -- local hovers = require "utils.null-ls.hovers"
+      -- local supported_hovers = hovers.list_registered(buf_ft)
+      -- vim.list_extend(buf_client_names, supported_hovers)
 
       local hash = {}
       local unique_client_names = {}
@@ -160,13 +160,13 @@ return {
           table.insert(cn_icons, icons.lsp.Linter)
         end
 
-        if vim.tbl_contains(supported_code_actions, client_name) then
-          table.insert(cn_icons, icons.lsp.CodeAction)
-        end
+        -- if vim.tbl_contains(supported_code_actions, client_name) then
+        --   table.insert(cn_icons, icons.lsp.CodeAction)
+        -- end
 
-        if vim.tbl_contains(supported_hovers, client_name) then
-          table.insert(cn_icons, icons.lsp.Hover)
-        end
+        -- if vim.tbl_contains(supported_hovers, client_name) then
+        --   table.insert(cn_icons, icons.lsp.Hover)
+        -- end
 
         if #cn_icons > 0 then
           unique_client_names[i] = client_name .. " " .. table.concat(cn_icons, "|")

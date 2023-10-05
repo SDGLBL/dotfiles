@@ -126,6 +126,8 @@ return {
         "stylua",
         "golines",
         -- "goimports",
+        "gomodifytags",
+        "impl",
         "taplo",
         "rustfmt",
         "prettier",

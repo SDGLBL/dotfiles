@@ -25,6 +25,12 @@ return {
         goimports = function(_, _)
           null_ls.register(formatting.goimports)
         end,
+        gomodifytags = function(_, _)
+          null_ls.register(code_actions.gomodifytags)
+        end,
+        impl = function(_, _)
+          null_ls.register(code_actions.impl)
+        end,
         taplo = function(_, _)
           null_ls.register(formatting.taplo)
         end,
