@@ -25,9 +25,10 @@ return {
           library = {
             types = true,
             plugins = {
-              "neotest",
-              "plenary.nvim",
-              "telescope.nvim",
+              -- "neotest",
+              -- "plenary.nvim",
+              -- "telescope.nvim",
+              -- "flash.nvim",
               -- "nvim-treesitter",
               -- "LuaSnip",
             },
@@ -114,7 +115,7 @@ return {
 
   -- null-ls setting
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "jay-babu/mason-null-ls.nvim",
