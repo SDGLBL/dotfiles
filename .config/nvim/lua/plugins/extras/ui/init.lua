@@ -155,6 +155,7 @@ return {
 
   {
     "f-person/auto-dark-mode.nvim",
+    enabled = os.getenv "TERM_PROGRAM" == "WarpTerminal",
     config = {
       update_interval = 1000,
       set_dark_mode = function()

@@ -4,6 +4,10 @@ local M = {}
 -- @param sunset number sunset time in hours default 18
 -- @return boolean
 function M.is_dark(sunrise, sunset)
+  if os.getenv "TERM_PROGRAM" ~= "WarpTerminal" then
+    return true
+  end
+
   sunrise = sunrise or 6
   sunset = sunset or 19
 
