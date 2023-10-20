@@ -50,6 +50,7 @@ return {
         golangci_lint = function(_, _)
           if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
             null_ls.register(diagnostics.golangci_lint.with {
+              filetypes = { "go" },
               extra_args = {
                 "-c",
                 "~/.golangci.yml",
@@ -57,6 +58,7 @@ return {
             })
           else
             null_ls.register(diagnostics.golangci_lint.with {
+              filetypes = { "go" },
               extra_args = {
                 "-E",
                 "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
