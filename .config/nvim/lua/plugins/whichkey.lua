@@ -6,7 +6,7 @@ return {
     event = "VeryLazy",
     keys = {
       { "<leader>/", "<Plug>(comment_toggle_linewise_current)", desc = "Comment" },
-      { "<leader>a", "<cmd>Alpha<cr>", desc = "Alpha" },
+      { "<leader>\\", "<cmd>Alpha<cr>", desc = "Alpha" },
       { "<leader>w", "<cmd>w!<CR>", desc = "Save" },
       { "<leader>W", "<cmd>noautocmd w!<CR>", desc = "NoAC Save" },
       { "<leader>R", '<cmd>lua require("configs").reload()<CR>', desc = "Reload" },

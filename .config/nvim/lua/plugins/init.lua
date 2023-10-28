@@ -154,6 +154,10 @@ return {
         opts = {
           vdefaults = {
             ["<leader>c"] = { name = "+Copy" },
+            ["<leader>a"] = { name = "+AI" },
+            ["<leader>ac"] = { name = "+ChatGPT" },
+            ["<leader>an"] = { name = "+NeoAI" },
+            ["<leader>l"] = { name = "+LSP" },
           },
         },
       },
