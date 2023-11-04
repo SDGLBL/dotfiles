@@ -5,6 +5,19 @@ return {
       return
     end
 
+    null_ls.setup {
+      should_attach = function(bufnr)
+        vim.notify("should_attach check buffer " .. bufnr)
+
+        -- get filetype
+        local should_not_attach_fts = {
+          "NvimTree",
+        }
+        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+        return not vim.tbl_contains(should_not_attach_fts, ft)
+      end,
+    }
+
     local formatting = null_ls.builtins.formatting
     local diagnostics = null_ls.builtins.diagnostics
     local code_actions = null_ls.builtins.code_actions
@@ -17,7 +30,7 @@ return {
         function(source_name, methods)
           -- all sources with no handler get passed here
           -- Keep original functionality of `automatic_setup = true`
-          require "mason-null-ls.automatic_setup"(source_name, methods)
+          -- require "mason-null-ls.automatic_setup"(source_name, methods)
         end,
         stylua = function(_, _)
           null_ls.register(formatting.stylua)
@@ -66,20 +79,20 @@ return {
             })
           end
         end,
-        codespell = function(_, _)
-          null_ls.register(diagnostics.codespell.with {
-            extra_args = {
-              "-T",
-              vim.fn.stdpath "config" .. "/codespell-ignore-words",
-            },
-          })
-        end,
+        -- codespell = function(_, _)
+        --   null_ls.register(diagnostics.codespell.with {
+        --     extra_args = {
+        --       "-T",
+        --       vim.fn.stdpath "config" .. "/codespell-ignore-words",
+        --     },
+        --   })
+        -- end,
         golines = function(_, _)
           if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
             null_ls.register(formatting.golines.with {
               extra_args = {
                 "-m",
-                "95",
+                "140",
                 "--base-formatter",
                 "gofmt",
               },
@@ -132,20 +145,5 @@ return {
         async = true,
       },
     })
-
-    for _, source in ipairs(opts.sources) do
-      null_ls.register(source)
-    end
-
-    null_ls.setup {
-      should_attach = function(bufnr)
-        -- get filetype
-        local should_not_attach_fts = {
-          "NvimTree",
-        }
-        local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-        return not vim.tbl_contains(should_not_attach_fts, ft)
-      end,
-    }
   end,
 }

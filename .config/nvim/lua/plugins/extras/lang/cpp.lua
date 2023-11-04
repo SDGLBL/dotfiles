@@ -32,68 +32,69 @@ return {
     opts = {
       servers = {
         clangd = {
-          server = {
-            root_dir = function(...)
-              -- using a root .clang-format or .clang-tidy file messes up projects, so remove them
-              return require("lspconfig.util").root_pattern(
-                "compile_commands.json",
-                "compile_flags.txt",
-                "configure.ac",
-                ".git"
-              )(...)
-            end,
-            capabilities = {
-              offsetEncoding = { "utf-16" },
-            },
-            cmd = {
-              "clangd",
-              "--background-index",
-              "--clang-tidy",
-              "--header-insertion=iwyu",
-              "--completion-style=detailed",
-              "--function-arg-placeholders",
-              "--fallback-style=llvm",
-            },
-            init_options = {
-              usePlaceholders = true,
-              completeUnimported = true,
-              clangdFileStatus = true,
-            },
+          keys = {
+            { "<leader>cR", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
           },
-          extensions = {
-            inlay_hints = {
-              inline = true,
-            },
-            ast = {
-              --These require codicons (https://github.com/microsoft/vscode-codicons)
-              role_icons = {
-                type = "",
-                declaration = "",
-                expression = "",
-                specifier = "",
-                statement = "",
-                ["template argument"] = "",
-              },
-              kind_icons = {
-                Compound = "",
-                Recovery = "",
-                TranslationUnit = "",
-                PackExpansion = "",
-                TemplateTypeParm = "",
-                TemplateTemplateParm = "",
-                TemplateParamObject = "",
-              },
-            },
+          root_dir = function(...)
+            -- using a root .clang-format or .clang-tidy file messes up projects, so remove them
+            return require("lspconfig.util").root_pattern(
+              "compile_commands.json",
+              "compile_flags.txt",
+              "configure.ac",
+              ".git"
+            )(...)
+          end,
+          capabilities = {
+            offsetEncoding = { "utf-16" },
+          },
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+          },
+          init_options = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            clangdFileStatus = true,
           },
         },
       },
       setup = {
         clangd = function(_, opts)
           require("clangd_extensions").setup {
-            server = opts.server,
-            extensions = opts.extensions,
+            server = opts,
+            extensions = {
+              inlay_hints = {
+                inline = false,
+              },
+              ast = {
+                --These require codicons (https://github.com/microsoft/vscode-codicons)
+                role_icons = {
+                  type = "",
+                  declaration = "",
+                  expression = "",
+                  specifier = "",
+                  statement = "",
+                  ["template argument"] = "",
+                },
+                kind_icons = {
+                  Compound = "",
+                  Recovery = "",
+                  TranslationUnit = "",
+                  PackExpansion = "",
+                  TemplateTypeParm = "",
+                  TemplateTemplateParm = "",
+                  TemplateParamObject = "",
+                },
+              },
+            },
           }
-          return true
+
+          return false
         end,
       },
     },

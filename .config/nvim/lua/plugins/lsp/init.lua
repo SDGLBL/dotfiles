@@ -133,7 +133,7 @@ return {
         "prettier",
         "shellcheck",
         "golangci_lint",
-        "codespell",
+        -- "codespell",
         "shfmt",
       },
     },

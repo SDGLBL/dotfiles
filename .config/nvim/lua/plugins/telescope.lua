@@ -27,7 +27,7 @@ return {
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Find Help" },
       { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
       { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File" },
-      { "<leader>sR", "<cmd>Telescope registers<cr>", desc = "Registers" },
+      -- { "<leader>sR", "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
       { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
       {

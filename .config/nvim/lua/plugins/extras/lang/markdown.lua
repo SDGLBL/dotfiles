@@ -60,10 +60,11 @@ return {
     ft = "markdown",
     enabled = configs.markdown_preview,
     keys = {
-      { "<leader>pp", "<cmd>MarkdownPreview<cr>", desc = "Preview" },
-      { "<leader>ps", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop" },
-      { "<leader>pt", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle" },
-      { "<leader>pe", "<cmd>FeMaco<cr>", desc = "Edit Code Block" },
+      { "<leader>p", "", desc = "MKPreview", ft = "markdown" },
+      { "<leader>pp", "<cmd>MarkdownPreview<cr>", desc = "Preview", ft = "markdown" },
+      { "<leader>ps", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop", ft = "markdown" },
+      { "<leader>pt", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle", ft = "markdown" },
+      { "<leader>pe", "<cmd>FeMaco<cr>", desc = "Edit Code Block", ft = "markdown" },
     },
     config = function()
       if not configs.markdown_preview then
@@ -168,5 +169,11 @@ return {
       -- By default the theme is define according to the preferences of the system
       vim.g.mkdp_theme = require("utils.time").is_dark() and "dark" or "light"
     end,
+  },
+
+  {
+    "lukas-reineke/headlines.nvim",
+    opts = {},
+    ft = { "markdown", "norg", "rmd", "org" },
   },
 }
