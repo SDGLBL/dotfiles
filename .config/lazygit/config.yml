@@ -89,8 +89,8 @@ git:
   diffContextSize: 3 # how many lines of context are shown around a change in diffs
 os:
   copyToClipboardCmd: "" # See 'Custom Command for Copying to Clipboard' section
-  editPreset: "" # see 'Configuring File Editing' section
-  edit: "nvim"
+  editPreset: "nvim" # see 'Configuring File Editing' section
+  edit: ""
   editAtLine: ""
   editAtLineAndWait: ""
   open: ""
