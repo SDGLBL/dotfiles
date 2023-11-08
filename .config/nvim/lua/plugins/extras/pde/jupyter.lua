@@ -208,6 +208,7 @@ return {
 
   {
     "anuvyklack/hydra.nvim",
+    event = { "BufReadPre" },
     opts = {
       specs = {
         repl = repl_menu,
