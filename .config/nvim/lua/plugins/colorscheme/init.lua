@@ -1,5 +1,6 @@
 return {
   "folke/tokyonight.nvim",
+  "oxfist/night-owl.nvim",
   "rebelot/kanagawa.nvim",
   "tanvirtin/monokai.nvim",
   "lunarvim/darkplus.nvim",
