@@ -175,6 +175,4 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
   },
-
-  { "axkirillov/hbac.nvim", config = true },
 }
