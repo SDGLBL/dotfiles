@@ -20,6 +20,7 @@ local function lsp_init()
       focusable = true,
       style = "minimal",
       border = "rounded",
+      silent = true,
     },
 
     diagnostic = {

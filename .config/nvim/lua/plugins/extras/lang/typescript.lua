@@ -3,68 +3,78 @@ if not configs.typescript then
 end
 
 return {
-  -- add typescript to treesitter
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "typescript", "tsx", "javascript" })
-      end
+      vim.list_extend(opts.ensure_installed, { "javascript", "typescript", "tsx" })
     end,
   },
 
-  -- correctly setup lspconfig
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "typescript-language-server", "js-debug-adapter" })
+    end,
+  },
+
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+    opts = {
+      tsserver_file_preferences = {
+        -- Inlay Hints
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
+    config = function(_, opts)
+      require("utils.lsp").on_attach(function(client, bufnr)
+        if client.name == "tsserver" then
+          vim.keymap.set(
+            "n",
+            "<leader>lo",
+            "<cmd>TSToolsOrganizeImports<cr>",
+            { buffer = bufnr, desc = "Organize Imports" }
+          )
+          vim.keymap.set("n", "<leader>lO", "<cmd>TSToolsSortImports<cr>", { buffer = bufnr, desc = "Sort Imports" })
+          vim.keymap.set("n", "<leader>lu", "<cmd>TSToolsRemoveUnused<cr>", { buffer = bufnr, desc = "Removed Unused" })
+          vim.keymap.set(
+            "n",
+            "<leader>lz",
+            "<cmd>TSToolsGoToSourceDefinition<cr>",
+            { buffer = bufnr, desc = "Go To Source Definition" }
+          )
+          vim.keymap.set(
+            "n",
+            "<leader>lR",
+            "<cmd>TSToolsRemoveUnusedImports<cr>",
+            { buffer = bufnr, desc = "Removed Unused Imports" }
+          )
+          vim.keymap.set("n", "<leader>lF", "<cmd>TSToolsFixAll<cr>", { buffer = bufnr, desc = "Fix All" })
+          vim.keymap.set(
+            "n",
+            "<leader>lA",
+            "<cmd>TSToolsAddMissingImports<cr>",
+            { buffer = bufnr, desc = "Add Missing Imports" }
+          )
+        end
+      end)
+      require("typescript-tools").setup(opts)
+    end,
+  },
+
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "jose-elias-alvarez/typescript.nvim" },
-    ---@class PluginLspOpts
+    dependencies = { "pmizio/typescript-tools.nvim" },
     opts = {
       -- make sure mason installs the server
-      -- LSP Server Settings
-      ---@type lspconfig.options
       servers = {
-        ---@type lspconfig.options.tsserver
-        tsserver = {
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-              format = {
-                indentSize = vim.o.shiftwidth,
-                convertTabsToSpaces = vim.o.expandtab,
-                tabSize = vim.o.tabstop,
-              },
-            },
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-              format = {
-                indentSize = vim.o.shiftwidth,
-                convertTabsToSpaces = vim.o.expandtab,
-                tabSize = vim.o.tabstop,
-              },
-            },
-            completions = {
-              completeFunctionCalls = true,
-            },
-          },
-        },
         -- ESLint
         eslint = {
           settings = {
@@ -74,24 +84,11 @@ return {
         },
       },
       setup = {
-        tsserver = function(_, opts)
-          require("utils.lsp").on_attach(function(client, buffer)
-            if client.name == "tsserver" then
-              -- stylua: ignore
-              vim.keymap.set("n", "<leader>co", "<cmd>TypescriptOrganizeImports<CR>", { buffer = buffer, desc = "Organize Imports" })
-              -- stylua: ignore
-              vim.keymap.set("n", "<leader>cR", "<cmd>TypescriptRenameFile<CR>", { desc = "Rename File", buffer = buffer })
-            end
-          end, { group = "_tsserver_keymaps", desc = "init tsserver keymaps" })
-          require("typescript").setup { server = opts }
-          return true
-        end,
         eslint = function()
           vim.api.nvim_create_autocmd("BufWritePre", {
             callback = function(event)
-              local client = vim.lsp.get_clients({ bufnr = event.buf, name = "eslint" })[1]
+              local client = vim.lsp.get_active_clients({ bufnr = event.buf, name = "eslint" })[1]
               if client then
-                ---@diagnostic disable-next-line: missing-parameter
                 local diag = vim.diagnostic.get(event.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
                 if #diag > 0 then
                   vim.cmd "EslintFixAll"
@@ -105,51 +102,29 @@ return {
   },
 
   {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      table.insert(opts.sources, require "typescript.extensions.null-ls.code-actions")
-    end,
-  },
-
-  -- color picker
-  {
-    "uga-rosa/ccc.nvim",
-    ft = { "javascriptreact", "javascript", "typescript", "typescriptreact", "css", "html", "lua" },
-    enabled = configs.color_picker,
-    config = function(_, _)
-      require("ccc").setup {}
-
-      require("utils.lsp").on_attach(function(client, bufnr)
-        if client.name == "tsserver" then
-          vim.keymap.set("n", "<leader>cc", "<cmd>CccPick<CR>", { buffer = bufnr, desc = "Color picker" })
-        end
-      end)
-    end,
-  },
-
-  -- debug
-  {
     "mfussenegger/nvim-dap",
-    dependencies = {
-      { "mxsdev/nvim-dap-vscode-js" },
-      {
-        "microsoft/vscode-js-debug",
-        build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
-      },
-    },
     opts = {
       setup = {
         vscode_js_debug = function()
           local function get_js_debug()
-            local path = vim.fn.stdpath "data"
-            return path .. "/lazy/vscode-js-debug"
+            local install_path = require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+            return install_path .. "/js-debug/src/dapDebugServer.js"
           end
 
-          require("dap-vscode-js").setup {
-            node_path = "node",
-            debugger_path = get_js_debug(),
-            adapters = { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" },
-          }
+          for _, adapter in ipairs { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" } do
+            require("dap").adapters[adapter] = {
+              type = "server",
+              host = "localhost",
+              port = "${port}",
+              executable = {
+                command = "node",
+                args = {
+                  get_js_debug(),
+                  "${port}",
+                },
+              },
+            }
+          end
 
           for _, language in ipairs { "typescript", "javascript" } do
             require("dap").configurations[language] = {
@@ -197,7 +172,7 @@ return {
                 type = "pwa-chrome",
                 name = "Launch Chrome",
                 request = "launch",
-                url = "http://localhost:3000", -- This is for Vite. Change it to the framework you use
+                url = "http://localhost:5173", -- This is for Vite. Change it to the framework you use
                 webRoot = "${workspaceFolder}",
                 userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
               },
@@ -232,18 +207,6 @@ return {
     },
   },
 
-  {
-    "bennypowers/nvim-regexplainer",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "MunifTanjim/nui.nvim",
-    },
-    config = function()
-      require("regexplainer").setup()
-    end,
-  },
-
-  -- test
   {
     "nvim-neotest/neotest",
     dependencies = {
