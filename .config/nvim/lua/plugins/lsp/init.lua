@@ -20,22 +20,6 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       {
-        "folke/neodev.nvim",
-        opts = {
-          library = {
-            types = true,
-            plugins = {
-              -- "neotest",
-              -- "plenary.nvim",
-              -- "telescope.nvim",
-              -- "flash.nvim",
-              -- "nvim-treesitter",
-              -- "LuaSnip",
-            },
-          },
-        },
-      },
-      {
         "folke/neoconf.nvim",
         cmd = "Neoconf",
         config = true,

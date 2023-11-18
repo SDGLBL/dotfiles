@@ -19,6 +19,24 @@ return {
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+      {
+        "folke/neodev.nvim",
+        opts = {
+          library = {
+            types = true,
+            plugins = {
+              -- "neotest",
+              "plenary.nvim",
+              "telescope.nvim",
+              -- "flash.nvim",
+              -- "nvim-treesitter",
+              -- "LuaSnip",
+            },
+          },
+        },
+      },
+    },
     ---@class PluginLspOpts
     opts = {
       -- make sure mason installs the server
@@ -33,6 +51,16 @@ return {
               },
               workspace = {
                 checkThirdParty = false,
+                -- library = {
+                --   "/Users/lijie/.local/share/nvim/lazy/neodev.nvim/types/nightly",
+                --   "/usr/local/share/nvim/runtime/lua",
+                --   "/Users/lijie/.local/share/nvim/lazy/plenary.nvim/lua",
+                --   "/Users/lijie/.local/share/nvim/lazy/telescope.nvim/lua",
+                --   "/Users/lijie/.local/share/nvim/lazy/nvim-treesitter/lua",
+                --   "/Users/lijie/dotfiles/.config/nvim/lua",
+                --   "/Users/lijie/.local/share/nvim/lazy/neoconf.nvim/types",
+                --   "/Users/lijie/.local/share/nvim/lazy/neoconf.nvim/types/lua",
+                -- },
               },
             },
           },
