@@ -81,6 +81,10 @@ return {
             "--hidden",
             "-uuu",
             "--glob=!.git/",
+            "-g",
+            "!node_modules/",
+            "-g",
+            "!venv/",
           },
 
           mappings = {
@@ -150,7 +154,7 @@ return {
         },
         pickers = {
           find_files = {
-            find_command = { "fd", "--type=file", "-HI" },
+            find_command = { "fd", "--type=file" },
           },
           live_grep = {
             --@usage don't include the filename in the search results
