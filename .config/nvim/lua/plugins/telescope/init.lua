@@ -23,6 +23,7 @@ return {
       "stevearc/aerial.nvim",
       "ahmedkhalf/project.nvim",
       "benfowler/telescope-luasnip.nvim",
+      "nvim-telescope/telescope-project.nvim",
       "nvim-telescope/telescope-frecency.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
@@ -86,6 +87,7 @@ return {
       local actions_layout = require "telescope.actions.layout"
       local transform_mod = require("telescope.actions.mt").transform_mod
       local custom_pickers = require "plugins.telescope.pickers"
+      local lga_actions = require "telescope-live-grep-args.actions"
       local custom_actions = transform_mod {
 
         -- File path
@@ -264,8 +266,8 @@ return {
             find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
           },
           git_files = {
-            theme = "dropdown",
-            previewer = false,
+            -- theme = "dropdown",
+            previewer = true,
           },
           buffers = {
             theme = "dropdown",
@@ -290,6 +292,16 @@ return {
           project = {
             hidden_files = false,
             theme = "dropdown",
+          },
+          live_grep_args = {
+            auto_quoting = true, -- enable/disable auto-quoting
+            -- define mappings, e.g.
+            mappings = { -- extend mappings
+              i = {
+                ["<C-k>"] = lga_actions.quote_prompt(),
+                ["<C-i>"] = lga_actions.quote_prompt { postfix = " --iglob " },
+              },
+            },
           },
         },
       }

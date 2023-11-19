@@ -3,3 +3,4 @@
 .config/lvim/plugin/
 .config/nvim/lazy-lock.json
 .DS_Store
+.aider*

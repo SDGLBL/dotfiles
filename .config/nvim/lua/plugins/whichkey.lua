@@ -74,6 +74,7 @@ return {
       defaults = {
         prefix = "<leader>",
         mode = { "n", "v" },
+        ["\\"] = { "<cmd>Alpha<cr>", "Alpha" },
         w = { "<cmd>update!<cr>", "Save" },
         W = { "<cmd>noautocmd w!<cr>", "NoAC Save" },
         q = {
