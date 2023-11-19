@@ -79,45 +79,6 @@ return {
   },
 
   {
-    "olimorris/persisted.nvim",
-    event = "BufReadPre",
-    dependencies = {
-      {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
-        opts = {
-          defaults = {
-            ["<leader>s"] = { name = "+Search/Session" },
-          },
-        },
-      },
-    },
-    keys = {
-      { "<leader>ss", "<cmd>SessionSave<cr>", desc = "Save session" },
-      { "<leader>sl", "<cmd>SessionLoad<cr>", desc = "Load session" },
-      { "<leader>sL", "<cmd>SessionLoadLast<cr>", desc = "Load last session" },
-      { "<leader>sd", "<cmd>SessionDelete<cr>", desc = "Del cur session" },
-    },
-    config = function()
-      require("persisted").setup {
-        use_git_branch = true,
-        should_autosave = function()
-          -- do not autosave if the alpha dashboard is the current filetype
-          if vim.bo.filetype == "alpha" then
-            return false
-          end
-          return true
-        end,
-      }
-
-      local ok, telescope = pcall(require, "telescope")
-      if ok then
-        telescope.load_extension "persisted"
-      end
-    end,
-  },
-
-  {
     "bennypowers/splitjoin.nvim",
     lazy = true,
     keys = {
@@ -190,6 +151,7 @@ return {
     "phaazon/hop.nvim",
     event = "VeryLazy",
     branch = "v2",
+    enabled = false,
     dependencies = {
       {
         "folke/which-key.nvim",

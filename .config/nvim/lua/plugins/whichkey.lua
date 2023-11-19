@@ -2,22 +2,20 @@ local icons = require "utils.icons"
 
 return {
   {
+    "mrjones2014/legendary.nvim",
+    keys = {
+      { "<C-S-p>", "<cmd>Legendary<cr>", desc = "Legendary" },
+      { "<leader>hc", "<cmd>Legendary<cr>", desc = "Command Palette" },
+    },
+    opts = {
+      which_key = { auto_register = true },
+    },
+  },
+
+  {
     "folke/which-key.nvim",
     event = "VeryLazy",
-    keys = {
-      { "<leader>/", "<Plug>(comment_toggle_linewise_current)", desc = "Comment" },
-      { "<leader>\\", "<cmd>Alpha<cr>", desc = "Alpha" },
-      { "<leader>w", "<cmd>w!<CR>", desc = "Save" },
-      { "<leader>W", "<cmd>noautocmd w!<CR>", desc = "NoAC Save" },
-      { "<leader>R", '<cmd>lua require("configs").reload()<CR>', desc = "Reload" },
-      { "<leader>q", "<cmd>q!<CR>", desc = "Quit" },
-      { "<leader>u", "", desc = "Dismiss" },
-      { "<leader>h", "<cmd>nohlsearch<CR>", desc = "No Highlight" },
-      { "<leader>zi", "<cmd>:Lazy install<cr>", "Install" },
-      { "<leader>zu", "<cmd>:Lazy update<cr>", "Update" },
-      { "<leader>zc", "<cmd>:Lazy clean<cr>", "Clean" },
-      { "<leader>zp", "<cmd>:Lazy profile<cr>", "Profile" },
-    },
+    dependencies = { "mrjones2014/legendary.nvim" },
     opts = {
       setup = {
         plugins = {
@@ -74,20 +72,79 @@ return {
         },
       },
       defaults = {
-        mode = { "n" },
-        ["<leader>z"] = { name = "+Lazy" },
-        ["<leader>j"] = { name = "+SwapNext" },
-        ["<leader>k"] = { name = "+SwapPrev" },
-      },
-      vdefaults = {
-        mode = { "v" },
+        prefix = "<leader>",
+        mode = { "n", "v" },
+        w = { "<cmd>update!<cr>", "Save" },
+        W = { "<cmd>noautocmd w!<cr>", "NoAC Save" },
+        q = {
+          name = "Quit/Session",
+          q = {
+            function()
+              require("utils").quit()
+            end,
+            "Quit",
+          },
+          t = { "<cmd>tabclose<cr>", "Close Tab" },
+        },
+        a = { name = "+AI" },
+        b = { name = "+Buffer" },
+        d = { name = "+Debug" },
+        -- D = { name = "+Database" },
+        f = {
+          name = "+File",
+          function()
+            require("utils").open_term "yazi"
+          end,
+          "Terminal File Manager",
+        },
+        h = { name = "+Help" },
+        g = { name = "+Git", h = { name = "+Hunk" }, t = { name = "+Toggle" }, w = { name = "+Work Tree" } },
+        -- n = { name = "+Notes" },
+        p = { name = "+Project" },
+        -- r = { name = "+Refactor" },
+        v = {
+          name = "+View",
+          n = { "<cmd>nohlsearch<cr>", "NoHighlight" },
+        },
+        t = { name = "+Test", t = { "+Overseer" } },
+        z = { name = "+System" },
+        s = {
+          name = "+Search",
+          c = {
+            function()
+              require("utils.coding").cht()
+            end,
+            "Cheatsheets",
+          },
+          o = {
+            function()
+              require("utils.coding").stack_overflow()
+            end,
+            "Stack Overflow",
+          },
+        },
+        l = {
+          name = "+Language",
+          g = { name = "Annotation" },
+          x = {
+            name = "Swap Next",
+            f = "Function",
+            p = "Parameter",
+            c = "Class",
+          },
+          X = {
+            name = "Swap Previous",
+            f = "Function",
+            p = "Parameter",
+            c = "Class",
+          },
+        },
       },
     },
     config = function(_, opts)
       local wk = require "which-key"
       wk.setup(opts.setup)
       wk.register(opts.defaults)
-      wk.register(opts.vdefaults)
     end,
   },
 }

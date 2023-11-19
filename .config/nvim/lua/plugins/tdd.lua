@@ -83,6 +83,15 @@ return {
         },
         status = { virtual_text = true },
         output = { open_on_run = true },
+        quickfix = {
+          open = function()
+            if require("utils").has "trouble.nvim" then
+              vim.cmd "Trouble quickfix"
+            else
+              vim.cmd "copen"
+            end
+          end,
+        },
         -- overseer.nvim
         consumers = {
           overseer = require "neotest.consumers.overseer",

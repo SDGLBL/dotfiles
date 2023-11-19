@@ -14,11 +14,11 @@ return {
     event = "VeryLazy",
     keys = {
       { "<leader>bj", "<cmd>BufferLinePick<cr>", desc = "Jump" },
-      {
-        "<leader>bf",
-        "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-        desc = "Find",
-      },
+      -- {
+      --   "<leader>bf",
+      --   "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+      --   desc = "Find",
+      -- },
       { "<leader>bb", "<cmd>BufferLineCyclePrev<cr>", desc = "Previous" },
       { "<leader>be", "<cmd>BufferLinePickClose<cr>", desc = "Pick which buffer to close" },
       { "<leader>bh", "<cmd>BufferLineCloseLeft<cr>", desc = "Close all to the left" },

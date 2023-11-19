@@ -5,11 +5,12 @@ return {
     event = "VeryLazy",
     keys = {
       {
-        "<leader>un",
+        "<leader>vd",
         function()
           require("notify").dismiss { silent = true, pending = true }
+          vim.cmd "nohlsearch"
         end,
-        desc = "Notifications",
+        desc = "Dismiss Notif",
       },
     },
     config = function()
