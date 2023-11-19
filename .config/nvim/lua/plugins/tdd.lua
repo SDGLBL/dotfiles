@@ -81,6 +81,8 @@ return {
             ignore_file_types = { "python", "vim", "lua" },
           },
         },
+        status = { virtual_text = true },
+        output = { open_on_run = true },
         -- overseer.nvim
         consumers = {
           overseer = require "neotest.consumers.overseer",
@@ -105,5 +107,20 @@ return {
 
       require("neotest").setup(opts)
     end,
+  },
+
+  {
+    "andythigpen/nvim-coverage",
+    cmd = { "Coverage" },
+    config = function()
+      require("coverage").setup()
+    end,
+  },
+
+  {
+    "Zeioth/compiler.nvim",
+    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+    dependencies = { "stevearc/overseer.nvim" },
+    opts = {},
   },
 }
