@@ -4,8 +4,16 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       if type(opts.ensure_installed) == "table" then
-        vim.list_extend(opts.ensure_installed, { "python" })
+        vim.list_extend(opts.ensure_installed, { "ninja", "python", "rst", "toml" })
       end
+    end,
+  },
+
+  {
+    "nvimtools/none-ls.nvim",
+    opts = function(_, opts)
+      local nls = require "null-ls"
+      table.insert(opts.sources, nls.builtins.formatting.black)
     end,
   },
 

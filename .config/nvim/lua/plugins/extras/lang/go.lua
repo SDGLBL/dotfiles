@@ -13,6 +13,53 @@ return {
     end,
   },
 
+  {
+    "nvimtools/none-ls.nvim",
+    opts = function(_, opts)
+      local nls = require "null-ls"
+      table.insert(opts.sources, nls.builtins.formatting.goimports)
+      table.insert(opts.sources, nls.builtins.code_actions.gomodifytags)
+      table.insert(opts.sources, nls.builtins.code_actions.impl)
+
+      if vim.fn.filereadable(vim.fn.expand "~/.golangci.yml") == 1 then
+        table.insert(
+          opts.sources,
+          nls.builtins.diagnostics.golangci_lint.with {
+            filetypes = { "go" },
+            extra_args = {
+              "-c",
+              "~/.golangci.yml",
+            },
+          }
+        )
+        table.insert(
+          opts.sources,
+          nls.builtins.formatting.golines.with {
+            filetypes = { "go" },
+            extra_args = {
+              "-m",
+              "140",
+              "--base-formatter",
+              "gofmt",
+            },
+          }
+        )
+      else
+        table.insert(opts.sources, nls.builtins.formatting.golines)
+        table.insert(
+          opts.sources,
+          nls.builtins.diagnostics.golangci_lint.with {
+            filetypes = { "go" },
+            extra_args = {
+              "-E",
+              "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
+            },
+          }
+        )
+      end
+    end,
+  },
+
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",

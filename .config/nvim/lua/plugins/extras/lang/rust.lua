@@ -27,6 +27,15 @@ return {
     end,
   },
 
+  {
+    "nvimtools/none-ls.nvim",
+    opts = function(_, opts)
+      local nls = require "null-ls"
+      table.insert(opts.sources, nls.builtins.formatting.rustfmt)
+      table.insert(opts.sources, nls.builtins.formatting.taplo)
+    end,
+  },
+
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",

@@ -97,33 +97,30 @@ return {
     end,
   },
 
-  -- null-ls setting
   {
     "nvimtools/none-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "jay-babu/mason-null-ls.nvim",
-    },
-    opts = {
-      sources = {},
-      ensure_installed = {
-        "stylua",
-        "golines",
-        -- "goimports",
-        "gomodifytags",
-        "impl",
-        "taplo",
-        "rustfmt",
-        "prettier",
-        "shellcheck",
-        "golangci_lint",
-        -- "codespell",
-        "shfmt",
-      },
-    },
-    config = function(_, opts)
-      require("plugins.lsp.mason-null-ls").setup(opts)
+    dependencies = { "mason.nvim" },
+    opts = function()
+      local nls = require "null-ls"
+      return {
+        root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+        sources = {
+          nls.builtins.formatting.shfmt,
+          nls.builtins.diagnostics.shellcheck,
+          nls.builtins.code_actions.shellcheck,
+        },
+      }
     end,
+  },
+
+  {
+    "jay-babu/mason-null-ls.nvim",
+    opts = {
+      ensure_installed = nil,
+      automatic_installation = true,
+      automatic_setup = false,
+    },
   },
 
   {

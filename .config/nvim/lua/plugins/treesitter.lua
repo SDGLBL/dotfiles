@@ -72,7 +72,7 @@ return {
         "toml",
       },
       highlight = {
-        enable = true,
+        enable = false,
       },
       rainbow = {
         enable = false,
@@ -88,7 +88,7 @@ return {
         disable = { "python" },
       },
       context_commentstring = {
-        enable = true,
+        enable = false,
         enable_autocmd = false,
       },
       incremental_selection = {
