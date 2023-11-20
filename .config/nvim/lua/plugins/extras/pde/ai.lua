@@ -4,20 +4,24 @@ return {
     cmd = { "ChatGPT", "ChatGPTRun", "ChatGPTActAs", "ChatGPTCompleteCode", "ChatGPTEditWithInstructions" },
     keys = {
       { "<leader>a", desc = "AI" },
-      { "<leader>ac", desc = "ChatGPT" },
-      { "<leader>ace", "<cmd>ChatGPTEditWithInstructions<cr>", mode = { "n", "v" }, desc = "Edit with Instructions" },
-      { "<leader>acc", "<cmd>ChatGPTRun complete_code<cr>", mode = { "n", "v" }, desc = "Complete Code" },
-      { "<leader>acg", "<cmd>ChatGPTRun grammar_correction<cr>", mode = { "n", "v" }, desc = "Grammar Correction" },
-      { "<leader>act", "<cmd>ChatGPTRun translate chinese<cr>", mode = { "n", "v" }, desc = "Translate" },
-      { "<leader>acd", "<cmd>ChatGPTRun docstring<cr>", mode = { "n", "v" }, desc = "Docstring" },
-      { "<leader>aca", "<cmd>ChatGPTRun add_tests<cr>", mode = { "n", "v" }, desc = "Add Tests" },
-      { "<leader>aco", "<cmd>ChatGPTRun optimize_code<cr>", mode = { "n", "v" }, desc = "Optimize Code" },
-      { "<leader>acs", "<cmd>ChatGPTRun summarize<cr>", mode = { "n", "v" }, desc = "Summarize Code" },
-      { "<leader>acf", "<cmd>ChatGPTRun fix_bugs<cr>", mode = { "n", "v" }, desc = "Fix Bug" },
-      { "<leader>acx", "<cmd>ChatGPTRun explain_code<cr>", mode = { "n", "v" }, desc = "Explain Code" },
+      { "<leader>ae", "<cmd>ChatGPTEditWithInstructions<cr>", mode = { "n", "v" }, desc = "Edit with Instructions" },
+      { "<leader>ac", "<cmd>ChatGPTRun complete_code<cr>", mode = { "n", "v" }, desc = "Complete Code" },
+      { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<cr>", mode = { "n", "v" }, desc = "Grammar Correction" },
+      { "<leader>at", "<cmd>ChatGPTRun translate chinese<cr>", mode = { "n", "v" }, desc = "Translate" },
+      { "<leader>ad", "<cmd>ChatGPTRun docstring<cr>", mode = { "n", "v" }, desc = "Docstring" },
+      { "<leader>aa", "<cmd>ChatGPTRun add_tests<cr>", mode = { "n", "v" }, desc = "Add Tests" },
+      { "<leader>ao", "<cmd>ChatGPTRun optimize_code<cr>", mode = { "n", "v" }, desc = "Optimize Code" },
+      -- { "<leader>as", "<cmd>ChatGPTRun summarize<cr>", mode = { "n", "v" }, desc = "Summarize Code" },
+      { "<leader>af", "<cmd>ChatGPTRun fix_bugs<cr>", mode = { "n", "v" }, desc = "Fix Bug" },
+      { "<leader>ax", "<cmd>ChatGPTRun explain_code<cr>", mode = { "n", "v" }, desc = "Explain Code" },
       -- { "<leader>acr", "<cmd>ChatGPTRun roxygen_edit<cr>", mode = { "n", "v" }, desc = "Roxygen Edit" },
-      { "<leader>acr", "<cmd>ChatGPTRun write_example<cr>", mode = { "n", "v" }, desc = "Write Example" },
-      { "<leader>acl", "<cmd>ChatGPTRun code_readability_analysis<cr>", mode = { "n", "v" }, desc = "Code Analysis" },
+      { "<leader>aw", "<cmd>ChatGPTRun write_example<cr>", mode = { "n", "v" }, desc = "Write Example" },
+      {
+        "<leader>ar",
+        "<cmd>ChatGPTRun code_readability_analysis<cr>",
+        mode = { "n", "v" },
+        desc = "Readablility Analysis",
+      },
     },
     opts = {
       openai_params = {
@@ -60,9 +64,9 @@ return {
       "NeoAIShortcut",
     },
     keys = {
-      { "<leader>aa", desc = "NeoAI" },
-      { "<leader>aas", desc = "Summarize Text" },
-      { "<leader>aag", desc = "Generate Git Message" },
+      -- { "<leader>aa", desc = "NeoAI" },
+      { "<leader>as", desc = "Summarize Text" },
+      { "<leader>ag", desc = "Generate Git Message" },
     },
     opts = {
       shortcuts = {
@@ -109,7 +113,8 @@ return {
     opts = {},
     --stylua: ignore
     keys = {
-      { "<leader>sD", function() require("wtf").ai() end, desc = "Search Diagnostic with AI" },
+      { "<leader>sd", function() require("wtf").ai() end, desc = "Search Diagnostic with AI" },
+      { "<leader>sD", function() require("wtf").search() end, desc = "Search Diagnostic with Google" },
     },
   },
 
