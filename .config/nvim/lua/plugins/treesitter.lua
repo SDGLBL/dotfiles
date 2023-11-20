@@ -72,7 +72,7 @@ return {
         "toml",
       },
       highlight = {
-        enable = false,
+        enable = true,
       },
       rainbow = {
         enable = false,

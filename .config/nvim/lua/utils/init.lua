@@ -1,5 +1,7 @@
 local M = {}
 
+M.root_patterns = { ".git", "lua" }
+
 function M.fg_bg(group, fg_color, bg_color)
   vim.cmd("hi " .. group .. " guifg=" .. fg_color .. " guibg=" .. bg_color)
 end
