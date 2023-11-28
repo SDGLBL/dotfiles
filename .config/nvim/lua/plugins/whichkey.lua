@@ -93,9 +93,9 @@ return {
         -- D = { name = "+Database" },
         f = {
           name = "+File",
-          function()
-            require("utils").open_term "yazi"
-          end,
+          -- function()
+          --   require("utils").open_term "yazi"
+          -- end,
           "Terminal File Manager",
         },
         h = { name = "+Help" },
@@ -108,7 +108,10 @@ return {
           n = { "<cmd>nohlsearch<cr>", "NoHighlight" },
         },
         t = { name = "+Test", t = { "+Overseer" } },
-        z = { name = "+System" },
+        z = {
+          name = "+System",
+          u = { "<cmd>Lazy update<cr>", "LazyUpdate" },
+        },
         s = {
           name = "+Search",
           c = {

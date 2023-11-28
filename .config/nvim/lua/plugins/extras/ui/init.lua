@@ -175,4 +175,20 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
   },
+
+  {
+    "axkirillov/hbac.nvim",
+    event = "VeryLazy",
+    opts = {
+      autoclose = true,
+      threshold = 10,
+    },
+    enabled = true,
+  },
+
+  {
+    "tzachar/highlight-undo.nvim",
+    event = "VeryLazy",
+    opts = {},
+  },
 }
