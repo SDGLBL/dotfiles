@@ -30,6 +30,7 @@ alias ehp='export http_proxy=$IP'
 alias ehps='export https_proxy=$IP'
 alias sv2ray='nohup ~/software/v2/v2ray run ~/software/v2/config.json > ~/.cache/v2.log 2>&1 &'
 alias sxray='nohup ~/software/xray/xray run ~/software/xray/config.json > ~/.cache/xray.log 2>&1 &'
+alias sopenairewrite='tmux new-session -d -s openairewrite "cd ~/software/script/ && mitmproxy --listen-port 8082 --mode regular -s rewrite_openai.py"'
 
 # start vmod
 if [[ "$OSTYPE" =~ ^darwin ]]; then
