@@ -208,7 +208,7 @@ return {
     opts = { rename_files = false },
     keys = {
       {
-        "<leader>lR",
+        "<leader>rr",
         function()
           require("replacer").run()
         end,
