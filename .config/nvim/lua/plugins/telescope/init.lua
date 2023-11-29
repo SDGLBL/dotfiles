@@ -29,6 +29,7 @@ return {
       "nvim-telescope/telescope-live-grep-args.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
+    --stylua: ignore
     keys = {
       { "<leader><space>", require("utils").find_files, desc = "Find Files" },
       { "<leader>ff", require("utils").telescope "files", desc = "Find Files (Root Dir)" },
@@ -37,40 +38,15 @@ return {
       { "<leader>fr", "<cmd>Telescope frecency<cr>", desc = "Recent" },
       { "<leader>fm", "<cmd>Telescope marks<cr>", desc = "Marks" },
       { "<leader>fc", "<cmd>cd %:p:h<cr>", desc = "Change WorkDir" },
-      {
-        "<leader>fg",
-        function()
-          require("telescope").extensions.live_grep_args.live_grep_args()
-        end,
-        desc = "Live Grep",
-      },
+      { "<leader>fg", function() require("telescope").extensions.live_grep_args.live_grep_args() end, desc = "Live Grep", },
       { "<leader>st", require("utils").telescope "live_grep", desc = "Grep (Root Dir)" },
       { "<leader>sT", require("utils").telescope("live_grep", { cwd = false }), desc = "Grep (Cwd)" },
       { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
-      {
-        "<leader>sb",
-        function()
-          require("telescope.builtin").current_buffer_fuzzy_find()
-        end,
-        desc = "Buffer",
-      },
-      {
-        "<leader>su",
-        function()
-          require("telescope.builtin").live_grep { search_dirs = { vim.fs.dirname(vim.fn.expand "%") } }
-        end,
-        desc = "Grep (Current File Path)",
-      },
+      { "<leader>sb", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Buffer" },
+      { "<leader>su", function() require("telescope.builtin").live_grep { search_dirs = { vim.fs.dirname(vim.fn.expand "%") } } end, desc = "Grep (Current File Path)" },
       { "<leader>gf", require("plugins.telescope.pickers").git_diff_picker, desc = "Diff Files" },
       { "<leader>hs", "<cmd>Telescope help_tags<cr>", desc = "Search" },
-
-      {
-        "<leader>zc",
-        function()
-          require("telescope.builtin").colorscheme { enable_preview = true }
-        end,
-        desc = "Colorscheme",
-      },
+      { "<leader>zc", function() require("telescope.builtin").colorscheme { enable_preview = true } end, desc = "Colorscheme", },
       { "<leader>vo", "<cmd>Telescope aerial<cr>", desc = "Code Outline" },
       { "<leader>pp", function() require("telescope").extensions.project.project { display_type = "minimal" } end, desc = "List", },
     },

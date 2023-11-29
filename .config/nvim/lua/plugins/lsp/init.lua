@@ -19,17 +19,9 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      {
-        "folke/neoconf.nvim",
-        cmd = "Neoconf",
-        config = true,
-      },
-      {
-        "ray-x/lsp_signature.nvim",
-        opts = {
-          hint_prefix = require("utils.icons").diagnostics.BoldHint .. " ",
-        },
-      },
+      -- { "smjonas/inc-rename.nvim", config = true },
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      { "ray-x/lsp_signature.nvim", opts = { hint_prefix = require("utils.icons").diagnostics.BoldHint .. " " } },
       {
         "RRethy/vim-illuminate",
         event = "VeryLazy",
