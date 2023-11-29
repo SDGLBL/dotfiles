@@ -102,7 +102,7 @@ return {
         g = { name = "+Git", h = { name = "+Hunk" }, t = { name = "+Toggle" }, w = { name = "+Work Tree" } },
         -- n = { name = "+Notes" },
         p = { name = "+Project" },
-        -- r = { name = "+Refactor" },
+        r = { name = "+Refactor" },
         v = {
           name = "+View",
           n = { "<cmd>nohlsearch<cr>", "NoHighlight" },
