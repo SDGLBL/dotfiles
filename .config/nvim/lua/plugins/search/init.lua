@@ -109,4 +109,18 @@ return {
       require("hlslens").setup()
     end,
   },
+
+  {
+    "gabrielpoca/replacer.nvim",
+    opts = { rename_files = false },
+    keys = {
+      {
+        "<leader>rr",
+        function()
+          require("replacer").run()
+        end,
+        desc = "Replace",
+      },
+    },
+  },
 }
