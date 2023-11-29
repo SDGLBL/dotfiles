@@ -27,6 +27,9 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
     curWidth = curWidth + chunkWidth
   end
 
+  local rAlignAppndx = math.max(math.min(vim.opt.textwidth["_value"], width - 1) - curWidth - sufWidth, 0)
+  suffix = (" "):rep(rAlignAppndx) .. suffix
+
   table.insert(newVirtText, { suffix, "MoreMsg" })
 
   return newVirtText
@@ -43,6 +46,20 @@ return {
     event = "VeryLazy",
     dependencies = {
       "kevinhwang91/promise-async",
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require "statuscol.builtin"
+          require("statuscol").setup {
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          }
+        end,
+      },
     },
     enabled = configs.ufo,
     keys = {
@@ -94,6 +111,7 @@ return {
     opts = {
       open_fold_hl_timeout = 20,
       fold_virt_text_handler = handler,
+      close_fold_kinds = { "imports", "comment" },
       provider_selector = function(_, filetype, _)
         return ftMap[filetype]
       end,

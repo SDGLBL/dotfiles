@@ -6,6 +6,7 @@ require("configs").setup {
   light_colorscheme = "catppuccin-latte",
   dap = true,
   -- tint = true,
+  ufo = true,
   -- refactor = true,
   -- better_fold = true,
   -- indent_blankline = true,
