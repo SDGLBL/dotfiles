@@ -72,13 +72,7 @@ return {
         desc = "Colorscheme",
       },
       { "<leader>vo", "<cmd>Telescope aerial<cr>", desc = "Code Outline" },
-      {
-        "<leader>pp",
-        function()
-          require("telescope").extensions.project.project { display_type = "minimal" }
-        end,
-        desc = "List",
-      },
+      { "<leader>pp", function() require("telescope").extensions.project.project { display_type = "minimal" } end, desc = "List", },
     },
     opts = function()
       local telescope = require "telescope"
