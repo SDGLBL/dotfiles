@@ -19,7 +19,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      -- { "smjonas/inc-rename.nvim", config = true },
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       { "ray-x/lsp_signature.nvim", opts = { hint_prefix = require("utils.icons").diagnostics.BoldHint .. " " } },
       {
@@ -136,11 +135,7 @@ return {
         self:map("gh", "Lspsaga finder", { desc = "Lspsaga finder" })
         self:map("gp", "Lspsaga peek_definition", { desc = "Lspsaga peek_definition" })
         -- self:map("gd", "Lspsaga goto_definition", { desc = "Lspsaga goto_definition" })
-        self:map(
-          "<leader>la",
-          "Lspsaga code_action",
-          { desc = "Lspsaga code_action", mode = { "n", "v" }, has = "codeAction" }
-        )
+        self:map("<leader>la", "Lspsaga code_action", { desc = "Lspsaga code_action", mode = { "n", "v" }, has = "codeAction" })
         self:map("<leader>lr", "Lspsaga rename", { desc = "Lspsaga rename" })
         self:map("<leader>lj", "Lspsaga diagnostic_jump_next", { desc = "Lspsaga diagnostic_jump_next" })
         self:map("<leader>lk", "Lspsaga diagnostic_jump_prev", { desc = "Lspsaga diagnostic_jump_prev" })
@@ -185,18 +180,19 @@ return {
     event = "VeryLazy",
     enabled = configs.refactor,
     dependencies = { "nvim-telescope/telescope.nvim" },
+    -- stylua: ignore
     keys = {
-      { "<leader>rs", function() require("telescope").extensions.refactoring.refactors() end, mode = { "v" }, desc = "Refactor", },
-      { "<leader>ri", function() require("refactoring").refactor("Inline Variable") end, mode = {"n","v"}, desc =  "Inline Variable" },
-      { "<leader>rb", function() require('refactoring').refactor('Exract Block') end, mode = {"n"}, desc = "Extract Block" },
-      { "<leader>rf", function() require('refactoring').refactor('Exract Block To File') end, mode = {"n"}, desc = "Extract Block to File" },
-      { "<leader>rP", function() require('refactoring').debug.printf({below = false}) end,  mode = {"n"}, desc = "Debug Print" },
-      { "<leader>rp", function() require('refactoring').debug.print_var({normal = true}) end, mode = {"n"}, desc = "Debug Print Variable" },
-      { "<leader>rc", function() require('refactoring').debug.cleanup({}) end, mode = {"n"}, desc = "Debug Cleanup" },
-      { "<leader>rf", function() require('refactoring').refactor('Extract Function') end,  mode = {"v"}, desc = "Extract Function" },
-      { "<leader>rF", function() require('refactoring').refactor('Extract Function to File') end, mode = {"v"}, desc =  "Extract Function to File" },
-      { "<leader>rx", function() require('refactoring').refactor('Extract Variable') end, mode = {"v"}, desc = "Extract Variable" },
-      { "<leader>rp", function() require('refactoring').debug.print_var({}) end, mode = {"v"}, desc =  "Debug Print Variable" },
+      { "<leader>rs", function() require("telescope").extensions.refactoring.refactors() end, mode = { "v" }, desc = "Refactor" },
+      { "<leader>ri", function() require("refactoring").refactor "Inline Variable" end, mode = { "n", "v" }, desc = "Inline Variable" },
+      { "<leader>rb", function() require("refactoring").refactor "Exract Block" end, mode = { "n" }, desc = "Extract Block" },
+      { "<leader>rf", function() require("refactoring").refactor "Exract Block To File" end, mode = { "n" }, desc = "Extract Block to File" },
+      { "<leader>rP", function() require("refactoring").debug.printf { below = false } end, mode = { "n" }, desc = "Debug Print" },
+      { "<leader>rp", function() require("refactoring").debug.print_var { normal = true } end, mode = { "n" }, desc = "Debug Print Variable" },
+      { "<leader>rc", function() require("refactoring").debug.cleanup {} end, mode = { "n" }, desc = "Debug Cleanup" },
+      { "<leader>rf", function() require("refactoring").refactor "Extract Function" end, mode = { "v" }, desc = "Extract Function" },
+      { "<leader>rF", function() require("refactoring").refactor "Extract Function to File" end, mode = { "v" }, desc = "Extract Function to File" },
+      { "<leader>rx", function() require("refactoring").refactor "Extract Variable" end, mode = { "v" }, desc = "Extract Variable" },
+      { "<leader>rp", function() require("refactoring").debug.print_var {} end, mode = { "v" }, desc = "Debug Print Variable" },
     },
     config = function()
       if not configs.refactor then
