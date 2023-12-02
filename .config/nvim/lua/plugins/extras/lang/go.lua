@@ -72,6 +72,7 @@ return {
         gopls = {
           settings = {
             gopls = {
+              semanticTokens = true,
               usePlaceholders = false,
               codelenses = {
                 generate = true,
