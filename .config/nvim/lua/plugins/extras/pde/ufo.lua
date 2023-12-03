@@ -30,6 +30,31 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
   local rAlignAppndx = math.max(math.min(vim.opt.textwidth["_value"], width - 1) - curWidth - sufWidth, 0)
   suffix = (" "):rep(rAlignAppndx) .. suffix
 
+  -- Check if the current folded section is a Go if err != nil block
+  local bufnr = vim.api.nvim_get_current_buf()
+  ---@diagnostic disable-next-line: deprecated
+  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  if filetype == "go" then
+    local foldedLines = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, endLnum, false)
+    local isSimpleCheck = false
+    local returnStatement = nil
+    for _, line in ipairs(foldedLines) do
+      if line:match "^%s*if%s+.+[%!=><]+.+%s+{" then
+        isSimpleCheck = true
+      end
+
+      if line:match "^%s*return%s+" then
+        -- remove "return " in line
+        returnStatement = line:gsub("^%s*return%s+", "")
+        break
+      end
+    end
+
+    if isSimpleCheck and returnStatement ~= nil then
+      table.insert(newVirtText, { "  : " .. returnStatement .. " 󱟀", "MoreMsg" })
+    end
+  end
+
   table.insert(newVirtText, { suffix, "MoreMsg" })
 
   return newVirtText
@@ -109,7 +134,7 @@ return {
       },
     },
     opts = {
-      open_fold_hl_timeout = 20,
+      open_fold_hl_timeout = 40,
       fold_virt_text_handler = handler,
       close_fold_kinds = { "imports", "comment" },
       provider_selector = function(_, filetype, _)
