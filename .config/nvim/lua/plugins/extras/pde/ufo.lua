@@ -38,8 +38,8 @@ local handler = function(virtText, lnum, endLnum, width, truncate)
     local foldedLines = vim.api.nvim_buf_get_lines(bufnr, lnum - 1, endLnum, false)
     local isSimpleCheck = false
     local returnStatement = nil
-    for _, line in ipairs(foldedLines) do
-      if line:match "^%s*if%s+.+[%!=><]+.+%s+{" then
+    for i, line in ipairs(foldedLines) do
+      if i == 1 and line:match "^%s*if%s+.+[%!=><]+.+%s+{" then
         isSimpleCheck = true
       end
 
