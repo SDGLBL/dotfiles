@@ -126,6 +126,9 @@ return {
         symbol_in_winbar = {
           enable = false,
         },
+        finder = {
+          layout = "normal",
+        },
       }
 
       -- set keymaps
@@ -141,7 +144,7 @@ return {
         self:map("<leader>lk", "Lspsaga diagnostic_jump_prev", { desc = "Lspsaga diagnostic_jump_prev" })
         -- self:map("<leader>lW", "Lspsaga show_line_diagnostics", { desc = "Lspsaga show_line_diagnostics" })
         -- self:map("<leader>lw", "Lspsaga show_workspace_diagnostics", { desc = "Lspsaga show_workspace_diagnostics" })
-        self:map("<leader>lo", "Lspsaga outline", { desc = "Lspsaga outline" })
+        -- self:map("<leader>lo", "Lspsaga outline", { desc = "Lspsaga outline" })
         -- self:map("<leader>lc", vim.lsp.codelens.run, { desc = "Codelenses" })
       end, { group = "_lspsaga_keymaps", desc = "init lspsaga keymaps" })
     end,
@@ -245,5 +248,10 @@ return {
       { "<leader>ld", "<cmd>TroubleToggle document_diagnostics<cr>", desc = "Document Diagnostics" },
       { "<leader>lD", "<cmd>TroubleToggle workspace_diagnostics<cr>", desc = "Workspace Diagnostics" },
     },
+  },
+
+  {
+    "VidocqH/lsp-lens.nvim",
+    config = true,
   },
 }
