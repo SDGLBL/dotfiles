@@ -6,7 +6,7 @@ return {
       { "<leader>a", desc = "AI" },
       { "<leader>ae", "<cmd>ChatGPTEditWithInstructions<cr>", mode = { "n", "v" }, desc = "Edit with Instructions" },
       { "<leader>ac", "<cmd>ChatGPTRun complete_code<cr>", mode = { "n", "v" }, desc = "Complete Code" },
-      { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<cr>", mode = { "n", "v" }, desc = "Grammar Correction" },
+      -- { "<leader>ag", "<cmd>ChatGPTRun grammar_correction<cr>", mode = { "n", "v" }, desc = "Grammar Correction" },
       { "<leader>at", "<cmd>ChatGPTRun translate chinese<cr>", mode = { "n", "v" }, desc = "Translate" },
       { "<leader>ad", "<cmd>ChatGPTRun docstring<cr>", mode = { "n", "v" }, desc = "Docstring" },
       { "<leader>aa", "<cmd>ChatGPTRun add_tests<cr>", mode = { "n", "v" }, desc = "Add Tests" },
@@ -72,7 +72,7 @@ return {
       shortcuts = {
         {
           name = "textify",
-          key = "<leader>aas",
+          key = "<leader>as",
           desc = "fix text with AI",
           use_context = true,
           prompt = [[
@@ -85,14 +85,15 @@ return {
         },
         {
           name = "gitcommit",
-          key = "<leader>aag",
+          key = "<leader>ag",
           desc = "generate git commit message",
           use_context = false,
           prompt = function()
             return [[
                     Using the following git diff generate a consise and
                     clear git commit message, with a short title summary
-                    that is 75 characters or less:
+                    that is 75 characters or less. You only need write the
+                    git commit message. DO NOT WRITE ANYTHING ELSE.
                 ]] .. vim.fn.system "git diff --cached"
           end,
           modes = { "n" },
