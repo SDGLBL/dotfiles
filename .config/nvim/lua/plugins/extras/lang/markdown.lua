@@ -60,11 +60,11 @@ return {
     ft = "markdown",
     enabled = configs.markdown_preview,
     keys = {
-      { "<leader>p", "", desc = "MKPreview", ft = "markdown" },
-      { "<leader>pp", "<cmd>MarkdownPreview<cr>", desc = "Preview", ft = "markdown" },
-      { "<leader>ps", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop", ft = "markdown" },
-      { "<leader>pt", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle", ft = "markdown" },
-      { "<leader>pe", "<cmd>FeMaco<cr>", desc = "Edit Code Block", ft = "markdown" },
+      -- { "<leader>p", "", desc = "MKPreview", ft = "markdown" },
+      -- { "<leader>pp", "<cmd>MarkdownPreview<cr>", desc = "Preview", ft = "markdown" },
+      -- { "<leader>ps", "<cmd>MarkdownPreviewStop<cr>", desc = "Stop", ft = "markdown" },
+      -- { "<leader>pt", "<cmd>MarkdownPreviewToggle<cr>", desc = "Toggle", ft = "markdown" },
+      -- { "<leader>pe", "<cmd>FeMaco<cr>", desc = "Edit Code Block", ft = "markdown" },
     },
     config = function()
       if not configs.markdown_preview then
