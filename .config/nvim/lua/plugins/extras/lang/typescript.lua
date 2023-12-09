@@ -20,6 +20,7 @@ return {
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+    enabled = false,
     opts = {
       tsserver_file_preferences = {
         -- Inlay Hints
