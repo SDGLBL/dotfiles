@@ -1,3 +1,7 @@
+if not configs.python then
+  return
+end
+
 return {
   -- add json to treesitter
   {
@@ -17,6 +21,13 @@ return {
     end,
   },
 
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "debugpy", "black", "ruff" })
+    end,
+  },
+
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
@@ -26,7 +37,20 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
-        pyright = {},
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                autoImportCompletions = true,
+                typeCheckingMode = "off",
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "openFilesOnly",
+                stubPath = vim.fn.stdpath "data" .. "/lazy/python-type-stubs/stubs",
+              },
+            },
+          },
+        },
         ruff_lsp = {
           on_attach = function(client, _)
             -- Disable hover in favor of Pyright
@@ -34,57 +58,89 @@ return {
           end,
         },
       },
-    },
-  },
-
-  -- python debug
-  {
-    "mfussenegger/nvim-dap",
-    opts = {
       setup = {
-        python = function(_)
-          local dap = require "dap"
-          local input_args = require("utils").input_args
+        pyright = function(_, _)
+          local lsp_utils = require "utils.lsp"
+          lsp_utils.on_attach(function(client, bufnr)
+            local map = function(mode, lhs, rhs, desc)
+              if desc then
+                desc = desc
+              end
+              vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
+            end
 
-          dap.adapters.python = {
-            type = "executable",
-            command = "python3",
-            args = {
-              "-m",
-              "debugpy.adapter",
-            },
-          }
-
-          dap.configurations.python = {
-            {
-              type = "python",
-              request = "launch",
-              name = "Launch file",
-              justMyCode = false,
-              program = "${file}",
-              args = input_args,
-              pythonPath = function()
-                local cwd = vim.fn.getcwd()
-
-                if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-                  return cwd .. "/venv/bin/python"
-                elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-                  return cwd .. "/.venv/bin/python"
-                elseif os.getenv "CONDA_PREFIX" ~= nil and os.getenv "CONDA_PREFIX" ~= "" then
-                  return os.getenv "CONDA_PREFIX" .. "/bin/python"
-                else
-                  -- 运行 shell cmd $(where python3 | head -n 1) 获取 python3 的路径
-                  local python3 = vim.fn.trim(vim.fn.system "which python3 | head -n 1")
-                  local python = vim.fn.trim(vim.fn.system "which python | head -n 1")
-                  return python3 ~= "" and python3 or python
-                end
-              end,
-            },
-          }
+            -- stylua: ignore
+            if client.name == "pyright" then
+              map("n", "<leader>lO", "<cmd>PyrightOrganizeImports<cr>",  "Organize Imports" )
+              map("n", "<leader>lC", function() require("dap-python").test_class() end,  "Debug Class" )
+              map("n", "<leader>lM", function() require("dap-python").test_method() end,  "Debug Method" )
+              map("v", "<leader>lE", function() require("dap-python").debug_selection() end, "Debug Selection" )
+            end
+          end)
         end,
       },
     },
   },
+
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "mfussenegger/nvim-dap-python",
+      config = function()
+        local path = require("mason-registry").get_package("debugpy"):get_install_path()
+        require("dap-python").setup(path .. "/venv/bin/python")
+      end,
+    },
+  },
+
+  -- -- python debug
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   opts = {
+  --     setup = {
+  --       python = function(_)
+  --         local dap = require "dap"
+  --         local input_args = require("utils").input_args
+
+  --         dap.adapters.python = {
+  --           type = "executable",
+  --           command = "python3",
+  --           args = {
+  --             "-m",
+  --             "debugpy.adapter",
+  --           },
+  --         }
+
+  --         dap.configurations.python = {
+  --           {
+  --             type = "python",
+  --             request = "launch",
+  --             name = "Launch file",
+  --             justMyCode = false,
+  --             program = "${file}",
+  --             args = input_args,
+  --             pythonPath = function()
+  --               local cwd = vim.fn.getcwd()
+
+  --               if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+  --                 return cwd .. "/venv/bin/python"
+  --               elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+  --                 return cwd .. "/.venv/bin/python"
+  --               elseif os.getenv "CONDA_PREFIX" ~= nil and os.getenv "CONDA_PREFIX" ~= "" then
+  --                 return os.getenv "CONDA_PREFIX" .. "/bin/python"
+  --               else
+  --                 -- 运行 shell cmd $(where python3 | head -n 1) 获取 python3 的路径
+  --                 local python3 = vim.fn.trim(vim.fn.system "which python3 | head -n 1")
+  --                 local python = vim.fn.trim(vim.fn.system "which python | head -n 1")
+  --                 return python3 ~= "" and python3 or python
+  --               end
+  --             end,
+  --           },
+  --         }
+  --       end,
+  --     },
+  --   },
+  -- },
 
   -- tdd support
   {
@@ -100,5 +156,12 @@ return {
         },
       })
     end,
+  },
+
+  {
+    "linux-cultist/venv-selector.nvim",
+    cmd = "VenvSelect",
+    opts = {},
+    keys = { { "<leader>lv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv" } },
   },
 }
