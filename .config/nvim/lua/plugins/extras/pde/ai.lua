@@ -89,12 +89,12 @@ return {
           desc = "generate git commit message",
           use_context = false,
           prompt = function()
-            return [[
-                    Using the following git diff generate a consise and
-                    clear git commit message, with a short title summary
-                    that is 75 characters or less. You only need write the
-                    git commit message. DO NOT WRITE ANYTHING ELSE.
-                ]] .. vim.fn.system "git diff --cached"
+            return [[You are an expert software engineer.
+Review the provided context and diffs which are about to be committed to a git repo.
+Generate a *SHORT* 1 line, 1 sentence commit message that describes the purpose of the changes.
+The commit message MUST be in the past tense.
+It must describe the changes *which have been made* in the diffs!
+Reply with JUST the commit message, without quotes, comments, questions, etc! CONTEXT: ]] .. vim.fn.system "git diff --cached"
           end,
           modes = { "n" },
           strip_function = nil,
