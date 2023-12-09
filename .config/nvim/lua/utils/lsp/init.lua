@@ -199,6 +199,14 @@ function M.on_attach(on_attach, ...)
         return
       end
 
+      -- get filetype of current buffer
+      local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+      -- when filetype equal NvimTree,alpha,Outline,neo-tree, undotree, gundo, sagaoutline
+      local disabled_fts = { "NvimTree", "alpha", "Outline", "neo-tree", "undotree", "gundo", "saga-outline" }
+      if vim.tbl_contains(disabled_fts, filetype) then
+        return
+      end
+
       on_attach(client, bufnr)
     end,
   }
