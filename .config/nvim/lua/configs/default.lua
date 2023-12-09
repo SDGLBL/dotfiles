@@ -198,6 +198,9 @@
 -- enable `typescript`
 -- typescript support for neovim
 ---@field typescript boolean
+-- enable `python`
+-- python support for neovim
+---@field python boolean
 -- enable `color-picker`.
 -- Tools for better development in rust using neovim's builtin lsp
 ---@field color_picker boolean
@@ -308,6 +311,9 @@ return {
   -- `typescript`
   -- typescript support for neovim
   typescript = false,
+  -- `python`
+  -- python support for neovim
+  python = false,
   -- `docker`
   -- docker support for neovim
   docker = true,
@@ -443,4 +449,3 @@ return {
     end
   end,
 }
-
