@@ -17,7 +17,6 @@ require("configs").setup {
   -- cpp = true,
   -- jupyter = true,
   -- typescript = true,
-  -- better_fold = true,
   -- tint = true,
   -- indent_blankline = true,
   markdown_preview = true,
