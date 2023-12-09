@@ -35,6 +35,7 @@ return {
             types = true,
             plugins = {
               -- "neotest",
+              -- "nvim-lspconfig",
               "plenary.nvim",
               "telescope.nvim",
               -- "flash.nvim",
