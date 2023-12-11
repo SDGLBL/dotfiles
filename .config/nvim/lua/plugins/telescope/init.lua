@@ -58,6 +58,13 @@ return {
       local transform_mod = require("telescope.actions.mt").transform_mod
       local custom_pickers = require "plugins.telescope.pickers"
       local lga_actions = require "telescope-live-grep-args.actions"
+      local open_with_trouble = function(...)
+        return require("trouble.providers.telescope").open_with_trouble(...)
+      end
+      local open_selected_with_trouble = function(...)
+        return require("trouble.providers.telescope").open_selected_with_trouble(...)
+      end
+
       local custom_actions = transform_mod {
 
         -- File path
@@ -163,6 +170,8 @@ return {
 
       local mappings = {
         i = {
+          ["<C-t>"] = open_with_trouble,
+          ["<A-t>"] = open_selected_with_trouble,
           ["<C-j>"] = actions.move_selection_next,
           ["<C-k>"] = actions.move_selection_previous,
           ["<C-n>"] = actions.cycle_history_next,
