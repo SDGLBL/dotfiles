@@ -108,7 +108,6 @@ return {
 
   {
     "famiu/bufdelete.nvim",
-    enabled = false,
     keys = {
       { "<leader>c", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
     },
