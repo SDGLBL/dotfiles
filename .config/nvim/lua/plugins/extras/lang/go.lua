@@ -14,10 +14,19 @@ return {
   },
 
   {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "goimports", "gofumpt", "golangci-lint" })
+    end,
+  },
+
+  {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
       local nls = require "null-ls"
       table.insert(opts.sources, nls.builtins.formatting.goimports)
+      table.insert(opts.sources, nls.builtins.formatting.gofumpt)
       table.insert(opts.sources, nls.builtins.code_actions.gomodifytags)
       table.insert(opts.sources, nls.builtins.code_actions.impl)
 
@@ -72,6 +81,7 @@ return {
         gopls = {
           settings = {
             gopls = {
+              gofumpt = true,
               semanticTokens = true,
               usePlaceholders = false,
               codelenses = {
