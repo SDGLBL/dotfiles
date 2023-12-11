@@ -93,55 +93,6 @@ return {
     },
   },
 
-  -- -- python debug
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   opts = {
-  --     setup = {
-  --       python = function(_)
-  --         local dap = require "dap"
-  --         local input_args = require("utils").input_args
-
-  --         dap.adapters.python = {
-  --           type = "executable",
-  --           command = "python3",
-  --           args = {
-  --             "-m",
-  --             "debugpy.adapter",
-  --           },
-  --         }
-
-  --         dap.configurations.python = {
-  --           {
-  --             type = "python",
-  --             request = "launch",
-  --             name = "Launch file",
-  --             justMyCode = false,
-  --             program = "${file}",
-  --             args = input_args,
-  --             pythonPath = function()
-  --               local cwd = vim.fn.getcwd()
-
-  --               if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-  --                 return cwd .. "/venv/bin/python"
-  --               elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-  --                 return cwd .. "/.venv/bin/python"
-  --               elseif os.getenv "CONDA_PREFIX" ~= nil and os.getenv "CONDA_PREFIX" ~= "" then
-  --                 return os.getenv "CONDA_PREFIX" .. "/bin/python"
-  --               else
-  --                 -- 运行 shell cmd $(where python3 | head -n 1) 获取 python3 的路径
-  --                 local python3 = vim.fn.trim(vim.fn.system "which python3 | head -n 1")
-  --                 local python = vim.fn.trim(vim.fn.system "which python | head -n 1")
-  --                 return python3 ~= "" and python3 or python
-  --               end
-  --             end,
-  --           },
-  --         }
-  --       end,
-  --     },
-  --   },
-  -- },
-
   -- tdd support
   {
     "nvim-neotest/neotest",
@@ -161,7 +112,14 @@ return {
   {
     "linux-cultist/venv-selector.nvim",
     cmd = "VenvSelect",
-    opts = {},
+    opts = {
+      name = {
+        "venv",
+        ".venv",
+        "env",
+        ".env",
+      },
+    },
     keys = { { "<leader>lv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv" } },
   },
 }
