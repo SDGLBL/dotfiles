@@ -125,6 +125,12 @@ return {
       lsp_inlay_hints = {
         enable = false,
       },
+      lsp_codelens = false,
+      lsp_keymaps = false,
+      diagnostic = false,
+      lsp_document_formatting = false,
+      dap_debug = false,
+      dap_debug_keymap = false,
     },
   },
 
