@@ -76,7 +76,7 @@ return {
               usePlaceholders = false,
               codelenses = {
                 generate = true,
-                gc_details = true,
+                gc_details = false,
                 regenerate_cgo = true,
                 run_govulncheck = true,
                 test = true,
