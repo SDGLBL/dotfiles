@@ -50,17 +50,7 @@ return {
   -- lsp progress ui
   {
     "j-hui/fidget.nvim",
-    tag = "legacy",
-    config = function()
-      require("fidget").setup {
-        text = {
-          spinner = "dots", -- animation shown when tasks are ongoing
-        },
-        window = {
-          relative = "editor", -- window position
-        },
-      }
-    end,
+    opts = {},
   },
 
   -- dynamic windows
