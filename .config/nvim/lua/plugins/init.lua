@@ -66,26 +66,6 @@ return {
   },
 
   {
-    "uga-rosa/translate.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("translate").setup {
-        default = {
-          command = "google",
-          output = "floating",
-        },
-        preset = {
-          output = {
-            split = {
-              append = true,
-            },
-          },
-        },
-      }
-    end,
-  },
-
-  {
     "bennypowers/splitjoin.nvim",
     lazy = true,
     keys = {
@@ -111,76 +91,5 @@ return {
     keys = {
       { "<leader>c", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
     },
-  },
-
-  {
-    "SDGLBL/hapigo.nvim",
-    dependencies = {
-      {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
-        opts = {
-          vdefaults = {
-            ["<leader>c"] = { name = "+Copy" },
-            ["<leader>a"] = { name = "+AI" },
-            ["<leader>ac"] = { name = "+ChatGPT" },
-            ["<leader>an"] = { name = "+NeoAI" },
-            ["<leader>l"] = { name = "+LSP" },
-          },
-        },
-      },
-    },
-    cmd = {
-      "HapigoAPPSerchWord",
-      "HapigoAPPSerch",
-      "HapigoFileSerchWord",
-      "HapigoFileSerch",
-      "HapigoClipboardSerchWord",
-      "HapigoClipboardSerch",
-      "HapigoTranslateWord",
-      "HapigoTranslate",
-    },
-    keys = {
-      {
-        "<leader>cs",
-        function()
-          local text = require("hapigo.config").config.visual_text()
-          vim.fn.setreg("+", text)
-        end,
-        mode = "v",
-        desc = "Join By Space",
-      },
-    },
-    config = true,
-  },
-
-  {
-    "phaazon/hop.nvim",
-    event = "VeryLazy",
-    branch = "v2",
-    enabled = false,
-    dependencies = {
-      {
-        "folke/which-key.nvim",
-        event = "VeryLazy",
-        opts = {
-          defaults = {
-            ["<leader>m"] = { name = "+Move" },
-          },
-        },
-      },
-    },
-    keys = {
-      { "<leader>mw", "<cmd>HopWord<cr>", desc = "HopWord" },
-      { "<leader>ml", "<cmd>HopLine<cr>", desc = "HopLine" },
-      { "<leader>ma", "<cmd>HopAnywhere<cr>", desc = "HopAnywhere" },
-      { "<leader>mv", "<cmd>HopVertical<cr>", desc = "HopVertical" },
-      { "<leader>mc", "<cmd>HopChar1<cr>", desc = "HopChar1" },
-      { "<leader>m2", "<cmd>HopChar2<cr>", desc = "HopChar2" },
-      { "<leader>mp", "<cmd>HopPattern<cr>", desc = "HopPattern" },
-      { "<leader>mn", "<cmd>lua require'tsht'.nodes()<cr>", desc = "TSNodes" },
-      { "<leader>mb", "<cmd>lua require('dropbar.api').pick()<cr>", desc = "DropBar" },
-    },
-    config = true,
   },
 }
