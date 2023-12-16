@@ -162,3 +162,10 @@ fi
 
 # fix rust blocking
 alias fix_rust_blocking="rm -rf ~/.cargo/registry/index/* ~/.cargo/.package-ca"
+
+# github copilot alias
+alias ghcs="gh copilot suggest"
+alias ghce="gh copilot explain"
+
+# if file ~/.token.sh exists, source it
+[[ ! -f ~/.token.sh ]] || source ~/.token.sh
