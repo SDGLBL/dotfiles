@@ -1,5 +1,6 @@
 return {
   "stevearc/dressing.nvim",
+
   {
     "Bekaboo/dropbar.nvim",
     enabled = false,

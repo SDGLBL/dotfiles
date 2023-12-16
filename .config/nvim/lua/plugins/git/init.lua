@@ -11,6 +11,11 @@ return {
   },
 
   {
+    "wintermute-cell/gitignore.nvim",
+    cmd = "Gitignore",
+  },
+
+  {
     "emmanueltouzery/agitator.nvim",
     event = "VeryLazy",
     keys = {

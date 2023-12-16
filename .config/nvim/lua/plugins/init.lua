@@ -3,11 +3,6 @@ return {
   "nvim-lua/plenary.nvim",
 
   {
-    "wintermute-cell/gitignore.nvim",
-    cmd = "Gitignore",
-  },
-
-  {
     "ethanholz/nvim-lastplace",
     config = true,
   },

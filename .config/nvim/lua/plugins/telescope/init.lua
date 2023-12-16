@@ -177,7 +177,7 @@ return {
           ["<C-n>"] = actions.cycle_history_next,
           ["<C-p>"] = actions.cycle_history_prev,
           ["?"] = actions_layout.toggle_preview,
-          ["<C-s>"] = custom_actions.visidata,
+          -- ["<C-s>"] = custom_actions.visidata,
           ["<A-f>"] = custom_actions.file_browser,
           ["<C-z>"] = custom_actions.toggle_term,
         },

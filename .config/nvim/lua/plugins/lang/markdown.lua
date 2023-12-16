@@ -8,7 +8,7 @@ return {
     event = "VeryLazy",
     opts = {
       defaults = {
-        ["<leader>p"] = { name = "+Markdown" },
+        -- ["<leader>p"] = { name = "+Markdown" },
       },
     },
   },
@@ -174,6 +174,27 @@ return {
   {
     "lukas-reineke/headlines.nvim",
     opts = {},
-    ft = { "markdown", "norg", "rmd", "org" },
+    ft = { "markdown", "norg", "rmd", "org", "quarto" },
   },
+
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*", -- recommended, use latest release instead of latest commit
+    lazy = true,
+    ft = "markdown",
+    dependencies = {
+      -- Required.
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      workspaces = {
+        {
+          name = "work",
+          path = "~/sync/Work&Life/",
+        },
+      },
+    },
+  },
+
+  { "ellisonleao/glow.nvim", config = true, cmd = "Glow", enabled = true },
 }
