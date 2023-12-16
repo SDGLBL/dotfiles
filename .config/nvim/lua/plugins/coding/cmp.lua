@@ -8,24 +8,42 @@ return {
       { "hrsh7th/cmp-emoji" },
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-cmdline" },
+      { "dmitmel/cmp-cmdline-history" },
       {
-        "zbirenbaum/copilot-cmp",
-        enabled = false,
-        dependencies = {
-          "zbirenbaum/copilot.lua",
-          enabled = false,
-          cmd = "Copilot",
-          event = "InsertEnter",
-          config = function()
-            require("copilot").setup {
-              suggestion = { enabled = false },
-              panel = { enabled = false },
-            }
-          end,
-        },
+        "tzachar/cmp-ai",
         config = function()
-          require("copilot_cmp").setup()
-          vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
+          local cmp_ai = require "cmp_ai.config"
+
+          cmp_ai:setup {
+            max_lines = 1000,
+            provider = "OpenAI",
+            provider_options = {
+              model = "gpt-3.5-turbo",
+            },
+            notify = true,
+            notify_callback = function(msg)
+              vim.notify(msg)
+            end,
+            run_on_every_keystroke = false,
+            ignored_file_types = {
+              -- default is not to ignore
+              -- uncomment to ignore in lua:
+              -- lua = true
+            },
+          }
+        end,
+      },
+      {
+        "uga-rosa/cmp-dictionary",
+        build = "aspell -d en dump master | aspell -l en expand > " .. vim.fn.stdpath "config" .. "/dict/en_us.dict",
+        config = function()
+          local dict = require "cmp_dictionary"
+          dict.setup {}
+          dict.switcher {
+            spelllang = {
+              en_us = vim.fn.stdpath "config" .. "/dict/en_us.dict",
+            },
+          }
         end,
       },
 
@@ -211,11 +229,14 @@ return {
       }
 
       local name_icons = {
-        copilot = " ",
-        emoji = "ﲃ ",
+        cmp_ai = " ",
+        emoji = "󰞅 ",
         crates = " ",
         npm = " ",
         calc = " ",
+        dictionary = " ",
+        path = " ",
+        cmdline_history = " ",
       }
 
       -- source_names
@@ -230,12 +251,12 @@ return {
         luasnip = "(Snippet)",
         buffer = "(Buffer)",
         orgmode = "(Org)",
-        copilot = "(Copilot)",
         neorg = "(Neorg)",
         spell = "(Spell)",
         latex_symbols = "(LaTeX)",
         npm = "(Npm)",
         crates = "(Crates)",
+        dictionary = "(Dict)",
       }
 
       -- duplicates
@@ -292,6 +313,16 @@ return {
           ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i" }),
           ["<C-d>"] = cmp.mapping.scroll_docs(-4),
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
+          ["<C-x>"] = cmp.mapping(
+            cmp.mapping.complete {
+              config = {
+                sources = cmp.config.sources {
+                  { name = "cmp_ai" },
+                },
+              },
+            },
+            { "i" }
+          ),
           -- TODO: potentially fix emmet nonsense
           ["<C-y>"] = cmp.mapping {
             i = cmp.mapping.confirm { behavior = cmp.ConfirmBehavior.Replace, select = false },
@@ -410,6 +441,7 @@ return {
             end,
           },
           { name = "luasnip" },
+          { name = "dictionary", keyword_length = 2 },
           { name = "npm", keyword_length = 4 },
           { name = "neorg" },
           { name = "path" },
@@ -449,6 +481,7 @@ return {
           { name = "path" },
         }, {
           { name = "cmdline" },
+          { name = "cmdline_history" },
         }),
       })
     end,
