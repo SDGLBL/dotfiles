@@ -282,4 +282,16 @@ return {
     "VidocqH/lsp-lens.nvim",
     config = false,
   },
+
+  {
+    "danymat/neogen",
+    keys = {
+      { "<leader>lgt", "<cmd>Neogen type<cr>", desc = "Type doc" },
+      { "<leader>lgc", "<cmd>Neogen class<cr>", desc = "Class doc" },
+      { "<leader>lgf", "<cmd>Neogen func<cr>", desc = "Func doc" },
+      { "<leader>lgd", "<cmd>Neogen file<cr>", desc = "Doc doc" },
+    },
+    event = "VeryLazy",
+    config = true,
+  },
 }
