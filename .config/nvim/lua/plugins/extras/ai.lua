@@ -69,6 +69,13 @@ return {
       { "<leader>ag", desc = "Generate Git Message" },
     },
     opts = {
+      models = {
+        {
+          name = "openai",
+          model = "gpt-3.5-turbo-1106",
+          params = nil,
+        },
+      },
       shortcuts = {
         {
           name = "textify",
