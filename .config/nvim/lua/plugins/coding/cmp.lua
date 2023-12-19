@@ -261,6 +261,7 @@ return {
 
       -- duplicates
       local duplicates = {
+        dictionary = 3,
         buffer = 2,
         path = 2,
         luasnip = 2,
@@ -441,11 +442,11 @@ return {
             end,
           },
           { name = "luasnip" },
+          { name = "buffer" },
           { name = "dictionary", keyword_length = 2 },
           { name = "npm", keyword_length = 4 },
           { name = "neorg" },
           { name = "path" },
-          { name = "buffer" },
           { name = "calc" },
           { name = "latex_symbols" },
           { name = "emoji", insert = true },
