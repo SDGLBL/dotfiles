@@ -90,7 +90,7 @@ return {
   -- ui transparent support
   {
     "xiyaowong/transparent.nvim",
-    enabled = not vim.g.neovide,
+    enabled = not vim.g.neovide and os.getenv "KITTY_WINDOW_ID" == nil,
     config = function()
       require("transparent").setup {
         extra_groups = {
@@ -150,10 +150,12 @@ return {
     config = {
       update_interval = 1000,
       set_dark_mode = function()
+        ---@diagnostic disable-next-line: deprecated
         vim.api.nvim_set_option("background", "dark")
         vim.cmd("colorscheme " .. _G.configs.dark_colorscheme)
       end,
       set_light_mode = function()
+        ---@diagnostic disable-next-line: deprecated
         vim.api.nvim_set_option("background", "light")
         vim.cmd("colorscheme " .. _G.configs.light_colorscheme)
       end,
