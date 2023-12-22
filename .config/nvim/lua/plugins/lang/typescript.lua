@@ -208,4 +208,12 @@ return {
       })
     end,
   },
+
+  {
+    "vuki656/package-info.nvim",
+    event = { "BufRead package.json" },
+    opts = {},
+    -- stylua: ignore
+    keys = { { "<leader>zv", function()   require("package-info").show() end, desc = "Show Latest Version" } },
+  },
 }
