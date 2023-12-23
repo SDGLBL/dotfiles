@@ -58,6 +58,7 @@ return {
       "nvim-neotest/neotest-vim-test",
       "vim-test/vim-test",
     },
+    --stylua: ignore
     keys = {
       {
         "<leader>tF",
@@ -71,6 +72,7 @@ return {
       { "<leader>tn", "<cmd>w|lua require('neotest').run.run()<cr>", desc = "Nearest" },
       { "<leader>tN", "<cmd>w|lua require('neotest').run.run({strategy = 'dap'})<cr>", desc = "Debug Nearest" },
       { "<leader>to", "<cmd>w|lua require('neotest').output.open({ enter = true })<cr>", desc = "Output" },
+      { "<leader>tO", function() require("neotest").output_panel.toggle() end, desc = "Toggle Output Panel" },
       { "<leader>ts", "<cmd>w|lua require('neotest').run.stop()<cr>", desc = "Stop" },
       { "<leader>tS", "<cmd>w|lua require('neotest').summary.toggle()<cr>", desc = "Summary" },
     },
@@ -86,7 +88,7 @@ return {
         quickfix = {
           open = function()
             if require("utils").has "trouble.nvim" then
-              vim.cmd "Trouble quickfix"
+              require("trouble").open { mode = "quickfix", focus = false }
             else
               vim.cmd "copen"
             end
@@ -149,6 +151,32 @@ return {
             return {}
           end
         end
+      end
+
+      if opts.adapters then
+        local adapters = {}
+        for name, config in pairs(opts.adapters or {}) do
+          if type(name) == "number" then
+            if type(config) == "string" then
+              config = require(config)
+            end
+            adapters[#adapters + 1] = config
+          elseif config ~= false then
+            local adapter = require(name)
+            if type(config) == "table" and not vim.tbl_isempty(config) then
+              local meta = getmetatable(adapter)
+              if adapter.setup then
+                adapter.setup(config)
+              elseif meta and meta.__call then
+                adapter(config)
+              else
+                error("Adapter " .. name .. " does not support setup")
+              end
+            end
+            adapters[#adapters + 1] = adapter
+          end
+        end
+        opts.adapters = adapters
       end
 
       require("neotest").setup(opts)
