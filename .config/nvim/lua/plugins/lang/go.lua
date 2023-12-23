@@ -36,6 +36,7 @@ return {
           nls.builtins.diagnostics.golangci_lint.with {
             filetypes = { "go" },
             extra_args = {
+              "--fast",
               "-c",
               "~/.golangci.yml",
             },
@@ -60,6 +61,7 @@ return {
           nls.builtins.diagnostics.golangci_lint.with {
             filetypes = { "go" },
             extra_args = {
+              "--fast",
               "-E",
               "errcheck,lll,gofmt,errorlint,deadcode,gosimple,govet,ineffassign,staticcheck,structcheck,typecheck,unused,varcheck,bodyclose,contextcheck,forcetypeassert,funlen,nilerr,revive",
             },
@@ -84,6 +86,9 @@ return {
               gofumpt = true,
               semanticTokens = true,
               usePlaceholders = false,
+              completeUnimported = true,
+              staticcheck = true,
+              directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
               codelenses = {
                 generate = true,
                 gc_details = false,
@@ -94,7 +99,11 @@ return {
                 upgrade_dependency = true,
               },
               analyses = {
-                unreachable = true,
+                fieldalignment = true,
+                nilness = true,
+                unusedparams = true,
+                unusedwrite = true,
+                useany = true,
               },
               -- https://github.com/golang/tools/blob/master/gopls/doc/inlayHints.md
               hints = {
