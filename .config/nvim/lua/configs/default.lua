@@ -411,11 +411,11 @@ return {
   after_hook = function(c)
     local colorscheme = ""
 
-    -- if require("utils.time").is_dark() then
-    --   colorscheme = c.dark_colorscheme
-    -- else
-    --   colorscheme = c.light_colorscheme
-    -- end
+    if require("utils.time").is_dark() then
+      colorscheme = c.dark_colorscheme
+    else
+      colorscheme = c.light_colorscheme
+    end
 
     ---@diagnostic disable-next-line: param-type-mismatch
     local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
