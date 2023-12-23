@@ -100,10 +100,7 @@ function M.telescope(builtin, opts)
         map("i", "<a-c>", function()
           local action_state = require "telescope.actions.state"
           local line = action_state.get_current_line()
-          M.telescope(
-            params.builtin,
-            vim.tbl_deep_extend("force", {}, params.opts or {}, { cwd = false, default_text = line })
-          )()
+          M.telescope(params.builtin, vim.tbl_deep_extend("force", {}, params.opts or {}, { cwd = false, default_text = line }))()
         end)
         return true
       end
