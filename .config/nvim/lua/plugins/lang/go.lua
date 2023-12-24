@@ -128,7 +128,6 @@ return {
     ft = { "go", "gomod" },
     -- if you need to install/update all binaries
     -- build = ':lua require("go.install").update_all_sync()',
-    enabled = configs.go,
     dependencies = "ray-x/guihua.lua",
     opts = {
       lsp_inlay_hints = {
