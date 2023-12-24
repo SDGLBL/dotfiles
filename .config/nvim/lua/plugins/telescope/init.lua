@@ -31,23 +31,36 @@ return {
     },
     --stylua: ignore
     keys = {
+      -- common
+      { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader><space>", require("utils").find_files, desc = "Find Files" },
+      -- find
       { "<leader>ff", require("utils").telescope "files", desc = "Find Files (Root Dir)" },
       { "<leader>fF", require("utils").telescope("files", { cwd = false }), desc = "Find Files (Cwd)" },
-      { "<leader>fb", "<cmd>Telescope buffers sort_mru=true ignore_current_buffer=true<cr>", desc = "Buffers" },
+      { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>", desc = "Buffers" },
       { "<leader>fr", "<cmd>Telescope frecency<cr>", desc = "Recent" },
       { "<leader>fm", "<cmd>Telescope marks<cr>", desc = "Marks" },
       { "<leader>fc", "<cmd>cd %:p:h<cr>", desc = "Change WorkDir" },
       { "<leader>fg", function() require("telescope").extensions.live_grep_args.live_grep_args() end, desc = "Live Grep", },
+      -- search
+      { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers" },
       { "<leader>st", require("utils").telescope "live_grep", desc = "Grep (Root Dir)" },
       { "<leader>sT", require("utils").telescope("live_grep", { cwd = false }), desc = "Grep (Cwd)" },
-      { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+      -- { "<leader>ss", "<cmd>Telescope luasnip<cr>", desc = "Snippets" },
+      { "<leader>ss", "<cmd>Telescope spell_suggest<cr>", desc = "Spell Suggest" },
       { "<leader>sb", function() require("telescope.builtin").current_buffer_fuzzy_find() end, desc = "Buffer" },
       { "<leader>su", function() require("telescope.builtin").live_grep { search_dirs = { vim.fs.dirname(vim.fn.expand "%") } } end, desc = "Grep (Current File Path)" },
+      { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      -- git
       { "<leader>gf", require("plugins.telescope.pickers").git_diff_picker, desc = "Diff Files" },
+      -- help
       { "<leader>hs", "<cmd>Telescope help_tags<cr>", desc = "Search" },
+      -- system
       { "<leader>zc", function() require("telescope.builtin").colorscheme { enable_preview = true } end, desc = "Colorscheme", },
+      -- codeoutline
       { "<leader>vo", "<cmd>Telescope aerial<cr>", desc = "Code Outline" },
+      -- project
       { "<leader>pp", function() require("telescope").extensions.project.project { display_type = "minimal" } end, desc = "List", },
     },
     opts = function()
