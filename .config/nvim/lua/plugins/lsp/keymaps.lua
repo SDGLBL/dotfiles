@@ -56,6 +56,7 @@ function M.on_attach(client, buffer)
   self:map("<leader>lf", format, { desc = "Format Document", has = "documentFormatting" })
   self:map("<leader>lf", format, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
   self:map("<leader>lr", vim.lsp.buf.rename, { expr = true, desc = "Rename", has = "rename" })
+  self:map("<leader>uf", require("plugins.lsp.format").toggle, { desc = "Toggle Format on Save" })
 
   self:map("<leader>ls", require("telescope.builtin").lsp_document_symbols, { desc = "Document Symbols" })
   self:map("<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })

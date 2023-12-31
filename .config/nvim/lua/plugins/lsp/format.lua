@@ -71,11 +71,7 @@ function M.notify(formatters)
 end
 
 function M.supports_format(client)
-  if
-    client.config
-    and client.config.capabilities
-    and client.config.capabilities.documentFormattingProvider == false
-  then
+  if client.config and client.config.capabilities and client.config.capabilities.documentFormattingProvider == false then
     return false
   end
   return client.supports_method "textDocument/formatting" or client.supports_method "textDocument/rangeFormatting"

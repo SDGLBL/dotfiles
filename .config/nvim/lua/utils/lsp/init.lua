@@ -132,36 +132,6 @@ function M.setup_codelens_refresh(client, bufnr)
   })
 end
 
----filter passed to vim.lsp.buf.format
----always selects null-ls if it's available and caches the value per buffer
----@param client table client attached to a buffer
----@return boolean if client matches
-function M.format_filter(client)
-  local filetype = vim.bo.filetype
-  local n = require "null-ls"
-  local s = require "null-ls.sources"
-  local method = n.methods.FORMATTING
-  local avalable_formatters = s.get_available(filetype, method)
-
-  if #avalable_formatters > 0 then
-    return client.name == "null-ls"
-  elseif client.supports_method "textDocument/formatting" then
-    return true
-  else
-    return false
-  end
-end
-
----Provide vim.lsp.buf.format for nvim <0.8
----@param opts table
-function M.format(opts)
-  opts = opts or { filter = M.format_filter }
-
-  if vim.lsp.buf.format then
-    return vim.lsp.buf.format(opts)
-  end
-end
-
 --   vararg table:
 --     • group (string|integer) optional: autocommand group name or
 --       id to match against.

@@ -3,12 +3,6 @@
 local function autocmds_setup(c)
   local autocmds = require "configs.autocmds"
 
-  if c.format_on_save then
-    autocmds.enable_format_on_save()
-  else
-    autocmds.disable_format_on_save()
-  end
-
   -- load user cmd
   c.autocmds = c.autocmds or {}
   local default_cmds = autocmds.load_augroups() or {}
