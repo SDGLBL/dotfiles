@@ -101,6 +101,8 @@ return {
           "NormalFloat",
           "NvimTreeNormal",
           "NvimTreeNormalNC",
+          "NeoTreeNormal",
+          "NeoTreeNormalNC",
           "MsgArea",
           "HopPreview",
           "WhichKeyFloat",

@@ -53,14 +53,13 @@ local function setup(opts)
     end
   end
 
-  require "configs.options"
-  require "configs.keymaps"
-
   if vim.b.loaded then
     return
   end
 
+  require "configs.options"
   require "configs.lazy"
+  require "configs.keymaps"
 
   autocmds_setup(c)
   toggle_transparent(c)

@@ -1,6 +1,7 @@
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
+    enabled = false,
     dependencies = {
       {
         "s1n7ax/nvim-window-picker",
@@ -73,7 +74,7 @@ return {
       filesystem = {
         bind_to_cwd = false,
         follow_current_file = { enabled = true },
-        use_libuv_file_watcher = true,
+        -- use_libuv_file_watcher = true,
       },
       window = {
         mappings = {
@@ -145,7 +146,7 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua",
-    enabled = false,
+    -- enabled = false,
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
     },

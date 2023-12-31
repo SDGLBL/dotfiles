@@ -77,8 +77,6 @@ return {
         prefix = "<leader>",
         mode = { "n", "v" },
         ["\\"] = { "<cmd>Alpha<cr>", "Alpha" },
-        w = { "<cmd>update!<cr>", "Save" },
-        W = { "<cmd>noautocmd w!<cr>", "NoAC Save" },
         q = {
           name = "Quit/Session",
           q = {
@@ -90,6 +88,10 @@ return {
           t = { "<cmd>tabclose<cr>", "Close Tab" },
         },
         a = { name = "+AI" },
+        u = {
+          name = "+UI",
+          h = { "<cmd>nohlsearch<cr>", "NoHighlight" },
+        },
         b = { name = "+Buffer" },
         d = { name = "+Debug" },
         -- D = { name = "+Database" },
@@ -107,7 +109,6 @@ return {
         r = { name = "+Refactor" },
         v = {
           name = "+View",
-          n = { "<cmd>nohlsearch<cr>", "NoHighlight" },
         },
         t = { name = "+Test", t = { "+Overseer" } },
         z = {
