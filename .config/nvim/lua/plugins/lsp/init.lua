@@ -100,7 +100,11 @@ return {
           nls.builtins.formatting.shfmt,
           nls.builtins.diagnostics.shellcheck,
           nls.builtins.code_actions.shellcheck,
-          nls.builtins.diagnostics.codespell,
+          nls.builtins.diagnostics.codespell.with {
+            extra_args = {
+              "-L crate",
+            },
+          },
         },
       }
     end,
