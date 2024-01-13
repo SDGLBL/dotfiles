@@ -102,7 +102,7 @@ return {
           nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.codespell.with {
             extra_args = {
-              "-L crate",
+              "-L crate,ser,",
             },
           },
         },
