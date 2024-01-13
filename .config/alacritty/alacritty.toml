@@ -1,0 +1,205 @@
+import = ["/Users/lijie/.config/alacritty/theme/GruvboxDarkHard.toml"]
+live_config_reload = true
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 17.0
+
+[font.bold]
+family = "FiraCode Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+
+[font.italic]
+family = "FiraCode Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "FiraCode Nerd Font"
+style = "Retina"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "Quit"
+key = "Q"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "N"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "Return"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "Equals"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "Minus"
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "Minus"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0018d"
+key = "D"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018&"
+key = "W"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018c"
+key = "T"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018o"
+key = "RBracket"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0018;"
+key = "LBracket"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0018n"
+key = "RBracket"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018p"
+key = "LBracket"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018s"
+key = "D"
+mods = "Command|Shift"
+
+[[keyboard.bindings]]
+chars = "\u0018h"
+key = "H"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018j"
+key = "J"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018k"
+key = "K"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018l"
+key = "L"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00181"
+key = "Key1"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00182"
+key = "Key2"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00183"
+key = "Key3"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00184"
+key = "Key4"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00185"
+key = "Key5"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00186"
+key = "Key6"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00187"
+key = "Key7"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00188"
+key = "Key8"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u00189"
+key = "Key9"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018H"
+key = "Left"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018J"
+key = "Down"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018K"
+key = "Up"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u0018L"
+key = "Right"
+mods = "Command"
+
+[selection]
+save_to_clipboard = false
+
+[shell]
+args = ["--login"]
+program = "/bin/zsh"
+
+[window]
+decorations = "full"
+dynamic_title = true
+opacity = 0.9
+startup_mode = "Windowed"
