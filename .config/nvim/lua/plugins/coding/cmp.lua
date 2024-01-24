@@ -38,10 +38,9 @@ return {
         build = "aspell -d en dump master | aspell -l en expand > " .. vim.fn.stdpath "config" .. "/dict/en_us.dict",
         config = function()
           local dict = require "cmp_dictionary"
-          dict.setup {}
-          dict.switcher {
-            spelllang = {
-              en_us = vim.fn.stdpath "config" .. "/dict/en_us.dict",
+          dict.setup {
+            paths = {
+              vim.fn.stdpath "config" .. "/dict/en_us.dict",
             },
           }
         end,
