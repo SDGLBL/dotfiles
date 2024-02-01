@@ -96,8 +96,8 @@ map("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result
 map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 
 -- save file
-map({ "i", "x", "n", "s" }, "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file" })
-map({ "i", "x", "n", "s" }, "<leader>W", "<cmd>noautocmd w<cr><esc>", { desc = "NoA Save" })
+map({ "x", "n", "s" }, "<leader>w", "<cmd>w<cr><esc>", { desc = "Save file" })
+map({ "x", "n", "s" }, "<leader>W", "<cmd>noautocmd w<cr><esc>", { desc = "NoA Save" })
 
 -- new file
 map("n", "<leader>fn", "<cmd>enew<cr>", { desc = "New File" })
