@@ -60,17 +60,17 @@ return {
         end,
       },
       { "kdheepak/cmp-latex-symbols", ft = "plaintext" },
-      {
-        "L3MON4D3/LuaSnip",
-        build = "make install_jsregexp",
-        dependencies = { "rafamadriz/friendly-snippets" },
-        event = "VeryLazy",
-        config = function()
-          require("luasnip.loaders.from_vscode").lazy_load { exclude = { "rust" } }
-          require("luasnip.loaders.from_vscode").lazy_load { paths = { "./vscode-snippets" } }
-          require("luasnip.loaders.from_snipmate").lazy_load()
-        end,
-      },
+      -- {
+      --   "L3MON4D3/LuaSnip",
+      --   build = "make install_jsregexp",
+      --   dependencies = { "rafamadriz/friendly-snippets" },
+      --   event = "VeryLazy",
+      --   config = function()
+      --     require("luasnip.loaders.from_vscode").lazy_load { exclude = { "rust" } }
+      --     require("luasnip.loaders.from_vscode").lazy_load { paths = { "./vscode-snippets" } }
+      --     require("luasnip.loaders.from_snipmate").lazy_load()
+      --   end,
+      -- },
     },
     enabled = configs.lsp,
     opts = function()
@@ -256,6 +256,8 @@ return {
         npm = "(Npm)",
         crates = "(Crates)",
         dictionary = "(Dict)",
+        ["otter:pyright"] = "(LSP)",
+        otter = "(LSP)",
       }
 
       -- duplicates
@@ -307,8 +309,8 @@ return {
           },
         },
         mapping = cmp.mapping.preset.insert {
-          ["<C-k>"] = cmp.mapping.select_prev_item(),
-          ["<C-j>"] = cmp.mapping.select_next_item(),
+          ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+          ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
           ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select }, { "i" }),
           ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select }, { "i" }),
           ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -442,7 +444,7 @@ return {
           },
           { name = "luasnip" },
           { name = "buffer" },
-          { name = "dictionary", keyword_length = 2 },
+          { name = "dictionary", keyword_length = 2, max_item_count = 3 },
           { name = "npm", keyword_length = 4 },
           { name = "neorg" },
           { name = "path" },
