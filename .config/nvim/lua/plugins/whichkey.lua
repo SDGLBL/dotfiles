@@ -5,7 +5,7 @@ return {
     "mrjones2014/legendary.nvim",
     keys = {
       { "<C-S-p>", "<cmd>Legendary<cr>", desc = "Legendary" },
-      { "<leader>hc", "<cmd>Legendary<cr>", desc = "Command Palette" },
+      { "<leader>p", "<cmd>Legendary<cr>", desc = "Command Palette" },
     },
     opts = {
       extensions = {
@@ -105,7 +105,7 @@ return {
         h = { name = "+Help" },
         g = { name = "+Git", h = { name = "+Hunk" }, t = { name = "+Toggle" }, w = { name = "+Work Tree" } },
         -- n = { name = "+Notes" },
-        p = { name = "+Project" },
+        -- p = { name = "+Project" },
         r = { name = "+Refactor" },
         v = {
           name = "+View",
