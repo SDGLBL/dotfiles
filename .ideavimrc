@@ -62,8 +62,8 @@ inoremap jk <ESC>
 
 
 """ Mappings --------------------------------
-nmap <leader>mw <Plug>(easymotion-s)
-nmap <leader>ml <Plug>(easymotion-f)
+nmap m <Plug>(easymotion-s)
+"""nmap ml <Plug>(easymotion-f)
 """ map sh :
 
 """ Find
@@ -78,8 +78,7 @@ nmap <leader>e :NERDTreeToggle<cr>
 nmap <leader>nf :NERDTreeFind<cr>
 
 """ Buffer control
-nmap <leader>be :action CloseAllEditorsButActive<cr>
-nmap <leader>bl :action CloseAllToTheRight<cr>
+
 nmap <leader>bh :action CloseAllToTheLeft<cr>
 nnoremap <s-TAB> :action PreviousTab<CR>
 nnoremap <TAB> :action NextTab<CR>
