@@ -264,7 +264,7 @@ return {
   -- `hlargs`.
   -- Highlight arguments' definitions and usages, using Treesitter
   -- [hlargs.nvim](https://github.com/m-demare/hlargs.nvim)
-  hlargs = true,
+  hlargs = false,
   -- `autopairs`
   -- autopairs for neovim written by lua
   -- [nvim-autopairs](https://github.com/windwp/nvim-autopairs)
@@ -434,18 +434,18 @@ return {
         return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
       end
 
-      vim.g.neovide_transparency = 0.0
+      vim.g.neovide_transparency = 0.5
       vim.g.transparency = 0.85
       vim.g.neovide_background_color = "#000000" .. alpha()
       vim.g.neovide_theme = "auto"
       vim.g.neovide_refresh_rate = 120
       vim.g.neovide_input_macos_alt_is_meta = false
 
-      vim.g.neovide_floating_blur = 60
+      vim.g.neovide_floating_blur = 200
 
       -- vim.opt.cmdheight = 0
 
-      vim.o.background = "dark"
+      -- vim.o.background = "dark"
     end
   end,
 }
