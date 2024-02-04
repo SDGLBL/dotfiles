@@ -28,9 +28,7 @@ local function lsp_init()
         spacing = 4,
         source = "if_many",
         prefix = "●",
-        severity = {
-          min = vim.diagnostic.severity.ERROR,
-        },
+        severity_sort = true,
       },
       signs = {
         active = signs,

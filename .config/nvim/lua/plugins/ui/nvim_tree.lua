@@ -1,7 +1,7 @@
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
-    enabled = false,
+    -- enabled = false,
     dependencies = {
       {
         "s1n7ax/nvim-window-picker",
@@ -29,14 +29,14 @@ return {
       {
         "<leader>fe",
         function()
-          require("neo-tree.command").execute { toggle = true, dir = require("utils").get_root() }
+          require("neo-tree.command").execute { toggle = true, dir = require("utils").get_root(), reveal_force_cwd = true }
         end,
         desc = "Explorer NeoTree (root dir)",
       },
       {
         "<leader>fE",
         function()
-          require("neo-tree.command").execute { toggle = true, dir = vim.loop.cwd() }
+          require("neo-tree.command").execute { toggle = true, dir = vim.loop.cwd(), reveal_force_cwd = true }
         end,
         desc = "Explorer NeoTree (cwd)",
       },
@@ -72,7 +72,7 @@ return {
       sources = { "filesystem", "buffers", "git_status", "document_symbols" },
       open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
       filesystem = {
-        bind_to_cwd = false,
+        bind_to_cwd = true,
         follow_current_file = { enabled = true },
         -- use_libuv_file_watcher = true,
       },
@@ -146,7 +146,7 @@ return {
 
   {
     "nvim-tree/nvim-tree.lua",
-    -- enabled = false,
+    enabled = false,
     keys = {
       { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Explorer" },
     },
