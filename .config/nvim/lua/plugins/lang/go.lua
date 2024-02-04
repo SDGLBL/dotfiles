@@ -25,7 +25,7 @@ return {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
       local nls = require "null-ls"
-      table.insert(opts.sources, nls.builtins.formatting.goimports)
+      -- table.insert(opts.sources, nls.builtins.formatting.goimports)
       table.insert(opts.sources, nls.builtins.formatting.gofumpt)
       table.insert(opts.sources, nls.builtins.code_actions.gomodifytags)
       table.insert(opts.sources, nls.builtins.code_actions.impl)
@@ -50,7 +50,8 @@ return {
               "-m",
               "140",
               "--base-formatter",
-              "gofmt",
+              "gofumpt",
+              -- "gofmt",
             },
           }
         )
@@ -99,7 +100,7 @@ return {
                 upgrade_dependency = true,
               },
               analyses = {
-                fieldalignment = true,
+                fieldalignment = false,
                 nilness = true,
                 unusedparams = true,
                 unusedwrite = true,
@@ -118,6 +119,29 @@ return {
             },
           },
         },
+      },
+      setup = {
+        gopls = function(_, opts)
+          _ = opts
+          -- workaround for gopls not supporting semanticTokensProvider
+          -- https://github.com/golang/go/issues/54531#issuecomment-1464982242
+          require("utils.lsp").on_attach(function(client, _)
+            if client.name == "gopls" then
+              if not client.server_capabilities.semanticTokensProvider then
+                local semantic = client.config.capabilities.textDocument.semanticTokens
+                client.server_capabilities.semanticTokensProvider = {
+                  full = true,
+                  legend = {
+                    tokenTypes = semantic.tokenTypes,
+                    tokenModifiers = semantic.tokenModifiers,
+                  },
+                  range = true,
+                }
+              end
+            end
+          end)
+          -- end workaround
+        end,
       },
     },
   },
