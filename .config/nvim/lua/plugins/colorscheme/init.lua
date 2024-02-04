@@ -1,18 +1,52 @@
 return {
-  "folke/tokyonight.nvim",
-  "oxfist/night-owl.nvim",
-  "rebelot/kanagawa.nvim",
-  "tanvirtin/monokai.nvim",
-  "lunarvim/darkplus.nvim",
-  "tiagovla/tokyodark.nvim",
-  "ellisonleao/gruvbox.nvim",
-  "projekt0n/github-nvim-theme",
-  "marko-cerovac/material.nvim",
-  "bluz71/vim-nightfly-guicolors",
-  "felipeagc/fleet-theme-nvim",
+  {
+    "folke/tokyonight.nvim",
+    lazy = true,
+  },
+  {
+    "oxfist/night-owl.nvim",
+    lazy = true,
+  },
+  {
+    "rebelot/kanagawa.nvim",
+    lazy = true,
+  },
+  {
+    "tanvirtin/monokai.nvim",
+    lazy = true,
+  },
+  {
+    "lunarvim/darkplus.nvim",
+    lazy = true,
+  },
+  {
+    "tiagovla/tokyodark.nvim",
+    lazy = true,
+  },
+  {
+    "ellisonleao/gruvbox.nvim",
+    lazy = true,
+  },
+  {
+    "projekt0n/github-nvim-theme",
+    lazy = true,
+  },
+  {
+    "marko-cerovac/material.nvim",
+    lazy = true,
+  },
+  {
+    "bluz71/vim-nightfly-guicolors",
+    lazy = true,
+  },
+  {
+    "felipeagc/fleet-theme-nvim",
+    lazy = true,
+  },
   {
     "catppuccin/nvim",
     name = "catppuccin",
+    lazy = true,
     opts = {
       integrations = {
         aerial = true,
@@ -54,15 +88,21 @@ return {
       },
     },
   },
-  { "rose-pine/neovim", name = "rose-pine" },
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    lazy = true,
+  },
   {
     "EdenEast/nightfox.nvim",
+    lazy = true,
     config = function()
       require("nightfox").setup {}
     end,
   },
   {
     "olimorris/onedarkpro.nvim",
+    lazy = true,
     priority = 1000, -- Ensure it loads first
   },
   {

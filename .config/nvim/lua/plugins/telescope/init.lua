@@ -53,7 +53,7 @@ return {
       { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
       -- git
-      { "<leader>gf", require("plugins.telescope.pickers").git_diff_picker, desc = "Diff Files" },
+      -- { "<leader>gf", require("plugins.telescope.pickers").git_diff_picker, desc = "Diff Files" },
       -- help
       { "<leader>hs", "<cmd>Telescope help_tags<cr>", desc = "Search" },
       -- system

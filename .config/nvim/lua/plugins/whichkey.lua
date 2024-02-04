@@ -10,6 +10,9 @@ return {
     opts = {
       extensions = {
         which_key = { auto_register = true },
+        nvim_tree = true,
+        diffview = true,
+        lazy_nvim = true,
       },
     },
   },
@@ -18,6 +21,10 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     dependencies = { "mrjones2014/legendary.nvim" },
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 150
+    end,
     opts = {
       setup = {
         plugins = {

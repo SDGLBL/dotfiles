@@ -1,6 +1,7 @@
 return {
   {
     "benlubas/molten-nvim",
+    event = "VeryLazy",
     dependencies = {
       "3rd/image.nvim",
     },
@@ -16,6 +17,7 @@ return {
 
   {
     "jmbuhr/otter.nvim",
+    event = "VeryLazy",
     opts = {
       buffers = {
         set_filetype = true,

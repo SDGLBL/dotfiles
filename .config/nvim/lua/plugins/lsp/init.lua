@@ -112,6 +112,7 @@ return {
 
   {
     "jay-babu/mason-null-ls.nvim",
+    event = "VeryLazy",
     opts = {
       ensure_installed = nil,
       automatic_installation = true,
@@ -187,7 +188,7 @@ return {
     "ThePrimeagen/refactoring.nvim",
     event = "VeryLazy",
     enabled = configs.refactor,
-    dependencies = { "nvim-telescope/telescope.nvim" },
+    -- dependencies = { "nvim-telescope/telescope.nvim" },
     -- stylua: ignore
     keys = {
       { "<leader>rs", function() require("telescope").extensions.refactoring.refactors() end, mode = { "v" }, desc = "Refactor" },
@@ -209,10 +210,10 @@ return {
 
       local refactor = require "refactoring"
 
-      local ok, telescope = pcall(require, "telescope")
-      if ok then
-        telescope.load_extension "refactoring"
-      end
+      -- local ok, telescope = pcall(require, "telescope")
+      -- if ok then
+      --   telescope.load_extension "refactoring"
+      -- end
 
       refactor.setup {}
     end,
