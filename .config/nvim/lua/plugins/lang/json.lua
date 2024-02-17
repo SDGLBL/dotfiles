@@ -9,6 +9,22 @@ return {
     end,
   },
 
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "fixjson" })
+    end,
+  },
+
+  {
+    "nvimtools/none-ls.nvim",
+    opts = function(_, opts)
+      local nls = require "null-ls"
+      table.insert(opts.sources, nls.builtins.formatting.fixjson)
+    end,
+  },
+
   -- correctly setup lspconfig
   {
     "neovim/nvim-lspconfig",
