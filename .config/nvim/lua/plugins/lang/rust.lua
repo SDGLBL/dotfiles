@@ -49,12 +49,12 @@ return {
         rust_analyzer = {
           settings = {
             ["rust-analyzer"] = {
-              imports = {
-                granularity = {
-                  group = "module",
-                },
-                prefix = "self",
-              },
+              -- imports = {
+              --   granularity = {
+              --     group = "module",
+              --   },
+              --   prefix = "self",
+              -- },
               cargo = {
                 allFeatures = true,
                 loadOutDirsFromCheck = true,
@@ -67,17 +67,9 @@ return {
                 command = "clippy",
                 extraArgs = { "--no-deps" },
               },
-              procMacro = {
-                enable = true,
-                ignored = {
-                  ["async-trait"] = { "async_trait" },
-                  ["napi-derive"] = { "napi" },
-                  ["async-recursion"] = { "async_recursion" },
-                },
-              },
               inlayHints = {
                 enable = true,
-                maxLength = 25,
+                maxLength = 30,
                 typeHintsWithVariable = true,
                 bindingModeHints = {
                   enable = true,
@@ -91,9 +83,9 @@ return {
                 typeHints = {
                   enable = true,
                 },
-                closureCaptureHints = {
-                  enable = true,
-                },
+                -- closureCaptureHints = {
+                --   enable = true,
+                -- },
                 closingBraceHints = {
                   enable = true,
                 },
