@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     opts = {
       defaults = {
-        ["<leader>v"] = { name = "+DiffView" },
+        ["<leader>gd"] = { name = "+DiffView" },
       },
     },
   },
@@ -12,13 +12,13 @@ return {
   {
     "sindrets/diffview.nvim",
     keys = {
-      { "<leader>vo", "<cmd>DiffviewOpen<cr>", desc = "DiffOpen" },
-      { "<leader>vc", "<cmd>DiffviewClose<cr>", desc = "DiffClose" },
-      { "<leader>vr", "<cmd>DiffviewRefresh<cr>", desc = "DiffRefresh" },
-      { "<leader>vh", "<cmd>DiffviewFileHistory<cr>", desc = "DiffFileHistory" },
-      { "<leader>vl", "v$:'<,'>DiffviewFileHistory<cr>", desc = "DiffLineHistory" },
-      { "<leader>vf", "<cmd>DiffviewFileHistory %<cr>", desc = "DiffFileHistory (Cur File)" },
-      { "<leader>vt", "<cmd>DiffviewToggleFiles %<cr>", desc = "DiffToggleFiles" },
+      { "<leader>gdo", "<cmd>DiffviewOpen<cr>", desc = "DiffOpen" },
+      { "<leader>gdc", "<cmd>DiffviewClose<cr>", desc = "DiffClose" },
+      { "<leader>gdr", "<cmd>DiffviewRefresh<cr>", desc = "DiffRefresh" },
+      { "<leader>gdh", "<cmd>DiffviewFileHistory<cr>", desc = "DiffFileHistory" },
+      { "<leader>gdl", "v$:'<,'>DiffviewFileHistory<cr>", desc = "DiffLineHistory" },
+      { "<leader>gdf", "<cmd>DiffviewFileHistory %<cr>", desc = "DiffFileHistory (Cur File)" },
+      { "<leader>gdt", "<cmd>DiffviewToggleFiles %<cr>", desc = "DiffToggleFiles" },
     },
     cmd = {
       "DiffviewOpen",
