@@ -17,6 +17,15 @@ return {
       {
         "<Tab>",
         function()
+          local cmp = require "cmp"
+          cmp.mapping.abort()
+
+          local copilot_keys = vim.fn["copilot#Accept"]()
+          if copilot_keys ~= "" then
+            vim.api.nvim_feedkeys(copilot_keys, "i", true)
+            return
+          end
+
           if vim.snippet.jumpable(1) then
             vim.schedule(function()
               vim.snippet.jump(1)

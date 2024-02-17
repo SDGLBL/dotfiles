@@ -336,36 +336,36 @@ return {
               end
             end,
           },
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and has_words_before() then
-              cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
-            elseif snip_status_ok and luasnip.jumpable(1) then
-              luasnip.jump(1)
-            elseif neogen_status_ok and neogen.jumpable() then
-              neogen.jump_next()
-            else
-              -- input a tab symbol
-              vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
-              fallback()
-            end
-          end, {
-            "i",
-            "s",
-          }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif snip_status_ok and luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            elseif neogen_status_ok and neogen.jumpable(true) then
-              neogen.jump_prev()
-            else
-              fallback()
-            end
-          end, {
-            "i",
-            "s",
-          }),
+          -- ["<Tab>"] = cmp.mapping(function(fallback)
+          --   if cmp.visible() and has_words_before() then
+          --     cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+          --   elseif snip_status_ok and luasnip.jumpable(1) then
+          --     luasnip.jump(1)
+          --   elseif neogen_status_ok and neogen.jumpable() then
+          --     neogen.jump_next()
+          --   else
+          --     -- input a tab symbol
+          --     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, true, true), "n", true)
+          --     fallback()
+          --   end
+          -- end, {
+          --   "i",
+          --   "s",
+          -- }),
+          -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+          --   if cmp.visible() then
+          --     cmp.select_prev_item()
+          --   elseif snip_status_ok and luasnip.jumpable(-1) then
+          --     luasnip.jump(-1)
+          --   elseif neogen_status_ok and neogen.jumpable(true) then
+          --     neogen.jump_prev()
+          --   else
+          --     fallback()
+          --   end
+          -- end, {
+          --   "i",
+          --   "s",
+          -- }),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-l>"] = function(fallback)
             cmp.mapping.abort()
@@ -376,25 +376,34 @@ return {
               fallback()
             end
           end,
-          ["<CR>"] = cmp.mapping(function(fallback)
-            if cmp.visible() and cmp.get_selected_entry() ~= nil then
-              local confirm_opts = {
-                behavior = cmp.ConfirmBehavior.Replace,
-                select = false,
-              }
-              local is_insert_mode = function()
-                return vim.api.nvim_get_mode().mode:sub(1, 1) == "i"
-              end
-
-              if is_insert_mode then
-                confirm_opts.behavior = cmp.ConfirmBehavior.Insert
-              end
-              if cmp.confirm(confirm_opts) then
-                return
-              end
-            end
+          ["<CR>"] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<S-CR>"] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+          }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<C-CR>"] = function(fallback)
+            cmp.abort()
             fallback()
-          end),
+          end,
+          -- ["<CR>"] = cmp.mapping(function(fallback)
+          --   if cmp.visible() and cmp.get_selected_entry() ~= nil then
+          --     local confirm_opts = {
+          --       behavior = cmp.ConfirmBehavior.Replace,
+          --       select = false,
+          --     }
+          --     local is_insert_mode = function()
+          --       return vim.api.nvim_get_mode().mode:sub(1, 1) == "i"
+          --     end
+
+          --     if is_insert_mode then
+          --       confirm_opts.behavior = cmp.ConfirmBehavior.Insert
+          --     end
+          --     if cmp.confirm(confirm_opts) then
+          --       return
+          --     end
+          --   end
+          --   fallback()
+          -- end),
           -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           --[[ ["<CR>"] = cmp.mapping.confirm { select = true }, ]]
         },
