@@ -10,6 +10,13 @@ return {
   },
 
   {
+    "nvim-cmp",
+    opts = function(_, opts)
+      table.insert(opts.sources, { name = "neorg" })
+    end,
+  },
+
+  {
     "nvim-neorg/neorg",
     dependencies = "nvim-lua/plenary.nvim",
     enabled = configs.neorg,

@@ -1,9 +1,10 @@
 return {
-  desc = "Use native snippets instead of LuaSnip. Only works on Neovim >= 0.10!",
+  -- desc = "Use native snippets instead of LuaSnip. Only works on Neovim >= 0.10!",
   {
     "L3MON4D3/LuaSnip",
     enabled = false,
   },
+
   {
     "nvim-cmp",
     opts = {

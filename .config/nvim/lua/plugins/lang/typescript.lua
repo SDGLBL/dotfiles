@@ -18,6 +18,23 @@ return {
   },
 
   {
+    "nvim-cmp",
+    dependencies = {
+      {
+        "David-Kunz/cmp-npm",
+        event = { "BufRead package.json" },
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+          require("cmp-npm").setup {}
+        end,
+      },
+    },
+    opts = function(_, opts)
+      table.insert(opts.sources, { name = "npm", keyword_length = 4 })
+    end,
+  },
+
+  {
     "pmizio/typescript-tools.nvim",
     dependencies = { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
     enabled = false,
