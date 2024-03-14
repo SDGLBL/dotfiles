@@ -166,7 +166,8 @@ return {
 
   {
     "chrishrb/gx.nvim",
-    event = { "BufEnter" },
+    keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
+    cmd = { "Browse" },
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {},
   },
