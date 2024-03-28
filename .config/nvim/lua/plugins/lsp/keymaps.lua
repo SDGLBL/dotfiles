@@ -6,8 +6,8 @@ local function show_documentation()
     vim.cmd("h " .. vim.fn.expand "<cword>")
   elseif vim.tbl_contains({ "man" }, filetype) then
     vim.cmd("Man " .. vim.fn.expand "<cword>")
-  elseif vim.tbl_contains({ "rust" }, filetype) then
-    require("rust-tools").hover_actions.hover_actions()
+  -- elseif vim.tbl_contains({ "rust" }, filetype) then
+  --   require("rust-tools").hover_actions.hover_actions()
   elseif vim.fn.expand "%:t" == "Cargo.toml" and require("crates").popup_available() then
     require("crates").show_popup()
   else
@@ -46,11 +46,7 @@ function M.on_attach(client, buffer)
   self:map("[e", M.diagnostic_goto(false, "ERROR"), { desc = "Prev Error" })
   self:map("]w", M.diagnostic_goto(true, "WARNING"), { desc = "Next Warning" })
   self:map("[w", M.diagnostic_goto(false, "WARNING"), { desc = "Prev Warning" })
-  self:map(
-    "<leader>la",
-    vim.fn.exists ":CodeActionMenu" ~= 0 and "CodeActionMenu" or vim.lsp.buf.code_action,
-    { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" }
-  )
+  self:map("<leader>la", vim.lsp.buf.code_action, { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
 
   local format = require("plugins.lsp.format").format
   self:map("<leader>lf", format, { desc = "Format Document", has = "documentFormatting" })
