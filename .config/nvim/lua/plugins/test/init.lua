@@ -57,6 +57,7 @@ return {
       -- "antoinemadec/FixCursorHold.nvim",
       "nvim-neotest/neotest-vim-test",
       "vim-test/vim-test",
+      "nvim-neotest/nvim-nio",
     },
     --stylua: ignore
     keys = {
