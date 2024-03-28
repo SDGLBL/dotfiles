@@ -18,7 +18,7 @@ return {
 
       local defaults = {
         ---@usage Animation style one of { "fade", "slide", "fade_in_slide_out", "static" }
-        stages = "fade_in_slide_out",
+        stages = "static",
 
         fps = 60,
 

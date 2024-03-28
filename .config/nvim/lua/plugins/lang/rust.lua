@@ -27,147 +27,89 @@ return {
     end,
   },
 
+  -- Ensure Rust debugger is installed
   {
-    "nvimtools/none-ls.nvim",
+    "williamboman/mason.nvim",
+    optional = true,
     opts = function(_, opts)
-      local nls = require "null-ls"
-      -- table.insert(opts.sources, nls.builtins.formatting.rustfmt)
-      table.insert(opts.sources, nls.builtins.formatting.taplo)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "codelldb" })
     end,
   },
 
-  -- correctly setup lspconfig
+  -- Correctly setup lspconfig for Rust 🚀
   {
     "neovim/nvim-lspconfig",
-    ---@class PluginLspOpts
-    dependencies = { "simrat39/rust-tools.nvim", "rust-lang/rust.vim" },
     opts = {
-      -- make sure mason installs the server
-      -- LSP Server Settings
-      ---@type lspconfig.options
       servers = {
-        rust_analyzer = {
-          settings = {
-            ["rust-analyzer"] = {
-              -- imports = {
-              --   granularity = {
-              --     group = "module",
-              --   },
-              --   prefix = "self",
-              -- },
-              cargo = {
-                allFeatures = true,
-                loadOutDirsFromCheck = true,
-                runBuildScripts = true,
-              },
-              -- Add clippy lints for Rust.
-              ---@diagnostic disable-next-line: assign-type-mismatch
-              checkOnSave = {
-                allFeatures = true,
-                command = "clippy",
-                extraArgs = { "--no-deps" },
-              },
-              inlayHints = {
-                enable = true,
-                maxLength = 30,
-                typeHintsWithVariable = true,
-                bindingModeHints = {
-                  enable = true,
-                },
-                chainingHints = {
-                  enable = true,
-                },
-                parameterHints = {
-                  enable = true,
-                },
-                typeHints = {
-                  enable = true,
-                },
-                -- closureCaptureHints = {
-                --   enable = true,
-                -- },
-                closingBraceHints = {
-                  enable = true,
-                },
-                closureReturnTypeHints = {
-                  enable = "always",
-                },
-                discriminantHints = {
-                  enable = "always",
-                },
-              },
+        rust_analyzer = {},
+        taplo = {
+          keys = {
+            {
+              "K",
+              function()
+                if vim.fn.expand "%:t" == "Cargo.toml" and require("crates").popup_available() then
+                  require("crates").show_popup()
+                else
+                  vim.lsp.buf.hover()
+                end
+              end,
+              desc = "Show Crate Documentation",
             },
           },
         },
       },
       setup = {
-        rust_analyzer = function(_, opts)
-          local codelldb_path, liblldb_path = get_codelldb()
-          require("utils.lsp").on_attach(function(client, bufnr)
-            local map = function(mode, lhs, rhs, desc)
-              if desc then
-                desc = desc
-              end
-              vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
-            end
-
-            -- stylua: ignore
-            if client.name == "rust_analyzer" then
-              map("n", "<leader>le", "<cmd>RustRunnables<cr>", "Runnables")
-              map("n", "<leader>ll", function() vim.lsp.codelens.run() end, "Code Lens" )
-              map("n", "<leader>lt", "<cmd>Cargo test<cr>", "Cargo test" )
-              map("n", "<leader>lR", "<cmd>Cargo run<cr>", "Cargo run" )
-            end
-          end)
-
-          vim.api.nvim_create_autocmd({ "BufEnter" }, {
-            pattern = { "Cargo.toml" },
-            callback = function(event)
-              local bufnr = event.buf
-
-              -- Register keymappings
-              local wk = require "which-key"
-              local keys = { mode = { "n", "v" }, ["<leader>lc"] = { name = "+Crates" } }
-              wk.register(keys)
-
-              local map = function(mode, lhs, rhs, desc)
-                if desc then
-                  desc = desc
-                end
-                vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc, buffer = bufnr, noremap = true })
-              end
-              map("n", "<leader>lcy", "<cmd>lua require'crates'.open_repository()<cr>", "Open Repository")
-              map("n", "<leader>lcp", "<cmd>lua require'crates'.show_popup()<cr>", "Show Popup")
-              map("n", "<leader>lci", "<cmd>lua require'crates'.show_crate_popup()<cr>", "Show Info")
-              map("n", "<leader>lcf", "<cmd>lua require'crates'.show_features_popup()<cr>", "Show Features")
-              map("n", "<leader>lcd", "<cmd>lua require'crates'.show_dependencies_popup()<cr>", "Show Dependencies")
-            end,
-          })
-
-          require("rust-tools").setup {
-            tools = {
-              inlay_hints = {
-                auto = false,
-              },
-              -- hover_actions = { border = "solid" },
-              on_initialized = function()
-                vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
-                  pattern = { "*.rs" },
-                  callback = function()
-                    vim.lsp.codelens.refresh()
-                  end,
-                })
-              end,
-            },
-            server = opts,
-            dap = {
-              adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-            },
-          }
+        rust_analyzer = function()
           return true
         end,
       },
     },
+  },
+
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^4", -- Recommended
+    ft = { "rust" },
+    opts = {
+      server = {
+        on_attach = function(_, bufnr)
+          vim.keymap.set("n", "<leader>la", function()
+            vim.cmd.RustLsp "codeAction"
+          end, { desc = "Code Action", buffer = bufnr })
+          vim.keymap.set("n", "<leader>dR", function()
+            vim.cmd.RustLsp "debuggables"
+          end, { desc = "Rust debuggables", buffer = bufnr })
+        end,
+        default_settings = {
+          -- rust-analyzer language server configuration
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+              runBuildScripts = true,
+            },
+            -- Add clippy lints for Rust.
+            checkOnSave = {
+              allFeatures = true,
+              command = "clippy",
+              extraArgs = { "--no-deps" },
+            },
+            procMacro = {
+              enable = true,
+              ignored = {
+                ["async-trait"] = { "async_trait" },
+                ["napi-derive"] = { "napi" },
+                ["async-recursion"] = { "async_recursion" },
+              },
+            },
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
+    end,
   },
 
   {
@@ -348,12 +290,10 @@ return {
   -- tdd support
   {
     "nvim-neotest/neotest",
-    dependencies = {
-      "rouge8/neotest-rust",
-    },
+    optional = true,
     opts = function(_, opts)
       vim.list_extend(opts.adapters, {
-        require "neotest-rust",
+        require "rustaceanvim.neotest",
       })
     end,
   },
