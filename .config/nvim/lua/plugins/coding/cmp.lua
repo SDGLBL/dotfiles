@@ -94,6 +94,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
       "dmitmel/cmp-cmdline-history",
       {
         "roobert/tailwindcss-colorizer-cmp.nvim",
@@ -117,6 +118,7 @@ return {
       local cmp = require "cmp"
       local defaults = require "cmp.config.default"()
       return {
+        auto_brackets = {}, -- configure any filetype to auto add brackets
         completion = {
           completeopt = "menu,menuone,noinsert",
         },
@@ -143,10 +145,10 @@ return {
           end,
         },
         sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "buffer" },
-          { name = "dictionary", keyword_length = 2, max_item_count = 3 },
-          { name = "path" },
+          { name = "nvim_lsp", group_index = 1 },
+          { name = "buffer", group_index = 3 },
+          { name = "dictionary", keyword_length = 4, group_index = 3, max_item_count = 3 },
+          { name = "path", group_index = 5 },
         }, {
           { name = "buffer" },
         }),
@@ -179,13 +181,14 @@ return {
         sorting = defaults.sorting,
       }
     end,
-    ---@param opts cmp.ConfigSchema
+    ---@param opts cmp.ConfigSchema | {auto_brackets?: string[]}
     config = function(_, opts)
       for _, source in ipairs(opts.sources) do
         source.group_index = source.group_index or 1
       end
 
       local cmp = require "cmp"
+      local Kind = cmp.lsp.CompletionItemKind
       cmp.setup(opts)
 
       -- Use buffer source for `/` (if you enabled `native_menu`, this won"t work anymore).
@@ -206,6 +209,18 @@ return {
           { name = "cmdline_history" },
         }),
       })
+
+      cmp.event:on("confirm_done", function(event)
+        if not vim.tbl_contains(opts.auto_brackets or {}, vim.bo.filetype) then
+          return
+        end
+        local entry = event.entry
+        local item = entry:get_completion_item()
+        if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
+          local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
+          vim.api.nvim_feedkeys(keys, "i", true)
+        end
+      end)
     end,
   },
 
@@ -221,6 +236,17 @@ return {
         end,
       },
       {
+        "honza/vim-snippets",
+        config = function()
+          require("luasnip.loaders.from_snipmate").lazy_load()
+
+          -- One peculiarity of honza/vim-snippets is that the file with the global snippets is _.snippets, so global snippets
+          -- are stored in `ls.snippets._`.
+          -- We need to tell luasnip that "_" contains global snippets:
+          require("luasnip").filetype_extend("all", { "_" })
+        end,
+      },
+      {
         "nvim-cmp",
         dependencies = {
           "saadparwaiz1/cmp_luasnip",
@@ -231,7 +257,7 @@ return {
               require("luasnip").lsp_expand(args.body)
             end,
           }
-          table.insert(opts.sources, { name = "luasnip" })
+          table.insert(opts.sources, { name = "luasnip", group_index = 2 })
         end,
       },
     },
@@ -244,6 +270,12 @@ return {
       {
         "<tab>",
         function()
+          local copilot_keys = vim.fn["copilot#Accept"]()
+          if copilot_keys ~= "" then
+            vim.api.nvim_feedkeys(copilot_keys, "i", true)
+            return
+          end
+
           return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
         end,
         expr = true, silent = true, mode = "i",
