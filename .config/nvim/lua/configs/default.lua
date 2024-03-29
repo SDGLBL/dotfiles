@@ -59,6 +59,7 @@
 --- | "material"
 --- | "gruvbox"
 --- | "delek"
+--- | "pastelnight"
 -- `light_colorscheme`
 ---@field light_colorscheme string
 --- | "default"
@@ -243,7 +244,7 @@
 
 ---@type Config
 return {
-  -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material
+  -- duskfox,nightfly,nightfox,github_dimmed,tokyonight,sonokai,onedarkpro,monokai_soda,catppuccin,tokyodark,kanagawa,material,pastelnight
   colorscheme = "",
   -- `lsp`
   lsp = true,
@@ -413,8 +414,10 @@ return {
 
     if require("utils.time").is_dark() then
       colorscheme = c.dark_colorscheme
+      vim.o.background = "dark"
     else
       colorscheme = c.light_colorscheme
+      vim.o.background = "light"
     end
 
     ---@diagnostic disable-next-line: param-type-mismatch
@@ -428,22 +431,16 @@ return {
     -- vim.o.background = require("utils.time").is_dark() and "dark" or "light"
 
     if vim.g.neovide then
-      -- Helper function for transparency formatting
-      local alpha = function()
-        ---@diagnostic disable-next-line: ambiguity-1
-        return string.format("%x", math.floor(255 * vim.g.transparency or 0.8))
-      end
-
-      vim.g.neovide_transparency = 0.5
-      vim.g.transparency = 0.85
-      vim.g.neovide_background_color = "#000000" .. alpha()
+      vim.g.neovide_transparency = 0.8
       vim.g.neovide_theme = "auto"
       vim.g.neovide_refresh_rate = 120
       vim.g.neovide_input_macos_alt_is_meta = false
-
-      vim.g.neovide_floating_blur = 200
-
-      -- vim.opt.cmdheight = 0
+      vim.g.neovide_window_blurred = true
+      vim.g.neovide_floating_shadow = true
+      vim.g.neovide_floating_z_height = 10
+      vim.g.neovide_light_angle_degrees = 45
+      vim.g.neovide_light_radius = 5
+      vim.g.neovide_theme = "auto"
 
       -- vim.o.background = "dark"
     end
