@@ -98,8 +98,8 @@ return {
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
           nls.builtins.formatting.shfmt,
-          nls.builtins.diagnostics.shellcheck,
-          nls.builtins.code_actions.shellcheck,
+          -- nls.builtins.diagnostics.shellcheck,
+          -- nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.codespell.with {
             extra_args = {
               "-L crate,ser,",
@@ -145,7 +145,7 @@ return {
         self:map("gh", "Lspsaga finder", { desc = "Lspsaga finder" })
         self:map("gp", "Lspsaga peek_definition", { desc = "Lspsaga peek_definition" })
         -- self:map("gd", "Lspsaga goto_definition", { desc = "Lspsaga goto_definition" })
-        self:map("<leader>la", "Lspsaga code_action", { desc = "Lspsaga code_action", mode = { "n", "v" }, has = "codeAction" })
+        -- self:map("<leader>la", "Lspsaga code_action", { desc = "Lspsaga code_action", mode = { "n", "v" }, has = "codeAction" })
         self:map("<leader>lr", "Lspsaga rename", { desc = "Lspsaga rename" })
         self:map("<leader>lj", "Lspsaga diagnostic_jump_next", { desc = "Lspsaga diagnostic_jump_next" })
         self:map("<leader>lk", "Lspsaga diagnostic_jump_prev", { desc = "Lspsaga diagnostic_jump_prev" })
