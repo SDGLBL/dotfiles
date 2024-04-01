@@ -45,7 +45,11 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
+        basedpyright = {
+          enabled = true,
+        },
         pyright = {
+          enabled = false,
           settings = {
             python = {
               analysis = {
