@@ -26,6 +26,11 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
+      {
+        "luckasRanarison/tailwind-tools.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        opts = {}, -- your configuration
+      },
       { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
     },
     opts = function(_, opts)
