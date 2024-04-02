@@ -17,6 +17,9 @@ return {
           vim.opt.splitkeep = "screen"
         end,
         opts = {
+          animate = {
+            enabled = false,
+          },
           right = {
             { ft = "codecompanion", title = "Code Companion Chat", size = { width = 0.45 } },
           },
