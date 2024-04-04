@@ -3,6 +3,7 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     -- enabled = false,
     dependencies = {
+      "MunifTanjim/nui.nvim",
       {
         "s1n7ax/nvim-window-picker",
         version = "2.*",
