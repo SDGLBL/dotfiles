@@ -36,13 +36,7 @@ return {
     config = function(_, _)
       require("codecompanion").setup {
         adapters = {
-          chat = require("codecompanion.adapters").use("openai", {
-            env = {
-              api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
-            },
-            url = os.getenv "OPENAI_API_BASE" .. "/chat/completions",
-          }),
-          inline = require("codecompanion.adapters").use("openai", {
+          openai = require("codecompanion.adapters").use("openai", {
             env = {
               api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
             },
