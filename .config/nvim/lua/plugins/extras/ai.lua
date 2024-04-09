@@ -29,6 +29,7 @@ return {
     cmds = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionToggle", "CodeCompanionActions" },
     keys = {
       { "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Actions" },
+      { "<leader>av", "<cmd>CodeCompanionAdd<cr>", mode = { "v" }, desc = "Add Visual" },
       { "<leader>at", "<cmd>CodeCompanionToggle<cr>", mode = { "n", "v" }, desc = "Toggle" },
       -- { "<leader>sd", function() require("wtf").ai() end, desc = "Search Diagnostic with AI" },
       -- { "<leader>sD", function() require("wtf").search() end, desc = "Search Diagnostic with Google" },
