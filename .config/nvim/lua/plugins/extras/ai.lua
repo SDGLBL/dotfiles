@@ -53,12 +53,35 @@ return {
             prompts = {
               {
                 role = "system",
-                content = [[You are an expert software engineer.
-Review the provided context and diffs which are about to be committed to a git repo.
-Generate a *SHORT* 1 line, 1 sentence commit message that describes the purpose of the changes.
-The commit message MUST be in the past tense.
-It must describe the changes *which have been made* in the diffs!
-Reply with JUST the commit message, without quotes, comments, questions, etc!]],
+                content = [[Generate a concise, past tense commit message for provided diffs without additional content.]],
+                --                 content = [[You are an expert software engineer.
+                -- Review the provided context and diffs which are about to be committed to a git repo.
+                -- Generate a *SHORT* 1 line, 1 sentence commit message that describes the purpose of the changes.
+                -- The commit message MUST be in the past tense.
+                -- It must describe the changes *which have been made* in the diffs!
+                -- Reply with JUST the commit message, without quotes, comments, questions, etc!]],
+              },
+              {
+                role = "user",
+                content = [[ CONTEXT: ]] .. vim.fn.system "git diff --cached",
+              },
+            },
+          },
+          {
+            name = "(CN) Generate Git Message ",
+            strategy = "inline",
+            description = "Generate a git commit message",
+            opts = { placement = "cursor" },
+            prompts = {
+              {
+                role = "system",
+                content = [[使用中文生成提供的差异的简明过去式提交消息，不包含其他内容。]],
+                --                 content = [[You are an expert software engineer.
+                -- Review the provided context and diffs which are about to be committed to a git repo.
+                -- Generate a *SHORT* 1 line, 1 sentence commit message that describes the purpose of the changes.
+                -- The commit message MUST be in the past tense.
+                -- It must describe the changes *which have been made* in the diffs!
+                -- Reply with JUST the commit message, without quotes, comments, questions, etc!]],
               },
               {
                 role = "user",
