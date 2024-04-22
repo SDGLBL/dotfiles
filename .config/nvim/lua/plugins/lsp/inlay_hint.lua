@@ -8,6 +8,8 @@ return {
       return
     end
 
-    vim.lsp.inlay_hint.enable(bufnr, true)
+    vim.lsp.inlay_hint.enable(true, {
+      bufnr = bufnr,
+    })
   end,
 }
