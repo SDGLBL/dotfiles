@@ -173,6 +173,7 @@ return {
 
   {
     "lukas-reineke/headlines.nvim",
+    enabled = false,
     opts = function()
       local opts = {}
       for _, ft in ipairs { "markdown", "norg", "rmd", "org" } do
@@ -206,6 +207,16 @@ return {
           end,
         })
       end)
+    end,
+  },
+
+  {
+    "MeanderingProgrammer/markdown.nvim",
+    -- name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = { "markdown", "norg", "rmd", "org" },
+    config = function()
+      require("render-markdown").setup {}
     end,
   },
 
