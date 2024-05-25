@@ -206,7 +206,7 @@ return {
           { name = "path" },
         }, {
           { name = "cmdline" },
-          { name = "cmdline_history" },
+          { name = "cmdline_history", max_item_count = 3 },
         }),
       })
 
