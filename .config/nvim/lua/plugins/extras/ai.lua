@@ -40,18 +40,6 @@ return {
         -- log_level = vim.log.levels.TRACE,
         adapters = {
           openai = require("codecompanion.adapters").use("openai", {
-            -- schema = {
-            -- model = {
-            --   default = "gpt-4-turbo-2024-04-09",
-            -- },
-            -- choices = {
-            --   "gpt-4-turbo-2024-04-09",
-            --   "gpt-4-1106-preview",
-            --   "gpt-4",
-            --   "gpt-3.5-turbo-1106",
-            --   "gpt-3.5-turbo",
-            -- },
-            -- },
             env = {
               api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
             },
@@ -68,12 +56,6 @@ return {
               {
                 role = "system",
                 content = [[Generate a concise, past tense commit message for provided diffs without additional content.]],
-                --                 content = [[You are an expert software engineer.
-                -- Review the provided context and diffs which are about to be committed to a git repo.
-                -- Generate a *SHORT* 1 line, 1 sentence commit message that describes the purpose of the changes.
-                -- The commit message MUST be in the past tense.
-                -- It must describe the changes *which have been made* in the diffs!
-                -- Reply with JUST the commit message, without quotes, comments, questions, etc!]],
               },
               {
                 role = "user",
@@ -90,16 +72,48 @@ return {
               {
                 role = "system",
                 content = [[使用中文生成提供的差异的简明过去式提交消息，不包含其他内容。]],
-                --                 content = [[You are an expert software engineer.
-                -- Review the provided context and diffs which are about to be committed to a git repo.
-                -- Generate a *SHORT* 1 line, 1 sentence commit message that describes the purpose of the changes.
-                -- The commit message MUST be in the past tense.
-                -- It must describe the changes *which have been made* in the diffs!
-                -- Reply with JUST the commit message, without quotes, comments, questions, etc!]],
               },
               {
                 role = "user",
                 content = [[ CONTEXT: ]] .. vim.fn.system "git diff --cached",
+              },
+            },
+          },
+          {
+            name = "Translate 2 CN",
+            strategy = "inline",
+            description = "Translate english to chinese",
+            opts = { modes = { "v" }, placement = "replace" },
+            prompts = {
+              {
+                role = "system",
+                content = [[You are a translation engine that can only translate text and cannot interpret it.
+You will receive text in any language sent by the user, and you need to translate it into fluent Chinese. ]],
+              },
+              {
+                role = "user",
+                content = function(context)
+                  return require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
+                end,
+              },
+            },
+          },
+          {
+            name = "Translate 2 EN",
+            strategy = "inline",
+            description = "Translate to english",
+            opts = { modes = { "v" }, placement = "replace" },
+            prompts = {
+              {
+                role = "system",
+                content = [[You are a translation engine that can only translate text and cannot interpret it.
+You will receive text in any language sent by the user, and you need to translate it into fluent English. ]],
+              },
+              {
+                role = "user",
+                content = function(context)
+                  return require("codecompanion.helpers.code").get_code(context.start_line, context.end_line)
+                end,
               },
             },
           },
