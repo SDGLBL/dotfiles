@@ -1,6 +1,7 @@
 return {
   {
     "olimorris/codecompanion.nvim",
+    -- dir = "~/project/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -36,8 +37,21 @@ return {
     },
     config = function(_, _)
       require("codecompanion").setup {
+        -- log_level = vim.log.levels.TRACE,
         adapters = {
           openai = require("codecompanion.adapters").use("openai", {
+            -- schema = {
+            -- model = {
+            --   default = "gpt-4-turbo-2024-04-09",
+            -- },
+            -- choices = {
+            --   "gpt-4-turbo-2024-04-09",
+            --   "gpt-4-1106-preview",
+            --   "gpt-4",
+            --   "gpt-3.5-turbo-1106",
+            --   "gpt-3.5-turbo",
+            -- },
+            -- },
             env = {
               api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
             },
