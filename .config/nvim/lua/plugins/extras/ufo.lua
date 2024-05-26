@@ -136,7 +136,7 @@ return {
     opts = {
       open_fold_hl_timeout = 40,
       fold_virt_text_handler = handler,
-      close_fold_kinds_for_ft = { default = { "imports" } },
+      close_fold_kinds_for_ft = { default = {} },
       provider_selector = function(_, filetype, _)
         return ftMap[filetype]
       end,
