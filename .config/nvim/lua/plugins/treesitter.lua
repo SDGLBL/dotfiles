@@ -18,11 +18,10 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      "windwp/nvim-ts-autotag",
+      { "windwp/nvim-ts-autotag", opts = {} },
       "andymass/vim-matchup",
       "mfussenegger/nvim-ts-hint-textobject",
       "nvim-treesitter/nvim-treesitter-textobjects",
-
       {
         url = "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
         config = function()
