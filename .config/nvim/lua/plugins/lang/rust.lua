@@ -123,6 +123,9 @@ return {
       popup = {
         border = "rounded",
       },
+      completion = {
+        cmp = { enabled = true },
+      },
     },
     config = function(_, opts)
       require("crates").setup(opts)
