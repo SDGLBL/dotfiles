@@ -57,6 +57,7 @@ local source_names = {
   nvim_lua = "(NvimLua)",
   vsnip = "(Snippet)",
   luasnip = "(Snippet)",
+  snippets = "(Snippet)",
   buffer = "(Buffer)",
   orgmode = "(Org)",
   neorg = "(Neorg)",
@@ -74,16 +75,6 @@ local max_width = 20
 local function trim(s)
   return (s:gsub("^%s*(.-)%s*$", "%1"))
 end
-
--- duplicates
-local duplicates = {
-  dictionary = 3,
-  buffer = 2,
-  path = 2,
-  luasnip = 2,
-  cmp_tabnine = 0,
-  nvim_lsp = 1,
-}
 
 return {
   {
@@ -145,10 +136,10 @@ return {
           end,
         },
         sources = cmp.config.sources({
-          { name = "nvim_lsp", group_index = 1 },
-          { name = "buffer", group_index = 3 },
-          { name = "dictionary", keyword_length = 4, group_index = 3, max_item_count = 3 },
-          { name = "path", group_index = 5 },
+          { name = "nvim_lsp" },
+          { name = "buffer" },
+          { name = "dictionary", keyword_length = 4, max_item_count = 3 },
+          { name = "path" },
         }, {
           { name = "buffer" },
         }),
@@ -165,7 +156,7 @@ return {
             vim_item.menu = source_names[entry.source.name]
 
             -- vim_item dup
-            vim_item.dup = duplicates[entry.source.name] or 0
+            -- vim_item.dup = duplicates[entry.source.name] or 0
             return require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
           end,
         },
@@ -217,8 +208,12 @@ return {
         local entry = event.entry
         local item = entry:get_completion_item()
         if vim.tbl_contains({ Kind.Function, Kind.Method }, item.kind) then
-          local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
-          vim.api.nvim_feedkeys(keys, "i", true)
+          local cursor = vim.api.nvim_win_get_cursor(0)
+          local prev_char = vim.api.nvim_buf_get_text(0, cursor[1] - 1, cursor[2], cursor[1] - 1, cursor[2] + 1, {})[1]
+          if prev_char ~= "(" and prev_char ~= ")" then
+            local keys = vim.api.nvim_replace_termcodes("()<left>", false, false, true)
+            vim.api.nvim_feedkeys(keys, "i", true)
+          end
         end
       end)
     end,
