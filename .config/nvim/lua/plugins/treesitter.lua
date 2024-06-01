@@ -22,10 +22,7 @@ return {
       "andymass/vim-matchup",
       "mfussenegger/nvim-ts-hint-textobject",
       "nvim-treesitter/nvim-treesitter-textobjects",
-      {
-        "romgrk/nvim-treesitter-context",
-        enabled = not vim.g.neovide,
-      },
+
       {
         url = "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
         config = function()
