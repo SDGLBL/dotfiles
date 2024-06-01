@@ -71,7 +71,14 @@ return {
     "mrcjkb/rustaceanvim",
     version = "^4", -- Recommended
     ft = { "rust" },
+    ---@type RustaceanOpts
     opts = {
+      ---@type RustaceanToolsOpts
+      tools = {
+        float_win_config = {
+          border = "rounded",
+        },
+      },
       server = {
         on_attach = function(_, bufnr)
           vim.keymap.set("n", "<leader>la", function()
