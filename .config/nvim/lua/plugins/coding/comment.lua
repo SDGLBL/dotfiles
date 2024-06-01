@@ -1,6 +1,7 @@
 return {
   {
     "numToStr/Comment.nvim",
+    enabled = vim.fn.has "nvim-0.10.0" ~= 1,
     event = "VeryLazy",
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
@@ -56,5 +57,12 @@ return {
         post_hook = nil,
       }
     end,
+  },
+
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+    enabled = vim.fn.has "nvim-0.10.0" == 1,
   },
 }
