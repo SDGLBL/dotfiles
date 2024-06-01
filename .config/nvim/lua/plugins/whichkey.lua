@@ -23,7 +23,7 @@ return {
     dependencies = { "mrjones2014/legendary.nvim" },
     init = function()
       vim.o.timeout = true
-      vim.o.timeoutlen = 150
+      vim.o.timeoutlen = 200
     end,
     opts = {
       setup = {
