@@ -18,7 +18,6 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
-      { "windwp/nvim-ts-autotag", opts = {} },
       "andymass/vim-matchup",
       "mfussenegger/nvim-ts-hint-textobject",
       "nvim-treesitter/nvim-treesitter-textobjects",
@@ -74,9 +73,6 @@ return {
         enable = false,
       },
       matchup = {
-        enable = true,
-      },
-      autotag = {
         enable = true,
       },
       indent = {
@@ -144,6 +140,13 @@ return {
     ---@param opts TSConfig
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
+    end,
+  },
+
+  {
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-ts-autotag").setup()
     end,
   },
 }
