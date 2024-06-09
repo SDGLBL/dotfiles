@@ -33,5 +33,17 @@ require("configs").setup {
         end,
       },
     },
+    {
+      "BufWinEnter",
+      {
+        group = "_filetype_settings",
+        desc = "set wrap",
+        callback = function()
+          if vim.bo.ft == "codecompanion" then
+            vim.wo.wrap = true
+          end
+        end,
+      },
+    },
   },
 }
