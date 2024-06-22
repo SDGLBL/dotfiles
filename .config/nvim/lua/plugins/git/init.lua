@@ -55,31 +55,11 @@ return {
 
       gitsigns.setup {
         signs = {
-          add = { hl = "GitSignsAdd", text = icons.ui.BoldLineLeft, numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-          change = {
-            hl = "GitSignsChange",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn",
-          },
-          delete = {
-            hl = "GitSignsDelete",
-            text = icons.ui.Triangle,
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn",
-          },
-          topdelete = {
-            hl = "GitSignsDelete",
-            text = icons.ui.Triangle,
-            numhl = "GitSignsDeleteNr",
-            linehl = "GitSignsDeleteLn",
-          },
-          changedelete = {
-            hl = "GitSignsChange",
-            text = icons.ui.BoldLineLeft,
-            numhl = "GitSignsChangeNr",
-            linehl = "GitSignsChangeLn",
-          },
+          add = { text = icons.ui.BoldLineLeft },
+          change = { text = icons.ui.BoldLineLeft },
+          delete = { text = icons.ui.Triangle },
+          topdelete = { text = icons.ui.Triangle },
+          changedelete = { text = icons.ui.BoldLineLeft },
         },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
         numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
@@ -97,9 +77,6 @@ return {
           delay = 1000,
           ignore_whitespace = false,
         },
-        current_line_blame_formatter_opts = {
-          relative_time = false,
-        },
         sign_priority = 6,
         update_debounce = 100,
         status_formatter = nil, -- Use default
@@ -111,9 +88,6 @@ return {
           relative = "cursor",
           row = 0,
           col = 1,
-        },
-        yadm = {
-          enable = false,
         },
       }
     end,
