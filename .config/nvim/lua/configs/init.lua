@@ -1,9 +1,9 @@
--- autocmds_setup function
+-- 设置自动命令组
 ---@param c Config
 local function autocmds_setup(c)
   local autocmds = require "configs.autocmds"
 
-  -- load user cmd
+  -- 加载用户命令
   c.autocmds = c.autocmds or {}
   local default_cmds = autocmds.load_augroups() or {}
 
@@ -14,7 +14,7 @@ local function autocmds_setup(c)
   autocmds.define_augroups(default_cmds)
 end
 
--- toggle_transparent function
+-- 切换透明窗口
 ---@param c Config
 local function toggle_transparent(c)
   local ok, tran = pcall(require, "transparent")
@@ -34,12 +34,14 @@ local function toggle_transparent(c)
   end
 end
 
----@param opts Config
+-- 配置初始化函数
+-- @param opts Config
 local function setup(opts)
   local dc = require "configs.default"
   local c = opts and vim.tbl_deep_extend("force", dc, opts) or dc
   _G.configs = c
 
+  -- 执行预钩子函数
   if c.pre_hook ~= nil then
     local pre_hook_status, ret = pcall(c.pre_hook, c)
     if not pre_hook_status then
@@ -47,17 +49,22 @@ local function setup(opts)
     end
   end
 
+  -- 检查是否已经加载
   if vim.b.loaded then
     return
   end
 
+  -- 加载配置选项
   require "configs.options"
   require "configs.lazy"
   require "configs.keymaps"
 
+  -- 重新设置自动命令组
   autocmds_setup(c)
   toggle_transparent(c)
 
+  -- 执行后钩子函数
+  -- 执行后钩子函数
   if c.after_hook ~= nil then
     local after_hook_status, ret = pcall(c.after_hook, c)
     if not after_hook_status then
@@ -68,9 +75,11 @@ local function setup(opts)
   vim.b.loaded = true
 end
 
+-- 重新加载配置
 local function reload()
   vim.notify "Reload configs"
 
+  -- 重置 which-key 插件
   local wk = require "which-key"
   if wk ~= nil then
     wk.reset()
@@ -81,6 +90,7 @@ local function reload()
     wk.register(opts.vdefaults)
   end
 
+  -- 重新加载 init.lua 文件
   local fn = vim.fn
   local init_file_path = fn.join({ fn.stdpath "config", "init.lua" }, "/")
   local ok, err = pcall(dofile, init_file_path)
@@ -88,6 +98,7 @@ local function reload()
     vim.notify("Error reloading init.lua: " .. err, vim.log.levels.ERROR)
   end
 
+  -- 获取全局配置
   local c = _G.configs
   if c == nil then
     return
@@ -114,6 +125,7 @@ local function reload()
   vim.b.loaded = true
 end
 
+-- 导出 setup 和 reload 函数
 return {
   setup = setup,
   reload = reload,
