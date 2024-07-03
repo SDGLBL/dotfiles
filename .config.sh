@@ -38,7 +38,6 @@ alias sxray='nohup ~/software/xray/xray run ~/software/xray/config.json > ~/.cac
 alias sopenairewrite='tmux new-session -d -s openairewrite "cd ~/software/script/ && mitmproxy --listen-port 8082 --mode regular -s rewrite_openai.py"'
 alias obsidianollama='nohup env OLLAMA_ORIGINS=app://obsidian.md\* ollama serve > ~/.cache/ollama.log 2>&1 &'
 
-
 # start vmod
 if [[ "$OSTYPE" =~ ^darwin ]]; then
 	alias vmod='source ~/.oh-my-zsh/custom/plugins/vi-mode/zsh-vi-mode.zsh'
@@ -54,6 +53,17 @@ resume_screen() {
 alias sr=resume_screen
 alias sls='screen -ls'
 alias sw='screen -wipe'
+
+# Fuzzy find and change directory using fd with nested directory view
+fzf_cd() {
+	local dir
+	dir=$(fd --type d --hidden --follow --exclude .git . ${1:-.} 2>/dev/null |
+		fzf --preview 'tree -C {} | head -100' \
+			--bind 'ctrl-/:change-preview-window(down|hidden|)' \
+			--height 80% --reverse) && cd "$dir"
+}
+# Bind fzf_cd to a shorter command, e.g., 'cdf'
+alias cdf=fzf_cd
 
 # fzf tail -f
 alias tff='tail -f $(fzf)'
