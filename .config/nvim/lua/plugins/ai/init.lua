@@ -84,6 +84,13 @@ return {
           inline = "anthropic",
           tool = "openai",
         },
+        display = {
+          inline = {
+            diff = {
+              enabled = false,
+            },
+          },
+        },
       }
 
       -- require "telescope".load_extension "codecompanion"
