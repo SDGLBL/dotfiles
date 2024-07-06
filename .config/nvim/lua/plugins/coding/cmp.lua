@@ -46,6 +46,7 @@ local name_icons = {
   dictionary = " ",
   path = " ",
   cmdline_history = " ",
+  buffer = " ",
 }
 
 local source_names = {
