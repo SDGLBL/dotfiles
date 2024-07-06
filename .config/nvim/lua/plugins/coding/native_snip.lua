@@ -5,10 +5,19 @@ local function snippet_replace(snippet, fn)
   end) or snippet
 end
 
+local function snippet_preview(snippet)
+  local ok, parsed = pcall(function()
+    return vim.lsp._snippet_grammar.parse(snippet)
+  end)
+  return ok and tostring(parsed) or M.snippet_replace(snippet, function(placeholder)
+    return M.snippet_preview(placeholder.text)
+  end):gsub("%$0", "")
+end
+
 local function snippet_fix(snippet)
   local texts = {} ---@type table<number, string>
   return snippet_replace(snippet, function(placeholder)
-    texts[placeholder.n] = texts[placeholder.n] or M.snippet_preview(placeholder.text)
+    texts[placeholder.n] = texts[placeholder.n] or snippet_preview(placeholder.text)
     return "${" .. placeholder.n .. ":" .. texts[placeholder.n] .. "}"
   end)
 end
@@ -45,6 +54,10 @@ return {
         "garymjr/nvim-snippets",
         opts = {
           friendly_snippets = true,
+          search_paths = {
+            vim.fn.stdpath "config" .. "/snippets",
+            vim.fn.stdpath "config" .. "/vscode-snippets",
+          },
         },
         dependencies = { "rafamadriz/friendly-snippets" },
       },
@@ -52,6 +65,7 @@ return {
     opts = function(_, opts)
       opts.snippet = {
         expand = function(item)
+          -- return vim.snippet.expand(item.body)
           return expand(item.body)
         end,
       }
@@ -70,16 +84,39 @@ return {
             return
           end
 
-          return vim.snippet.active { direction = 1 } and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
+          if vim.snippet.active { direction = 1 } then
+            vim.schedule(function()
+              vim.snippet.jump(1)
+            end)
+            return
+          end
+          return "<Tab>"
         end,
         expr = true,
         silent = true,
-        mode = { "i", "s" },
+        mode = "i",
+      },
+      {
+        "<Tab>",
+        function()
+          vim.schedule(function()
+            vim.snippet.jump(1)
+          end)
+        end,
+        expr = true,
+        silent = true,
+        mode = "s",
       },
       {
         "<S-Tab>",
         function()
-          return vim.snippet.active { direction = -1 } and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<Tab>"
+          if vim.snippet.active { direction = -1 } then
+            vim.schedule(function()
+              vim.snippet.jump(-1)
+            end)
+            return
+          end
+          return "<S-Tab>"
         end,
         expr = true,
         silent = true,
