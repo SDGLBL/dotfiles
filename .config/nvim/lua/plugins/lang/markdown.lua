@@ -37,6 +37,49 @@ return {
     },
   },
 
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "prettierd", "markdownlint", "markdown-toc" })
+    end,
+  },
+
+  {
+    "stevearc/conform.nvim",
+    optional = true,
+    opts = {
+      formatters_by_ft = {
+        ["markdown"] = { { "prettierd", "prettier" }, "markdownlint", "markdown-toc" },
+        ["markdown.mdx"] = { { "prettierd", "prettier" }, "markdownlint", "markdown-toc" },
+      },
+    },
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        markdown = { "markdownlint" },
+      },
+    },
+  },
+
+  {
+    "ChuufMaster/markdown-toc",
+    opts = {
+
+      -- The heading level to match (i.e the number of "#"s to match to) max 6
+      heading_level_to_match = -1,
+
+      -- Set to True display a dropdown to allow you to select the heading level
+      ask_for_heading_level = false,
+
+      -- TOC default string
+      -- WARN
+      toc_format = "%s- [%s](<%s#%s>)",
+    },
+  },
+
   -- add support edit markdown codeblock
   {
     "AckslD/nvim-FeMaco.lua",
@@ -214,9 +257,12 @@ return {
     "MeanderingProgrammer/markdown.nvim",
     -- name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    ft = { "markdown", "norg", "rmd", "org" },
+    -- ft = "norg",
+    ft = { "markdown", "norg", "rmd", "org", "codecompanion" },
     config = function()
-      require("render-markdown").setup {}
+      require("render-markdown").setup {
+        file_types = { "markdown", "norg", "rmd", "org", "codecompanion" },
+      }
     end,
   },
 

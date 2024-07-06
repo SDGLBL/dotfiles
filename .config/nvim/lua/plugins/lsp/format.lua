@@ -1,35 +1,57 @@
 local M = {}
 
 M.autoformat = true
-M.format_notify = false
+M.format_notify = true
 
 function M.toggle()
   M.autoformat = not M.autoformat
   vim.notify(M.autoformat and "Enabled format on save" or "Disabled format on save")
 end
 
-function M.format()
-  local buf = vim.api.nvim_get_current_buf()
+---@alias lsp.Client.format {timeout_ms?: number, format_options?: table, bufnr?: integer} | lsp.Client.filter
 
-  local formatters = M.get_formatters(buf)
-  local client_ids = vim.tbl_map(function(client)
-    return client.id
-  end, formatters.active)
+---@param opts? lsp.Client.format
+function M.format(opts)
+  opts = vim.tbl_deep_extend(
+    "force",
+    {},
+    opts or {},
+    require("plugins.lsp.utils").opts("nvim-lspconfig").format or {},
+    require("plugins.lsp.utils").opts("conform.nvim").format or {}
+  )
 
-  if #client_ids == 0 then
-    return
+  local ok, conform = pcall(require, "conform")
+  if ok then
+    opts.formatters = {}
+    local fs = conform.format(opts)
+    if not fs and M.format_notify then
+      vim.notify("No formatters available", vim.log.levels.WARN)
+    end
+  else
+    vim.lsp.buf.format(opts)
   end
 
-  if M.format_notify then
-    M.notify(formatters)
-  end
-
-  vim.lsp.buf.format(vim.tbl_deep_extend("force", {
-    bufnr = buf,
-    filter = function(client)
-      return vim.tbl_contains(client_ids, client.id)
-    end,
-  }, require("plugins.lsp.utils").opts("nvim-lspconfig").format or {}))
+  -- local buf = vim.api.nvim_get_current_buf()
+  --
+  -- local formatters = M.get_formatters(buf)
+  -- local client_ids = vim.tbl_map(function(client)
+  --   return client.id
+  -- end, formatters.active)
+  --
+  -- if #client_ids == 0 then
+  --   return
+  -- end
+  --
+  -- if M.format_notify then
+  --   M.notify(formatters)
+  -- end
+  --
+  -- vim.lsp.buf.format(vim.tbl_deep_extend("force", {
+  --   bufnr = buf,
+  --   filter = function(client)
+  --     return vim.tbl_contains(client_ids, client.id)
+  --   end,
+  -- }, require("plugins.lsp.utils").opts("nvim-lspconfig").format or {}))
 end
 
 function M.notify(formatters)
@@ -39,14 +61,14 @@ function M.notify(formatters)
     local line = "- **" .. client.name .. "**"
     if client.name == "null-ls" then
       line = line
-        .. " ("
-        .. table.concat(
-          vim.tbl_map(function(f)
-            return "`" .. f.name .. "`"
-          end, formatters.null_ls),
-          ", "
-        )
-        .. ")"
+          .. " ("
+          .. table.concat(
+            vim.tbl_map(function(f)
+              return "`" .. f.name .. "`"
+            end, formatters.null_ls),
+            ", "
+          )
+          .. ")"
     end
     table.insert(lines, line)
   end
@@ -108,7 +130,9 @@ function M.on_attach(_, bufnr)
     buffer = bufnr,
     callback = function()
       if M.autoformat then
-        M.format()
+        M.format {
+          bufnr = bufnr,
+        }
       end
     end,
   })

@@ -17,12 +17,61 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "goimports", "gofumpt", "golangci-lint" })
+      vim.list_extend(opts.ensure_installed, { "goimports", "gofumpt", "golangci-lint", "golines", "golangci-lint" })
     end,
   },
 
   {
+    "stevearc/conform.nvim",
+    -- optional = true,
+    opts = {
+      formatters_by_ft = {
+        go = { "goimports", "gofumpt", "golines" },
+      },
+      formatters = {
+        golines = {
+          prepend_args = {
+            "-m",
+            "140",
+            "--base-formatter",
+            "gofumpt",
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters = {
+        golangcilint = {
+          -- ignore_exitcode = false,
+          args = {
+            "run",
+            "--fix=false",
+            "-c",
+            "~/.golangci.yml",
+            "--out-format",
+            "json",
+            "--show-stats=false",
+            "--print-issued-lines=false",
+            "--print-linter-name=false",
+            function()
+              return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":h")
+            end,
+          },
+        },
+      },
+      linters_by_ft = {
+        go = { "golangcilint" },
+      },
+    },
+  },
+
+  {
     "nvimtools/none-ls.nvim",
+    enabled = false,
     opts = function(_, opts)
       local nls = require "null-ls"
       -- table.insert(opts.sources, nls.builtins.formatting.goimports)
@@ -205,11 +254,15 @@ return {
   {
     "nvim-neotest/neotest",
     dependencies = {
-      "nvim-neotest/neotest-go",
+      -- "nvim-neotest/neotest-go",
+      "fredrikaverpil/neotest-golang",
     },
     opts = function(_, opts)
+      -- vim.list_extend(opts.adapters, {
+      --   require "neotest-go",
+      -- })
       vim.list_extend(opts.adapters, {
-        require "neotest-go",
+        require "neotest-golang" { dap_go_enabled = true },
       })
     end,
   },

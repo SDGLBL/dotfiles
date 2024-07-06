@@ -10,17 +10,34 @@ return {
   },
 
   {
-    "nvimtools/none-ls.nvim",
+    "williamboman/mason.nvim",
     opts = function(_, opts)
-      local nls = require "null-ls"
-      table.insert(opts.sources, nls.builtins.formatting.stylua)
+      vim.list_extend(opts.ensure_installed, { "stylua" })
     end,
   },
 
   {
-    "williamboman/mason.nvim",
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
+  },
+
+  { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
+
+  {                                        -- optional completion source for require statements and module annotations
+    "hrsh7th/nvim-cmp",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "stylua" })
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, {
+        name = "lazydev",
+        group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+      })
     end,
   },
 
@@ -28,23 +45,31 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      {
-        "folke/neodev.nvim",
-        opts = {
-          library = {
-            types = true,
-            plugins = {
-              -- "neotest",
-              -- "nvim-lspconfig",
-              "plenary.nvim",
-              "telescope.nvim",
-              -- "flash.nvim",
-              -- "nvim-treesitter",
-              -- "LuaSnip",
-            },
-          },
-        },
-      },
+      -- {
+      --   "folke/neodev.nvim",
+      --   opts = {
+      --     library = {
+      --       types = true,
+      --       plugins = {
+      --         -- "neotest",
+      --         -- "nvim-lspconfig",
+      --         "plenary.nvim",
+      --         "telescope.nvim",
+      --         "lazy.nvim",
+      --         "nvim-cmp",
+      --         "codecompanion",
+      --         "rustaceanvim",
+      --         "conform.nvim",
+      --         "nvim-lint",
+      --         "lint",
+      --         "conform",
+      --         -- "flash.nvim",
+      --         -- "nvim-treesitter",
+      --         -- "LuaSnip",
+      --       },
+      --     },
+      --   },
+      -- },
     },
     ---@class PluginLspOpts
     opts = {
@@ -60,16 +85,11 @@ return {
               },
               workspace = {
                 checkThirdParty = false,
-                -- library = {
-                --   "/Users/lijie/.local/share/nvim/lazy/neodev.nvim/types/nightly",
-                --   "/usr/local/share/nvim/runtime/lua",
-                --   "/Users/lijie/.local/share/nvim/lazy/plenary.nvim/lua",
-                --   "/Users/lijie/.local/share/nvim/lazy/telescope.nvim/lua",
-                --   "/Users/lijie/.local/share/nvim/lazy/nvim-treesitter/lua",
-                --   "/Users/lijie/dotfiles/.config/nvim/lua",
-                --   "/Users/lijie/.local/share/nvim/lazy/neoconf.nvim/types",
-                --   "/Users/lijie/.local/share/nvim/lazy/neoconf.nvim/types/lua",
-                -- },
+                library = {
+                  -- luarocks path
+                  -- [vim.fn.expand "~/.luarocks/share/lua/5.1"] = true,
+                  "/opt/homebrew/share/lua/5.4/",
+                },
               },
             },
           },

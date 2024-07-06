@@ -14,7 +14,17 @@ return {
   },
 
   {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        ["python"] = { "black" },
+      },
+    },
+  },
+
+  {
     "nvimtools/none-ls.nvim",
+    enabled = false,
     opts = function(_, opts)
       local nls = require "null-ls"
       table.insert(opts.sources, nls.builtins.formatting.black)
@@ -24,7 +34,7 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "debugpy", "black", "ruff" })
+      vim.list_extend(opts.ensure_installed, { "debugpy", "black" })
     end,
   },
 
@@ -48,27 +58,27 @@ return {
         basedpyright = {
           enabled = true,
         },
-        pyright = {
-          enabled = false,
-          settings = {
-            python = {
-              analysis = {
-                autoImportCompletions = true,
-                typeCheckingMode = "off",
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = "openFilesOnly",
-                stubPath = vim.fn.stdpath "data" .. "/lazy/python-type-stubs/stubs",
-              },
-            },
-          },
-        },
-        ruff_lsp = {
-          on_attach = function(client, _)
-            -- Disable hover in favor of Pyright
-            client.server_capabilities.hoverProvider = false
-          end,
-        },
+        -- pyright = {
+        --   enabled = false,
+        --   settings = {
+        --     python = {
+        --       analysis = {
+        --         autoImportCompletions = true,
+        --         typeCheckingMode = "off",
+        --         autoSearchPaths = true,
+        --         useLibraryCodeForTypes = true,
+        --         diagnosticMode = "openFilesOnly",
+        --         stubPath = vim.fn.stdpath "data" .. "/lazy/python-type-stubs/stubs",
+        --       },
+        --     },
+        --   },
+        -- },
+        -- ruff_lsp = {
+        --   on_attach = function(client, _)
+        --     -- Disable hover in favor of Pyright
+        --     client.server_capabilities.hoverProvider = false
+        --   end,
+        -- },
       },
       setup = {
         pyright = function(_, _)

@@ -2,6 +2,7 @@ return {
   {
     "benlubas/molten-nvim",
     event = "VeryLazy",
+    enabled = false,
     dependencies = {
       "3rd/image.nvim",
     },
@@ -17,6 +18,7 @@ return {
 
   {
     "jmbuhr/otter.nvim",
+    enabled = false,
     event = "VeryLazy",
     opts = {
       buffers = {
@@ -27,6 +29,7 @@ return {
 
   {
     "quarto-dev/quarto-nvim",
+    enabled = false,
     opts = {
       lspFeatures = {
         languages = { "r", "python", "julia", "bash", "html", "lua" },
@@ -67,16 +70,16 @@ return {
     opts = {
       ---@type lspconfig.options
       servers = {
-        pyright = {},
+        -- pyright = {},
         julials = {},
-        marksman = {
-          -- also needs:
-          -- $home/.config/marksman/config.toml :
-          -- [core]
-          -- markdown.file_extensions = ["md", "markdown", "qmd"]
-          filetypes = { "markdown", "quarto" },
-          root_dir = require("lspconfig.util").root_pattern(".git", ".marksman.toml", "_quarto.yml"),
-        },
+        -- marksman = {
+        --   -- also needs:
+        --   -- $home/.config/marksman/config.toml :
+        --   -- [core]
+        --   -- markdown.file_extensions = ["md", "markdown", "qmd"]
+        --   filetypes = { "markdown", "quarto" },
+        --   root_dir = require("lspconfig.util").root_pattern(".git", ".marksman.toml", "_quarto.yml"),
+        -- },
       },
     },
   },

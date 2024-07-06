@@ -13,7 +13,25 @@ return {
   },
 
   {
+    "mason.nvim",
+    opts = function(_, opts)
+      opts.ensure_installed = opts.ensure_installed or {}
+      vim.list_extend(opts.ensure_installed, { "hadolint" })
+    end,
+  },
+
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        dockerfile = { "hadolint" },
+      },
+    },
+  },
+
+  {
     "nvimtools/none-ls.nvim",
+    enabled = false,
     opts = function(_, opts)
       local nls = require "null-ls"
       opts.sources = opts.sources or {}

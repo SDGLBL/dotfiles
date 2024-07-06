@@ -6,8 +6,8 @@ local function show_documentation()
     vim.cmd("h " .. vim.fn.expand "<cword>")
   elseif vim.tbl_contains({ "man" }, filetype) then
     vim.cmd("Man " .. vim.fn.expand "<cword>")
-  -- elseif vim.tbl_contains({ "rust" }, filetype) then
-  --   require("rust-tools").hover_actions.hover_actions()
+    -- elseif vim.tbl_contains({ "rust" }, filetype) then
+    --   require("rust-tools").hover_actions.hover_actions()
   elseif vim.fn.expand "%:t" == "Cargo.toml" and require("crates").popup_available() then
     require("crates").show_popup()
   else
@@ -25,7 +25,7 @@ function M.on_attach(client, buffer)
   local self = M.new(client, buffer)
 
   self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
-  self:map("gr", "Telescope lsp_references", { desc = "References" })
+  -- self:map("gr", "Telescope lsp_references", { desc = "References" })
   self:map("gI", "Telescope lsp_implementations", { desc = "Goto Implementation" })
   self:map("gb", "Telescope lsp_type_definitions", { desc = "Goto Type Definition" })
   self:map("<leader>lw", "", { desc = "Workspace" })
@@ -49,8 +49,12 @@ function M.on_attach(client, buffer)
   self:map("<leader>la", vim.lsp.buf.code_action, { desc = "Code Action", mode = { "n", "v" }, has = "codeAction" })
 
   local format = require("plugins.lsp.format").format
-  self:map("<leader>lf", format, { desc = "Format Document", has = "documentFormatting" })
-  self:map("<leader>lf", format, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
+  self:map("<leader>lf", function()
+    format({ bufnr = 0 })
+  end, { desc = "Format Document", has = "documentFormatting" })
+  self:map("<leader>lf", function()
+    format { bufnr = 0 }
+  end, { desc = "Format Range", mode = "v", has = "documentRangeFormatting" })
   self:map("<leader>lr", vim.lsp.buf.rename, { expr = true, desc = "Rename", has = "rename" })
   self:map("<leader>uf", require("plugins.lsp.format").toggle, { desc = "Toggle Format on Save" })
 

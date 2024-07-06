@@ -11,13 +11,6 @@ return {
   },
 
   {
-    "williamboman/mason.nvim",
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "typescript-language-server", "js-debug-adapter" })
-    end,
-  },
-
-  {
     "nvim-cmp",
     dependencies = {
       {
@@ -35,65 +28,109 @@ return {
   },
 
   {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-    enabled = false,
-    opts = {
-      tsserver_file_preferences = {
-        -- Inlay Hints
-        includeInlayParameterNameHints = "all",
-        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHints = true,
-        includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayEnumMemberValueHints = true,
-      },
-    },
+    "yioneko/nvim-vtsls",
+    lazy = true,
+    opts = {},
     config = function(_, opts)
-      require("utils.lsp").on_attach(function(client, bufnr)
-        if client.name == "tsserver" then
-          vim.keymap.set("n", "<leader>lo", "<cmd>TSToolsOrganizeImports<cr>", { buffer = bufnr, desc = "Organize Imports" })
-          vim.keymap.set("n", "<leader>lO", "<cmd>TSToolsSortImports<cr>", { buffer = bufnr, desc = "Sort Imports" })
-          vim.keymap.set("n", "<leader>lu", "<cmd>TSToolsRemoveUnused<cr>", { buffer = bufnr, desc = "Removed Unused" })
-          vim.keymap.set("n", "<leader>lz", "<cmd>TSToolsGoToSourceDefinition<cr>", { buffer = bufnr, desc = "Go To Source Definition" })
-          vim.keymap.set("n", "<leader>lR", "<cmd>TSToolsRemoveUnusedImports<cr>", { buffer = bufnr, desc = "Removed Unused Imports" })
-          vim.keymap.set("n", "<leader>lF", "<cmd>TSToolsFixAll<cr>", { buffer = bufnr, desc = "Fix All" })
-          vim.keymap.set("n", "<leader>lA", "<cmd>TSToolsAddMissingImports<cr>", { buffer = bufnr, desc = "Add Missing Imports" })
-        end
-      end)
-      require("typescript-tools").setup(opts)
+      require("vtsls").config(opts)
     end,
   },
 
   {
     "neovim/nvim-lspconfig",
-    dependencies = { "pmizio/typescript-tools.nvim" },
     opts = {
       -- make sure mason installs the server
       servers = {
-        -- ESLint
-        eslint = {
+        tsserver = {
+          enabled = false,
+        },
+        vtsls = {
           settings = {
-            -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
-            workingDirectory = { mode = "auto" },
+            complete_function_calls = true,
+            vtsls = {
+              enableMoveToFileCodeAction = true,
+              experimental = {
+                completion = {
+                  enableServerSideFuzzyMatch = true,
+                },
+              },
+            },
+            typescript = {
+              updateImportsOnFileMove = { enabled = "always" },
+              suggest = {
+                completeFunctionCalls = true,
+              },
+              inlayHints = {
+                enumMemberValues = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                parameterNames = { enabled = "literals" },
+                parameterTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                variableTypes = { enabled = false },
+              },
+            },
+          },
+          keys = {
+            {
+              "gD",
+              function()
+                require("vtsls").commands.goto_source_definition(0)
+              end,
+              desc = "Goto Source Definition",
+            },
+            {
+              "gR",
+              function()
+                require("vtsls").commands.file_references(0)
+              end,
+              desc = "File References",
+            },
+            {
+              "<leader>co",
+              function()
+                require("vtsls").commands.organize_imports(0)
+              end,
+              desc = "Organize Imports",
+            },
+            {
+              "<leader>cM",
+              function()
+                require("vtsls").commands.add_missing_imports(0)
+              end,
+              desc = "Add missing imports",
+            },
+            {
+              "<leader>cu",
+              function()
+                require("vtsls").commands.remove_unused_imports(0)
+              end,
+              desc = "Remove unused imports",
+            },
+            {
+              "<leader>cD",
+              function()
+                require("vtsls").commands.fix_all(0)
+              end,
+              desc = "Fix all diagnostics",
+            },
+            {
+              "<leader>cV",
+              function()
+                require("vtsls").commands.select_ts_version(0)
+              end,
+              desc = "Select TS workspace version",
+            },
           },
         },
       },
       setup = {
-        eslint = function()
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            callback = function(event)
-              local client = vim.lsp.get_active_clients({ bufnr = event.buf, name = "eslint" })[1]
-              if client then
-                local diag = vim.diagnostic.get(event.buf, { namespace = vim.lsp.diagnostic.get_namespace(client.id) })
-                if #diag > 0 then
-                  vim.cmd "EslintFixAll"
-                end
-              end
-            end,
-          })
+        tsserver = function()
+          -- disable tsserver
+          return true
+        end,
+        vtsls = function(_, opts)
+          -- copy typescript settings to javascript
+          opts.settings.javascript = vim.tbl_deep_extend("force", {}, opts.settings.typescript, opts.settings.javascript or {})
         end,
       },
     },
@@ -101,108 +138,68 @@ return {
 
   {
     "mfussenegger/nvim-dap",
-    opts = {
-      setup = {
-        vscode_js_debug = function()
-          local function get_js_debug()
-            local install_path = require("mason-registry").get_package("js-debug-adapter"):get_install_path()
-            return install_path .. "/js-debug/src/dapDebugServer.js"
-          end
-
-          for _, adapter in ipairs { "pwa-node", "pwa-chrome", "pwa-msedge", "node-terminal", "pwa-extensionHost" } do
-            require("dap").adapters[adapter] = {
-              type = "server",
-              host = "localhost",
-              port = "${port}",
-              executable = {
-                command = "node",
-                args = {
-                  get_js_debug(),
-                  "${port}",
-                },
-              },
-            }
-          end
-
-          for _, language in ipairs { "typescript", "javascript" } do
-            require("dap").configurations[language] = {
-              {
-                type = "pwa-node",
-                request = "launch",
-                name = "Launch file",
-                program = "${file}",
-                cwd = "${workspaceFolder}",
-              },
-              {
-                type = "pwa-node",
-                request = "attach",
-                name = "Attach",
-                processId = require("dap.utils").pick_process,
-                cwd = "${workspaceFolder}",
-              },
-              {
-                type = "pwa-node",
-                request = "launch",
-                name = "Debug Jest Tests",
-                -- trace = true, -- include debugger info
-                runtimeExecutable = "node",
-                runtimeArgs = {
-                  "./node_modules/jest/bin/jest.js",
-                  "--runInBand",
-                },
-                rootPath = "${workspaceFolder}",
-                cwd = "${workspaceFolder}",
-                console = "integratedTerminal",
-                internalConsoleOptions = "neverOpen",
-              },
-              {
-                type = "pwa-chrome",
-                name = "Attach - Remote Debugging",
-                request = "attach",
-                program = "${file}",
-                cwd = vim.fn.getcwd(),
-                sourceMaps = true,
-                protocol = "inspector",
-                port = 9222, -- Start Chrome google-chrome --remote-debugging-port=9222
-                webRoot = "${workspaceFolder}",
-              },
-              {
-                type = "pwa-chrome",
-                name = "Launch Chrome",
-                request = "launch",
-                url = "http://localhost:5173", -- This is for Vite. Change it to the framework you use
-                webRoot = "${workspaceFolder}",
-                userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
-              },
-            }
-          end
-
-          for _, language in ipairs { "typescriptreact", "javascriptreact" } do
-            require("dap").configurations[language] = {
-              {
-                type = "pwa-chrome",
-                name = "Attach - Remote Debugging",
-                request = "attach",
-                program = "${file}",
-                cwd = vim.fn.getcwd(),
-                sourceMaps = true,
-                protocol = "inspector",
-                port = 9222, -- Start Chrome google-chrome --remote-debugging-port=9222
-                webRoot = "${workspaceFolder}",
-              },
-              {
-                type = "pwa-chrome",
-                name = "Launch Chrome",
-                request = "launch",
-                url = "http://localhost:5173", -- This is for Vite. Change it to the framework you use
-                webRoot = "${workspaceFolder}",
-                userDataDir = "${workspaceFolder}/.vscode/vscode-chrome-debug-userdatadir",
-              },
-            }
-          end
+    optional = true,
+    dependencies = {
+      {
+        "williamboman/mason.nvim",
+        opts = function(_, opts)
+          opts.ensure_installed = opts.ensure_installed or {}
+          table.insert(opts.ensure_installed, "js-debug-adapter")
         end,
       },
     },
+    opts = function()
+      local dap = require "dap"
+      if not dap.adapters["pwa-node"] then
+        require("dap").adapters["pwa-node"] = {
+          type = "server",
+          host = "localhost",
+          port = "${port}",
+          executable = {
+            command = "node",
+            -- 💀 Make sure to update this path to point to your installation
+            args = {
+              require("mason-registry").get_package("js-debug-adapter"):get_install_path() .. "/js-debug/src/dapDebugServer.js",
+              "${port}",
+            },
+          },
+        }
+      end
+      if not dap.adapters["node"] then
+        dap.adapters["node"] = function(cb, config)
+          if config.type == "node" then
+            config.type = "pwa-node"
+          end
+          local nativeAdapter = dap.adapters["pwa-node"]
+          if type(nativeAdapter) == "function" then
+            nativeAdapter(cb, config)
+          else
+            cb(nativeAdapter)
+          end
+        end
+      end
+
+      for _, language in ipairs { "typescript", "javascript", "typescriptreact", "javascriptreact" } do
+        if not dap.configurations[language] then
+          dap.configurations[language] = {
+            {
+              type = "pwa-node",
+              request = "launch",
+              name = "Launch file",
+              program = "${file}",
+              cwd = "${workspaceFolder}",
+            },
+            {
+              type = "pwa-node",
+              request = "attach",
+              name = "Attach",
+              processId = require("dap.utils").pick_process,
+              cwd = "${workspaceFolder}",
+            },
+          }
+        end
+      end
+    end,
   },
 
   {

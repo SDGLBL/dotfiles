@@ -19,7 +19,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      { "folke/neoconf.nvim",       cmd = "Neoconf",                                                            config = true },
       { "ray-x/lsp_signature.nvim", opts = { hint_prefix = require("utils.icons").diagnostics.BoldHint .. " " } },
       {
         "RRethy/vim-illuminate",
@@ -92,6 +92,7 @@ return {
 
   {
     "nvimtools/none-ls.nvim",
+    enabled = false,
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "mason.nvim" },
     opts = function()
@@ -145,6 +146,7 @@ return {
         local self = require("plugins.lsp.keymaps").new(client, bufnr)
 
         self:map("gh", "Lspsaga finder", { desc = "Lspsaga finder" })
+        self:map("gr", "Lspsaga finder", { desc = "Lspsaga finder" })
         self:map("gp", "Lspsaga peek_definition", { desc = "Lspsaga peek_definition" })
         -- self:map("gd", "Lspsaga goto_definition", { desc = "Lspsaga goto_definition" })
         -- self:map("<leader>la", "Lspsaga code_action", { desc = "Lspsaga code_action", mode = { "n", "v" }, has = "codeAction" })
@@ -194,17 +196,17 @@ return {
     -- dependencies = { "nvim-telescope/telescope.nvim" },
     -- stylua: ignore
     keys = {
-      { "<leader>rs", function() require("telescope").extensions.refactoring.refactors() end, mode = { "v" }, desc = "Refactor" },
-      { "<leader>ri", function() require("refactoring").refactor "Inline Variable" end, mode = { "n", "v" }, desc = "Inline Variable" },
-      { "<leader>rb", function() require("refactoring").refactor "Extract Block" end, mode = { "n" }, desc = "Extract Block" },
-      { "<leader>rf", function() require("refactoring").refactor "Extract Block To File" end, mode = { "n" }, desc = "Extract Block to File" },
-      { "<leader>rP", function() require("refactoring").debug.printf { below = false } end, mode = { "n" }, desc = "Debug Print" },
-      { "<leader>rp", function() require("refactoring").debug.print_var { normal = true } end, mode = { "n" }, desc = "Debug Print Variable" },
-      { "<leader>rc", function() require("refactoring").debug.cleanup {} end, mode = { "n" }, desc = "Debug Cleanup" },
-      { "<leader>rf", function() require("refactoring").refactor "Extract Function" end, mode = { "v" }, desc = "Extract Function" },
-      { "<leader>rF", function() require("refactoring").refactor "Extract Function to File" end, mode = { "v" }, desc = "Extract Function to File" },
-      { "<leader>rx", function() require("refactoring").refactor "Extract Variable" end, mode = { "v" }, desc = "Extract Variable" },
-      { "<leader>rp", function() require("refactoring").debug.print_var {} end, mode = { "v" }, desc = "Debug Print Variable" },
+      { "<leader>rs", function() require("telescope").extensions.refactoring.refactors() end,    mode = { "v" },      desc = "Refactor" },
+      { "<leader>ri", function() require("refactoring").refactor "Inline Variable" end,          mode = { "n", "v" }, desc = "Inline Variable" },
+      { "<leader>rb", function() require("refactoring").refactor "Extract Block" end,            mode = { "n" },      desc = "Extract Block" },
+      { "<leader>rf", function() require("refactoring").refactor "Extract Block To File" end,    mode = { "n" },      desc = "Extract Block to File" },
+      { "<leader>rP", function() require("refactoring").debug.printf { below = false } end,      mode = { "n" },      desc = "Debug Print" },
+      { "<leader>rp", function() require("refactoring").debug.print_var { normal = true } end,   mode = { "n" },      desc = "Debug Print Variable" },
+      { "<leader>rc", function() require("refactoring").debug.cleanup {} end,                    mode = { "n" },      desc = "Debug Cleanup" },
+      { "<leader>rf", function() require("refactoring").refactor "Extract Function" end,         mode = { "v" },      desc = "Extract Function" },
+      { "<leader>rF", function() require("refactoring").refactor "Extract Function to File" end, mode = { "v" },      desc = "Extract Function to File" },
+      { "<leader>rx", function() require("refactoring").refactor "Extract Variable" end,         mode = { "v" },      desc = "Extract Variable" },
+      { "<leader>rp", function() require("refactoring").debug.print_var {} end,                  mode = { "v" },      desc = "Debug Print Variable" },
     },
     config = function()
       if not configs.refactor then
@@ -255,7 +257,7 @@ return {
     opts = { use_diagnostic_signs = true },
     keys = {
       { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
-      { "<leader>lD", "<cmd>Trouble diagnostics toggle<cr>", desc = "Workspace Diagnostics" },
+      { "<leader>lD", "<cmd>Trouble diagnostics toggle<cr>",              desc = "Workspace Diagnostics" },
       {
         "[q",
         function()
@@ -295,12 +297,65 @@ return {
   {
     "danymat/neogen",
     keys = {
-      { "<leader>lgt", "<cmd>Neogen type<cr>", desc = "Type doc" },
+      { "<leader>lgt", "<cmd>Neogen type<cr>",  desc = "Type doc" },
       { "<leader>lgc", "<cmd>Neogen class<cr>", desc = "Class doc" },
-      { "<leader>lgf", "<cmd>Neogen func<cr>", desc = "Func doc" },
-      { "<leader>lgd", "<cmd>Neogen file<cr>", desc = "Doc doc" },
+      { "<leader>lgf", "<cmd>Neogen func<cr>",  desc = "Func doc" },
+      { "<leader>lgd", "<cmd>Neogen file<cr>",  desc = "Doc doc" },
     },
     event = "VeryLazy",
     config = true,
+  },
+
+  {
+    "stevearc/conform.nvim",
+    dependencies = { "mason.nvim" },
+    lazy = true,
+    cmd = "ConformInfo",
+    keys = {
+      {
+        "<leader>lF",
+        function()
+          require("conform").format { formatters = { "injected" }, timeout_ms = 3000 }
+        end,
+        mode = { "n", "v" },
+        desc = "Format Injected Langs",
+      },
+    },
+    opts = function()
+      ---@class ConformOpts
+      local opts = {
+        -- LazyVim will use these options when formatting with the conform.nvim formatter
+        format = {
+          timeout_ms = 3000,
+          async = false,       -- not recommended to change
+          quiet = false,       -- not recommended to change
+          lsp_fallback = true, -- not recommended to change
+        },
+        ---@type table<string, conform.FormatterUnit[]>
+        formatters_by_ft = {
+          lua = { "stylua" },
+          fish = { "fish_indent" },
+          sh = { "shfmt" },
+        },
+        -- The options you set here will be merged with the builtin formatters.
+        -- You can also define any custom formatters here.
+        ---@type table<string, conform.FormatterConfigOverride|fun(bufnr: integer): nil|conform.FormatterConfigOverride>
+        formatters = {
+          injected = { options = { ignore_errors = true } },
+          -- # Example of using dprint only when a dprint.json file is present
+          -- dprint = {
+          --   condition = function(ctx)
+          --     return vim.fs.find({ "dprint.json" }, { path = ctx.filename, upward = true })[1]
+          --   end,
+          -- },
+          --
+          -- # Example of using shfmt with extra args
+          -- shfmt = {
+          --   prepend_args = { "-i", "2", "-ci" },
+          -- },
+        },
+      }
+      return opts
+    end,
   },
 }
