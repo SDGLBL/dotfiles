@@ -1,4 +1,4 @@
-import = ["/Users/lijie/.config/alacritty/theme/GruvboxDarkHard.toml"]
+import = ["/Users/lijie/.config/alacritty/themes/themes/rose-pine.toml"]
 live_config_reload = true
 
 [colors]
@@ -201,6 +201,7 @@ program = "/bin/zsh"
 [window]
 decorations = "full"
 dynamic_title = true
-opacity = 0.8
+opacity = 0.6
 blur = true
 startup_mode = "SimpleFullscreen"
+option_as_alt = "OnlyLeft"
