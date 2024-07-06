@@ -1,3 +1,6 @@
+snippet discl "Disable cspell line"
+	// cspell:disable-line
+
 snippet v "shorthand variable declaration"
 	${1} := ${2}
 
@@ -47,13 +50,6 @@ snippet dfr "defer recover"
 	defer func() {
 		if re := recover(); re != nil {
 			${0:${VISUAL}}
-		}
-	}()
-
-snippet dfrl "defer recover warn log"
-	defer func() {
-		if re := recover(); re != nil {
-			utils.WarnLog(ctx, fmt.Sprintf("${0:${VISUAL}} panic: %v", re))
 		}
 	}()
 
