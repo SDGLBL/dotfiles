@@ -1,15 +1,5 @@
 return {
   {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      defaults = {
-        -- ["<leader>t"] = { name = "+Terminal" },
-      },
-    },
-  },
-
-  {
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
     commit = "12cba0a",
