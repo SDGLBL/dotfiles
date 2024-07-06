@@ -55,10 +55,41 @@ vim.o.qftf = "{info -> v:lua._G.qftf(info)}"
 return {
   {
     "nvim-pack/nvim-spectre",
-    -- stylua: ignore
+    enabled = false,
     keys = {
-      { "<leader>sr", function() require("spectre").open() end, desc = "Search and Replace (Spectre)" },
+      {
+        "<leader>sr",
+        function()
+          require("spectre").open()
+        end,
+        desc = "Search and Replace (Spectre)",
+      },
     },
+  },
+
+  {
+    "MagicDuck/grug-far.nvim",
+    keys = {
+      {
+        "<leader>sr",
+        function()
+          require("grug-far").grug_far()
+        end,
+        desc = "Search and Replace (GrugFar)",
+        mode = { "n" },
+      },
+      {
+        "<leader>sr",
+        function()
+          require("grug-far").with_visual_selection()
+        end,
+        desc = "Search and Replace (GrugFar)",
+        mode = { "v" },
+      },
+    },
+    config = function()
+      require("grug-far").setup()
+    end,
   },
 
   {
