@@ -201,4 +201,11 @@ return {
       { "<leader>c", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
     },
   },
+
+  {
+    "nvim-zh/colorful-winsep.nvim",
+    config = true,
+    event = { "WinNew" },
+  },
+
 }
