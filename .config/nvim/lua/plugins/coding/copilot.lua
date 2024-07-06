@@ -29,6 +29,16 @@ return {
         desc = "CopilotDismiss",
         mode = { "i" },
       },
+      {
+        "<C-j>",
+        "<Plug>(copilot-accept)",
+        desc = "CopilotAccept",
+        mode = { "i" },
+        callback = function()
+          require("cmp").mapping.abort()(function() end)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-accept)", true, true, true), "m", true)
+        end,
+      },
     },
     config = function()
       -- copilot setup
@@ -51,6 +61,13 @@ return {
         ["norg"] = true,
         ["sh"] = true,
       }
+
+      vim.keymap.set("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
+        expr = true,
+        replace_keycodes = false,
+      })
+
+      vim.keymap.set("i", "<C-L>", "<Plug>(copilot-accept-word)")
     end,
   },
 }
