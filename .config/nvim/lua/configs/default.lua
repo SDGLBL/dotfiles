@@ -371,7 +371,7 @@ return {
 
     -- colorscheme style
     vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
-    vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+    vim.g.sonokai_style = "maia"    -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
     vim.g.tokyonight_style = "night"
     vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
     vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
@@ -438,6 +438,9 @@ return {
       vim.g.neovide_window_blurred = true
       vim.g.neovide_floating_shadow = true
       vim.g.neovide_floating_z_height = 10
+      vim.g.neovide_floating_blurred = true
+      vim.g.neovide_floating_blur_amount_x = 2.0
+      vim.g.neovide_floating_blur_amount_y = 2.0
       vim.g.neovide_light_angle_degrees = 45
       vim.g.neovide_light_radius = 5
       vim.g.neovide_theme = "auto"
