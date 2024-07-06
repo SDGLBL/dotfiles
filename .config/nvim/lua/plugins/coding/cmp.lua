@@ -1,4 +1,5 @@
 local icons = require "utils.icons"
+local cmp_utils = require "utils.cmp"
 
 local kind_icons = {
   Array = icons.kind.Array .. " ",
@@ -109,10 +110,14 @@ return {
       vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", default = true })
       local cmp = require "cmp"
       local defaults = require "cmp.config.default"()
+      local auto_select = true
       return {
-        auto_brackets = {}, -- configure any filetype to auto add brackets
+        auto_brackets = {
+          "python",
+          "lua",
+        }, -- configure any filetype to auto add brackets
         completion = {
-          completeopt = "menu,menuone,noinsert",
+          completeopt = "menu,menuone,noinsert" .. (auto_select and "" or ",noselect"),
         },
         view = {
           entries = {
@@ -126,16 +131,15 @@ return {
           ["<C-f>"] = cmp.mapping.scroll_docs(4),
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
-          ["<CR>"] = cmp.mapping.confirm { select = true }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          ["<S-CR>"] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+          ["<CR>"] = cmp_utils.confirm { select = auto_select },
+          ["<C-y>"] = cmp_utils.confirm { select = true },
+          ["<S-CR>"] = cmp_utils.confirm { behavior = cmp.ConfirmBehavior.Replace }, -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
           ["<C-CR>"] = function(fallback)
             cmp.abort()
             fallback()
           end,
         },
+        preselect = cmp.PreselectMode.None,
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "buffer" },

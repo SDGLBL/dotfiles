@@ -29,48 +29,16 @@ return {
       {
         "<Tab>",
         function()
-          local cmp = require "cmp"
-          cmp.mapping.abort()
-
-          local copilot_keys = vim.fn["copilot#Accept"]()
-          if copilot_keys ~= "" then
-            vim.api.nvim_feedkeys(copilot_keys, "i", true)
-            return
-          end
-
-          if vim.snippet.active { direction = 1 } then
-            vim.schedule(function()
-              vim.snippet.jump(1)
-            end)
-            return
-          end
-          return "<Tab>"
+          return vim.snippet.active { direction = 1 } and "<cmd>lua vim.snippet.jump(1)<cr>" or "<Tab>"
         end,
         expr = true,
         silent = true,
-        mode = "i",
-      },
-      {
-        "<Tab>",
-        function()
-          vim.schedule(function()
-            vim.snippet.jump(1)
-          end)
-        end,
-        expr = true,
-        silent = true,
-        mode = "s",
+        mode = { "i", "s" },
       },
       {
         "<S-Tab>",
         function()
-          if vim.snippet.active { direction = -1 } then
-            vim.schedule(function()
-              vim.snippet.jump(-1)
-            end)
-            return
-          end
-          return "<S-Tab>"
+          return vim.snippet.active { direction = -1 } and "<cmd>lua vim.snippet.jump(-1)<cr>" or "<S-Tab>"
         end,
         expr = true,
         silent = true,
