@@ -257,13 +257,14 @@ return {
       -- "nvim-neotest/neotest-go",
       "fredrikaverpil/neotest-golang",
     },
-    opts = function(_, opts)
-      -- vim.list_extend(opts.adapters, {
-      --   require "neotest-go",
-      -- })
-      vim.list_extend(opts.adapters, {
-        require "neotest-golang" { dap_go_enabled = true },
-      })
-    end,
+    opts = {
+      adapters = {
+        ["neotest-golang"] = {
+          -- Here we can set options for neotest-golang, e.g.
+          -- go_test_args = { "-v", "-race", "-count=1", "-timeout=60s" },
+          dap_go_enabled = true, -- requires leoluz/nvim-dap-go
+        },
+      },
+    },
   },
 }
