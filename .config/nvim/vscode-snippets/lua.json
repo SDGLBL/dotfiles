@@ -1,4 +1,11 @@
 {
+    "inspect": {
+    "prefix":"inspect",
+    "description":"inspect function",
+    "body":[
+      "vim.notify(vim.inspect(${0}))"
+    ]
+  },
     "print_table": {
         "prefix": "print_table",
         "description": "print table function",
