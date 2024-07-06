@@ -8,6 +8,7 @@ return {
 
   {
     "weilbith/nvim-code-action-menu",
+    enabled = false,
   },
 
   -- windows tint
@@ -174,7 +175,6 @@ return {
 
   {
     "axkirillov/hbac.nvim",
-    event = "VeryLazy",
     opts = {
       autoclose = true,
       threshold = 10,
