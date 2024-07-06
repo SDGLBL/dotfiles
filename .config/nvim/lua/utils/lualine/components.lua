@@ -120,14 +120,27 @@ return {
       end
 
       -- add formatter
-      local formatters = require "utils.null-ls.formatters"
-      local supported_formatters = formatters.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_formatters)
+      local formatters = require("conform").list_formatters(0)
+      for _, formatter in ipairs(formatters) do
+        table.insert(buf_client_names, formatter.name)
+      end
+
+      -- add linnets
+      local linters = require("lint").get_running()
+      -- vim.notify(vim.inspect(linters))
+      for _, linter in ipairs(linters) do
+        table.insert(buf_client_names, linter)
+      end
+
+      -- add formatter
+      -- local formatters = require "utils.null-ls.formatters"
+      -- local supported_formatters = formatters.list_registered(buf_ft)
+      -- vim.list_extend(buf_client_names, supported_formatters)
 
       -- add linter
-      local linters = require "utils.null-ls.linters"
-      local supported_linters = linters.list_registered(buf_ft)
-      vim.list_extend(buf_client_names, supported_linters)
+      -- local linters = require "utils.null-ls.linters"
+      -- local supported_linters = linters.list_registered(buf_ft)
+      -- vim.list_extend(buf_client_names, supported_linters)
 
       -- add code actions
       -- local code_actions = require "utils.null-ls.code_actions"
@@ -144,7 +157,8 @@ return {
 
       for _, v in ipairs(buf_client_names) do
         if not hash[v] then
-          unique_client_names[#unique_client_names + 1] = v -- you could print here instead of saving to result table if you wanted
+          unique_client_names[#unique_client_names + 1] =
+              v -- you could print here instead of saving to result table if you wanted
           hash[v] = true
         end
       end
@@ -152,13 +166,13 @@ return {
       for i, client_name in ipairs(unique_client_names) do
         local cn_icons = {}
 
-        if vim.tbl_contains(supported_formatters, client_name) then
-          table.insert(cn_icons, icons.lsp.Formatter)
-        end
+        -- if vim.tbl_contains(supported_formatters, client_name) then
+        --   table.insert(cn_icons, icons.lsp.Formatter)
+        -- end
 
-        if vim.tbl_contains(supported_linters, client_name) then
-          table.insert(cn_icons, icons.lsp.Linter)
-        end
+        -- if vim.tbl_contains(supported_linters, client_name) then
+        --   table.insert(cn_icons, icons.lsp.Linter)
+        -- end
 
         -- if vim.tbl_contains(supported_code_actions, client_name) then
         --   table.insert(cn_icons, icons.lsp.CodeAction)

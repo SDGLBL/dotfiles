@@ -10,6 +10,7 @@ return {
   {
     "nacro90/numb.nvim",
     event = "BufReadPre",
+    enabled = false,
     config = true,
   },
 
@@ -23,6 +24,7 @@ return {
   {
     "SDGLBL/ggl.nvim",
     cmd = { "GLineLink", "GPermaLink" },
+    enabled = false,
     config = true,
   },
 }

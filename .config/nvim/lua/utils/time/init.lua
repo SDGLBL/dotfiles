@@ -9,7 +9,7 @@ function M.is_dark(sunrise, sunset)
   end
 
   sunrise = sunrise or 6
-  sunset = sunset or 19
+  sunset = sunset or 20
 
   local hour = tonumber(os.date "%H")
   return hour < sunrise or hour >= sunset

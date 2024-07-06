@@ -1,15 +1,20 @@
+-- 定义一个模块 M
 M = {}
 
+-- 引入 utils.table 模块
 local tbl = require "utils.table"
 
---- check if a client is active
----@param name string
----@return boolean
+--- 检查一个客户端是否处于活动状态
+---@param name string 客户端名称
+---@return boolean 返回布尔值，表示客户端是否处于活动状态
 function M.is_client_active(name)
   local clients = vim.lsp.get_clients { name = name }
   return #clients > 0
 end
 
+--- 根据文件类型获取活动的客户端
+---@param filetype string 文件类型
+---@return table 返回匹配的客户端列表
 function M.get_active_clients_by_ft(filetype)
   local matches = {}
   local clients = vim.lsp.get_clients()
@@ -23,6 +28,9 @@ function M.get_active_clients_by_ft(filetype)
   return matches
 end
 
+--- 获取客户端的能力
+---@param client_id number 客户端 ID
+---@return table 返回客户端的能力列表
 function M.get_client_capabilities(client_id)
   local client
   if not client_id then
@@ -52,9 +60,9 @@ function M.get_client_capabilities(client_id)
   return enabled_caps
 end
 
----Get supported filetypes per server
----@param server_name string can be any server supported by nvim-lsp-installer
----@return table supported filestypes as a list of strings
+--- 获取每个服务器支持的文件类型
+---@param server_name string 服务器名称，可以是 nvim-lsp-installer 支持的任何服务器
+---@return table 返回支持的文件类型列表
 function M.get_supported_filetypes(server_name)
   local status_ok, lsp_installer_servers = pcall(require, "nvim-lsp-installer.servers")
   if not status_ok then
@@ -69,16 +77,16 @@ function M.get_supported_filetypes(server_name)
   return requested_server:get_supported_filetypes()
 end
 
----Get supported servers per filetype
----@param filetype string
----@return table list of names of supported servers
+--- 获取每个文件类型支持的服务器
+---@param filetype string 文件类型
+---@return table 返回支持的服务器名称列表
 function M.get_supported_servers_per_filetype(filetype)
   local filetype_server_map = require "nvim-lsp-installer._generated.filetype_map"
   return filetype_server_map[filetype]
 end
 
----Get all supported filetypes by nvim-lsp-installer
----@return table supported filestypes as a list of strings
+--- 获取 nvim-lsp-installer 支持的所有文件类型
+---@return table 返回支持的文件类型列表
 function M.get_all_supported_filetypes()
   local status_ok, lsp_installer_filetypes = pcall(require, "nvim-lsp-installer._generated.filetype_map")
   if not status_ok then
@@ -87,6 +95,9 @@ function M.get_all_supported_filetypes()
   return vim.tbl_keys(lsp_installer_filetypes or {})
 end
 
+--- 设置文档高亮
+---@param client table 客户端对象
+---@param bufnr number 缓冲区编号
 function M.setup_document_highlight(client, bufnr)
   local status_ok, highlight_supported = pcall(function()
     return client.supports_method "textDocument/documentHighlight"
@@ -112,6 +123,9 @@ function M.setup_document_highlight(client, bufnr)
   })
 end
 
+--- 设置代码镜头刷新
+---@param client table 客户端对象
+---@param bufnr number 缓冲区编号
 function M.setup_codelens_refresh(client, bufnr)
   local status_ok, codelens_supported = pcall(function()
     return client.supports_method "textDocument/codeLens"
@@ -132,6 +146,7 @@ function M.setup_codelens_refresh(client, bufnr)
   })
 end
 
+--- 处理 LSP 附加事件
 --   vararg table:
 --     • group (string|integer) optional: autocommand group name or
 --       id to match against.
@@ -148,8 +163,8 @@ end
 --       autocommand only once |autocmd-once|.
 --     • nested (boolean) optional: defaults to false. Run nested
 --       autocommands |autocmd-nested|.
----@param on_attach fun(client, bufnr)
----@vararg table
+---@param on_attach fun(client, bufnr) 附加函数
+---@vararg table 可变参数表
 ---@return nil
 function M.on_attach(on_attach, ...)
   local opts = {
@@ -169,9 +184,9 @@ function M.on_attach(on_attach, ...)
         return
       end
 
-      -- get filetype of current buffer
+      -- 获取当前缓冲区的文件类型
       local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
-      -- when filetype equal NvimTree,alpha,Outline,neo-tree, undotree, gundo, sagaoutline
+      -- 当文件类型等于 NvimTree, alpha, Outline, neo-tree, undotree, gundo, saga-outline 时
       local disabled_fts = { "NvimTree", "alpha", "Outline", "neo-tree", "undotree", "gundo", "saga-outline" }
       if vim.tbl_contains(disabled_fts, filetype) then
         return
@@ -195,8 +210,9 @@ function M.on_attach(on_attach, ...)
   vim.api.nvim_create_autocmd("LspAttach", opts)
 end
 
----@param from string
----@param to string
+--- 处理文件重命名事件
+---@param from string 原文件名
+---@param to string 新文件名
 function M.on_rename(from, to)
   local clients = M.get_clients()
   for _, client in ipairs(clients) do
@@ -217,4 +233,5 @@ function M.on_rename(from, to)
   end
 end
 
+-- 返回模块 M
 return M
