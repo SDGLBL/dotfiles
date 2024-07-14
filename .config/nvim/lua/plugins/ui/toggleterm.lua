@@ -2,7 +2,7 @@ return {
   {
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
-    commit = "12cba0a",
+    -- commit = "12cba0a",
     keys = {
       -- { "<leader>tn", "<cmd>lua _NODE_TOGGLE()<cr>", desc = "Node" },
       -- { "<leader>tu", "<cmd>lua _NCDU_TOGGLE()<cr>", desc = "NCDU" },
@@ -19,7 +19,7 @@ return {
       toggleterm.setup {
         size = function(term)
           if term.direction == "horizontal" then
-            return 15
+            return 18
           elseif term.direction == "vertical" then
             return vim.o.columns * 0.4
           end
@@ -33,7 +33,7 @@ return {
         insert_mappings = true,
         persist_size = true,
         -- float
-        direction = "float",
+        direction = "horizontal",
         close_on_exit = false,
         shell = vim.o.shell,
         float_opts = {
