@@ -39,6 +39,16 @@ return {
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-accept)", true, true, true), "m", true)
         end,
       },
+      {
+        "<C-l>",
+        "<Plug>(copilot-accept-word)",
+        desc = "CopilotAcceptWord",
+        mode = { "i" },
+        callback = function()
+          require("cmp").mapping.abort()(function() end)
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-accept-word)", true, true, true), "m", true)
+        end,
+      },
     },
     config = function()
       -- copilot setup
