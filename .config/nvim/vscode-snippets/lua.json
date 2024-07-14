@@ -1,11 +1,11 @@
 {
     "inspect": {
-    "prefix":"inspect",
-    "description":"inspect function",
-    "body":[
-      "vim.notify(vim.inspect(${0}))"
-    ]
-  },
+        "prefix": "inspect",
+        "description": "inspect function",
+        "body": [
+            "vim.notify(vim.inspect(${0}))"
+        ]
+    },
     "print_table": {
         "prefix": "print_table",
         "description": "print table function",
@@ -49,6 +49,13 @@
             "end",
             "",
             "vim.cmd [[ autocmd User packer-$1 lua Config() ]]"
+        ]
+    },
+    "style_ignore": {
+        "prefix": "style_ignore",
+        "description": "Ignore a stylelint rule",
+        "body": [
+            "-- stylua: ignore "
         ]
     }
 }
