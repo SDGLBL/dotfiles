@@ -16,22 +16,6 @@ return {
         "stevearc/dressing.nvim", -- Optional: Improves the default Neovim UI
         opts = {},
       },
-      {
-        "folke/edgy.nvim",
-        event = "VeryLazy",
-        init = function()
-          vim.opt.laststatus = 3
-          vim.opt.splitkeep = "screen"
-        end,
-        opts = {
-          animate = {
-            enabled = false,
-          },
-          right = {
-            { ft = "codecompanion", title = "Code Companion Chat", size = { width = 0.45 } },
-          },
-        },
-      },
     },
     keys = {
       { "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Actions" },
@@ -40,12 +24,23 @@ return {
       { "<leader>at", "<cmd>CodeCompanionToggle<cr>", mode = { "n", "v" }, desc = "Toggle" },
     },
     config = function(_, _)
-      vim.cmd [[cab cc CodeCompanion]]
+      vim.cmd [[cab cc CodeCompanionCopilot]]
       vim.cmd [[cab ccb CodeCompanionWithBuffers]]
 
       require("codecompanion").setup {
-        log_level = vim.log.levels.INFO,
+        opts = {
+          log_level = "INFO",
+          -- log_level = "TRACE",
+        },
         adapters = {
+          ollama = require("codecompanion.adapters").use("ollama", {
+            schema = {
+              model = {
+                default = "llama3.1",
+                choices = {},
+              },
+            },
+          }),
           openai = require("codecompanion.adapters").use("openai", {
             env = {
               api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
@@ -56,10 +51,32 @@ return {
                 default = "gpt-4o",
                 choices = {
                   "gpt-4o",
+                  "gpt-4o-mini",
                   "gpt-4-turbo-preview",
                   "gpt-4",
                   "gpt-3.5-turbo",
                 },
+              },
+            },
+          }),
+          deepseek = require("codecompanion.adapters").use("openai", {
+            env = {
+              api_key = "cmd:gpg --decrypt ~/.deepseek-api-key.gpg 2>/dev/null",
+            },
+            url = os.getenv "DEEPSEEK_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "deepseek-coder",
+                choices = {
+                  "deepseek-coder",
+                  "deepseek-chat",
+                },
+              },
+              max_token = {
+                default = 8192,
+              },
+              temperature = {
+                default = 1,
               },
             },
           }),
@@ -70,19 +87,37 @@ return {
             url = os.getenv "OPENAI_API_BASE" .. "/messages",
             schema = {
               model = {
-                default = "claude-3-5-sonnet",
+                default = "claude-3-5-sonnet-20240620",
+                -- default = "claude-3-haiku-20240620",
               },
             },
           }),
         },
-        actions = {
-          require("plugins.ai.inline_actions").generate_inline_action,
-          require("plugins.ai.inline_actions").translate_inline_action,
-        },
         strategies = {
-          chat = "openai",
-          inline = "anthropic",
-          tool = "openai",
+          chat = {
+            adapter = "deepseek",
+          },
+          inline = {
+            adapter = "anthropic",
+          },
+          agent = {
+            adapter = "deepseek",
+            tools = {
+              opts = {
+                auto_submit_errors = false,
+                auto_submit_success = false,
+              },
+            },
+          },
+        },
+        default_prompts = {
+          -- ["(/comment filed)Add struct filed comments"] = require("plugins.ai.inline_prompts").add_struct_field_comment,
+          ["(/doc cn)"] = require("plugins.ai.inline_prompts").add_cn_doc_comment,
+          ["(/doc en)"] = require("plugins.ai.inline_prompts").add_en_doc_comment,
+          ["(/commit cn)"] = require("plugins.ai.inline_prompts").generate_cn_git_message,
+          ["(/commit en)"] = require("plugins.ai.inline_prompts").generate_en_git_message,
+          ["(/translate cn)"] = require("plugins.ai.inline_prompts").translate_to_cn,
+          ["(/translate en)"] = require("plugins.ai.inline_prompts").translate_to_en,
         },
         display = {
           inline = {
@@ -90,10 +125,11 @@ return {
               enabled = false,
             },
           },
+          chat = {
+            show_settings = true,
+          },
         },
       }
-
-      -- require "telescope".load_extension "codecompanion"
     end,
   },
 
