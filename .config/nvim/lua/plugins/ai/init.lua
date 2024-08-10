@@ -1,6 +1,7 @@
 return {
   {
     "olimorris/codecompanion.nvim",
+    commit = "4fadafcf93c9cff736e4305e62b36f6930818728",
     -- dir = "~/project/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
@@ -22,6 +23,10 @@ return {
       { "<leader>ai", "<cmd>CodeCompanion<cr>", mode = { "n", "v" }, desc = "InlineCode" },
       { "<leader>av", "<cmd>CodeCompanionAdd<cr>", mode = { "v" }, desc = "Add Visual" },
       { "<leader>at", "<cmd>CodeCompanionToggle<cr>", mode = { "n", "v" }, desc = "Toggle" },
+      { "<leader>am", desc = "Switch Mode Chat" },
+      { "<leader>ama", "<cmd>CodeCompanionChat anthropic<cr>", mode = { "n", "v" }, desc = "Anthropic" },
+      { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
+      { "<leader>amo", "<cmd>CodeCompanionChat openai<cr>", mode = { "n", "v" }, desc = "Openai" },
     },
     config = function(_, _)
       vim.cmd [[cab cc CodeCompanionCopilot]]
@@ -29,8 +34,8 @@ return {
 
       require("codecompanion").setup {
         opts = {
-          log_level = "INFO",
-          -- log_level = "TRACE",
+          -- log_level = "INFO",
+          log_level = "TRACE",
         },
         adapters = {
           ollama = require("codecompanion.adapters").use("ollama", {
@@ -48,11 +53,13 @@ return {
             url = os.getenv "OPENAI_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "gpt-4o",
+                default = "gpt-4o-2024-08-06",
+                -- default = "gpt-4o-mini",
                 choices = {
                   "gpt-4o",
                   "gpt-4o-mini",
                   "gpt-4-turbo-preview",
+                  "gpt-4o-2024-08-06",
                   "gpt-4",
                   "gpt-3.5-turbo",
                 },
@@ -66,7 +73,7 @@ return {
             url = os.getenv "DEEPSEEK_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "deepseek-coder",
+                default = "deepseek-chat",
                 choices = {
                   "deepseek-coder",
                   "deepseek-chat",
@@ -95,10 +102,10 @@ return {
         },
         strategies = {
           chat = {
-            adapter = "deepseek",
+            adapter = "openai",
           },
           inline = {
-            adapter = "anthropic",
+            adapter = "openai",
           },
           agent = {
             adapter = "deepseek",
@@ -110,14 +117,9 @@ return {
             },
           },
         },
-        default_prompts = {
-          -- ["(/comment filed)Add struct filed comments"] = require("plugins.ai.inline_prompts").add_struct_field_comment,
-          ["(/doc cn)"] = require("plugins.ai.inline_prompts").add_cn_doc_comment,
-          ["(/doc en)"] = require("plugins.ai.inline_prompts").add_en_doc_comment,
-          ["(/commit cn)"] = require("plugins.ai.inline_prompts").generate_cn_git_message,
-          ["(/commit en)"] = require("plugins.ai.inline_prompts").generate_en_git_message,
-          ["(/translate cn)"] = require("plugins.ai.inline_prompts").translate_to_cn,
-          ["(/translate en)"] = require("plugins.ai.inline_prompts").translate_to_en,
+        actions = {
+          require("plugins.ai.actions").translate,
+          require("plugins.ai.actions").write,
         },
         display = {
           inline = {
