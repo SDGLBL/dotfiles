@@ -8,10 +8,14 @@ return {
     },
     version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
     build = ":UpdateRemotePlugins",
+    keys = {
+      { "<leader>qrp", ":MoltenOpenInBrowser<cr>", desc = "Preview in browser" },
+      { "<leader>qri", ":MoltenImagePopup<cr>", desc = "Preview in browser" },
+    },
     init = function()
       -- this is an example, not a default. Please see the readme for more configuration options
       vim.g.molten_output_win_max_height = 12
-      vim.g.python3_host_prog = vim.fn.expand "~/venvs/neovim-venv/bin/python3"
+      -- vim.g.python3_host_prog = vim.fn.expand "~/venvs/neovim-venv/bin/python3"
       vim.g.molten_image_provider = "image_nvim"
     end,
   },
@@ -46,6 +50,7 @@ return {
       { "<leader>qp", ":lua require'quarto'.quartoPreview()<cr>", desc = "quarto preview" },
       { "<leader>qq", ":lua require'quarto'.quartoClosePreview()<cr>", desc = "quarto close" },
       { "<leader>qr", desc = "Run" },
+      { "<C-S-Enter>", function()require("quarto.runner").run_cell() end, desc = "Run Cell" },
       { "<leader>qrc", function()require("quarto.runner").run_cell() end, desc = "Run Cell" },
       { "<leader>qra", function()require("quarto.runner").run_above() end, desc = "Run Cell And Above" },
       { "<leader>qrA", function()require("quarto.runner").run_all() end, desc = "Run All" },
@@ -55,14 +60,31 @@ return {
   },
 
   {
-    "hrsh7th/nvim-cmp",
-    dependencies = { "jmbuhr/otter.nvim" },
-    opts = function(_, opts)
-      ---@param opts cmp.ConfigSchema
-      local cmp = require "cmp"
-      opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "otter" } }, 1))
-    end,
+    "jmbuhr/otter.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {},
+    keys = {
+      {
+        "<leader>qi",
+        function()
+          require("otter").activate()
+        end,
+        desc = "otter activate",
+      },
+    },
   },
+
+  -- {
+  --   "hrsh7th/nvim-cmp",
+  --   dependencies = { "jmbuhr/otter.nvim" },
+  --   opts = function(_, opts)
+  --     ---@param opts cmp.ConfigSchema
+  --     local cmp = require "cmp"
+  --     opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "otter" } }, 1))
+  --   end,
+  -- },
 
   {
     "neovim/nvim-lspconfig",
