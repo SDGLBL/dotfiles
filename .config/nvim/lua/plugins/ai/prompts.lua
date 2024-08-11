@@ -150,7 +150,7 @@ M.write_git_message = {
           prompts = {
             {
               role = "system",
-              content = [[You are an expert at following the Conventional Commit specification.  ]],
+              content = [[You are an expert at following the Conventional Commit specification.  Do not return the markdown codeblock symbol ``` in your response.]],
             },
             {
               role = "user",
@@ -161,7 +161,6 @@ M.write_git_message = {
                   .. "\n\n```\n"
                   .. vim.fn.system "git diff --staged -p"
                   .. "\n```"
-                  .. "Do not return the markdown codeblock symbol ``` in your response. "
               end,
             },
           },
