@@ -54,9 +54,9 @@ return {
     tokens = true,
     vision = true,
   },
-  url = "https://api.Deepseek.com/v1/chat/completions",
+  url = "https://api.deepseek.com/v1/chat/completions",
   env = {
-    api_key = "Deepseek_API_KEY",
+    api_key = "DEEPSEEK_API_KEY",
   },
   raw = {
     "--no-buffer",
