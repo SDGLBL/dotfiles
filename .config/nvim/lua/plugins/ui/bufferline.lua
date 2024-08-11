@@ -3,8 +3,8 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      defaults = {
-        ["<leader>b"] = { name = "+Buffers" },
+      spec = {
+        { "<leader>b", group = "Buffer" },
       },
     },
   },
