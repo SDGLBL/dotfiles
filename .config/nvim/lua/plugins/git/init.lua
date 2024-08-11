@@ -3,9 +3,9 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      defaults = {
-        ["<leader>g"] = { name = "+Git" },
-        ["<leader>gt"] = { name = "+Toggle" },
+      spec = {
+        { "<leader>g", group = "Git" },
+        { "<leader>gt", group = "Toggle" },
       },
     },
   },
