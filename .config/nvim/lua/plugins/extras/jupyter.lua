@@ -199,9 +199,9 @@ return {
     "folke/which-key.nvim",
     event = "VeryLazy",
     opts = {
-      defaults = {
-        ["<leader>x"] = { name = "+REPL" },
-        ["<leader>xm"] = { name = "+Mark" },
+      spec = {
+        { "<leader>x", group = "REPL" },
+        { "<leader>xm", group = "Mark" },
       },
     },
   },
