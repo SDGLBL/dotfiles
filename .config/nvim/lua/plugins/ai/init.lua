@@ -34,8 +34,8 @@ return {
 
       require("codecompanion").setup {
         opts = {
-          -- log_level = "INFO",
-          log_level = "TRACE",
+          log_level = "INFO",
+          -- log_level = "TRACE",
         },
         adapters = {
           ollama = require("codecompanion.adapters").use("ollama", {
@@ -66,7 +66,7 @@ return {
               },
             },
           }),
-          deepseek = require("codecompanion.adapters").use("openai", {
+          deepseek = require("codecompanion.adapters").use(require "plugins.ai.deepseek", {
             env = {
               api_key = "cmd:gpg --decrypt ~/.deepseek-api-key.gpg 2>/dev/null",
             },
@@ -105,7 +105,7 @@ return {
             adapter = "openai",
           },
           inline = {
-            adapter = "openai",
+            adapter = "deepseek",
           },
           agent = {
             adapter = "deepseek",

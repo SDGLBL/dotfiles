@@ -1,19 +1,7 @@
 local M = {}
 
-local support_languages = {
-  "Chinese",
-  "English",
-  "Japanese",
-  "Korean",
-  "French",
-  "Spanish",
-  "Portuguese",
-  "Russian",
-  "German",
-  "Italian",
-}
-
 local prompts = require "plugins.ai.prompts"
+local support_languages = require("plugins.ai.prompts").support_languages
 
 M.translate = {
   name = "Translate",
@@ -73,13 +61,12 @@ M.write = {
     modes = { "n", "v" },
   },
   picker = {
-    prompt = "Generate text",
+    prompt = "Write",
     items = function()
       local select_items = {}
-      table.insert(select_items, prompts.write_cn_git_message)
-      table.insert(select_items, prompts.write_en_git_message)
-      table.insert(select_items, prompts.write_cn_doc_comment)
-      table.insert(select_items, prompts.write_en_doc_comment)
+      table.insert(select_items, prompts.write_git_message)
+      table.insert(select_items, prompts.write_comment)
+      table.insert(select_items, prompts.write_in_context)
       return select_items
     end,
   },
