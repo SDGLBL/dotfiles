@@ -64,9 +64,9 @@ M.write = {
     prompt = "Write",
     items = function()
       local select_items = {}
-      table.insert(select_items, prompts.write_git_message)
-      table.insert(select_items, prompts.write_comment)
       table.insert(select_items, prompts.write_in_context)
+      table.insert(select_items, prompts.write_comment)
+      table.insert(select_items, prompts.write_git_message)
       return select_items
     end,
   },

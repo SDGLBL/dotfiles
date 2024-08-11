@@ -130,6 +130,7 @@ M.write_git_message = {
   strategy = "inline",
   description = "Write git commit message",
   opts = {
+    index = 2,
     modes = { "n" },
     placement = "cursor|after",
   },
@@ -179,6 +180,7 @@ M.write_in_context = {
   strategy = "inline",
   description = "Write in context",
   opts = {
+    index = 1,
     modes = { "n", "v" },
     placement = "replace|cursor",
     user_prompt = true,
@@ -252,19 +254,30 @@ Main buffer:
 %s
 
 ]],
-          buf_utils.format_by_id(bufnr)
+          main_buffer_content
         )
 
         local other_buffers = buf_utils.get_open(context.filetype)
         for _, buffer in ipairs(other_buffers) do
           if buffer.id ~= bufnr then
-            prompt = prompt .. string.format(
-              [[
-
+            local buf_info = buf_utils.get_info(buffer.id)
+            prompt = prompt
+              .. string.format(
+                [[
+Buffer ID: %d
+Name: %s
+Path: %s
+Filetype: %s
+Content:
 %s
 ]],
-              buf_utils.format_by_id(buffer.id)
-            )
+                buf_info.id,
+                buf_info.name,
+                buf_info.path,
+                buf_info.filetype,
+                buf_info.filetype,
+                buf_utils.get_content(buffer.id)
+              )
           end
         end
 
@@ -274,10 +287,7 @@ In the main buffer, the code between <|Selected|> and </|Selected|> is the user'
 
 Ensure that you use the same programming language and follow the coding style present in the surrounding code of the main buffer. If there are non-English comments or string literals in any buffer, maintain the same language for consistency in that buffer.
 
-Generate your response without any additional explanation. Your generated text will directly replace the selected area in the main buffer.
-
-Do not return any markdown codeblock symbols (```) in your response.
-]]
+Generate your response without any additional explanation. Your generated text will directly replace the selected area in the main buffer. Return the result without wrapping it in a markdown code fence]]
 
         return prompt
       end,
@@ -308,19 +318,30 @@ Main buffer:
 %s
 
 ]],
-          buf_utils.format_by_id(bufnr)
+          main_buffer_content
         )
 
         local other_buffers = buf_utils.get_open(context.filetype)
         for _, buffer in ipairs(other_buffers) do
           if buffer.id ~= bufnr then
-            prompt = prompt .. string.format(
-              [[
-
+            local buf_info = buf_utils.get_info(buffer.id)
+            prompt = prompt
+              .. string.format(
+                [[
+Buffer ID: %d
+Name: %s
+Path: %s
+Filetype: %s
+Content:
 %s
 ]],
-              buf_utils.format_by_id(buffer.id)
-            )
+                buf_info.id,
+                buf_info.name,
+                buf_info.path,
+                buf_info.filetype,
+                buf_info.filetype,
+                buf_utils.get_content(buffer.id)
+              )
           end
         end
 
@@ -330,10 +351,7 @@ In the main buffer, generate code or comments to replace the <|Write text here|>
 
 Ensure that you use the same programming language and follow the coding style present in the surrounding code of the main buffer. If there are non-English comments or string literals in any buffer, maintain the same language for consistency in that buffer.
 
-Generate your response without any additional explanation. Your generated text will replace the <|Write text here|> marker directly in the main buffer.
-
-Do not return any markdown codeblock symbols (```) in your response.
-]]
+Generate your response without any additional explanation. Your generated text will replace the <|Write text here|> marker directly in the main buffer. Return the result without wrapping it in a markdown code fence ]]
 
         return prompt
       end,

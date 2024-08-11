@@ -73,7 +73,7 @@ return {
             url = os.getenv "DEEPSEEK_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "deepseek-chat",
+                default = "deepseek-coder",
                 choices = {
                   "deepseek-coder",
                   "deepseek-chat",
@@ -102,7 +102,7 @@ return {
         },
         strategies = {
           chat = {
-            adapter = "openai",
+            adapter = "anthropic",
           },
           inline = {
             adapter = "deepseek",
@@ -124,7 +124,7 @@ return {
         display = {
           inline = {
             diff = {
-              -- enabled = false,
+              enabled = false,
             },
           },
           chat = {
