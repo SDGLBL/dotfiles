@@ -173,6 +173,8 @@ M.write_git_message = {
   },
 }
 
+local buf_utils = require "codecompanion.utils.buffers"
+
 M.write_in_context = {
   name = "Write in context",
   strategy = "inline",
@@ -189,18 +191,20 @@ M.write_in_context = {
         return context.is_visual
       end,
       content = [[
-You are an expert coder and helpful assistant who can write code or comments in context, specifically focusing on selected code regions. Follow these guidelines:
-1. Analyze the provided code context carefully, paying special attention to the code enclosed between <|Selected|> and </|Selected|> tags. This is the user's selected area.
-2. Identify the programming language used in the context and ensure you use the same language in your response.
-3. Your task is to modify, improve, or expand the selected code while considering the broader context.
-4. Your entire response will replace the content between the <|Selected|> tags, including the tags themselves.
-5. Your response should seamlessly integrate with the existing code surrounding the selected region.
-6. Do not include the <|Selected|> or </|Selected|> markers in your response.
-7. Do not add any explanations or comments about your response outside the code.
-8. Ensure your code follows the style, conventions, and language used in the surrounding code.
-9. If you're adding comments within the code, make sure they're in the appropriate style for the identified language (// or /* */ for most languages, # for Python, etc.).
-10. Consider the purpose of the selected code and aim to enhance its functionality, readability, or efficiency.
-11. If the surrounding code contains non-English comments or string literals, maintain the same language for consistency.
+You are an expert coder and helpful assistant who can write code or comments in context, considering multiple file buffers. Follow these guidelines for visual mode:
+1. Analyze the provided code context carefully, including all visible buffers.
+2. Pay special attention to the main buffer, focusing on the code enclosed between <|Selected|> and </|Selected|> tags. This is the user's selected area.
+3. Identify the programming language used in each buffer and ensure you use the appropriate language in your response.
+4. Your task is to modify, improve, or expand the selected code while considering the broader context from all buffers.
+5. Your entire response will replace the content between the <|Selected|> tags, including the tags themselves.
+6. Your response should seamlessly integrate with the existing code surrounding the selected region.
+7. Do not include the <|Selected|> tags in your response.
+8. Do not add any explanations or comments about your response outside the code.
+9. Ensure your code follows the style, conventions, and language used in the surrounding code of the main buffer.
+10. If you're adding comments within the code, make sure they're in the appropriate style for the identified language.
+11. Consider the purpose of the selected code and aim to enhance its functionality, readability, or efficiency.
+12. If any buffer contains non-English comments or string literals, maintain the same language for consistency in that buffer.
+13. You may reference or use information from other buffers, but your primary focus should be on modifying the selected area in the main buffer.
       ]],
     },
     {
@@ -209,18 +213,19 @@ You are an expert coder and helpful assistant who can write code or comments in 
         return not context.is_visual
       end,
       content = [[
-You are an expert coder and helpful assistant who can write code or comments in context. Follow these guidelines:
-1. Analyze the provided code context carefully.
-2. Identify the programming language used in the context and ensure you use the same language in your response.
-3. Write your response exactly where the <|Write text here|> marker is placed.
-4. Your response should seamlessly integrate with the existing code.
-5. Do not include the <|Write text here|> marker in your response.
-6. Do not add any explanations or comments about your response.
-7. Ensure your code follows the style, conventions, and language used in the surrounding code.
-8. If you're adding comments within the code, make sure they're in the appropriate style for the identified language (// or /* */ for most languages, # for Python, etc.).
-9. Your entire response will be inserted directly into the code, so make sure it's ready to use as-is.
+You are an expert coder and helpful assistant who can write code or comments in context, considering multiple file buffers. Follow these guidelines for normal mode:
+1. Analyze the provided code context carefully, including all visible buffers.
+2. Pay special attention to the main buffer, focusing on the area around the <|Write text here|> marker.
+3. Identify the programming language used in each buffer and ensure you use the appropriate language in your response.
+4. Your task is to write code or comments to replace the <|Write text here|> marker while considering the broader context from all buffers.
+5. Your response should seamlessly integrate with the existing code surrounding the marker.
+6. Do not include the <|Write text here|> marker in your response.
+7. Do not add any explanations or comments about your response outside the code.
+8. Ensure your code follows the style, conventions, and language used in the surrounding code of the main buffer.
+9. If you're adding comments within the code, make sure they're in the appropriate style for the identified language.
 10. Consider the context around the insertion point and aim to enhance the functionality, readability, or efficiency of the code.
-11. If the surrounding code contains non-English comments or string literals, maintain the same language for consistency.
+11. If any buffer contains non-English comments or string literals, maintain the same language for consistency in that buffer.
+12. You may reference or use information from other buffers, but your primary focus should be on writing code or comments at the marker position in the main buffer.
       ]],
     },
     {
@@ -230,34 +235,52 @@ You are an expert coder and helpful assistant who can write code or comments in 
       end,
       content = function(context)
         local bufnr = context.bufnr
-        local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+        local main_buffer_content = buf_utils.get_content(bufnr)
         local start_line, start_col = context.start_line, context.start_col
         local end_line, end_col = context.end_line, context.end_col
 
         -- Insert the selection markers
+        local lines = vim.split(main_buffer_content, "\n")
         lines[start_line] = string.sub(lines[start_line], 1, start_col - 1) .. "<|Selected|>" .. string.sub(lines[start_line], start_col)
         lines[end_line] = string.sub(lines[end_line], 1, end_col) .. "</|Selected|>" .. string.sub(lines[end_line], end_col + 1)
+        main_buffer_content = table.concat(lines, "\n")
 
-        local full_content = table.concat(lines, "\n")
-
-        return string.format(
+        local prompt = string.format(
           [[
-Given the entire content of the current buffer below, please focus on the code enclosed in <|Selected|> tags:
+Given the content of multiple buffers, please focus on the main buffer and the selected area within it.
 
-```
+Main buffer:
 %s
-```
 
-The code between <|Selected|> and </|Selected|> is the user's selected area. Analyze this area carefully and provide improvements, modifications, or expansions as appropriate. Your response will completely replace the content between these tags, including the tags themselves.
-
-Ensure that you use the same programming language and follow the coding style present in the surrounding code. If there are non-English comments or string literals, maintain the same language for consistency.
-
-Generate your response without any additional explanation. Your generated text will directly replace the selected area in the buffer.
-
-Do not return the markdown codeblock symbol ``` in your response.
 ]],
-          full_content
+          buf_utils.format_by_id(bufnr)
         )
+
+        local other_buffers = buf_utils.get_open(context.filetype)
+        for _, buffer in ipairs(other_buffers) do
+          if buffer.id ~= bufnr then
+            prompt = prompt .. string.format(
+              [[
+
+%s
+]],
+              buf_utils.format_by_id(buffer.id)
+            )
+          end
+        end
+
+        prompt = prompt
+          .. [[
+In the main buffer, the code between <|Selected|> and </|Selected|> is the user's selected area. Analyze this area carefully and provide improvements, modifications, or expansions as appropriate. Your response will completely replace the content between these tags, including the tags themselves.
+
+Ensure that you use the same programming language and follow the coding style present in the surrounding code of the main buffer. If there are non-English comments or string literals in any buffer, maintain the same language for consistency in that buffer.
+
+Generate your response without any additional explanation. Your generated text will directly replace the selected area in the main buffer.
+
+Do not return any markdown codeblock symbols (```) in your response.
+]]
+
+        return prompt
       end,
     },
     {
@@ -267,33 +290,53 @@ Do not return the markdown codeblock symbol ``` in your response.
       end,
       content = function(context)
         local bufnr = context.bufnr
-        local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+        local main_buffer_content = buf_utils.get_content(bufnr)
         local cursor_line, cursor_col = unpack(context.cursor_pos)
 
         -- Insert the marker at the cursor position
+        local lines = vim.split(main_buffer_content, "\n")
         local current_line = lines[cursor_line]
         local before_cursor = string.sub(current_line, 1, cursor_col - 1)
         local after_cursor = string.sub(current_line, cursor_col)
         lines[cursor_line] = before_cursor .. "<|Write text here|>" .. after_cursor
+        main_buffer_content = table.concat(lines, "\n")
 
-        local full_content = table.concat(lines, "\n")
-
-        return string.format(
+        local prompt = string.format(
           [[
-Given the entire content of the current buffer below, please generate code or comments to replace the <|Write text here|> marker:
+Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Write text here|> marker.
 
-```
+Main buffer:
 %s
-```
 
-Ensure that you use the same programming language and follow the coding style present in the surrounding code. If there are non-English comments or string literals, maintain the same language for consistency.
-
-Generate your response without any additional explanation. Your generated text will replace the <|Write text here|> marker directly in the buffer.
-
-Do not return the markdown codeblock symbol ``` in your response.
 ]],
-          full_content
+          buf_utils.format_by_id(bufnr)
         )
+
+        local other_buffers = buf_utils.get_open(context.filetype)
+        for _, buffer in ipairs(other_buffers) do
+          if buffer.id ~= bufnr then
+            prompt = prompt .. string.format(
+              [[
+
+%s
+]],
+              buf_utils.format_by_id(buffer.id)
+            )
+          end
+        end
+
+        prompt = prompt
+          .. [[
+In the main buffer, generate code or comments to replace the <|Write text here|> marker.
+
+Ensure that you use the same programming language and follow the coding style present in the surrounding code of the main buffer. If there are non-English comments or string literals in any buffer, maintain the same language for consistency in that buffer.
+
+Generate your response without any additional explanation. Your generated text will replace the <|Write text here|> marker directly in the main buffer.
+
+Do not return any markdown codeblock symbols (```) in your response.
+]]
+
+        return prompt
       end,
     },
   },

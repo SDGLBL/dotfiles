@@ -124,7 +124,7 @@ return {
         display = {
           inline = {
             diff = {
-              enabled = false,
+              -- enabled = false,
             },
           },
           chat = {
