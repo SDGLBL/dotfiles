@@ -1,5 +1,3 @@
-local icons = require "utils.icons"
-
 return {
   {
     "mrjones2014/legendary.nvim",
@@ -13,6 +11,7 @@ return {
         nvim_tree = true,
         diffview = true,
         lazy_nvim = true,
+        codecompanion = true,
       },
     },
   },
@@ -25,140 +24,58 @@ return {
       vim.o.timeout = true
       vim.o.timeoutlen = 200
     end,
-    opts = {
-      setup = {
-        plugins = {
-          marks = true, -- shows a list of your marks on ' and `
-          registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
-          spelling = {
-            enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
-            suggestions = 20, -- how many suggestions should be shown in the list?
-          },
-          -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-          -- No actual key bindings are created
-          presets = {
-            operators = false, -- adds help for operators like d, y, ... and registers them for motion / text object completion
-            motions = true, -- adds help for motions
-            text_objects = true, -- help for text objects triggered after entering an operator
-            windows = true, -- default bindings on <c-w>
-            nav = true, -- misc bindings to work with windows
-            z = true, -- bindings for folds, spelling and others prefixed with z
-            g = true, -- bindings for prefixed with g
-          },
-        },
-        icons = {
-          breadcrumb = icons.ui.DoubleChevronRight,
-          separator = icons.ui.BoldArrowRight,
-          group = icons.ui.Plus,
-        },
-        popup_mappings = {
-          scroll_down = "<c-d>", -- binding to scroll down inside the popup
-          scroll_up = "<c-u>", -- binding to scroll up inside the popup
-        },
-        win = {
-          border = "rounded", -- none, single, double, shadow
-          -- position = "bottom", -- bottom, top
-          -- margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
-          padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-          -- winblend = 0,
-        },
-        layout = {
-          height = { min = 4, max = 25 }, -- min and max height of the columns
-          width = { min = 20, max = 50 }, -- min and max width of the columns
-          spacing = 3, -- spacing between columns
-          align = "left", -- align columns left, center or right
-        },
-        hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
-        show_help = true, -- show help message on the command line when the popup is visible
-        triggers = "auto", -- automatically setup triggers
-        triggers_blacklist = {
-          i = { "j", "k" },
-          v = { "j", "k" },
-        },
-        disable = {
-          buftypes = {},
-          filetypes = { "TelescopePrompt" },
-        },
+    keys = {
+      {
+        "<leader>?",
+        function()
+          require("which-key").show { global = false }
+        end,
+        desc = "Buffer Local Keymaps (which-key)",
       },
-      defaults = {
-        prefix = "<leader>",
-        mode = { "n", "v" },
-        ["\\"] = { "<cmd>Alpha<cr>", "Alpha" },
-        q = {
-          name = "Quit/Session",
-          q = {
-            function()
-              require("utils").quit()
+    },
+    opts_extend = { "spec" },
+    opts = {
+      spec = {
+        {
+          mode = { "n", "v" },
+          { "<leader><tab>", group = "tabs" },
+          {
+            "<leader>b",
+            group = "buffer",
+            expand = function()
+              return require("which-key.extras").expand.buf()
             end,
-            "Quit",
           },
-          t = { "<cmd>tabclose<cr>", "Close Tab" },
-        },
-        a = { name = "+AI" },
-        u = {
-          name = "+UI",
-          h = { "<cmd>nohlsearch<cr>", "NoHighlight" },
-        },
-        b = { name = "+Buffer" },
-        d = { name = "+Debug" },
-        -- D = { name = "+Database" },
-        f = {
-          name = "+File",
-          -- function()
-          --   require("utils").open_term "yazi"
-          -- end,
-          "Terminal File Manager",
-        },
-        h = { name = "+Help" },
-        g = { name = "+Git", h = { name = "+Hunk" }, t = { name = "+Toggle" }, w = { name = "+Work Tree" } },
-        -- n = { name = "+Notes" },
-        -- p = { name = "+Project" },
-        r = { name = "+Refactor" },
-        v = {
-          name = "+View",
-        },
-        t = { name = "+Test", t = { "+Overseer" } },
-        z = {
-          name = "+System",
-          u = { "<cmd>Lazy update<cr>", "LazyUpdate" },
-        },
-        s = {
-          name = "+Search",
-          c = {
-            function()
-              require("utils.coding").cht()
-            end,
-            "Cheatsheets",
-          },
-          o = {
-            function()
-              require("utils.coding").stack_overflow()
-            end,
-            "Stack Overflow",
-          },
-        },
-        l = {
-          name = "+Language",
-          g = { name = "Annotation" },
-          x = {
-            name = "Swap Next",
-            f = "Function",
-            p = "Parameter",
-            c = "Class",
-          },
-          X = {
-            name = "Swap Previous",
-            f = "Function",
-            p = "Parameter",
-            c = "Class",
-          },
+          { "<leader>c", group = "code" },
+          { "<leader>\\", "<cmd>Alpha<cr>", desc = "dashboard" },
+          { "<leader>f", group = "file/find" },
+          { "<leader>a", group = "ai" },
+          { "<leader>am", group = "AI Mode" },
+          { "<leader>l", group = "lsp", desc = "lsp" },
+          { "<leader>lx", group = "swap", desc = "swap" },
+          -- { "<leader>r", group = "refactor" },
+          { "<leader>g", group = "git" },
+          { "<leader>gh", group = "hunks" },
+          { "<leader>q", group = "quarto" },
+          { "<leader>h", group = "help" },
+          { "<leader>s", group = "search" },
+          { "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
+          { "<leader>uh", "<cmd>nohlsearch<cr>", desc = "NoHighlight" },
+          { "<leader>z", group = "system" },
+          { "<leader>zu", "<cmd>Lazy update<cr>", desc = "LazyUpdate" },
+          { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
+          { "<leader>w", "<cmd>w<cr><esc>", desc = "save" },
+          { "[", group = "prev" },
+          { "]", group = "next" },
+          { "g", group = "goto" },
+          { "gs", group = "surround" },
+          { "z", group = "fold" },
         },
       },
     },
     config = function(_, opts)
       local wk = require "which-key"
-      wk.setup(opts.setup)
-      wk.register(opts.defaults)
+      wk.setup(opts)
     end,
   },
 }
