@@ -13,6 +13,50 @@ local function diff_source()
   end
 end
 
+local chatspin = require("lualine.component"):extend()
+
+chatspin.processing = false
+chatspin.spinner_index = 1
+
+local spinner_symbols = {
+  "⠋",
+  "⠙",
+  "⠹",
+  "⠸",
+  "⠼",
+  "⠴",
+  "⠦",
+  "⠧",
+  "⠇",
+  "⠏",
+}
+local spinner_symbols_len = 10
+
+-- Initializer
+function chatspin:init(options)
+  chatspin.super.init(self, options)
+
+  local group = vim.api.nvim_create_augroup("CodeCompanionHooks", {})
+
+  vim.api.nvim_create_autocmd({ "User" }, {
+    pattern = "CodeCompanionRequest",
+    group = group,
+    callback = function(request)
+      self.processing = (request.data.status == "started")
+    end,
+  })
+end
+
+-- Function that runs every time statusline is updated
+function chatspin:update_status()
+  if self.processing then
+    self.spinner_index = (self.spinner_index % spinner_symbols_len) + 1
+    return spinner_symbols[self.spinner_index]
+  else
+    return nil
+  end
+end
+
 local icons = require "utils.icons"
 
 return {
@@ -120,17 +164,16 @@ return {
       end
 
       -- add formatter
-      local formatters = require("conform").list_formatters(0)
-      for _, formatter in ipairs(formatters) do
-        table.insert(buf_client_names, formatter.name)
-      end
+      -- local formatters = require("conform").list_formatters(0)
+      -- for _, formatter in ipairs(formatters) do
+      --   table.insert(buf_client_names, formatter.name)
+      -- end
 
       -- add linnets
-      local linters = require("lint").get_running()
-      -- vim.notify(vim.inspect(linters))
-      for _, linter in ipairs(linters) do
-        table.insert(buf_client_names, linter)
-      end
+      -- local linters = require("lint").get_running()
+      -- for _, linter in ipairs(linters) do
+      --   table.insert(buf_client_names, linter)
+      -- end
 
       -- add formatter
       -- local formatters = require "utils.null-ls.formatters"
@@ -157,8 +200,7 @@ return {
 
       for _, v in ipairs(buf_client_names) do
         if not hash[v] then
-          unique_client_names[#unique_client_names + 1] =
-              v -- you could print here instead of saving to result table if you wanted
+          unique_client_names[#unique_client_names + 1] = v -- you could print here instead of saving to result table if you wanted
           hash[v] = true
         end
       end
@@ -234,4 +276,5 @@ return {
     color = { fg = colors.yellow, bg = colors.bg },
     cond = nil,
   },
+  chatspin = chatspin,
 }
