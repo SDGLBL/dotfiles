@@ -24,7 +24,7 @@ return {
       "ahmedkhalf/project.nvim",
       "benfowler/telescope-luasnip.nvim",
       "nvim-telescope/telescope-project.nvim",
-      "nvim-telescope/telescope-frecency.nvim",
+      -- "nvim-telescope/telescope-frecency.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
       "nvim-telescope/telescope-live-grep-args.nvim",
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -38,7 +38,7 @@ return {
       { "<leader>ff", require("utils").telescope "files", desc = "Find Files (Root Dir)" },
       { "<leader>fF", require("utils").telescope("files", { cwd = false }), desc = "Find Files (Cwd)" },
       { "<leader>fb", "<cmd>Telescope buffers sort_mru=true sort_lastused=true ignore_current_buffer=true<cr>", desc = "Buffers" },
-      { "<leader>fr", "<cmd>Telescope frecency<cr>", desc = "Recent" },
+      -- { "<leader>fr", "<cmd>Telescope frecency<cr>", desc = "Recent" },
       { "<leader>fm", "<cmd>Telescope marks<cr>", desc = "Marks" },
       { "<leader>fc", "<cmd>cd %:p:h<cr>", desc = "Change WorkDir" },
       { "<leader>fg", function() require("telescope").extensions.live_grep_args.live_grep_args() end, desc = "Live Grep", },
@@ -304,7 +304,7 @@ return {
       local telescope = require "telescope"
       telescope.setup(opts)
       telescope.load_extension "fzf"
-      telescope.load_extension "frecency"
+      -- telescope.load_extension "frecency"
       telescope.load_extension "luasnip"
       telescope.load_extension "projects"
       telescope.load_extension "live_grep_args"
