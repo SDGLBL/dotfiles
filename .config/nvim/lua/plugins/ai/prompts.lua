@@ -269,7 +269,9 @@ Name: %s
 Path: %s
 Filetype: %s
 Content:
+```%s
 %s
+```
 ]],
                 buf_info.id,
                 buf_info.name,
@@ -333,7 +335,9 @@ Name: %s
 Path: %s
 Filetype: %s
 Content:
+```%s
 %s
+```
 ]],
                 buf_info.id,
                 buf_info.name,
