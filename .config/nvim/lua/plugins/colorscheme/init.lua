@@ -46,7 +46,7 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    lazy = true,
+    lazy = false,
     opts = {
       integrations = {
         aerial = true,
@@ -54,6 +54,7 @@ return {
         cmp = true,
         dashboard = true,
         flash = true,
+        grug_far = true,
         gitsigns = true,
         headlines = true,
         illuminate = true,
@@ -91,7 +92,6 @@ return {
   {
     "rose-pine/neovim",
     name = "rose-pine",
-    lazy = true,
   },
   {
     "EdenEast/nightfox.nvim",
