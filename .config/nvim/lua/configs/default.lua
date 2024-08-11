@@ -369,9 +369,14 @@ return {
       vim.g.python3_host_prog = os.getenv "conda_prefix" .. "/bin/python"
     end
 
+    local venv = os.getenv "VIRTUAL_ENV"
+    if venv then
+      vim.g.python3_host_prog = venv .. "/bin/python"
+    end
+
     -- colorscheme style
     vim.g.material_style = "darker" -- darker,lighter,oceanic,palenight,deep ocean
-    vim.g.sonokai_style = "maia"    -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
+    vim.g.sonokai_style = "maia" -- `'default'`, `'atlantis'`, `'andromeda'`, `'shusia'`, `'maia'`, `'espresso'`
     vim.g.tokyonight_style = "night"
     vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
     vim.g.catppuccin_flavour = "mocha" -- latte, frappe, macchiato, mocha
