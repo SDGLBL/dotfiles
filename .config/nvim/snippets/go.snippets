@@ -167,6 +167,9 @@ snippet pn "panic"
 snippet pf "fmt.Printf()"
 	fmt.Printf("%${1:s}\n", ${2:var})
 
+snippet pfv "fmt.Printf()"
+	fmt.Printf("${0} %#v\n", ${1:var})
+
 snippet pl "fmt.Println()"
 	fmt.Println("${1:s}")
 
