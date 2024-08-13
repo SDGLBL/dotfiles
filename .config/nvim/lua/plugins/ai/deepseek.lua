@@ -13,7 +13,7 @@ local function reset_cycle()
 end
 
 local function handle_streamed_error(data)
-  log:debug("Couldn't parse JSON: %s", data)
+  log:debug("Could't parse JSON: %s", data)
   log:trace("Error content so far: %s", error_content)
 
   -- Try and parse the JSON again
