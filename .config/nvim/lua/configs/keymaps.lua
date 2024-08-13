@@ -113,10 +113,10 @@ map("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
 -- Terminal --
 -- Better terminal navigation
-map("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-map("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-map("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+-- map("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
+-- map("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
+-- map("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
+-- map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Add <D-v> for neovide
 if vim.g.neovide then
