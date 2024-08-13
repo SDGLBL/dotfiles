@@ -19,6 +19,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "andymass/vim-matchup",
+      "nvim-treesitter/playground",
       "mfussenegger/nvim-ts-hint-textobject",
       "nvim-treesitter/nvim-treesitter-textobjects",
       {
