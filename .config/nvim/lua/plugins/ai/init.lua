@@ -1,7 +1,6 @@
 return {
   {
     "olimorris/codecompanion.nvim",
-    commit = "4fadafcf93c9cff736e4305e62b36f6930818728",
     -- dir = "~/project/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
