@@ -25,6 +25,10 @@ M.translate = {
             modes = { "v" },
             placement = "replace|cursor",
             stop_context_insertion = true,
+            adapter = {
+              name = "anthropic",
+              model = "claude-3-5-sonnet-20240620",
+            },
           },
           prompts = {
             {

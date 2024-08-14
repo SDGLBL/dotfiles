@@ -84,6 +84,10 @@ M.write_comment = {
             placement = "before|cursor|after|replace|new",
             stop_context_insertion = true,
             user_prompt = true,
+            adapter = {
+              name = "openai",
+              model = "gpt-4o-mini",
+            },
           },
           prompts = {
             {
@@ -147,6 +151,10 @@ M.write_git_message = {
           opts = {
             modes = { "n" },
             placement = "cursor|after",
+            adapter = {
+              name = "deepseek",
+              model = "deepseek-chat",
+            },
           },
           prompts = {
             {
@@ -184,6 +192,10 @@ M.write_in_context = {
     modes = { "n", "v" },
     placement = "replace|cursor",
     user_prompt = true,
+    adapter = {
+      name = "deepseek",
+      model = "deepseek-chat",
+    },
   },
   prompts = {
     {

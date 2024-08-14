@@ -1,7 +1,9 @@
 return {
   {
-    "olimorris/codecompanion.nvim",
-    -- dir = "~/project/codecompanion.nvim",
+    -- "olimorris/codecompanion.nvim",
+    -- commit = "4fadafcf93c9cff736e4305e62b36f6930818728",
+    -- commit = "1952a9e600cd569c3f8ddf6499474e7142338bad",
+    dir = "~/project/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -53,7 +55,6 @@ return {
             schema = {
               model = {
                 default = "gpt-4o-2024-08-06",
-                -- default = "gpt-4o-mini",
                 choices = {
                   "gpt-4o",
                   "gpt-4o-mini",
@@ -61,6 +62,9 @@ return {
                   "gpt-4o-2024-08-06",
                   "gpt-4",
                   "gpt-3.5-turbo",
+                  "gemini-1.5-pro-001",
+                  "TA/meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
+                  "TA/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
                 },
               },
             },
@@ -72,7 +76,7 @@ return {
             url = os.getenv "DEEPSEEK_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "deepseek-coder",
+                default = "deepseek-chat",
                 choices = {
                   "deepseek-coder",
                   "deepseek-chat",
@@ -94,7 +98,6 @@ return {
             schema = {
               model = {
                 default = "claude-3-5-sonnet-20240620",
-                -- default = "claude-3-haiku-20240620",
               },
             },
           }),
@@ -104,7 +107,7 @@ return {
             adapter = "anthropic",
           },
           inline = {
-            adapter = "deepseek",
+            adapter = "anthropic",
           },
           agent = {
             adapter = "deepseek",
