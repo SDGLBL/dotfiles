@@ -50,7 +50,7 @@ return {
           { "<leader>\\", "<cmd>Alpha<cr>", desc = "dashboard" },
           { "<leader>f", group = "file/find" },
           { "<leader>a", group = "ai" },
-          { "<leader>am", group = "AI Mode" },
+          { "<leader>am", group = "switch model" },
           { "<leader>l", group = "lsp", desc = "lsp" },
           { "<leader>lx", group = "swap", desc = "swap" },
           -- { "<leader>r", group = "refactor" },
