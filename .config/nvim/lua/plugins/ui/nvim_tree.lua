@@ -57,6 +57,13 @@ return {
         end,
         desc = "Buffer explorer",
       },
+      {
+        "<leader>le",
+        function()
+          require("neo-tree.command").execute { source = "document_symbols", toggle = true }
+        end,
+        desc = "Document symbols explorer",
+      },
     },
     deactivate = function()
       vim.cmd [[Neotree close]]
@@ -75,6 +82,8 @@ return {
       filesystem = {
         bind_to_cwd = true,
         follow_current_file = { enabled = true },
+        hide_dotfiles = false,
+        hide_gitignored = false,
         -- use_libuv_file_watcher = true,
       },
       window = {

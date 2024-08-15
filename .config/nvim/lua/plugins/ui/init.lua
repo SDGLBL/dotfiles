@@ -198,7 +198,7 @@ return {
   {
     "famiu/bufdelete.nvim",
     keys = {
-      { "<leader>c", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
+      { "<leader>bc", "<cmd>Bdelete!<CR>", desc = "Close Buffer" },
     },
   },
 
@@ -207,5 +207,4 @@ return {
     config = true,
     event = { "WinNew" },
   },
-
 }
