@@ -234,6 +234,18 @@ install_neovim() {
   log "Neovim installed"
 }
 
+# Function to create symlink
+create_symlink() {
+  local source="$1"
+  local target="$2"
+  if [ -e "$target" ]; then
+    output $YELLOW "Backing up existing $target"
+    mv "$target" "${target}.backup_$(date +%Y%m%d_%H%M%S)"
+  fi
+  ln -s "$source" "$target"
+  output $GREEN "Created symlink: $target -> $source"
+}
+
 # Function to configure Neovim
 configure_neovim() {
   output $BLUE "Configuring Neovim..."
@@ -274,36 +286,6 @@ install_tmux() {
   log "tmux installed"
 }
 
-# Function to configure tmux
-configure_tmux() {
-  output $BLUE "Configuring tmux..."
-  cat >~/.tmux.conf <<EOL
-# Enable mouse mode
-set -g mouse on
-
-# Set prefix to Ctrl-Space
-unbind C-b
-set -g prefix C-Space
-bind C-Space send-prefix
-
-# Use Alt-arrow keys to switch panes
-bind -n M-Left select-pane -L
-bind -n M-Right select-pane -R
-bind -n M-Up select-pane -U
-bind -n M-Down select-pane -D
-
-# Shift arrow to switch windows
-bind -n S-Left previous-window
-bind -n S-Right next-window
-
-# Set easier window split keys
-bind-key v split-window -h
-bind-key h split-window -v
-EOL
-  output $GREEN "tmux configured successfully"
-  log "tmux configured"
-}
-
 # Function to install Zsh
 install_zsh() {
   output $BLUE "Installing Zsh..."
@@ -334,27 +316,43 @@ install_oh_my_zsh() {
   log "Oh My Zsh installed"
 }
 
-# Function to configure Zsh
-configure_zsh() {
-  output $BLUE "Configuring Zsh..."
-  sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="agnoster"/' ~/.zshrc
-  echo 'export PATH=$HOME/bin:/usr/local/bin:$PATH' >>~/.zshrc
-  echo 'plugins=(git docker docker-compose)' >>~/.zshrc
-  output $GREEN "Zsh configured successfully"
-  log "Zsh configured"
+# Function to configure dotfiles
+configure_dotfiles() {
+  output $BLUE "Configuring dotfiles..."
+
+  # Create symlink for .config directory
+  create_symlink "$SCRIPT_DIR/config" "$HOME/.config"
+
+  # Create symlink for .tmux.conf
+  create_symlink "$SCRIPT_DIR/.tmux.conf" "$HOME/.tmux.conf"
+
+  # Create symlink for .config.sh
+  create_symlink "$SCRIPT_DIR/.config.sh" "$HOME/.config.sh"
+
+  # Update .bashrc and .zshrc to source .config.sh
+  for rc_file in "$HOME/.bashrc" "$HOME/.zshrc"; do
+    if [ -f "$rc_file" ]; then
+      if ! grep -q "source ~/.config.sh" "$rc_file"; then
+        echo '[ -f ~/.config.sh ] && source ~/.config.sh' >>"$rc_file"
+        output $GREEN "Updated $rc_file to source .config.sh"
+      fi
+    fi
+  done
+
+  output $GREEN "Dotfiles configured successfully"
+  log "Dotfiles configured"
 }
 
+# Function to install and configure editor and terminal tools
 # Function to install and configure editor and terminal tools
 install_editor_terminal_tools() {
   output $BLUE "Installing and configuring editor and terminal tools..."
 
   install_neovim
-  configure_neovim
   install_tmux
-  configure_tmux
   install_zsh
   install_oh_my_zsh
-  configure_zsh
+  configure_dotfiles
 
   output $GREEN "Editor and terminal tools installed and configured successfully"
   log "Editor and terminal tools installed and configured"
