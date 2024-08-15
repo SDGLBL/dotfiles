@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Unified Setup Script for Ubuntu/CentOS/macOS
-# Version: 1.0.0
+# Version: 1.1.0
 
 set -euo pipefail
 
@@ -21,6 +21,20 @@ LOG_FILE="$SCRIPT_DIR/setup_log.txt"
 GO_VERSION="1.21.1"
 NODE_VERSION="16.14.2"
 NEOVIM_VERSION="0.10.1"
+
+# Check if user is root
+is_root() {
+  return $(id -u)
+}
+
+# Function to use sudo if not root
+maybe_sudo() {
+  if is_root; then
+    "$@"
+  else
+    sudo "$@"
+  fi
+}
 
 # Function to output colored text
 output() {
@@ -70,12 +84,12 @@ install_basic_tools() {
   output $BLUE "Installing basic tools..."
   case $OS in
   "Ubuntu")
-    sudo apt update
-    sudo apt install -y git wget curl
+    maybe_sudo apt update
+    maybe_sudo apt install -y git wget curl
     ;;
   "CentOS")
-    sudo yum update -y
-    sudo yum install -y git wget curl
+    maybe_sudo yum update -y
+    maybe_sudo yum install -y git wget curl
     ;;
   "macOS")
     if ! command_exists brew; then
@@ -97,10 +111,10 @@ install_python() {
   output $BLUE "Installing Python..."
   case $OS in
   "Ubuntu")
-    sudo apt install -y python3 python3-pip python3-venv
+    maybe_sudo apt install -y python3 python3-pip python3-venv
     ;;
   "CentOS")
-    sudo yum install -y python3 python3-pip
+    maybe_sudo yum install -y python3 python3-pip
     ;;
   "macOS")
     brew install python
@@ -126,7 +140,7 @@ install_go() {
   fi
 
   wget "$download_url"
-  sudo tar -C /usr/local -xzf "$go_archive"
+  maybe_sudo tar -C /usr/local -xzf "$go_archive"
   rm "$go_archive"
 
   echo 'export PATH=$PATH:/usr/local/go/bin' >>"$HOME/.profile"
@@ -185,14 +199,14 @@ install_neovim() {
   output $BLUE "Installing Neovim version $NEOVIM_VERSION..."
   case $OS in
   "Ubuntu")
-    sudo apt-get install -y software-properties-common
-    sudo add-apt-repository ppa:neovim-ppa/stable -y
-    sudo apt-get update
-    sudo apt-get install -y neovim
+    maybe_sudo apt-get install -y software-properties-common
+    maybe_sudo add-apt-repository ppa:neovim-ppa/stable -y
+    maybe_sudo apt-get update
+    maybe_sudo apt-get install -y neovim
     ;;
   "CentOS")
-    sudo yum install -y epel-release
-    sudo yum install -y neovim python3-neovim
+    maybe_sudo yum install -y epel-release
+    maybe_sudo yum install -y neovim python3-neovim
     ;;
   "macOS")
     brew install neovim
@@ -229,10 +243,10 @@ install_tmux() {
   output $BLUE "Installing tmux..."
   case $OS in
   "Ubuntu")
-    sudo apt-get install -y tmux
+    maybe_sudo apt-get install -y tmux
     ;;
   "CentOS")
-    sudo yum install -y tmux
+    maybe_sudo yum install -y tmux
     ;;
   "macOS")
     brew install tmux
@@ -281,10 +295,10 @@ install_zsh() {
   output $BLUE "Installing Zsh..."
   case $OS in
   "Ubuntu")
-    sudo apt-get install -y zsh
+    maybe_sudo apt-get install -y zsh
     ;;
   "CentOS")
-    sudo yum install -y zsh
+    maybe_sudo yum install -y zsh
     ;;
   "macOS")
     brew install zsh
@@ -346,10 +360,10 @@ install_bat() {
   output $BLUE "Installing bat..."
   case $OS in
   "Ubuntu")
-    sudo apt-get install -y bat
+    maybe_sudo apt-get install -y bat
     ;;
   "CentOS")
-    sudo yum install -y bat
+    maybe_sudo yum install -y bat
     ;;
   "macOS")
     brew install bat
