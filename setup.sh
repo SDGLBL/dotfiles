@@ -1,8 +1,22 @@
 #!/usr/bin/env bash
 
 # Unified Setup Script for Ubuntu/CentOS/macOS
-# Version: 1.1.0
+# Version: 1.2.0
 
+# Function to safely source files
+safe_source() {
+  if [[ -f "$1" ]]; then
+    set +u
+    . "$1"
+    set -u
+  fi
+}
+
+# Safely source .bashrc and .profile
+safe_source ~/.bashrc
+safe_source ~/.profile
+
+# Enable strict mode
 set -euo pipefail
 
 # Colors for output
@@ -144,7 +158,7 @@ install_go() {
   rm "$go_archive"
 
   echo 'export PATH=$PATH:/usr/local/go/bin' >>"$HOME/.profile"
-  source "$HOME/.profile"
+  export PATH=$PATH:/usr/local/go/bin
 
   output $GREEN "Go installed successfully"
   log "Go installed"
@@ -154,7 +168,7 @@ install_go() {
 install_rust() {
   output $BLUE "Installing Rust..."
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  source "$HOME/.cargo/env"
+  safe_source "$HOME/.cargo/env"
   output $GREEN "Rust installed successfully"
   log "Rust installed"
 }
@@ -165,7 +179,7 @@ install_nodejs() {
   case $OS in
   "Ubuntu" | "CentOS")
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-    source "$HOME/.nvm/nvm.sh"
+    safe_source "$HOME/.nvm/nvm.sh"
     nvm install "$NODE_VERSION"
     nvm use "$NODE_VERSION"
     ;;
