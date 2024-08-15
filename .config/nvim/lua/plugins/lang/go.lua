@@ -135,7 +135,7 @@ return {
             gopls = {
               gofumpt = true,
               semanticTokens = true,
-              usePlaceholders = true,
+              usePlaceholders = false,
               completeUnimported = true,
               staticcheck = true,
               directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
