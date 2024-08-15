@@ -1,6 +1,7 @@
 local M = {}
 
 local comment_prompts = require("plugins.ai.comment_prompts").comment_prompts
+local buf_utils = require "codecompanion.utils.buffers"
 
 M.support_languages = {
   "Chinese",
@@ -83,7 +84,7 @@ M.write_comment = {
             modes = { "v" },
             placement = "before|cursor|after|replace|new",
             stop_context_insertion = true,
-            user_prompt = true,
+            -- user_prompt = true,
             adapter = {
               name = "openai",
               model = "gpt-4o-mini",
@@ -110,14 +111,39 @@ M.write_comment = {
               contains_code = true,
               content = function(context)
                 local code = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
+                local bufnr = context.bufnr
+                local buf_content = buf_utils.get_content(bufnr)
+                return string.format(
+                  [[
+As an expert coder, please write a comprehensive documentation comment for the following %s code snippet. Consider the full context of the file provided below.
 
-                return "Please add a documentation comment to the provided code:\n\n```"
-                  .. context.filetype
-                  .. "\n"
-                  .. code
-                  .. "\n```\n reply with just the comment only and no explanation, no codeblocks and do not return the code either. If necessary add parameter and return types. Please write the comments in "
-                  .. lang
-                  .. "."
+Full file context:
+```%s
+%s
+```
+
+Specific code to comment:
+```%s
+%s
+```
+
+Requirements:
+1. Write the comment in %s.
+2. Include parameter and return types if applicable.
+3. Provide a brief explanation of the code's purpose and functionality.
+4. Use the appropriate comment syntax for %s.
+5. Only return the comment, without any code or additional explanations.
+6. Ensure the comment is concise yet informative.
+
+Please provide the comment now:]],
+                  context.filetype,
+                  context.filetype,
+                  buf_content,
+                  context.filetype,
+                  code,
+                  lang,
+                  context.filetype
+                )
               end,
             },
           },
@@ -159,7 +185,7 @@ M.write_git_message = {
           prompts = {
             {
               role = "system",
-              content = [[You are an expert at following the Conventional Commit specification.  Do not return the markdown codeblock symbol ``` in your response.]],
+              content = [[You are an expert at following the Conventional Commit specification.  Return the result without wrapping it in a markdown code fence]],
             },
             {
               role = "user",
@@ -180,8 +206,6 @@ M.write_git_message = {
     end,
   },
 }
-
-local buf_utils = require "codecompanion.utils.buffers"
 
 M.write_in_context = {
   name = "Write in context",
