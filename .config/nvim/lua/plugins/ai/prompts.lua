@@ -185,7 +185,7 @@ M.write_git_message = {
           prompts = {
             {
               role = "system",
-              content = [[You are an expert at following the Conventional Commit specification.  Return the result without wrapping it in a markdown code fence]],
+              content = [[You are a git commit message generator specialized in Conventional Commits. Output only the detailed commit message, avoiding any markdown or code block syntax.]],
             },
             {
               role = "user",
