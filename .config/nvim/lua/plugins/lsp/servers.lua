@@ -76,6 +76,16 @@ function M.setup(_, opts)
       capabilities = capabilities,
     }, servers[server] or {})
 
+    -- FIXME: workaround for https://github.com/neovim/neovim/issues/28058
+    for _, v in pairs(server_opts) do
+      if type(v) == "table" and v.workspace then
+        v.workspace.didChangeWatchedFiles = {
+          dynamicRegistration = false,
+          relativePatternSupport = false,
+        }
+      end
+    end
+
     if opts.setup[server] then
       if opts.setup[server](server, server_opts) then
         return
