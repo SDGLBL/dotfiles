@@ -1,9 +1,7 @@
 return {
   {
-    -- "olimorris/codecompanion.nvim",
-    -- commit = "4fadafcf93c9cff736e4305e62b36f6930818728",
-    -- commit = "1952a9e600cd569c3f8ddf6499474e7142338bad",
-    dir = "~/project/codecompanion.nvim",
+    "olimorris/codecompanion.nvim",
+    -- dir = "~/project/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -63,6 +61,7 @@ return {
                   "gpt-4",
                   "gpt-3.5-turbo",
                   "gemini-1.5-pro-001",
+                  "gemini-1.5-flash-001",
                   "TA/meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
                   "TA/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
                 },

@@ -19,6 +19,7 @@ require("configs").setup {
   -- typescript = true,
   -- tint = true,
   -- indent_blankline = true,
+  autopairs = false,
   markdown_preview = true,
   transparent_window = true,
   autocmds = {
