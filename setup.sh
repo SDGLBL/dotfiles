@@ -409,7 +409,7 @@ install_extra_tools() {
 
   install_fzf
   install_bat
-  install_extra_tools
+  install_clipboard_provider
 
   output $GREEN "Extra tools installed successfully"
   log "Extra tools installed"
