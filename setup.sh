@@ -389,12 +389,27 @@ install_bat() {
   log "bat installed"
 }
 
+# Function to install clipboard-provider
+install_clipboard_provider() {
+  output $BLUE "Installing clipboard-provider..."
+  local provider_url="https://raw.githubusercontent.com/lotabout/dotfiles/master/bin/clipboard-provider"
+  local target_dir="$HOME/.local/bin"
+
+  mkdir -p "$target_dir"
+  wget -O "$target_dir/clipboard-provider" "$provider_url"
+  chmod +x "$target_dir/clipboard-provider"
+
+  output $GREEN "clipboard-provider installed successfully"
+  log "clipboard-provider installed"
+}
+
 # Function to install extra tools
 install_extra_tools() {
   output $BLUE "Installing extra tools..."
 
   install_fzf
   install_bat
+  install_extra_tools
 
   output $GREEN "Extra tools installed successfully"
   log "Extra tools installed"
@@ -423,6 +438,7 @@ display_menu() {
   echo "4) Extra tools"
   echo "   - fzf: Command-line fuzzy finder"
   echo "   - bat: A cat clone with syntax highlighting and Git integration"
+  echo "   - clipboard-provider: Tool for clipboard operations (useful for remote vim clipboard)"
   echo ""
   echo "5) All of the above"
   echo "   Install all tools and environments listed in options 1-4"
