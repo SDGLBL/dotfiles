@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     opts = {
       defaults = {
-        { "<leader>l", group = "LSP" },
+        { "<leader>l",  group = "LSP" },
         { "<leader>lg", group = "Generate Doc" },
       },
     },
@@ -19,7 +19,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
+      { "folke/neoconf.nvim",       cmd = "Neoconf",                                                            config = true },
       { "ray-x/lsp_signature.nvim", opts = { hint_prefix = require("utils.icons").diagnostics.BoldHint .. " " } },
       {
         "RRethy/vim-illuminate",
@@ -257,7 +257,7 @@ return {
     opts = { use_diagnostic_signs = true },
     keys = {
       { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
-      { "<leader>lD", "<cmd>Trouble diagnostics toggle<cr>", desc = "Workspace Diagnostics" },
+      { "<leader>lD", "<cmd>Trouble diagnostics toggle<cr>",              desc = "Workspace Diagnostics" },
       {
         "[q",
         function()
@@ -297,10 +297,10 @@ return {
   {
     "danymat/neogen",
     keys = {
-      { "<leader>lgt", "<cmd>Neogen type<cr>", desc = "Type doc" },
+      { "<leader>lgt", "<cmd>Neogen type<cr>",  desc = "Type doc" },
       { "<leader>lgc", "<cmd>Neogen class<cr>", desc = "Class doc" },
-      { "<leader>lgf", "<cmd>Neogen func<cr>", desc = "Func doc" },
-      { "<leader>lgd", "<cmd>Neogen file<cr>", desc = "Doc doc" },
+      { "<leader>lgf", "<cmd>Neogen func<cr>",  desc = "Func doc" },
+      { "<leader>lgd", "<cmd>Neogen file<cr>",  desc = "Doc doc" },
     },
     event = "VeryLazy",
     config = true,
@@ -324,14 +324,14 @@ return {
     opts = function()
       ---@class ConformOpts
       local opts = {
+        log_level = vim.log.levels.TRACE,
         -- LazyVim will use these options when formatting with the conform.nvim formatter
         format = {
           timeout_ms = 3000,
-          async = false, -- not recommended to change
-          quiet = false, -- not recommended to change
+          async = false,       -- not recommended to change
+          quiet = false,       -- not recommended to change
           lsp_fallback = true, -- not recommended to change
         },
-        ---@type table<string, conform.FormatterUnit[]>
         formatters_by_ft = {
           lua = { "stylua" },
           fish = { "fish_indent" },
