@@ -184,5 +184,11 @@ alias fix_rust_blocking="rm -rf ~/.cargo/registry/index/* ~/.cargo/.package-ca"
 alias ghcs="gh copilot suggest"
 alias ghce="gh copilot explain"
 
+# jupyter
+alias jkernels="cd ~/Library/Jupyter/kernels/"
+
+# proxyman
+alias setproxyman='set -a && source "~/.proxyman/proxyman_env_automatic_setup.sh" && set +a'
+
 # if file ~/.token.sh exists, source it
 [[ ! -f ~/.token.sh ]] || source ~/.token.sh
