@@ -57,6 +57,9 @@ return {
       servers = {
         basedpyright = {
           enabled = true,
+          analysis = {
+            typeCheckingMode = "basic",
+          }
         },
         -- pyright = {
         --   enabled = false,
