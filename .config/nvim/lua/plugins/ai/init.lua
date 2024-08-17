@@ -37,7 +37,7 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
-          ollama = require("codecompanion.adapters").use("ollama", {
+          ollama = require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
                 default = "llama3.1",
@@ -45,7 +45,7 @@ return {
               },
             },
           }),
-          openai = require("codecompanion.adapters").use("openai", {
+          openai = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
             },
@@ -68,7 +68,7 @@ return {
               },
             },
           }),
-          deepseek = require("codecompanion.adapters").use(require "plugins.ai.deepseek", {
+          deepseek = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = "cmd:gpg --decrypt ~/.deepseek-api-key.gpg 2>/dev/null",
             },
@@ -89,7 +89,7 @@ return {
               },
             },
           }),
-          anthropic = require("codecompanion.adapters").use("anthropic", {
+          anthropic = require("codecompanion.adapters").extend("anthropic", {
             env = {
               api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
             },
