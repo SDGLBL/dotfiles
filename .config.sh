@@ -1,110 +1,126 @@
 #!/bin/bash
-# add [[ ! -f ~/.config.sh ]] || source ~/.config.sh to .bashrc or .zshrc bottom
-# PATH
 
-export PATH=$PATH:~/.local/bin
-export PATH=$PATH:~/.bun/bin
-export PATH=$PATH:~/software/go/bin:~/software/nvim/bin:~/software/node/bin:~/software/gh/bin:~/.go/bin
-export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
-# export PATH=$PATH:~/.cargo/bin
-export PATH=$PATH:~/go/bin
+# Configuration script for shell environment
+# Add this line to your .bashrc or .zshrc:
+# [[ ! -f ~/.config.sh ]] || source ~/.config.sh
 
-if command -v brew >/dev/null 2>&1; then
-  export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
-fi
+# Function to check OS type
+is_macos() {
+  [[ "$OSTYPE" =~ ^darwin ]]
+}
 
-# add bin utils on macos
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-  export PATH=/opt/homebrew/opt/binutils/bin:$PATH
-  export LDFLAGS="-L/opt/homebrew/opt/binutils/lib"
-  export CPPFLAGS="-I/opt/homebrew/opt/binutils/include"
+# PATH configuration
+path_dirs=(
+  "${HOME}/.local/bin"
+  "${HOME}/.bun/bin"
+  "${HOME}/software/go/bin"
+  "${HOME}/software/nvim/bin"
+  "${HOME}/software/node/bin"
+  "${HOME}/software/gh/bin"
+  "${HOME}/.go/bin"
+  "${HOME}/go/bin"
+)
 
-  export LDFLAGS="-L/opt/homebrew/opt/curl/lib"
-  export CPPFLAGS="-I/opt/homebrew/opt/curl/include"
+for dir in "${path_dirs[@]}"; do
+  [[ -d "$dir" ]] && PATH="$PATH:$dir"
+done
+
+export PATH
+
+# MacOS specific configurations
+if is_macos; then
+  export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+  export PATH="/opt/homebrew/opt/binutils/bin:$PATH"
+  export LDFLAGS="-L/opt/homebrew/opt/binutils/lib -L/opt/homebrew/opt/curl/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/binutils/include -I/opt/homebrew/opt/curl/include"
   export PKG_CONFIG_PATH="/opt/homebrew/opt/curl/lib/pkgconfig"
 fi
 
+# Homebrew configuration
+if command -v brew >/dev/null 2>&1; then
+  DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+  export DYLD_LIBRARY_PATH
+fi
+
+# General configurations
 export NEOVIDE_MULTIGRID=true
-
 export GIT_EDITOR=nvim
-
 export LC_CTYPE="UTF-8"
+export CLASH_PROXY_PROT=7890
 
-# proxy settings
-PORT=':7890'
-IP='http://localhost'$PORT
-alias hp='http_proxy=$IP'
-alias hps='https_proxy=$IP'
-alias ehp='export http_proxy=$IP'
-alias ehps='export https_proxy=$IP'
+# Proxy settings
+proxy_ip="http://localhost:${CLASH_PROXY_PROT}"
+alias hp='http_proxy=$proxy_ip'
+alias hps='https_proxy=$proxy_ip'
+alias ehp='export http_proxy=$proxy_ip'
+alias ehps='export https_proxy=$proxy_ip'
+
+# Service start aliases
 alias sv2ray='nohup ~/software/v2/v2ray run ~/software/v2/config.json > ~/.cache/v2.log 2>&1 &'
 alias sxray='nohup ~/software/xray/xray run ~/software/xray/config.json > ~/.cache/xray.log 2>&1 &'
 alias sopenairewrite='tmux new-session -d -s openairewrite "cd ~/software/script/ && mitmproxy --listen-port 8082 --mode regular -s rewrite_openai.py"'
 alias obsidianollama='nohup env OLLAMA_ORIGINS=app://obsidian.md\* ollama serve > ~/.cache/ollama.log 2>&1 &'
 
-# start vmod
-if [[ "$OSTYPE" =~ ^darwin ]]; then
-  alias vmod='source ~/.oh-my-zsh/custom/plugins/vi-mode/zsh-vi-mode.zsh'
+# Vi mode activation
+if is_macos; then
+  alias vmod='source ${HOME}/.oh-my-zsh/custom/plugins/vi-mode/zsh-vi-mode.zsh'
 else
-  alias vmod='source ~/.zsh/vi-mode/vi-mode.zsh'
+  alias vmod='source ${HOME}/.zsh/vi-mode/vi-mode.zsh'
 fi
 
-# screen alias
+# Screen management functions and aliases
 resume_screen() {
-  echo resume screen "$1"
+  echo "Resuming screen $1"
   screen -r "$1"
 }
 alias sr=resume_screen
 alias sls='screen -ls'
 alias sw='screen -wipe'
 
-# Fuzzy find and change directory using fd with nested directory view
+# Directory navigation with fzf
 fzf_cd() {
   local dir
-  dir=$(fd --type d --hidden --follow --exclude .git . ${1:-.} 2>/dev/null |
+  dir=$(fd --type d --hidden --follow --exclude .git . "${1:-.}" 2>/dev/null |
     fzf --preview 'tree -C {} | head -100' \
       --bind 'ctrl-/:change-preview-window(down|hidden|)' \
-      --height 80% --reverse) && cd "$dir"
+      --height 80% --reverse) && cd "$dir" || return
 }
-# Bind fzf_cd to a shorter command, e.g., 'cdf'
 alias cdf=fzf_cd
 
-# fzf tail -f
+# Utility aliases
 alias tff='tail -f $(fzf)'
-
-# alias vtop
 alias top="vtop"
 alias oldtop="/usr/bin/top"
 
-# use new man
-# alias man="tldr"
-# alias backup command
-function bak() {
-  # get file name from arg1
-  cp "$1" "$1"_"$(date +%y-%m-%d_%H:%M)"
+# Backup function
+bak() {
+  cp "$1" "${1}_$(date +%y-%m-%d_%H:%M)"
 }
 
+# Git aliases
 alias simpleGitLog='git log --graph --pretty=oneline --abbrev-commit'
 alias complexGitLog='git log --graph --abbrev-commit'
 
-getpbp() { netstat -alntp | grep "$1" | awk '{ print $7 }' | awk -F '/' '{ print $1 } ' | grep --line-regexp "^[0-9]*$"; }
+# Network utility functions
+getpbp() {
+  netstat -alntp | grep "$1" | awk '{ print $7 }' | awk -F '/' '{ print $1 } ' | grep --line-regexp "^[0-9]*$"
+}
 alias getPIDByPort=getpbp
-# shellcheck disable=2046
-get_ftp_addr() { echo ftp://$(hostname)$(readlink -f "$1"); }
 
-# command_is_exists test command is exists
-command_is_exists() {
-  if command -v "$1" >/dev/null 2>&1; then
-    true
-  else
-    false
-  fi
+get_ftp_addr() {
+  echo "ftp://$(hostname)$(readlink -f "$1")"
 }
 
+# Command existence check
+command_is_exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Terminal IO functions
 runcmd() { perl -e 'ioctl STDOUT, 0x5412, $_ for split //, <>'; }
 writecmd() { perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }'; }
 
-# use exa
+# Use exa if available
 if command_is_exists exa; then
   alias l="exa -ll --all --icons"
   alias lt="exa -ll -all --icons -T -L"
@@ -112,88 +128,91 @@ if command_is_exists exa; then
   alias llt="exa -ll --icons -T -L"
 fi
 
-# support remote ssh copy (need terminal support osc52)
-# https://github.com/agriffis/skel/blob/master/neovim/bin/clipboard-provider
+# Remote SSH copy support
 if command_is_exists clipboard-provider; then
   alias clp='clipboard-provider copy'
 fi
 
-# alias lazygit
+# LazyGit alias
 if command_is_exists lazygit; then
-  alias lg='lazygit -ucf ~/.config/lazygit/config.yml'
+  alias lg='lazygit -ucf ${HOME}/.config/lazygit/config.yml'
 fi
 
-# go proxy
+# Go configuration
 if command_is_exists go; then
   export GOPROXY=https://goproxy.io,direct
 fi
 
-# GO_FLAGS
-function GO_FLAGS() {
+# GO_FLAGS function
+GO_FLAGS() {
   flags=("-X" "main.goversion=$(go version)" "-X" "main.buildstamp=$(date -u '+%Y-%m-%d_%I:%M:%S%p')")
   export flags
 }
 
+# Use bat if available
 if command_is_exists bat; then
   alias bat="bat --theme=gruvbox-dark"
   alias cat="bat"
 fi
 
-# fzf config
+# FZF configuration
 if command_is_exists fzf; then
   export FZF_DEFAULT_OPTS='--preview-window=right:50% --layout=reverse --border'
 
-  # fh - repeat history
+  # FZF history search functions
   fh() {
     ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | runcmd
   }
-  # fhe - repeat history edit
+
   fhe() {
     ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd
   }
 
-  # if had installed bat
-  if command_is_exists bat; then
-    alias pf='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
+  # FZF preview function
+  if command -v bat &>/dev/null; then
+    alias pf='find . -type d \( -name venv -o -name .venv -o -name env -o -name .env -o -name __pycache__ \) -prune -o -type f -not -name "*.pyc" -print | \
+            fzf --preview "bat --style=numbers --color=always --line-range :500 {}" \
+            --bind "ctrl-/:change-preview-window(down|hidden|)"'
   else
-    alias pf="fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+    alias pf='find . -type d \( -name venv -o -name .venv -o -name env -o -name .env -o -name __pycache__ \) -prune -o -type f -not -name "*.pyc" -print | \
+            fzf --preview "less {}" \
+            --bind "shift-up:preview-page-up,shift-down:preview-page-down" \
+            --bind "ctrl-/:change-preview-window(down|hidden|)"'
   fi
 fi
 
-# vim setting
+# Vim and NeoVim aliases
 alias vim="nvim"
 alias vimf='nvim $(pf)'
 alias vf='nvim $(pf)'
 alias nvimf='nvim $(pf)'
 alias nvf='nvim $(pf)'
-alias gvim="neovide --multigrid"
-alias gnvim="neovide --multigrid"
-alias chadvim="NVIM_APPNAME=nvchad_nvim nvim"
 
-# tmux alias
+# Tmux aliases
 alias t="tmux"
 alias ta="tmux a"
 
-# go debug prefix
-alias debug_prefix="GOMAXPROCS=1 GODEBUG=schedtrace=1000,scheddetail=1 mygo run"
-alias dlv="dlv --init ~/go/bin/dlv_config.init"
+# Go debug prefix
+# alias debug_prefix="GOMAXPROCS=1 GODEBUG=schedtrace=1000,scheddetail=1 mygo run"
+alias dlv='dlv --init ${HOME}/go/bin/dlv_config.init'
 
-if ! command_is_exists nix; then
-  [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]] && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-fi
+# Nix configuration
+# if ! command_is_exists nix; then
+#   [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]] && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+# fi
 
-# fix rust blocking
-alias fix_rust_blocking="rm -rf ~/.cargo/registry/index/* ~/.cargo/.package-ca"
+# Rust fix
+alias fix_rust_blocking='rm -rf ${HOME}/.cargo/registry/index/* ${HOME}/.cargo/.package-ca'
 
-# github copilot alias
+# GitHub Copilot aliases
 alias ghcs="gh copilot suggest"
 alias ghce="gh copilot explain"
 
-# jupyter
-alias jkernels='cd /Users/${USER}/Library/Jupyter/kernels/'
+# Jupyter kernels
+alias jkernels='cd ${HOME}/Library/Jupyter/kernels/'
 
-# proxyman
-alias setproxyman='set -a && source "/Users/${USER}/.proxyman/proxyman_env_automatic_setup.sh" && set +a'
+# Proxyman
+alias setproxyman='set -a && source "${HOME}/.proxyman/proxyman_env_automatic_setup.sh" && set +a'
 
-# if file ~/.token.sh exists, source it
-[[ ! -f ~/.token.sh ]] || source ~/.token.sh
+# Source additional configuration if exists
+[[ -f ${HOME}/.token.sh ]] && source "${HOME}"/.token.sh
