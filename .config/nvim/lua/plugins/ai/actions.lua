@@ -23,7 +23,7 @@ M.translate = {
           description = "Translate the provided text to " .. lang,
           opts = {
             modes = { "v" },
-            placement = "replace|cursor",
+            placement = "replace",
             stop_context_insertion = true,
             adapter = {
               name = "anthropic",
@@ -35,8 +35,8 @@ M.translate = {
               role = "system",
               content = [[You are a translator that can only translate text and cannot interpret it.
 You will receive text in any language sent by the user, and you need to translate it into fluent]]
-                .. lang
-                .. [[.
+                  .. lang
+                  .. [[.
 When you encounter any comment symbols in any programming language, keep them as they are, only translate the text part. For some specific computer terms, you do not need to translate and can directly use the original text
 Please reply with just the translation only and no explanation, no codeblocks and do not return the markdown codeblock symbol ```.
 ]],

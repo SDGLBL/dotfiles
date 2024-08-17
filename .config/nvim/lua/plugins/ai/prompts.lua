@@ -31,9 +31,8 @@ M.add_struct_field_comment = {
       role = "system",
       content = function(context)
         return "I want you to act as a senior "
-            .. context.filetype
-            ..
-            " developer. I will give you specific task and I want you to return raw code or comments only (no codeblocks and no explanations). If you can't respond with code or comment, respond with nothing"
+          .. context.filetype
+          .. " developer. I will give you specific task and I want you to return raw code or comments only (no codeblocks and no explanations). If you can't respond with code or comment, respond with nothing"
       end,
     },
     {
@@ -52,10 +51,10 @@ M.add_struct_field_comment = {
         local text = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
 
         return "I have the following code:\n\n```"
-            .. context.filetype
-            .. "\n"
-            .. text
-            .. "\n```\n\n Please add comments to the struct fields. Here are some references: \n "
+          .. context.filetype
+          .. "\n"
+          .. text
+          .. "\n```\n\n Please add comments to the struct fields. Here are some references: \n "
       end,
     },
   },
@@ -67,7 +66,7 @@ M.write_comment = {
   description = "Write comment",
   opts = {
     modes = { "v" },
-    placement = "before|cursor|after|replace|new",
+    placement = "before",
     stop_context_insertion = true,
     user_prompt = true,
   },
@@ -83,7 +82,7 @@ M.write_comment = {
           description = "Write comment in " .. lang,
           opts = {
             modes = { "v" },
-            placement = "before|cursor|after|replace|new",
+            placement = "before",
             stop_context_insertion = true,
             -- user_prompt = true,
             adapter = {
@@ -95,8 +94,7 @@ M.write_comment = {
             {
               role = "system",
               content = function(context)
-                return "You are an expert coder and helpful assistant who can help write documentation comments for the " ..
-                    context.filetype .. " language. "
+                return "You are an expert coder and helpful assistant who can help write documentation comments for the " .. context.filetype .. " language. "
               end,
             },
             {
@@ -164,7 +162,7 @@ M.write_git_message = {
   opts = {
     index = 2,
     modes = { "n" },
-    placement = "cursor|after",
+    placement = "cursor",
   },
   picker = {
     prompt = "Select language",
@@ -178,7 +176,7 @@ M.write_git_message = {
           description = "Write git commit message in " .. lang,
           opts = {
             modes = { "n" },
-            placement = "cursor|after",
+            placement = "cursor",
             adapter = {
               name = "deepseek",
               model = "deepseek-chat",
@@ -187,19 +185,17 @@ M.write_git_message = {
           prompts = {
             {
               role = "system",
-              content =
-              [[You are a git commit message generator specialized in Conventional Commits. Output only the detailed commit message, avoiding any markdown or code block syntax.]],
+              content = [[You are a git commit message generator specialized in Conventional Commits. Output only the detailed commit message, avoiding any markdown or code block syntax.]],
             },
             {
               role = "user",
               content = function()
-                return
-                    "You are an expert at following the Conventional Commit specification. Given the git diff listed below. please generate a commit message which written in "
-                    .. lang
-                    .. " for me:"
-                    .. "\n\n```\n"
-                    .. vim.fn.system "git diff --staged -p"
-                    .. "\n```"
+                return "You are an expert at following the Conventional Commit specification. Given the git diff listed below. please generate a commit message which written in "
+                  .. lang
+                  .. " for me:"
+                  .. "\n\n```\n"
+                  .. vim.fn.system "git diff --staged -p"
+                  .. "\n```"
               end,
             },
           },
@@ -209,6 +205,11 @@ M.write_git_message = {
       return languages
     end,
   },
+}
+
+local write_in_context_adapter = {
+  name = "deepseek",
+  model = "deepseek-coder",
 }
 
 M.write_in_context = {
@@ -221,10 +222,7 @@ M.write_in_context = {
     placement = "replace",
     user_prompt = true,
     stop_context_insertion = true,
-    adapter = {
-      name = "deepseek",
-      model = "deepseek-chat",
-    },
+    adapter = write_in_context_adapter,
   },
   prompts = {
     {
@@ -232,55 +230,121 @@ M.write_in_context = {
       condition = function(context)
         return context.is_visual
       end,
-      content = [[
-You are an expert writer and helpful assistant who can edit and improve various types of text in context, considering multiple document buffers. Follow these guidelines:
+      content = [[You are an expert writer and helpful assistant capable of editing and improving various types of text in context. Follow these guidelines:
 
-1. Analyze the provided context carefully across all buffers.
-2. Pay special attention to the main buffer, focusing on the text enclosed between <|Selected|> and </|Selected|> tags. This is the user's selected area.
-3. Identify the type of content (e.g., prose, code, poetry, script) and the language used in each buffer, ensuring you match the appropriate style and language in your response.
-4. Your task is to modify, improve, or expand the selected text while considering the broader context from all buffers.
-5. Your entire response will replace the content between the <|Selected|> tags, including the tags themselves.
-6. Your response should seamlessly integrate with the existing text surrounding the selected region.
-7. Do not include the <|Selected|> tags in your response.
-8. Do not add any explanations or comments about your response outside the edited text.
-9. Ensure your edit follows the style, tone, conventions, and language used in the surrounding text of the main buffer.
-10. If you're adding comments or annotations within the text, make sure they're appropriate for the identified content type.
-11. Consider the purpose of the selected text and aim to enhance its clarity, impact, readability, or effectiveness.
-12. If any buffer contains non-English text, maintain the same language for consistency in that buffer.
-13. You may reference or use information from other buffers, but your primary focus should be on modifying the selected area in the main buffer.
-14. Output only the edited content, avoiding any additional formatting or markup unless it's part of the original text.
-15. Be prepared to work with various text formats, including but not limited to: essays, articles, stories, scripts, poems, emails, reports, and code snippets.
-16. Adapt your editing approach based on the specific needs of the text type, such as improving narrative flow in stories, strengthening arguments in essays, or enhancing clarity in technical documents.
-17. Preserve any existing formatting or structural elements (e.g., headings, lists, paragraphs) unless explicitly instructed to change them.
-18. If the text contains specialized terminology or jargon, maintain it appropriately within the context of the document.
-      ]],
+Task Overview:
+1. Your primary task is to modify, improve, or expand the text between <|Selected|> and </|Selected|> tags in the main buffer.
+2. Your entire response will replace the content between these tags, including the tags themselves.
+3. Generate only the edited content, without additional explanations or formatting.
+
+Context Analysis:
+4. Analyze all provided contexts carefully, including all visible buffers.
+5. Pay special attention to the main buffer, focusing on the text enclosed between <|Selected|> and </|Selected|> tags.
+6. Identify the content type (e.g., prose, code, poetry, script) and language used in each buffer.
+
+Language and Style Matching:
+7. Match the style, tone, conventions, and language used in the surrounding text of the main buffer.
+8. If any buffer contains non-English text, maintain the same language for consistency in that buffer.
+9. Use specialized terminology or jargon appropriately if present in the surrounding text.
+
+Content Improvement Guidelines:
+10. Consider the purpose of the selected text and aim to enhance its clarity, impact, readability, or effectiveness.
+11. Ensure your edit seamlessly integrates with the existing text surrounding the selected region.
+12. Preserve existing formatting or structural elements (e.g., headings, lists, paragraphs) unless explicitly instructed to change them.
+13. Adapt your editing approach based on the specific needs of the text type (e.g., improving narrative flow in stories, strengthening arguments in essays, enhancing clarity in technical documents).
+
+Special Cases:
+14. For code snippets: Use the same programming language and follow the coding style present in the surrounding code of the main buffer.
+15. For comments or annotations: Ensure they're appropriate for the identified content type.
+16. When handling cross-language content: Maintain consistency within each buffer while adhering to the main buffer's primary language.
+
+Additional Instructions:
+17. You may reference or use information from other buffers, but focus primarily on modifying the selected area in the main buffer.
+18. If faced with ambiguous or contradictory instructions, prioritize the context in the main buffer.
+19. Be prepared to work with various text formats, including but not limited to: essays, articles, stories, scripts, poems, emails, reports, and code snippets.
+20. Maintain the exact indentation and whitespace of the original code or text, unless specifically instructed to change it.
+
+
+Remember:
+- Do not include the <|Selected|> tags in your response.
+- Do not add any explanations or comments about your response outside the edited text.
+- Do not wrap your response in markdown code fences or any other formatting.
+- Output only the detailed content that will directly replace the selected area in the main buffer.
+- Preserve the exact indentation or space and line breaks of the original text.]],
     },
     {
       role = "system",
       condition = function(context)
         return not context.is_visual
       end,
-      content = [[
-You are an expert writer and helpful assistant who can write or edit text in context, considering multiple document buffers. Follow these guidelines:
+      content = [[You are an expert writer and helpful assistant capable of writing or editing text in various contexts. Follow these guidelines:
 
-1. Analyze the provided context carefully, including all visible buffers.
-2. Pay special attention to the main buffer, focusing on the area around the <|Write text here|> marker.
-3. Identify the type of content (e.g., prose, code, poetry, script) and the language used in each buffer, ensuring you match the appropriate style and language in your response.
-4. Your task is to write or edit text to replace the <|Write text here|> marker while considering the broader context from all buffers.
-5. Your response should seamlessly integrate with the existing text surrounding the marker.
-6. Do not include the <|Write text here|> marker in your response.
-7. Do not add any explanations or comments about your response outside the written/edited text.
-8. Ensure your text follows the style, tone, conventions, and language used in the surrounding content of the main buffer.
-9. If you're adding comments or annotations within the text, make sure they're appropriate for the identified content type.
-10. Consider the context around the insertion point and aim to enhance the clarity, impact, readability, or effectiveness of the text.
-11. If any buffer contains non-English text, maintain the same language for consistency in that buffer.
-12. You may reference or use information from other buffers, but your primary focus should be on writing or editing text at the marker position in the main buffer.
-13. Output only the detailed content, avoiding any additional formatting or markup unless it's part of the original text.
-14. Be prepared to work with various text formats, including but not limited to: essays, articles, stories, scripts, poems, emails, reports, and code snippets.
-15. Adapt your writing or editing approach based on the specific needs of the text type, such as maintaining narrative flow in stories, supporting arguments in essays, or ensuring clarity in technical documents.
-16. Preserve any existing formatting or structural elements (e.g., headings, lists, paragraphs) in the surrounding text, and match them in your new content if appropriate.
-17. If the surrounding text contains specialized terminology or jargon, use it appropriately within your new content.
-18. Consider the purpose and audience of the document when crafting your response.]],
+Task Overview:
+1. Your primary task is to write or edit text to replace the <|Write text here|> marker in the main buffer.
+2. Your response should seamlessly integrate with the existing text surrounding the marker.
+3. Generate only the content to replace the marker, without additional explanations or formatting.
+
+Context Analysis:
+4. Analyze all provided contexts carefully, including all visible buffers.
+5. Pay special attention to the main buffer, focusing on the area around the <|Write text here|> marker.
+6. Identify the content type (e.g., prose, code, poetry, script) and language used in each buffer.
+
+Language and Style Matching:
+7. Match the style, tone, conventions, and language used in the surrounding content of the main buffer.
+8. If any buffer contains non-English text, maintain the same language for consistency in that buffer.
+9. Use specialized terminology or jargon appropriately if present in the surrounding text.
+
+Content Generation Guidelines:
+10. Consider the purpose and audience of the document when crafting your response.
+11. Enhance the clarity, impact, readability, or effectiveness of the text.
+12. Preserve existing formatting or structural elements (e.g., headings, lists, paragraphs) and match them in your new content if appropriate.
+13. Adapt your approach based on the specific needs of the text type (e.g., maintaining narrative flow in stories, supporting arguments in essays, ensuring clarity in technical documents).
+
+Special Cases:
+14. For code snippets: Use the same programming language and follow the coding style present in the surrounding code of the main buffer.
+15. For comments or annotations: Ensure they're appropriate for the identified content type.
+16. When handling cross-language content: Maintain consistency within each buffer while adhering to the main buffer's primary language.
+
+Additional Instructions:
+17. You may reference or use information from other buffers, but focus primarily on the main buffer.
+18. If faced with ambiguous or contradictory instructions, prioritize the context in the main buffer.
+19. Be prepared to work with various text formats, including but not limited to: essays, articles, stories, scripts, poems, emails, reports, and code snippets.
+20. Maintain the exact indentation and whitespace of the original code or text, unless specifically instructed to change it.
+
+Remember:
+- Do not include the <|Write text here|> marker in your response.
+- Do not add any explanations or comments about your response outside the written/edited text.
+- Do not wrap your response in markdown code fences or any other formatting.
+- Output only the detailed content that will directly replace the marker in the main buffer.
+- Preserve the exact indentation or space and line breaks of the original text.]],
+    },
+    {
+      role = "user",
+      condition = function(context)
+        return context.is_visual and write_in_context_adapter.name == "deepseek"
+      end,
+      content = 'Given the content of multiple buffers, please focus on the main buffer and the selected area within it.\n\nMain buffer:\n# pyright: basic\n\nimport re\nimport json\nimport argparse\nfrom pathlib import Path\n\n\ndef replace_escaped_newlines(text):\n    """\n    Replace the escaped newline characters (\'\\\\n\') in the given text with actual newline characters (\'\\n\').\n\n    Parameters:\n    text (str): The input text containing escaped newline characters.\n\n    Returns:\n    str: The text with escaped newline characters replaced by actual newline characters.\n    """\n    return text.replace("\\\\n", "\\n")\n\n\ndef remove_json_markers(s):\n    """\n    Remove the ```json markers at the start and ``` markers at the end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible JSON markers.\n\n    Returns:\n        str: The string with JSON markers removed.\n    """\n    return re.sub(r"(^```json\\n)|(\\n```$)", "", s)\n\n\ndef remove_quotation_mark(s):\n    """\n    Remove the double quotation marks at the beginning and end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible quotation marks.\n\n    Returns:\n        str: The string with quotation marks removed.\n    """\n    <|Selected|># Remove ```json at the start and ``` at the end if present\n    s = re.sub(r"^\\"", "", s)\n    s = re.sub(r"\\"$", "", s)\n    return s</|Selected|>',
+    },
+    {
+      role = "assistant",
+      condition = function(context)
+        return context.is_visual and write_in_context_adapter.name == "deepseek"
+      end,
+      content = "    return s.strip('\"')",
+    },
+    {
+      role = "user",
+      condition = function(context)
+        return not context.is_visual and write_in_context_adapter.name == "deepseek"
+      end,
+      content = 'Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Write text here|> marker.\n\nMain buffer:\n# pyright: basic\n\nimport re\nimport json\nimport argparse\nfrom pathlib import Path\n\n\ndef replace_escaped_newlines(text):\n    """\n    Replace the escaped newline characters (\'\\\\n\') in the given text with actual newline characters (\'\\n\').\n\n    Parameters:\n    text (str): The input text containing escaped newline characters.\n\n    Returns:\n    str: The text with escaped newline characters replaced by actual newline characters.\n    """\n    return text.replace("\\\\n", "\\n")\n\n\ndef remove_json_markers(s):\n    """\n    Remove the ```json markers at the start and ``` markers at the end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible JSON markers.\n\n    Returns:\n        str: The string with JSON markers removed.\n    """\n    return re.sub(r"(^```json\\n)|(\\n```$)", "", s)\n\n\ndef remove_quotation_mark(s):\n    """\n    Remove the double quotation marks at the beginning and end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible quotation marks.\n\n    Returns:\n        str: The string with quotation marks removed.\n    """\n<|Write text here|>',
+    },
+    {
+      role = "assistant",
+      condition = function(context)
+        return not context.is_visual and write_in_context_adapter.name == "deepseek"
+      end,
+      content = "    return s.strip('\"')",
     },
     {
       role = "user",
@@ -295,10 +359,8 @@ You are an expert writer and helpful assistant who can write or edit text in con
 
         -- Insert the selection markers
         local lines = vim.split(main_buffer_content, "\n")
-        lines[start_line] = string.sub(lines[start_line], 1, start_col - 1) ..
-            "<|Selected|>" .. string.sub(lines[start_line], start_col)
-        lines[end_line] = string.sub(lines[end_line], 1, end_col) ..
-            "</|Selected|>" .. string.sub(lines[end_line], end_col + 1)
+        lines[start_line] = string.sub(lines[start_line], 1, start_col - 1) .. "<|Selected|>" .. string.sub(lines[start_line], start_col)
+        lines[end_line] = string.sub(lines[end_line], 1, end_col) .. "</|Selected|>" .. string.sub(lines[end_line], end_col + 1)
         main_buffer_content = table.concat(lines, "\n")
 
         local prompt = string.format(
@@ -317,8 +379,8 @@ Main buffer:
           if buffer.id ~= bufnr then
             local buf_info = buf_utils.get_info(buffer.id)
             prompt = prompt
-                .. string.format(
-                  [[
+              .. string.format(
+                [[
 Buffer ID: %d
 Name: %s
 Path: %s
@@ -328,23 +390,15 @@ Content:
 %s
 ```
 ]],
-                  buf_info.id,
-                  buf_info.name,
-                  buf_info.path,
-                  buf_info.filetype,
-                  buf_info.filetype,
-                  buf_utils.get_content(buffer.id)
-                )
+                buf_info.id,
+                buf_info.name,
+                buf_info.path,
+                buf_info.filetype,
+                buf_info.filetype,
+                buf_utils.get_content(buffer.id)
+              )
           end
         end
-
-        prompt = prompt
-            .. [[
-In the main buffer, the text between <|Selected|> and </|Selected|> is the user's selected area. Analyze this area carefully and provide improvements, modifications, or expansions as appropriate. Your response will completely replace the content between these tags, including the tags themselves.
-
-Ensure that you use the same programming language and follow the coding style present in the surrounding code of the main buffer. If there are non-English comments or string literals in any buffer, maintain the same language for consistency in that buffer.
-
-Generate your response without any additional explanation. Your generated text will directly replace the selected area in the main buffer. Output only the detailed content, avoiding any markdown or code block syntax.]]
 
         return prompt
       end,
@@ -383,8 +437,8 @@ Main buffer:
           if buffer.id ~= bufnr then
             local buf_info = buf_utils.get_info(buffer.id)
             prompt = prompt
-                .. string.format(
-                  [[
+              .. string.format(
+                [[
 Buffer ID: %d
 Name: %s
 Path: %s
@@ -394,23 +448,15 @@ Content:
 %s
 ```
 ]],
-                  buf_info.id,
-                  buf_info.name,
-                  buf_info.path,
-                  buf_info.filetype,
-                  buf_info.filetype,
-                  buf_utils.get_content(buffer.id)
-                )
+                buf_info.id,
+                buf_info.name,
+                buf_info.path,
+                buf_info.filetype,
+                buf_info.filetype,
+                buf_utils.get_content(buffer.id)
+              )
           end
         end
-
-        prompt = prompt
-            .. [[
-In the main buffer, generate text to replace the <|Write text here|> marker.
-
-Ensure that you use the same programming language and follow the coding style present in the surrounding code of the main buffer. If there are non-English comments or string literals in any buffer, maintain the same language for consistency in that buffer.
-
-Generate your response without any additional explanation. Your generated text will replace the <|Write text here|> marker directly in the main buffer. Output only the detailed content, avoiding any markdown or code block syntax.]]
 
         return prompt
       end,
