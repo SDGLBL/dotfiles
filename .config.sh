@@ -9,6 +9,10 @@ export PATH=/opt/homebrew/opt/openjdk/bin:$PATH
 # export PATH=$PATH:~/.cargo/bin
 export PATH=$PATH:~/go/bin
 
+if command -v brew >/dev/null 2>&1; then
+  export DYLD_LIBRARY_PATH="$(brew --prefix)/lib:$DYLD_LIBRARY_PATH"
+fi
+
 # add bin utils on macos
 if [[ "$OSTYPE" =~ ^darwin ]]; then
   export PATH=/opt/homebrew/opt/binutils/bin:$PATH
@@ -186,10 +190,10 @@ alias ghcs="gh copilot suggest"
 alias ghce="gh copilot explain"
 
 # jupyter
-alias jkernels="cd ~/Library/Jupyter/kernels/"
+alias jkernels='cd /Users/${USER}/Library/Jupyter/kernels/'
 
 # proxyman
-alias setproxyman='set -a && source "~/.proxyman/proxyman_env_automatic_setup.sh" && set +a'
+alias setproxyman='set -a && source "/Users/${USER}/.proxyman/proxyman_env_automatic_setup.sh" && set +a'
 
 # if file ~/.token.sh exists, source it
 [[ ! -f ~/.token.sh ]] || source ~/.token.sh
