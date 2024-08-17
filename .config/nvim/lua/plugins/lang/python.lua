@@ -93,10 +93,10 @@ return {
 
             -- stylua: ignore
             if client.name == "pyright" then
-              map("n", "<leader>lO", "<cmd>PyrightOrganizeImports<cr>",  "Organize Imports" )
-              map("n", "<leader>lC", function() require("dap-python").test_class() end,  "Debug Class" )
-              map("n", "<leader>lM", function() require("dap-python").test_method() end,  "Debug Method" )
-              map("v", "<leader>lE", function() require("dap-python").debug_selection() end, "Debug Selection" )
+              map("n", "<leader>lO", "<cmd>PyrightOrganizeImports<cr>", "Organize Imports")
+              map("n", "<leader>lC", function() require("dap-python").test_class() end, "Debug Class")
+              map("n", "<leader>lM", function() require("dap-python").test_method() end, "Debug Method")
+              map("v", "<leader>lE", function() require("dap-python").debug_selection() end, "Debug Selection")
             end
           end)
         end,
@@ -108,6 +108,10 @@ return {
     "mfussenegger/nvim-dap",
     dependencies = {
       "mfussenegger/nvim-dap-python",
+      keys = {
+        { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
+        { "<leader>dPc", function() require('dap-python').test_class() end,  desc = "Debug Class",  ft = "python" },
+      },
       config = function()
         local path = require("mason-registry").get_package("debugpy"):get_install_path()
         require("dap-python").setup(path .. "/venv/bin/python")
@@ -133,8 +137,14 @@ return {
 
   {
     "linux-cultist/venv-selector.nvim",
+    branch = "regexp", -- Use this branch for the new version
     cmd = "VenvSelect",
     opts = {
+      settings = {
+        options = {
+          notify_user_on_venv_activation = true,
+        },
+      },
       name = {
         "venv",
         ".venv",
@@ -142,6 +152,8 @@ return {
         ".env",
       },
     },
+    --  Call config for python files and load the cached venv automatically
+    ft = "python",
     keys = { { "<leader>lv", "<cmd>:VenvSelect<cr>", desc = "Select VirtualEnv" } },
   },
 }
