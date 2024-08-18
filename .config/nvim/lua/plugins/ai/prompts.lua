@@ -280,13 +280,13 @@ Remember:
       content = [[You are an expert writer and helpful assistant capable of writing or editing text in various contexts. Follow these guidelines:
 
 Task Overview:
-1. Your primary task is to write or edit text to replace the <|Write text here|> marker in the main buffer.
+1. Your primary task is to write or edit text to replace the <|Cursor|> marker in the main buffer.
 2. Your response should seamlessly integrate with the existing text surrounding the marker.
 3. Generate only the content to replace the marker, without additional explanations or formatting.
 
 Context Analysis:
 4. Analyze all provided contexts carefully, including all visible buffers.
-5. Pay special attention to the main buffer, focusing on the area around the <|Write text here|> marker.
+5. Pay special attention to the main buffer, focusing on the area around the <|Cursor|> marker.
 6. Identify the content type (e.g., prose, code, poetry, script) and language used in each buffer.
 
 Language and Style Matching:
@@ -312,7 +312,7 @@ Additional Instructions:
 20. Maintain the exact indentation and whitespace of the original code or text, unless specifically instructed to change it.
 
 Remember:
-- Do not include the <|Write text here|> marker in your response.
+- Do not include the <|Cursor|> marker in your response.
 - Do not add any explanations or comments about your response outside the written/edited text.
 - Do not wrap your response in markdown code fences or any other formatting.
 - Output only the detailed content that will directly replace the marker in the main buffer.
@@ -337,7 +337,7 @@ Remember:
       condition = function(context)
         return not context.is_visual and write_in_context_adapter.name == "deepseek"
       end,
-      content = 'Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Write text here|> marker.\n\nMain buffer:\n# pyright: basic\n\nimport re\nimport json\nimport argparse\nfrom pathlib import Path\n\n\ndef replace_escaped_newlines(text):\n    """\n    Replace the escaped newline characters (\'\\\\n\') in the given text with actual newline characters (\'\\n\').\n\n    Parameters:\n    text (str): The input text containing escaped newline characters.\n\n    Returns:\n    str: The text with escaped newline characters replaced by actual newline characters.\n    """\n    return text.replace("\\\\n", "\\n")\n\n\ndef remove_json_markers(s):\n    """\n    Remove the ```json markers at the start and ``` markers at the end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible JSON markers.\n\n    Returns:\n        str: The string with JSON markers removed.\n    """\n    return re.sub(r"(^```json\\n)|(\\n```$)", "", s)\n\n\ndef remove_quotation_mark(s):\n    """\n    Remove the double quotation marks at the beginning and end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible quotation marks.\n\n    Returns:\n        str: The string with quotation marks removed.\n    """\n<|Write text here|>',
+      content = 'Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Cursor|> marker.\n\nMain buffer:\n# pyright: basic\n\nimport re\nimport json\nimport argparse\nfrom pathlib import Path\n\n\ndef replace_escaped_newlines(text):\n    """\n    Replace the escaped newline characters (\'\\\\n\') in the given text with actual newline characters (\'\\n\').\n\n    Parameters:\n    text (str): The input text containing escaped newline characters.\n\n    Returns:\n    str: The text with escaped newline characters replaced by actual newline characters.\n    """\n    return text.replace("\\\\n", "\\n")\n\n\ndef remove_json_markers(s):\n    """\n    Remove the ```json markers at the start and ``` markers at the end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible JSON markers.\n\n    Returns:\n        str: The string with JSON markers removed.\n    """\n    return re.sub(r"(^```json\\n)|(\\n```$)", "", s)\n\n\ndef remove_quotation_mark(s):\n    """\n    Remove the double quotation marks at the beginning and end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible quotation marks.\n\n    Returns:\n        str: The string with quotation marks removed.\n    """\n<|Cursor|>',
     },
     {
       role = "assistant",
@@ -418,12 +418,12 @@ Content:
         local current_line = lines[cursor_line]
         local before_cursor = string.sub(current_line, 1, cursor_col - 1)
         local after_cursor = string.sub(current_line, cursor_col)
-        lines[cursor_line] = before_cursor .. "<|Write text here|>" .. after_cursor
+        lines[cursor_line] = before_cursor .. "<|Cursor|>" .. after_cursor
         main_buffer_content = table.concat(lines, "\n")
 
         local prompt = string.format(
           [[
-Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Write text here|> marker.
+Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Cursor|> marker.
 
 Main buffer:
 %s
