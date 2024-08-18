@@ -32,6 +32,7 @@ return {
             strategy = {
               [""] = rainbow_delimiters.strategy["global"],
               vim = rainbow_delimiters.strategy["local"],
+              markdown = rainbow_delimiters.strategy["noop"],
             },
             query = {
               [""] = "rainbow-delimiters",
