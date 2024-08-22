@@ -19,6 +19,7 @@ path_dirs=(
   "${HOME}/software/gh/bin"
   "${HOME}/.go/bin"
   "${HOME}/go/bin"
+  "${HOME}/.local/share/nvim/mason/bin"
 )
 
 for dir in "${path_dirs[@]}"; do
