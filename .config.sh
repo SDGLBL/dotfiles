@@ -203,7 +203,7 @@ alias dlv='dlv --init ${HOME}/go/bin/dlv_config.init'
 # fi
 
 # Rust fix
-alias fix_rust_blocking='rm -rf ${HOME}/.cargo/registry/index/* ${HOME}/.cargo/.package-ca'
+alias fix_rust_blocking='rm -rf ${HOME}/cargo/registry/index/* ${HOME}/cargo/.package-cache'
 
 # GitHub Copilot aliases
 alias ghcs="gh copilot suggest"
