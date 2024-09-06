@@ -47,7 +47,7 @@ return {
           }),
           openai = require("codecompanion.adapters").extend("openai", {
             env = {
-              api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
+              api_key = os.getenv "OPENAI_API_KEY",
             },
             url = os.getenv "OPENAI_API_BASE" .. "/chat/completions",
             schema = {
@@ -64,13 +64,15 @@ return {
                   "gemini-1.5-flash-001",
                   "TA/meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
                   "TA/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
+                  "Claude-3.5-Sonnet",
+                  "claude-3-5-sonnet-20240620",
                 },
               },
             },
           }),
           deepseek = require("codecompanion.adapters").extend("openai", {
             env = {
-              api_key = "cmd:gpg --decrypt ~/.deepseek-api-key.gpg 2>/dev/null",
+              api_key = os.getenv "DEEPSEEK_API_KEY",
             },
             url = os.getenv "DEEPSEEK_API_BASE" .. "/chat/completions",
             schema = {
