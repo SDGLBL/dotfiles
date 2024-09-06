@@ -93,7 +93,7 @@ return {
           }),
           anthropic = require("codecompanion.adapters").extend("anthropic", {
             env = {
-              api_key = "cmd:gpg --decrypt ~/.openai-api-key.gpg 2>/dev/null",
+              api_key = os.getenv "ANTHROPIC_API_KEY",
             },
             url = os.getenv "OPENAI_API_BASE" .. "/messages",
             schema = {
