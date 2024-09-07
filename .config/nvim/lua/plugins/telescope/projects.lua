@@ -1,6 +1,7 @@
 return {
   {
     "ahmedkhalf/project.nvim",
+    enabled = false,
     event = "VeryLazy",
     config = function()
       local project = require "project_nvim"

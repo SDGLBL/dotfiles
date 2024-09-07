@@ -5,23 +5,11 @@ return {
   },
 
   {
-    "ahmedkhalf/project.nvim",
-    config = function()
-      require("project_nvim").setup {
-        detection_methods = { "pattern", "lsp" },
-        patterns = { ".git" },
-        ignore_lsp = { "null-ls" },
-      }
-    end,
-  },
-
-  {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
     dependencies = {
       "tiagovla/scope.nvim",
       "stevearc/aerial.nvim",
-      "ahmedkhalf/project.nvim",
       "benfowler/telescope-luasnip.nvim",
       "nvim-telescope/telescope-project.nvim",
       -- "nvim-telescope/telescope-frecency.nvim",
@@ -306,7 +294,6 @@ return {
       telescope.load_extension "fzf"
       -- telescope.load_extension "frecency"
       telescope.load_extension "luasnip"
-      telescope.load_extension "projects"
       telescope.load_extension "live_grep_args"
 
       local fg_bg = require("utils").fg_bg
