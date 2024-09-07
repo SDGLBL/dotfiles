@@ -47,6 +47,9 @@ return {
               "RainbowDelimiterViolet",
               "RainbowDelimiterCyan",
             },
+            condition = function()
+              return vim.api.nvim_buf_line_count(0) < 5000
+            end,
           }
         end,
       },
