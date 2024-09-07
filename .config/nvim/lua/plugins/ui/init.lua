@@ -95,6 +95,13 @@ return {
     config = function()
       require("transparent").setup {
         extra_groups = {
+          "BufferLineTabClose",
+          "BufferlineBufferSelected",
+          "BufferLineFill",
+          "BufferLineBackground",
+          "BufferLineSeparator",
+          "BufferLineIndicatorSelected",
+
           "SignColumn",
           "TelescopeBorder",
           "TelescopeNormal",
@@ -108,7 +115,11 @@ return {
           "HopPreview",
           "WhichKeyFloat",
         }, -- table: additional groups that should be cleared
-        exclude_groups = {}, -- table: groups you don't want to clear
+
+        exclude_groups = {
+          "StatusLine",
+          "StatusLineNC",
+        }, -- table: groups you don't want to clear
       }
     end,
   },
