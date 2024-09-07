@@ -34,6 +34,9 @@ return {
             -- "--stdin-single-line",
             "-",
           },
+          condition = function(_)
+            return vim.api.nvim_buf_line_count(0) < 3000
+          end,
         },
         -- -- Example of using selene only when a selene.toml file is present
         -- selene = {
