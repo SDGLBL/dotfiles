@@ -182,6 +182,9 @@ function M.define_augroups(definitions)
   for _, entry in ipairs(definitions) do
     local event = entry[1]
     local opts = entry[2]
+    if opts == nil then
+      goto continue
+    end
     if type(opts.group) == "string" and opts.group ~= "" then
       local exists, _ = pcall(vim.api.nvim_get_autocmds, { group = opts.group })
       if not exists then
@@ -189,6 +192,8 @@ function M.define_augroups(definitions)
       end
     end
     vim.api.nvim_create_autocmd(event, opts)
+
+    ::continue::
   end
 end
 
