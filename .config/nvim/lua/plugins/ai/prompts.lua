@@ -2,6 +2,7 @@ local M = {}
 
 local comment_prompts = require("plugins.ai.comment_prompts").comment_prompts
 local buf_utils = require "codecompanion.utils.buffers"
+local content_prompt = require "plugins.ai.prompts.content_prompt"
 
 M.support_languages = {
   "Chinese",
@@ -109,6 +110,9 @@ M.write_comment = {
             {
               role = "user",
               contains_code = true,
+              -- opts = {
+              --   contains_code = true,
+              -- },
               content = function(context)
                 local code = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
                 local bufnr = context.bufnr
@@ -210,7 +214,9 @@ M.write_git_message = {
 
 local write_in_context_adapter = {
   name = "deepseek",
-  model = "deepseek-coder",
+  model = "deepseek-chat",
+  -- name = "anthropic",
+  -- model = "claude-3-5-sonnet-20240620",
 }
 
 M.write_in_context = {
@@ -221,245 +227,75 @@ M.write_in_context = {
     index = 1,
     modes = { "n", "v" },
     placement = "replace",
-    user_prompt = true,
     stop_context_insertion = true,
+    user_prompt = true,
+    append_user_prompt = false,
+    append_last_chat = true,
+    append_last_system_prompt = false,
     adapter = write_in_context_adapter,
   },
   prompts = {
     {
       role = "system",
-      condition = function(context)
-        return context.is_visual
-      end,
-      content = [[You are an expert writer and helpful assistant capable of editing and improving various types of text in context. Follow these guidelines:
-
-Task Overview:
-1. Your primary task is to modify, improve, or expand the text between <|Selected|> and </|Selected|> tags in the main buffer.
-2. Your entire response will replace the content between these tags, including the tags themselves.
-3. Generate only the edited content, without additional explanations or formatting.
-
-Context Analysis:
-4. Analyze all provided contexts carefully, including all visible buffers.
-5. Pay special attention to the main buffer, focusing on the text enclosed between <|Selected|> and </|Selected|> tags.
-6. Identify the content type (e.g., prose, code, poetry, script) and language used in each buffer.
-
-Language and Style Matching:
-7. Match the style, tone, conventions, and language used in the surrounding text of the main buffer.
-8. If any buffer contains non-English text, maintain the same language for consistency in that buffer.
-9. Use specialized terminology or jargon appropriately if present in the surrounding text.
-
-Content Improvement Guidelines:
-10. Consider the purpose of the selected text and aim to enhance its clarity, impact, readability, or effectiveness.
-11. Ensure your edit seamlessly integrates with the existing text surrounding the selected region.
-12. Preserve existing formatting or structural elements (e.g., headings, lists, paragraphs) unless explicitly instructed to change them.
-13. Adapt your editing approach based on the specific needs of the text type (e.g., improving narrative flow in stories, strengthening arguments in essays, enhancing clarity in technical documents).
-
-Special Cases:
-14. For code snippets: Use the same programming language and follow the coding style present in the surrounding code of the main buffer.
-15. For comments or annotations: Ensure they're appropriate for the identified content type.
-16. When handling cross-language content: Maintain consistency within each buffer while adhering to the main buffer's primary language.
-
-Additional Instructions:
-17. You may reference or use information from other buffers, but focus primarily on modifying the selected area in the main buffer.
-18. If faced with ambiguous or contradictory instructions, prioritize the context in the main buffer.
-19. Be prepared to work with various text formats, including but not limited to: essays, articles, stories, scripts, poems, emails, reports, and code snippets.
-20. Maintain the exact indentation and whitespace of the original code or text, unless specifically instructed to change it.
-
-
-Remember:
-- Do not include the <|Selected|> tags in your response.
-- Do not add any explanations or comments about your response outside the edited text.
-- Do not wrap your response in markdown code fences or any other formatting.
-- Output only the detailed content that will directly replace the selected area in the main buffer.
-- Preserve the exact indentation or space and line breaks of the original text.]],
-    },
-    {
-      role = "system",
-      condition = function(context)
-        return not context.is_visual
-      end,
-      content = [[You are an expert writer and helpful assistant capable of writing or editing text in various contexts. Follow these guidelines:
-
-Task Overview:
-1. Your primary task is to write or edit text to replace the <|Cursor|> marker in the main buffer.
-2. Your response should seamlessly integrate with the existing text surrounding the marker.
-3. Generate only the content to replace the marker, without additional explanations or formatting.
-
-Context Analysis:
-4. Analyze all provided contexts carefully, including all visible buffers.
-5. Pay special attention to the main buffer, focusing on the area around the <|Cursor|> marker.
-6. Identify the content type (e.g., prose, code, poetry, script) and language used in each buffer.
-
-Language and Style Matching:
-7. Match the style, tone, conventions, and language used in the surrounding content of the main buffer.
-8. If any buffer contains non-English text, maintain the same language for consistency in that buffer.
-9. Use specialized terminology or jargon appropriately if present in the surrounding text.
-
-Content Generation Guidelines:
-10. Consider the purpose and audience of the document when crafting your response.
-11. Enhance the clarity, impact, readability, or effectiveness of the text.
-12. Preserve existing formatting or structural elements (e.g., headings, lists, paragraphs) and match them in your new content if appropriate.
-13. Adapt your approach based on the specific needs of the text type (e.g., maintaining narrative flow in stories, supporting arguments in essays, ensuring clarity in technical documents).
-
-Special Cases:
-14. For code snippets: Use the same programming language and follow the coding style present in the surrounding code of the main buffer.
-15. For comments or annotations: Ensure they're appropriate for the identified content type.
-16. When handling cross-language content: Maintain consistency within each buffer while adhering to the main buffer's primary language.
-
-Additional Instructions:
-17. You may reference or use information from other buffers, but focus primarily on the main buffer.
-18. If faced with ambiguous or contradictory instructions, prioritize the context in the main buffer.
-19. Be prepared to work with various text formats, including but not limited to: essays, articles, stories, scripts, poems, emails, reports, and code snippets.
-20. Maintain the exact indentation and whitespace of the original code or text, unless specifically instructed to change it.
-
-Remember:
-- Do not include the <|Cursor|> marker in your response.
-- Do not add any explanations or comments about your response outside the written/edited text.
-- Do not wrap your response in markdown code fences or any other formatting.
-- Output only the detailed content that will directly replace the marker in the main buffer.
-- Preserve the exact indentation or space and line breaks of the original text.]],
+      -- opts = {
+      --   contains_code = true,
+      -- },
+      content = [[As a code assistant, you need to understand and process various input formats:
+1. Source code file: Usually enclosed in <document></document> tags, may contain code segments to be modified, which are surrounded by <rewrite_this></rewrite_this> tags.
+2. User queries: May be inquiries about code optimization or feature improvements. These queries typically appear in regular user messages.
+3. Assistant replies: Your previous responses, which may include code suggestions or explanations.
+4. Rewrite instructions: In the last user message, rewrite instructions are usually contained within <prompt></prompt> tags. These instructions may relate to previous user queries and your replies.
+5. Context association: Note that rewrite instructions may be related to previous conversation content. When handling rewrite requests, consider previous user queries and your responses. 
+6. Code rewriting: When encountering rewrite instructions, only modify the code within <rewrite_this></rewrite_this> tags, keeping other parts unchanged. Maintain the original indentation level when rewriting, and rewrite the entire section completely, even if some parts don't need changes.
+7. Code insertion: When encountering insert instructions, insert the code at the position marked by <insert_here></insert_here> tags. Ensure that the inserted code matches the indentation level of the surrounding code.
+8. Only return the modified code or text, without any additional explanations or code fences.
+Please interpret and respond to the following messages according to these rules.]],
     },
     {
       role = "user",
-      condition = function(context)
-        return context.is_visual and write_in_context_adapter.name == "deepseek"
-      end,
-      content = 'Given the content of multiple buffers, please focus on the main buffer and the selected area within it.\n\nMain buffer:\n# pyright: basic\n\nimport re\nimport json\nimport argparse\nfrom pathlib import Path\n\n\ndef replace_escaped_newlines(text):\n    """\n    Replace the escaped newline characters (\'\\\\n\') in the given text with actual newline characters (\'\\n\').\n\n    Parameters:\n    text (str): The input text containing escaped newline characters.\n\n    Returns:\n    str: The text with escaped newline characters replaced by actual newline characters.\n    """\n    return text.replace("\\\\n", "\\n")\n\n\ndef remove_json_markers(s):\n    """\n    Remove the ```json markers at the start and ``` markers at the end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible JSON markers.\n\n    Returns:\n        str: The string with JSON markers removed.\n    """\n    return re.sub(r"(^```json\\n)|(\\n```$)", "", s)\n\n\ndef remove_quotation_mark(s):\n    """\n    Remove the double quotation marks at the beginning and end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible quotation marks.\n\n    Returns:\n        str: The string with quotation marks removed.\n    """\n    <|Selected|># Remove ```json at the start and ``` at the end if present\n    s = re.sub(r"^\\"", "", s)\n    s = re.sub(r"\\"$", "", s)\n    return s</|Selected|>',
-    },
-    {
-      role = "assistant",
-      condition = function(context)
-        return context.is_visual and write_in_context_adapter.name == "deepseek"
-      end,
-      content = "    return s.strip('\"')",
-    },
-    {
-      role = "user",
-      condition = function(context)
-        return not context.is_visual and write_in_context_adapter.name == "deepseek"
-      end,
-      content = 'Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Cursor|> marker.\n\nMain buffer:\n# pyright: basic\n\nimport re\nimport json\nimport argparse\nfrom pathlib import Path\n\n\ndef replace_escaped_newlines(text):\n    """\n    Replace the escaped newline characters (\'\\\\n\') in the given text with actual newline characters (\'\\n\').\n\n    Parameters:\n    text (str): The input text containing escaped newline characters.\n\n    Returns:\n    str: The text with escaped newline characters replaced by actual newline characters.\n    """\n    return text.replace("\\\\n", "\\n")\n\n\ndef remove_json_markers(s):\n    """\n    Remove the ```json markers at the start and ``` markers at the end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible JSON markers.\n\n    Returns:\n        str: The string with JSON markers removed.\n    """\n    return re.sub(r"(^```json\\n)|(\\n```$)", "", s)\n\n\ndef remove_quotation_mark(s):\n    """\n    Remove the double quotation marks at the beginning and end of the given string, if present.\n\n    Parameters:\n        s (str): The input string containing possible quotation marks.\n\n    Returns:\n        str: The string with quotation marks removed.\n    """\n<|Cursor|>',
-    },
-    {
-      role = "assistant",
-      condition = function(context)
-        return not context.is_visual and write_in_context_adapter.name == "deepseek"
-      end,
-      content = "    return s.strip('\"')",
-    },
-    {
-      role = "user",
-      condition = function(context)
-        return context.is_visual
-      end,
+      -- opts = {
+      --   contains_code = true,
+      -- },
       content = function(context)
         local bufnr = context.bufnr
+        local user_prompt = context.user_input
         local main_buffer_content = buf_utils.get_content(bufnr)
-        local start_line, start_col = context.start_line, context.start_col
-        local end_line, end_col = context.end_line, context.end_col
-
-        -- Insert the selection markers
         local lines = vim.split(main_buffer_content, "\n")
-        lines[start_line] = string.sub(lines[start_line], 1, start_col - 1) .. "<|Selected|>" .. string.sub(lines[start_line], start_col)
-        lines[end_line] = string.sub(lines[end_line], 1, end_col) .. "</|Selected|>" .. string.sub(lines[end_line], end_col + 1)
-        main_buffer_content = table.concat(lines, "\n")
 
-        local prompt = string.format(
-          [[
-Given the content of multiple buffers, please focus on the main buffer and the selected area within it.
+        -- Determine content type based on filetype
+        local content_type = (context.filetype == "markdown" or context.filetype == "html") and "text" or "code"
 
-Main buffer:
-%s
+        -- Common values for both insert and visual mode
+        local val = {
+          language_name = context.filetype,
+          document_content = main_buffer_content,
+          content_type = content_type,
+          user_prompt = user_prompt,
+        }
 
-]],
-          main_buffer_content
-        )
+        if not context.is_visual then
+          -- Insert mode: Add insert marker at cursor position
+          local cursor_line, cursor_col = unpack(context.cursor_pos)
+          local current_line = lines[cursor_line]
+          local before_cursor = string.sub(current_line, 1, cursor_col - 1)
+          local after_cursor = string.sub(current_line, cursor_col)
+          lines[cursor_line] = before_cursor .. "<insert_here></insert_here>" .. after_cursor
+          val.is_insert = true
+        else
+          -- Visual mode: Add rewrite markers around selected text
+          local start_line, start_col = context.start_line, context.start_col
+          local end_line, end_col = context.end_line, context.end_col
 
-        local other_buffers = buf_utils.get_open(context.filetype)
-        for _, buffer in ipairs(other_buffers) do
-          if buffer.id ~= bufnr then
-            local buf_info = buf_utils.get_info(buffer.id)
-            prompt = prompt
-              .. string.format(
-                [[
-Buffer ID: %d
-Name: %s
-Path: %s
-Filetype: %s
-Content:
-```%s
-%s
-```
-]],
-                buf_info.id,
-                buf_info.name,
-                buf_info.path,
-                buf_info.filetype,
-                buf_info.filetype,
-                buf_utils.get_content(buffer.id)
-              )
-          end
+          lines[start_line] = string.sub(lines[start_line], 1, start_col - 1) .. "<rewrite_this>\n" .. string.sub(lines[start_line], start_col)
+          lines[end_line] = string.sub(lines[end_line], 1, end_col) .. "\n</rewrite_this>" .. string.sub(lines[end_line], end_col + 1)
+          val.is_insert = false -- This is actually a rewrite operation
         end
 
-        return prompt
-      end,
-    },
-    {
-      role = "user",
-      condition = function(context)
-        return not context.is_visual
-      end,
-      content = function(context)
-        local bufnr = context.bufnr
-        local main_buffer_content = buf_utils.get_content(bufnr)
-        local cursor_line, cursor_col = unpack(context.cursor_pos)
+        -- Update main_buffer_content with modified lines
+        val.document_content = table.concat(lines, "\n")
 
-        -- Insert the marker at the cursor position
-        local lines = vim.split(main_buffer_content, "\n")
-        local current_line = lines[cursor_line]
-        local before_cursor = string.sub(current_line, 1, cursor_col - 1)
-        local after_cursor = string.sub(current_line, cursor_col)
-        lines[cursor_line] = before_cursor .. "<|Cursor|>" .. after_cursor
-        main_buffer_content = table.concat(lines, "\n")
-
-        local prompt = string.format(
-          [[
-Given the content of multiple buffers, please focus on the main buffer and generate code or comments to replace the <|Cursor|> marker.
-
-Main buffer:
-%s
-
-]],
-          main_buffer_content
-        )
-
-        local other_buffers = buf_utils.get_open(context.filetype)
-        for _, buffer in ipairs(other_buffers) do
-          if buffer.id ~= bufnr then
-            local buf_info = buf_utils.get_info(buffer.id)
-            prompt = prompt
-              .. string.format(
-                [[
-Buffer ID: %d
-Name: %s
-Path: %s
-Filetype: %s
-Content:
-```%s
-%s
-```
-]],
-                buf_info.id,
-                buf_info.name,
-                buf_info.path,
-                buf_info.filetype,
-                buf_info.filetype,
-                buf_utils.get_content(buffer.id)
-              )
-          end
-        end
-
-        return prompt
+        -- Generate and return the prompt
+        return content_prompt.render(val)
       end,
     },
   },
