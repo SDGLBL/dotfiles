@@ -134,6 +134,7 @@ Requirements:
 4. Use the appropriate comment syntax for %s.
 5. Only return the comment, without any code or additional explanations.
 6. Ensure the comment is concise yet informative.
+7. Do NOT Wrap code with code fences.
 
 Please provide the comment now:]],
                   context.filetype,
