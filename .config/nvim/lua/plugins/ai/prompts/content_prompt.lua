@@ -41,7 +41,13 @@ local template = {
       result = result
         .. "Match the indentation in the original file in the inserted "
         .. (data.content_type or "")
-        .. ", don't include any indentation on blank lines.\n"
+        .. [[, don't include any indentation on blank lines.]]
+        .. [[Immediately start without code fences]]
+    --         .. [[Immediately start with the following format with no remarks:
+    --
+    -- ```
+    -- {{INSERTED_CODE}}
+    -- ```]]
     else
       result = result .. "Edit the section of " .. (data.content_type or "") .. " in <rewrite_this></rewrite_this> tags based on the following prompt:\n"
       result = result .. "<prompt>\n" .. (data.user_prompt or "") .. "\n</prompt>\n"
@@ -58,7 +64,14 @@ local template = {
       result = result
         .. "Start at the indentation level in the original file in the rewritten "
         .. (data.content_type or "")
-        .. ". Don't stop until you've rewritten the entire section, even if you have no more changes to make, always write out the whole section with no unnecessary elisions.\n"
+        .. [[. Don't stop until you've rewritten the entire section, even if you have no more changes to make, always write out the whole section with no unnecessary elisions.
+
+        .. [[Immediately start without code fences]]
+      --         .. [[Immediately start with the following format with no remarks:
+      --
+      -- ```
+      -- {{REWRITTEN_CODE}}
+      -- ```]]
     end
 
     return result
