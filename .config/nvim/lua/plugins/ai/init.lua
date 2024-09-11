@@ -134,7 +134,7 @@ return {
         display = {
           inline = {
             diff = {
-              enabled = false,
+              enabled = true,
             },
           },
           chat = {
