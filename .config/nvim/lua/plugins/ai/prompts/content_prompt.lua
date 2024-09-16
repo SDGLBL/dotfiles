@@ -41,8 +41,9 @@ local template = {
       result = result
         .. "Match the indentation in the original file in the inserted "
         .. (data.content_type or "")
-        .. [[, don't include any indentation on blank lines.]]
-        .. [[Immediately start without code fences]]
+        .. [[, don't include any indentation on blank lines.
+
+Immediately start without any markdown code fences.]]
     --         .. [[Immediately start with the following format with no remarks:
     --
     -- ```
@@ -66,7 +67,7 @@ local template = {
         .. (data.content_type or "")
         .. [[. Don't stop until you've rewritten the entire section, even if you have no more changes to make, always write out the whole section with no unnecessary elisions.
 
-        .. [[Immediately start without code fences]]
+Immediately start without any markdown code fences.]]
       --         .. [[Immediately start with the following format with no remarks:
       --
       -- ```
