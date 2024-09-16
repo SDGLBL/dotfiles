@@ -13,6 +13,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
       "nvim-telescope/telescope.nvim", -- Optional
+      "echasnovski/mini.diff",
       {
         "grapp-dev/nui-components.nvim",
         dependencies = {
