@@ -167,7 +167,7 @@ M.write_git_message = {
   opts = {
     index = 2,
     modes = { "n" },
-    placement = "cursor",
+    placement = "add",
   },
   picker = {
     prompt = "Select language",
@@ -181,7 +181,7 @@ M.write_git_message = {
           description = "Write git commit message in " .. lang,
           opts = {
             modes = { "n" },
-            placement = "cursor",
+            placement = "add",
             adapter = {
               name = "deepseek",
               model = "deepseek-chat",
