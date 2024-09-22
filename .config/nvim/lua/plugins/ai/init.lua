@@ -91,7 +91,7 @@ return {
                   "deepseek-chat",
                 },
               },
-              max_token = {
+              max_tokens = {
                 default = 8192,
               },
               temperature = {
