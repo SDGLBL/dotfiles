@@ -35,6 +35,18 @@ return {
             "-",
           },
           condition = function(_)
+            local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t")
+            local disabled = {
+              "go.mod",
+              "go.sum",
+            }
+
+            for _, name in ipairs(disabled) do
+              if filename == name then
+                return false
+              end
+            end
+
             return vim.api.nvim_buf_line_count(0) < 3000
           end,
         },
