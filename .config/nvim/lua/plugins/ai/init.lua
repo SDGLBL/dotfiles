@@ -29,7 +29,7 @@ return {
       { "<leader>aa", "<cmd>CodeCompanionActions<cr>", mode = { "n", "v" }, desc = "Actions" },
       { "<leader>ai", "<cmd>CodeCompanion<cr>", mode = { "n", "v" }, desc = "InlineCode" },
       { "<leader>av", "<cmd>CodeCompanionAdd<cr>", mode = { "v" }, desc = "Add Visual" },
-      { "<leader>at", "<cmd>CodeCompanionToggle<cr>", mode = { "n", "v" }, desc = "Toggle" },
+      { "<leader>at", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "Toggle" },
       { "<leader>am", desc = "Switch Mode Chat" },
       { "<leader>ama", "<cmd>CodeCompanionChat anthropic<cr>", mode = { "n", "v" }, desc = "Anthropic" },
       { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
@@ -128,9 +128,9 @@ return {
             },
           },
         },
-        actions = {
-          require("plugins.ai.actions").translate,
-          require("plugins.ai.actions").write,
+        prompt_library = {
+          ["Translate"] = require("plugins.ai.actions").translate,
+          ["Write"] = require("plugins.ai.actions").write,
         },
         display = {
           inline = {
