@@ -4,7 +4,7 @@ return {
     event = "VeryLazy",
     opts = {
       defaults = {
-        { "<leader>l",  group = "LSP" },
+        { "<leader>l", group = "LSP" },
         { "<leader>lg", group = "Generate Doc" },
       },
     },
@@ -19,7 +19,7 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      { "folke/neoconf.nvim",       cmd = "Neoconf",                                                            config = true },
+      { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
       { "ray-x/lsp_signature.nvim", opts = { hint_prefix = require("utils.icons").diagnostics.BoldHint .. " " } },
       {
         "RRethy/vim-illuminate",
@@ -157,6 +157,8 @@ return {
         -- self:map("<leader>lw", "Lspsaga show_workspace_diagnostics", { desc = "Lspsaga show_workspace_diagnostics" })
         -- self:map("<leader>lo", "Lspsaga outline", { desc = "Lspsaga outline" })
         -- self:map("<leader>lc", vim.lsp.codelens.run, { desc = "Codelenses" })
+        self:map("<leader>lo", "Lspsaga outgoing_calls", { desc = "Lspsaga outgoing_calls" })
+        self:map("<leader>li", "Lspsaga incoming_calls", { desc = "Lspsaga incoming_calls" })
       end, { group = "_lspsaga_keymaps", desc = "init lspsaga keymaps" })
     end,
   },
