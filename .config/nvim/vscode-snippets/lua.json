@@ -3,7 +3,7 @@
         "prefix": "inspect",
         "description": "inspect function",
         "body": [
-            "vim.notify(vim.inspect(${0}))"
+            "vim.notify(string.format(${0}))"
         ]
     },
     "print_table": {

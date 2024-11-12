@@ -80,11 +80,13 @@ return {
       sources = { "filesystem", "buffers", "git_status", "document_symbols" },
       open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
       filesystem = {
-        bind_to_cwd = true,
-        follow_current_file = { enabled = true },
-        hide_dotfiles = false,
-        hide_gitignored = false,
-        -- use_libuv_file_watcher = true,
+        filtered_items = {
+          bind_to_cwd = true,
+          follow_current_file = { enabled = true },
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          -- use_libuv_file_watcher = true,
+        },
       },
       window = {
         mappings = {

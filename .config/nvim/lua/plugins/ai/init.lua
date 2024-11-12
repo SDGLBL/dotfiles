@@ -45,6 +45,13 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          copilot = require("codecompanion.adapters").extend("copilot", {
+            schema = {
+              model = {
+                default = "claude-3-5-sonnet",
+              },
+            },
+          }),
           ollama = require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
@@ -68,8 +75,8 @@ return {
                   "gpt-4o-2024-08-06",
                   "gpt-4",
                   "gpt-3.5-turbo",
-                  "gemini-1.5-pro-001",
-                  "gemini-1.5-flash-001",
+                  "gemini-1.5-pro-latest",
+                  "gemini-1.5-flash-latest",
                   "TA/meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
                   "TA/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
                   "Claude-3.5-Sonnet",
@@ -99,6 +106,27 @@ return {
               },
             },
           }),
+          yi = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "YI_API_KEY",
+            },
+            url = os.getenv "YI_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "yi-lightning",
+                choices = {
+                  "yi-lightning",
+                  "yi-large",
+                },
+              },
+              max_tokens = {
+                default = 4000,
+              },
+              temperature = {
+                default = 1,
+              },
+            },
+          }),
           anthropic = require("codecompanion.adapters").extend("anthropic", {
             env = {
               api_key = os.getenv "ANTHROPIC_API_KEY",
@@ -106,14 +134,18 @@ return {
             url = os.getenv "OPENAI_API_BASE" .. "/messages",
             schema = {
               model = {
-                default = "claude-3-5-sonnet-20240620",
+                default = "claude-3-5-sonnet-latest",
+                choices = {
+                  "claude-3-5-sonnet-latest",
+                  "claude-3-5-haiku-latest",
+                },
               },
             },
           }),
         },
         strategies = {
           chat = {
-            adapter = "anthropic",
+            adapter = "openai",
           },
           inline = {
             adapter = "anthropic",

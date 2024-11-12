@@ -3,6 +3,10 @@ local template = {
   Detailed comments explaining all fields that need to be passed in `data` for the `render` function:
 
   - `data.language_name`: (string) The name of the programming language the file is written in. If provided, it will be included in the rendered output.
+  - `data.context_files`(table) A table of context files that provide additional information about the codebase. Each context file includes: 
+    - `name`: (string) The name of the file.
+    - `filetype`: (string) The type of the file (e.g., "lua", "json").
+    - `content`: (string) The content of the file.
   - `data.is_insert`: (boolean) Indicates whether the operation is an insertion. If true, the output will instruct to insert content in place of `<insert_here></insert_here>` tags. If false, it will instruct to rewrite content within `<rewrite_this></rewrite_this>` tags.
   - `data.document_content`: (string) The content of the document that needs to be edited or inserted into. This will be included in the rendered output.
   - `data.is_truncated`: (boolean) Indicates whether the context around the relevant section has been truncated for brevity. If true, a message about truncation will be included in the output.
@@ -17,6 +21,13 @@ local template = {
       result = result .. "Here's a file of " .. data.language_name .. " that I'm going to ask you to make an edit to.\n"
     else
       result = result .. "Here's a file of text that I'm going to ask you to make an edit to.\n"
+    end
+
+    if data.context_files and #data.context_files > 0 then
+      result = result .. "\nFirst, here are some related context files that might help you understand the codebase:\n\n"
+      for _, ctx_file in ipairs(data.context_files) do
+        result = result .. string.format('<context_file name="%s" type="%s">\n%s\n</context_file>\n\n', ctx_file.name, ctx_file.filetype, ctx_file.content)
+      end
     end
 
     if data.is_insert then
@@ -43,6 +54,8 @@ local template = {
         .. (data.content_type or "")
         .. [[, don't include any indentation on blank lines.
 
+Please consider all context files provided above when generating the content. Your response should be well-integrated with the existing codebase.
+
 Immediately start without any markdown code fences.]]
     --         .. [[Immediately start with the following format with no remarks:
     --
@@ -65,7 +78,7 @@ Immediately start without any markdown code fences.]]
       result = result
         .. "Start at the indentation level in the original file in the rewritten "
         .. (data.content_type or "")
-        .. [[. Don't stop until you've rewritten the entire section, even if you have no more changes to make, always write out the whole section with no unnecessary elisions.
+        .. [[. Consider all context files provided above when making changes to ensure consistency with the existing codebase. Don't stop until you've rewritten the entire section, even if you have no more changes to make, always write out the whole section with no unnecessary elisions.
 
 Immediately start without any markdown code fences.]]
       --         .. [[Immediately start with the following format with no remarks:
