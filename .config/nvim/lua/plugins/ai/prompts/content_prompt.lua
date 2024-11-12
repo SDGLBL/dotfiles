@@ -3,6 +3,7 @@ local template = {
   Detailed comments explaining all fields that need to be passed in `data` for the `render` function:
 
   - `data.language_name`: (string) The name of the programming language the file is written in. If provided, it will be included in the rendered output.
+  - `data.codebase`: (string) The codebase that needs to be edited or inserted into. This will be included in the rendered output.
   - `data.context_files`(table) A table of context files that provide additional information about the codebase. Each context file includes: 
     - `name`: (string) The name of the file.
     - `filetype`: (string) The type of the file (e.g., "lua", "json").
@@ -28,6 +29,11 @@ local template = {
       for _, ctx_file in ipairs(data.context_files) do
         result = result .. string.format('<context_file name="%s" type="%s">\n%s\n</context_file>\n\n', ctx_file.name, ctx_file.filetype, ctx_file.content)
       end
+    end
+
+    if data.codebase and data.codebase ~= "" then
+      result = result .. "Here's the codebase you'll be working with:\n"
+      result = result .. "<codebase>\n" .. data.codebase .. "\n</codebase>\n"
     end
 
     if data.is_insert then

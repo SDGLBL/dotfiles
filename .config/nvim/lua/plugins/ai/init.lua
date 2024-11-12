@@ -45,6 +45,39 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          siliconflow = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "SILICONFLOW_API_KEY",
+            },
+            url = os.getenv "SILICONFLOW_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "Qwen/Qwen2.5-Coder-32B-Instruct",
+                choices = {
+                  "Qwen/Qwen2.5-Coder-32B-Instruct",
+                },
+              },
+            },
+          }),
+          gemini = require("codecompanion.adapters").extend("gemini", {
+            env = {
+              api_key = os.getenv "GEMINI_API_KEY",
+            },
+          }),
+          groq = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "GROQ_API_KEY",
+            },
+            url = os.getenv "GROQ_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "llama-3.2-90b-text-preview",
+                choices = {
+                  "llama-3.2-90b-text-preview",
+                },
+              },
+            },
+          }),
           copilot = require("codecompanion.adapters").extend("copilot", {
             schema = {
               model = {
@@ -55,8 +88,10 @@ return {
           ollama = require("codecompanion.adapters").extend("ollama", {
             schema = {
               model = {
-                default = "llama3.1",
-                choices = {},
+                default = "qwen2.5-coder:1.5b",
+                choices = {
+                  "qwen2.5-coder:1.5b",
+                },
               },
             },
           }),
@@ -168,7 +203,12 @@ return {
           inline = {
             diff = {
               enabled = true,
+              provider = "default",
             },
+          },
+          diff = {
+            enabled = true,
+            provider = "mini_diff",
           },
           chat = {
             show_settings = true,
@@ -176,6 +216,49 @@ return {
         },
         slash_commands = {
           prompts = require "plugins.ai.prompts.slash_prompts",
+        },
+      }
+    end,
+  },
+
+  {
+    dir = "~/project/context-groups.nvim",
+    config = function()
+      require("context-groups").setup {
+        keymaps = {
+          add_context = "<leader>ca",
+          show_context = "<leader>cs",
+          add_imports = "<leader>ci",
+        },
+        storage_path = vim.fn.stdpath "data" .. "/context-groups",
+        import_prefs = {
+          show_stdlib = false,
+          show_external = false,
+          ignore_patterns = { "node_modules", "__pycache__" },
+        },
+        max_preview_lines = 500,
+        telescope_theme = require("telescope.themes").get_ivy(),
+        on_context_change = function()
+          -- Custom callback when context group changes
+          vim.notify "Context group updated"
+        end,
+        -- 导出相关配置
+        export = {
+          max_tree_depth = 4, -- 项目树的最大深度
+          exclude_patterns = { -- 要排除的文件模式
+            "__pycache__",
+            "node_modules",
+            ".git",
+            ".idea",
+            ".vscode",
+            "build",
+            "dist",
+            ".pytest_cache",
+            ".mypy_cache",
+            ".tox",
+            "venv",
+            "env",
+          },
         },
       }
     end,
