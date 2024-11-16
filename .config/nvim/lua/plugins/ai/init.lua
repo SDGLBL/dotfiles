@@ -46,6 +46,21 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          together = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "TOGETHER_API_KEY",
+            },
+            url = os.getenv "TOGETHER_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "Qwen/Qwen2.5-Coder-32B-Instruct",
+                choices = {
+                  "Qwen/Qwen2.5-Coder-32B-Instruct",
+                  "Qwen/Qwen2.5-72B-Instruct-Turbo",
+                },
+              },
+            },
+          }),
           siliconflow = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = os.getenv "SILICONFLOW_API_KEY",
