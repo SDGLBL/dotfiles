@@ -7,7 +7,7 @@ return {
     opts = {},
     keys = {
       {
-        "m",
+        "s",
         mode = { "n", "x", "o" },
         function()
           -- default options: exact mode, multi window, all directions, with a backdrop
