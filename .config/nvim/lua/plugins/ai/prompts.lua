@@ -2,7 +2,8 @@ local M = {}
 
 local comment_prompts = require("plugins.ai.comment_prompts").comment_prompts
 local buf_utils = require "codecompanion.utils.buffers"
-local content_prompt = require "plugins.ai.prompts.content_prompt"
+local user_prompt_tpl = require("plugins.ai.prompts.content_prompt").user_prompt_template
+local system_prompt = require("plugins.ai.prompts.content_prompt").system_prompt
 local context_groups = require "context-groups"
 
 M.support_languages = {
@@ -195,10 +196,10 @@ M.write_git_message = {
               -- model = "deepseek-chat",
               -- name = "groq",
               -- model = "llama-3.2-90b-text-preview",
-              -- name = "siliconflow",
-              -- model = "Qwen/Qwen2.5-Coder-32B-Instruct",
-              name = "together",
+              name = "siliconflow",
               model = "Qwen/Qwen2.5-Coder-32B-Instruct",
+              -- name = "together",
+              -- model = "Qwen/Qwen2.5-Coder-32B-Instruct",
             },
           },
           prompts = {
@@ -229,10 +230,10 @@ M.write_git_message = {
 local write_in_context_adapter = {
   -- name = "deepseek",
   -- model = "deepseek-chat",
-  -- name = "siliconflow",
-  -- model = "Qwen/Qwen2.5-Coder-32B-Instruct",
-  name = "together",
+  name = "siliconflow",
   model = "Qwen/Qwen2.5-Coder-32B-Instruct",
+  -- name = "together",
+  -- model = "Qwen/Qwen2.5-Coder-32B-Instruct",
   -- name = "groq",
   -- model = "llama-3.2-90b-text-preview",
   -- name = "copilot",
@@ -270,16 +271,7 @@ M.write_in_selected_context = {
       -- opts = {
       --   contains_code = true,
       -- },
-      content = [[As a code assistant, you need to understand and process various input formats:
-1. Source code file: Usually enclosed in <document></document> tags, may contain code segments to be modified, which are surrounded by <rewrite_this></rewrite_this> tags.
-2. User queries: May be inquiries about code optimization or feature improvements. These queries typically appear in regular user messages.
-3. Assistant replies: Your previous responses, which may include code suggestions or explanations.
-4. Rewrite instructions: In the last user message, rewrite instructions are usually contained within <prompt></prompt> tags. These instructions may relate to previous user queries and your replies.
-5. Context association: Note that rewrite instructions may be related to previous conversation content. When handling rewrite requests, consider previous user queries and your responses. 
-6. Code rewriting: When encountering rewrite instructions, only modify the code within <rewrite_this></rewrite_this> tags, keeping other parts unchanged. Maintain the original indentation level when rewriting, and rewrite the entire section completely, even if some parts don't need changes.
-7. Code insertion: When encountering insert instructions, insert the code at the position marked by <insert_here></insert_here> tags. Ensure that the inserted code matches the indentation level of the surrounding code.
-8. Return the modified code directly without any markdown formatting, code fences, or additional text. Do not wrap the response in ``` or any other code fences. The response should start with the actual code content and contain nothing else.
-Please interpret and respond to the following messages according to these rules.]],
+      content = system_prompt,
     },
     {
       role = "user",
@@ -327,7 +319,7 @@ Please interpret and respond to the following messages according to these rules.
         val.document_content = table.concat(lines, "\n")
 
         -- Generate and return the prompt
-        return content_prompt.render(val)
+        return user_prompt_tpl.render(val)
       end,
     },
   },
@@ -354,16 +346,7 @@ M.write_in_codebase_context = {
       -- opts = {
       --   contains_code = true,
       -- },
-      content = [[As a code assistant, you need to understand and process various input formats:
-1. Source code file: Usually enclosed in <document></document> tags, may contain code segments to be modified, which are surrounded by <rewrite_this></rewrite_this> tags.
-2. User queries: May be inquiries about code optimization or feature improvements. These queries typically appear in regular user messages.
-3. Assistant replies: Your previous responses, which may include code suggestions or explanations.
-4. Rewrite instructions: In the last user message, rewrite instructions are usually contained within <prompt></prompt> tags. These instructions may relate to previous user queries and your replies.
-5. Context association: Note that rewrite instructions may be related to previous conversation content. When handling rewrite requests, consider previous user queries and your responses. 
-6. Code rewriting: When encountering rewrite instructions, only modify the code within <rewrite_this></rewrite_this> tags, keeping other parts unchanged. Maintain the original indentation level when rewriting, and rewrite the entire section completely, even if some parts don't need changes.
-7. Code insertion: When encountering insert instructions, insert the code at the position marked by <insert_here></insert_here> tags. Ensure that the inserted code matches the indentation level of the surrounding code.
-8. Return the modified code directly without any markdown formatting, code fences, or additional text. Do not wrap the response in ``` or any other code fences. The response should start with the actual code content and contain nothing else.
-Please interpret and respond to the following messages according to these rules.]],
+      content = system_prompt,
     },
     {
       role = "user",
@@ -412,7 +395,7 @@ Please interpret and respond to the following messages according to these rules.
         val.document_content = table.concat(lines, "\n")
 
         -- Generate and return the prompt
-        return content_prompt.render(val)
+        return user_prompt_tpl.render(val)
       end,
     },
   },
