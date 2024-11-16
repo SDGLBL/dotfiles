@@ -33,6 +33,7 @@ return {
       { "<leader>am", desc = "Switch Mode Chat" },
       { "<leader>ama", "<cmd>CodeCompanionChat anthropic<cr>", mode = { "n", "v" }, desc = "Anthropic" },
       { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
+      { "<leader>amq", "<cmd>CodeCompanionChat siliconflow<cr>", mode = { "n", "v" }, desc = "Qwen" },
       { "<leader>amo", "<cmd>CodeCompanionChat openai<cr>", mode = { "n", "v" }, desc = "Openai" },
     },
     config = function(_, _)
