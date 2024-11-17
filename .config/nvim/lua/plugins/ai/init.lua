@@ -38,6 +38,21 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          openrouter = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "OPENROUTER_API_KEY",
+            },
+            url = os.getenv "OPENROUTER_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "Qwen/Qwen2.5-Coder-32B-Instruct",
+                choices = {
+                  "Qwen/Qwen2.5-Coder-32B-Instruct",
+                  "Qwen/Qwen2.5-72B-Instruct-Turbo",
+                },
+              },
+            },
+          }),
           together = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = os.getenv "TOGETHER_API_KEY",
