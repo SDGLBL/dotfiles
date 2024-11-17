@@ -1,13 +1,5 @@
 return {
   {
-    -- dir = "~/project/codecompanion.nvim",
-    -- enabled = function()
-    --   local dir_path = vim.fn.expand "~/project/codecompanion.nvim"
-    --   if vim.fn.isdirectory(dir_path) == 0 then
-    --     return false
-    --   end
-    --   return true
-    -- end,
     "olimorris/codecompanion.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim",
