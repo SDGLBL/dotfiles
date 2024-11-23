@@ -38,6 +38,21 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          hyperbolic = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "HYPERBOLIC_API_KEY",
+            },
+            url = os.getenv "HYPERBOLIC_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "Qwen/Qwen2.5-Coder-32B-Instruct",
+                choices = {
+                  "Qwen/Qwen2.5-Coder-32B-Instruct",
+                  "Qwen/Qwen2.5-72B-Instruct-Turbo",
+                },
+              },
+            },
+          }),
           openrouter = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = os.getenv "OPENROUTER_API_KEY",
@@ -129,6 +144,7 @@ return {
                 choices = {
                   "gpt-4o",
                   "gpt-4o-mini",
+                  "chatgpt-4o-latest",
                   "gpt-4-turbo-preview",
                   "gpt-4o-2024-08-06",
                   "gpt-4",
@@ -137,7 +153,7 @@ return {
                   "gemini-1.5-flash-latest",
                   "TA/meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo",
                   "TA/meta-llama/Meta-Llama-3.1-70B-Instruct-Turbo",
-                  "Claude-3.5-Sonnet",
+                  "claude-3.5-sonnet-latest",
                   "claude-3-5-sonnet-20240620",
                 },
               },
