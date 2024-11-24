@@ -72,8 +72,8 @@ Assistant should respond with:
 
 Important Notes:
 - Always maintain the original indentation level
-- Don't add any explanatory text in the response
-- Don't use code fences or markdown formatting 
+- Don't add any explanatory text in the last response
+- Don't use code fences or markdown formatting in last response
 - Consider the entire conversation context when making changes
 - Rewrite the entire code block within rewrite_this tag, even if only part of it needs changes
 - Make sure inserted code matches the surrounding code style]]
