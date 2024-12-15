@@ -49,7 +49,7 @@ return {
         return
       end
 
-      telescope.load_extension "projects"
+      -- telescope.load_extension "projects"
     end,
   },
 }
