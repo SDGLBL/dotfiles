@@ -27,6 +27,7 @@ return {
       { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
       { "<leader>amq", "<cmd>CodeCompanionChat siliconflow<cr>", mode = { "n", "v" }, desc = "Qwen" },
       { "<leader>amo", "<cmd>CodeCompanionChat openai<cr>", mode = { "n", "v" }, desc = "Openai" },
+      { "<leader>amg", "<cmd>CodeCompanionChat groq<cr>", mode = { "n", "v" }, desc = "Groq" },
     },
     config = function(_, _)
       vim.cmd [[cab cc CodeCompanionCopilot]]
@@ -101,6 +102,11 @@ return {
             env = {
               api_key = os.getenv "GEMINI_API_KEY",
             },
+            schema = {
+              model = {
+                default = "gemini-2.0-flash-exp",
+              },
+            },
           }),
           groq = require("codecompanion.adapters").extend("openai", {
             env = {
@@ -109,9 +115,10 @@ return {
             url = os.getenv "GROQ_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "llama-3.2-90b-text-preview",
+                default = "llama-3.3-70b-versatile",
                 choices = {
                   "llama-3.2-90b-text-preview",
+                  "llama-3.3-70b-versatile",
                 },
               },
             },
