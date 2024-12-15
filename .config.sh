@@ -51,10 +51,10 @@ export CLASH_PROXY_PROT=7890
 
 # Proxy settings
 proxy_ip="http://localhost:${CLASH_PROXY_PROT}"
-alias hp='http_proxy=$proxy_ip'
-alias hps='https_proxy=$proxy_ip'
-alias ehp='export http_proxy=$proxy_ip'
-alias ehps='export https_proxy=$proxy_ip'
+alias hp='HTTP_PROXY=$proxy_ip'
+alias hps='HTTPS_PROXY=$proxy_ip'
+alias ehp='export HTTP_PROXY=$proxy_ip'
+alias ehps='export HTTPS_PROXY=$proxy_ip'
 
 # Service start aliases
 alias sv2ray='nohup ~/software/v2/v2ray run ~/software/v2/config.json > ~/.cache/v2.log 2>&1 &'
@@ -130,9 +130,9 @@ if command_is_exists exa; then
 fi
 
 # Remote SSH copy support
-if command_is_exists clipboard-provider; then
-  alias clp='clipboard-provider copy'
-fi
+# if command_is_exists clipboard-provider; then
+#   alias clp='clipboard-provider copy'
+# fi
 
 # LazyGit alias
 if command_is_exists lazygit; then
