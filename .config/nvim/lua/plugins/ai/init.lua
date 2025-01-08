@@ -26,7 +26,7 @@ return {
       { "<leader>ama", "<cmd>CodeCompanionChat anthropic<cr>", mode = { "n", "v" }, desc = "Anthropic" },
       { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
       { "<leader>amq", "<cmd>CodeCompanionChat siliconflow<cr>", mode = { "n", "v" }, desc = "Qwen" },
-      { "<leader>amo", "<cmd>CodeCompanionChat openai<cr>", mode = { "n", "v" }, desc = "Openai" },
+      { "<leader>amo", "<cmd>CodeCompanionChat openrouter<cr>", mode = { "n", "v" }, desc = "Openrouter" },
       { "<leader>amg", "<cmd>CodeCompanionChat groq<cr>", mode = { "n", "v" }, desc = "Groq" },
     },
     config = function(_, _)
@@ -61,10 +61,16 @@ return {
             url = os.getenv "OPENROUTER_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "Qwen/Qwen2.5-Coder-32B-Instruct",
+                default = "deepseek/deepseek-chat",
                 choices = {
-                  "Qwen/Qwen2.5-Coder-32B-Instruct",
-                  "Qwen/Qwen2.5-72B-Instruct-Turbo",
+                  "deepseek/deepseek-chat",
+                  "qwen/qwen-2.5-coder-32b-instruct",
+                  "qwen/qwen-2.5-72b-instruct",
+                  "google/gemini-2.0-flash-thinking-exp:free",
+                  "google/gemini-2.0-flash-exp:free",
+                  "google/gemini-exp-1206:free",
+                  "anthropic/claude-3.5-sonnet",
+                  "openai/gpt-4o-2024-11-20",
                 },
               },
             },
