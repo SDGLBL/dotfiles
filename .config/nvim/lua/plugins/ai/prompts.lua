@@ -89,15 +89,8 @@ M.write_comment = {
             stop_context_insertion = true,
             -- user_prompt = true,
             adapter = {
-              -- name = "groq",
-              -- model = "llama-3.2-90b-text-preview",
-              -- name = "openai",
-              -- model = "gpt-4o-mini",
-              -- name = "ollama",
-              -- model = "qwen2.5-coder",
-              -- model = "gemini-1.5-flash-latest",
-              name = "siliconflow",
-              model = "Qwen/Qwen2.5-Coder-32B-Instruct",
+              name = "deepseek",
+              model = "deepseek-chat",
             },
           },
           prompts = {
@@ -192,14 +185,8 @@ M.write_git_message = {
             modes = { "n" },
             placement = "add",
             adapter = {
-              -- name = "deepseek",
-              -- model = "deepseek-chat",
-              -- name = "groq",
-              -- model = "llama-3.2-90b-text-preview",
-              name = "siliconflow",
-              model = "Qwen/Qwen2.5-Coder-32B-Instruct",
-              -- name = "together",
-              -- model = "Qwen/Qwen2.5-Coder-32B-Instruct",
+              name = "deepseek",
+              model = "deepseek-chat",
             },
           },
           prompts = {
@@ -228,26 +215,8 @@ M.write_git_message = {
 }
 
 local write_in_context_adapter = {
-  -- name = "deepseek",
-  -- model = "deepseek-chat",
-  name = "siliconflow",
-  model = "Qwen/Qwen2.5-Coder-32B-Instruct",
-  -- name = "together",
-  -- model = "Qwen/Qwen2.5-Coder-32B-Instruct",
-  -- name = "groq",
-  -- model = "llama-3.2-90b-text-preview",
-  -- name = "copilot",
-  -- model = "claude-3-5-sonnet",
-  -- name = "openai",
-  -- model = "gpt-4o-mini",
-  -- name = "yi",
-  -- model = "yi-lightning",
-  -- name = "anthropic",
-  -- model = "claude-3-5-haiku-latest",
-  -- name = "openai",
-  -- model = "gemini-1.5-flash-latest",
-  -- name = "ollama",
-  -- model = "qwen2.5-coder:1.5b",
+  name = "deepseek",
+  model = "deepseek-chat",
 }
 
 M.write_in_selected_context = {
