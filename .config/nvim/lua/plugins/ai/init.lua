@@ -27,7 +27,6 @@ return {
       { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
       { "<leader>amq", "<cmd>CodeCompanionChat siliconflow<cr>", mode = { "n", "v" }, desc = "Qwen" },
       { "<leader>amo", "<cmd>CodeCompanionChat openrouter<cr>", mode = { "n", "v" }, desc = "Openrouter" },
-      { "<leader>amg", "<cmd>CodeCompanionChat groq<cr>", mode = { "n", "v" }, desc = "Groq" },
     },
     config = function(_, _)
       vim.cmd [[cab cc CodeCompanionCopilot]]
@@ -39,21 +38,6 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
-          hyperbolic = require("codecompanion.adapters").extend("openai", {
-            env = {
-              api_key = os.getenv "HYPERBOLIC_API_KEY",
-            },
-            url = os.getenv "HYPERBOLIC_API_BASE" .. "/chat/completions",
-            schema = {
-              model = {
-                default = "Qwen/Qwen2.5-Coder-32B-Instruct",
-                choices = {
-                  "Qwen/Qwen2.5-Coder-32B-Instruct",
-                  "Qwen/Qwen2.5-72B-Instruct-Turbo",
-                },
-              },
-            },
-          }),
           openrouter = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = os.getenv "OPENROUTER_API_KEY",
@@ -61,8 +45,9 @@ return {
             url = os.getenv "OPENROUTER_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "deepseek/deepseek-chat",
+                default = "deepseek/deepseek-r1",
                 choices = {
+                  "deepseek/deepseek-r1",
                   "deepseek/deepseek-chat",
                   "qwen/qwen-2.5-coder-32b-instruct",
                   "qwen/qwen-2.5-72b-instruct",
@@ -71,21 +56,6 @@ return {
                   "google/gemini-exp-1206:free",
                   "anthropic/claude-3.5-sonnet",
                   "openai/gpt-4o-2024-11-20",
-                },
-              },
-            },
-          }),
-          together = require("codecompanion.adapters").extend("openai", {
-            env = {
-              api_key = os.getenv "TOGETHER_API_KEY",
-            },
-            url = os.getenv "TOGETHER_API_BASE" .. "/chat/completions",
-            schema = {
-              model = {
-                default = "Qwen/Qwen2.5-Coder-32B-Instruct",
-                choices = {
-                  "Qwen/Qwen2.5-Coder-32B-Instruct",
-                  "Qwen/Qwen2.5-72B-Instruct-Turbo",
                 },
               },
             },
@@ -111,21 +81,6 @@ return {
             schema = {
               model = {
                 default = "gemini-2.0-flash-exp",
-              },
-            },
-          }),
-          groq = require("codecompanion.adapters").extend("openai", {
-            env = {
-              api_key = os.getenv "GROQ_API_KEY",
-            },
-            url = os.getenv "GROQ_API_BASE" .. "/chat/completions",
-            schema = {
-              model = {
-                default = "llama-3.3-70b-versatile",
-                choices = {
-                  "llama-3.2-90b-text-preview",
-                  "llama-3.3-70b-versatile",
-                },
               },
             },
           }),
@@ -172,42 +127,21 @@ return {
               },
             },
           }),
-          deepseek = require("codecompanion.adapters").extend("openai", {
+          deepseek = require("codecompanion.adapters").extend("deepseek", {
             env = {
               api_key = os.getenv "DEEPSEEK_API_KEY",
             },
             url = os.getenv "DEEPSEEK_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "deepseek-chat",
+                default = "deepseek-reasoner",
                 choices = {
-                  "deepseek-coder",
+                  "deepseek-reasoner",
                   "deepseek-chat",
                 },
               },
               max_tokens = {
                 default = 8192,
-              },
-              temperature = {
-                default = 1,
-              },
-            },
-          }),
-          yi = require("codecompanion.adapters").extend("openai", {
-            env = {
-              api_key = os.getenv "YI_API_KEY",
-            },
-            url = os.getenv "YI_API_BASE" .. "/chat/completions",
-            schema = {
-              model = {
-                default = "yi-lightning",
-                choices = {
-                  "yi-lightning",
-                  "yi-large",
-                },
-              },
-              max_tokens = {
-                default = 4000,
               },
               temperature = {
                 default = 1,
