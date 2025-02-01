@@ -135,10 +135,6 @@ return {
             schema = {
               model = {
                 default = "deepseek-reasoner",
-                choices = {
-                  "deepseek-reasoner",
-                  "deepseek-chat",
-                },
               },
               max_tokens = {
                 default = 8192,
