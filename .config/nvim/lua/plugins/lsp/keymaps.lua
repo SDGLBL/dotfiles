@@ -24,7 +24,7 @@ function M.on_attach(client, buffer)
 
   local self = M.new(client, buffer)
 
-  self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition" })
+  self:map("gd", "Telescope lsp_definitions", { desc = "Goto Definition", buffer = vim.bo.filetype ~= "codecompanion" and self.buffer or nil })
   -- self:map("gr", "Telescope lsp_references", { desc = "References" })
   self:map("gI", "Telescope lsp_implementations", { desc = "Goto Implementation" })
   self:map("gb", "Telescope lsp_type_definitions", { desc = "Goto Type Definition" })
