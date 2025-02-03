@@ -59,6 +59,10 @@ return {
           end
         end,
 
+        per_filetype = {
+          codecompanion = { "codecompanion" },
+        },
+
         providers = {
           lsp = {
             transform_items = function(_, items)
