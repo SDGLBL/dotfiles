@@ -26,8 +26,8 @@ M.translate = {
             placement = "replace",
             stop_context_insertion = true,
             adapter = {
-              name = "anthropic",
-              model = "claude-3-5-sonnet-20240620",
+              name = "openrouter",
+              model = "google/gemini-2.0-flash-exp:free",
             },
           },
           prompts = {
