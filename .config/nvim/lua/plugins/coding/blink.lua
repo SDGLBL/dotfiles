@@ -1,5 +1,3 @@
-local kind_icons = require("utils.lsp").kind_icons
-
 return {
   {
     "saghen/blink.cmp",
@@ -51,9 +49,47 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { "dictionary", "lsp", "path", "snippets", "buffer", "ripgrep" },
+        default = function()
+          local success, node = pcall(vim.treesitter.get_node)
+
+          if success and node and vim.tbl_contains({ "comment", "line_comment", "block_comment" }, node:type()) then
+            return { "dictionary", "path", "ripgrep", "buffer" }
+          else
+            return { "dictionary", "lsp", "path", "snippets", "buffer", "ripgrep" }
+          end
+        end,
 
         providers = {
+          lsp = {
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.labelDetails = {
+                  description = "(lsp)",
+                }
+              end
+              return items
+            end,
+          },
+          snippets = {
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.labelDetails = {
+                  description = "(snip)",
+                }
+              end
+              return items
+            end,
+          },
+          buffer = {
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.labelDetails = {
+                  description = "(buf)",
+                }
+              end
+              return items
+            end,
+          },
           dictionary = {
             module = "blink-cmp-dictionary",
             name = "Dict",
@@ -67,10 +103,19 @@ return {
                 vim.fn.stdpath "config" .. "/dict/en_us.dict",
               },
             },
+            transform_items = function(_, items)
+              for _, item in ipairs(items) do
+                item.labelDetails = {
+                  description = "(dict)",
+                }
+              end
+              return items
+            end,
           },
           ripgrep = {
             module = "blink-ripgrep",
             name = "Ripgrep",
+            max_items = 3,
             -- the options below are optional, some default values are shown
             ---@module "blink-ripgrep"
             ---@type blink-ripgrep.Options
@@ -153,7 +198,6 @@ return {
             -- autocompletion help
             transform_items = function(_, items)
               for _, item in ipairs(items) do
-                -- example: append a description to easily distinguish rg results
                 item.labelDetails = {
                   description = "(rg)",
                 }
@@ -167,12 +211,20 @@ return {
       completion = {
         menu = {
           border = "rounded",
+          auto_show = function(ctx)
+            return ctx.mode ~= "cmdline" or not vim.tbl_contains({ "/", "?" }, vim.fn.getcmdtype())
+          end,
           draw = {
+            -- We don't need label_description now because label and label_description are already
+            -- combined together in label by colorful-menu.nvim.
+            columns = { { "kind_icon" }, { "label", gap = 1 }, { "label_description" } },
             components = {
-              kind_icon = {
-                ellipsis = false,
+              label = {
                 text = function(ctx)
-                  return kind_icons[ctx.kind]
+                  return require("colorful-menu").blink_components_text(ctx)
+                end,
+                highlight = function(ctx)
+                  return require("colorful-menu").blink_components_highlight(ctx)
                 end,
               },
             },
