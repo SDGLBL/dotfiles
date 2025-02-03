@@ -28,6 +28,9 @@ return {
       { "<leader>amq", "<cmd>CodeCompanionChat siliconflow<cr>", mode = { "n", "v" }, desc = "Qwen" },
       { "<leader>amo", "<cmd>CodeCompanionChat openrouter<cr>", mode = { "n", "v" }, desc = "Openrouter" },
     },
+    init = function()
+      require("plugins.ai.fidget-spinner"):init()
+    end,
     config = function(_, _)
       vim.cmd [[cab cc CodeCompanionCopilot]]
       vim.cmd [[cab ccb CodeCompanionWithBuffers]]
