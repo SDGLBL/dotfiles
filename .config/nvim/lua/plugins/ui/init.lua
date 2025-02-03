@@ -110,6 +110,8 @@ return {
           "MsgArea",
           "HopPreview",
           "WhichKeyFloat",
+          "BlinkCmpMenu",
+          "BlinkCmpMenuBorder",
         }, -- table: additional groups that should be cleared
 
         exclude_groups = {
