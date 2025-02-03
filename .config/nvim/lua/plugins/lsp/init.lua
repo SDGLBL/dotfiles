@@ -16,7 +16,7 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     enabled = configs.lsp,
     dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
+      -- "hrsh7th/cmp-nvim-lsp",
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
