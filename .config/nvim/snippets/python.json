@@ -1,0 +1,30 @@
+{
+  "Pyright ignore": {
+    "prefix": "ignore",
+    "body": [
+      "# pyright:ignore[${1}]"
+    ],
+    "description": "Add a pyright ignore comment"
+  },
+  "Pyright strict": {
+    "prefix": "strict",
+    "body": [
+      "# pyright: strict"
+    ],
+    "description": "Enable strict type checking mode for pyright"
+  },
+  "Pyright basic": {
+    "prefix": "basic",
+    "body": [
+      "# pyright: basic"
+    ],
+    "description": "Enable basic type checking mode for pyright"
+  },
+  "Pyright all": {
+    "prefix": "all",
+    "body": [
+      "# pyright: all"
+    ],
+    "description": "Enable all type checking features for pyright"
+  }
+}

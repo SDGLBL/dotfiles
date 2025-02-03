@@ -1,0 +1,286 @@
+{
+  "Disable cspell line": {
+    "prefix": "discl",
+    "body": [
+      "// cspell:disable-line"
+    ],
+    "description": "Disable cspell for current line"
+  },
+  "Shorthand variable declaration": {
+    "prefix": "v",
+    "body": [
+      "${1} := ${2}"
+    ],
+    "description": "Shorthand variable declaration"
+  },
+  "Variable initialization": {
+    "prefix": "vr",
+    "body": [
+      "var ${1:t} ${0:string}"
+    ],
+    "description": "Initialize a variable with type"
+  },
+  "Variable declaration": {
+    "prefix": "var",
+    "body": [
+      "var ${1} ${2} = ${3}"
+    ],
+    "description": "Declare and initialize a variable"
+  },
+  "Variables declaration": {
+    "prefix": "vars",
+    "body": [
+      "var (",
+      "\t${1} ${2} = ${3}",
+      ")"
+    ],
+    "description": "Declare multiple variables"
+  },
+  "Append": {
+    "prefix": "ap",
+    "body": [
+      "append(${1:slice}, ${0:value})"
+    ],
+    "description": "Append to slice"
+  },
+  "Bool": {
+    "prefix": "bl",
+    "body": [
+      "bool"
+    ],
+    "description": "Boolean type"
+  },
+  "Byte": {
+    "prefix": "bt",
+    "body": [
+      "byte"
+    ],
+    "description": "Byte type"
+  },
+  "Break": {
+    "prefix": "br",
+    "body": [
+      "break"
+    ],
+    "description": "Break statement"
+  },
+  "Channel": {
+    "prefix": "ch",
+    "body": [
+      "chan ${0:int}"
+    ],
+    "description": "Channel declaration"
+  },
+  "Case": {
+    "prefix": "cs",
+    "body": [
+      "case ${1:value}:",
+      "\t${0:${TM_SELECTED_TEXT}}"
+    ],
+    "description": "Case statement"
+  },
+  "Constants with iota": {
+    "prefix": "co",
+    "body": [
+      "const (",
+      "\t${1:NAME1} = iota",
+      "\t${0:NAME2}",
+      ")"
+    ],
+    "description": "Constants with iota"
+  },
+  "Continue": {
+    "prefix": "cn",
+    "body": [
+      "continue"
+    ],
+    "description": "Continue statement"
+  },
+  "Defer": {
+    "prefix": "df",
+    "body": [
+      "defer ${0:func}()"
+    ],
+    "description": "Defer statement"
+  },
+  "Defer recover": {
+    "prefix": "dfr",
+    "body": [
+      "defer func() {",
+      "\tif re := recover(); re != nil {",
+      "\t\t${0:${TM_SELECTED_TEXT}}",
+      "\t}",
+      "}()"
+    ],
+    "description": "Defer with recover"
+  },
+  "Import": {
+    "prefix": "im",
+    "body": [
+      "import (",
+      "\t\"${1:package}\"",
+      ")"
+    ],
+    "description": "Import package"
+  },
+  "Interface": {
+    "prefix": "in",
+    "body": [
+      "interface{}"
+    ],
+    "description": "Empty interface"
+  },
+  "Full interface": {
+    "prefix": "inf",
+    "body": [
+      "interface ${1:name} {",
+      "\t${2:/* methods */}",
+      "}"
+    ],
+    "description": "Interface definition"
+  },
+  "If condition": {
+    "prefix": "if",
+    "body": [
+      "if ${1} {",
+      "\t${2:${TM_SELECTED_TEXT}}",
+      "}"
+    ],
+    "description": "If statement"
+  },
+  "If else condition": {
+    "prefix": "ife",
+    "body": [
+      "if ${1} {",
+      "\t${2:${TM_SELECTED_TEXT}}",
+      "} else {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "If-else statement"
+  },
+  "Else": {
+    "prefix": "el",
+    "body": [
+      "else {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ],
+    "description": "Else statement"
+  },
+  "If error not nil return": {
+    "prefix": "ir",
+    "body": [
+      "if err != nil {",
+      "\treturn err",
+      "}",
+      "${0}"
+    ],
+    "description": "Check and return error"
+  },
+  "For loop": {
+    "prefix": "for",
+    "body": [
+      "for ${1} {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ],
+    "description": "For loop"
+  },
+  "For int loop": {
+    "prefix": "fori",
+    "body": [
+      "for ${2:i} := 0; $2 < ${1:count}; $2${3:++} {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ],
+    "description": "For loop with counter"
+  },
+  "For range": {
+    "prefix": "forr",
+    "body": [
+      "for ${1:e} := range ${2:collection} {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ],
+    "description": "For range loop"
+  },
+  "Function": {
+    "prefix": "fun",
+    "body": [
+      "func ${1:funcName}(${2}) ${3:error} {",
+      "\t${4}",
+      "}",
+      "${0}"
+    ],
+    "description": "Function declaration"
+  },
+  "Method": {
+    "prefix": "fum",
+    "body": [
+      "func (${1:receiver} ${2:type}) ${3:funcName}(${4}) ${5:error} {",
+      "\t${6}",
+      "}",
+      "${0}"
+    ],
+    "description": "Method declaration"
+  },
+  "HTTP handler method": {
+    "prefix": "fumh",
+    "body": [
+      "func (${1:receiver} ${2:type}) ${3:funcName}(${4:w} http.ResponseWriter, ${5:r} *http.Request) {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ],
+    "description": "HTTP handler method"
+  },
+  "Main function": {
+    "prefix": "main",
+    "body": [
+      "func main() {",
+      "\t${1}",
+      "}",
+      "${0}"
+    ],
+    "description": "Main function"
+  },
+  "Test function": {
+    "prefix": "test",
+    "body": [
+      "func Test${1:name}(t *testing.T) {",
+      "\t${0:${TM_SELECTED_TEXT}}",
+      "}"
+    ],
+    "description": "Test function"
+  },
+  "Table test": {
+    "prefix": "testt",
+    "body": [
+      "func Test${1:name}(t *testing.T) {",
+      "\ttests := []struct {",
+      "\t\tname string",
+      "\t}{",
+      "\t\t{",
+      "\t\t\tname: \"${2:test name}\",",
+      "\t\t},",
+      "\t}",
+      "",
+      "\tfor _, test := range tests {",
+      "\t\tt.Run(test.name, func(t *testing.T) {",
+      "\t\t\t${0:${TM_SELECTED_TEXT}}",
+      "\t\t})",
+      "\t}",
+      "}"
+    ],
+    "description": "Table driven test"
+  },
+  "Error wrapping": {
+    "prefix": "errwr",
+    "body": [
+      "if ${1}err != nil {",
+      "\treturn fmt.Errorf(\"${2} %w\", err)",
+      "}"
+    ],
+    "description": "Error wrapping with fmt.Errorf"
+  }
+}

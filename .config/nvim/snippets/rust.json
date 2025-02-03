@@ -1,0 +1,222 @@
+{
+  "Function definition": {
+    "prefix": "fn",
+    "body": [
+      "fn ${1:function_name}(${2})${3} {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Create a function definition"
+  },
+  "Public function": {
+    "prefix": "pfn",
+    "body": [
+      "pub fn ${1:function_name}(${2})${3} {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Create a public function definition"
+  },
+  "Async function": {
+    "prefix": "afn",
+    "body": [
+      "async fn ${1:function_name}(${2})${3} {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Create an async function definition"
+  },
+  "Public async function": {
+    "prefix": "pafn",
+    "body": [
+      "pub async fn ${1:function_name}(${2})${3} {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Create a public async function definition"
+  },
+  "Bench function": {
+    "prefix": "bench",
+    "body": [
+      "#[bench]",
+      "fn ${1:bench_function_name}(b: &mut test::Bencher) {",
+      "\tb.iter(|| {",
+      "\t\t${0}",
+      "\t})",
+      ""
+    ],
+    "description": "Create a benchmark function"
+  },
+  "Constructor": {
+    "prefix": "new",
+    "body": [
+      "pub fn new(${2}) -> ${1:Self} {",
+      "\t$1 { ${3} }",
+      "}"
+    ],
+    "description": "Create a new constructor"
+  },
+  "Main function": {
+    "prefix": "main",
+    "body": [
+      "pub fn main() {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Create a main function"
+  },
+  "Let declaration": {
+    "prefix": "let",
+    "body": [
+      "let ${1} = ${2};"
+    ],
+    "description": "Variable declaration with type inference"
+  },
+  "Let typed declaration": {
+    "prefix": "lett",
+    "body": [
+      "let ${1}: ${2} = ${3};"
+    ],
+    "description": "Variable declaration with explicit type"
+  },
+  "Let mut declaration": {
+    "prefix": "letm",
+    "body": [
+      "let mut ${1} = ${2};"
+    ],
+    "description": "Mutable variable declaration with type inference"
+  },
+  "Let mut typed declaration": {
+    "prefix": "lettm",
+    "body": [
+      "let mut ${1}: ${2} = ${3};"
+    ],
+    "description": "Mutable variable declaration with explicit type"
+  },
+  "Print": {
+    "prefix": "pri",
+    "body": [
+      "print!(\"${1}\");"
+    ],
+    "description": "Print macro"
+  },
+  "Print with format": {
+    "prefix": "pri,",
+    "body": [
+      "print!(\"${1}{${2}}\", ${3});"
+    ],
+    "description": "Print macro with formatting"
+  },
+  "Println": {
+    "prefix": "pln",
+    "body": [
+      "println!(\"${1}\");"
+    ],
+    "description": "Println macro"
+  },
+  "Println with format": {
+    "prefix": "pln,",
+    "body": [
+      "println!(\"${1}{${2}}\", ${3});"
+    ],
+    "description": "Println macro with formatting"
+  },
+  "Format": {
+    "prefix": "fmt",
+    "body": [
+      "format!(\"${1}{${2}}\", ${3});"
+    ],
+    "description": "Format macro"
+  },
+  "Debug": {
+    "prefix": "d",
+    "body": [
+      "dbg!(${0:${TM_SELECTED_TEXT}})"
+    ],
+    "description": "Debug macro"
+  },
+  "Debug statement": {
+    "prefix": "d;",
+    "body": [
+      "dbg!(&${1});",
+      "${0}"
+    ],
+    "description": "Debug macro statement"
+  },
+  "Struct": {
+    "prefix": "st",
+    "body": [
+      "struct ${1:Name} {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Create a struct"
+  },
+  "Implementation": {
+    "prefix": "impl",
+    "body": [
+      "impl ${1:Type/Trait}${2: for $3} {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Implementation block"
+  },
+  "Match": {
+    "prefix": "mat",
+    "body": [
+      "match ${1} {",
+      "\t${2} => ${3}",
+      "}"
+    ],
+    "description": "Match expression"
+  },
+  "Test function": {
+    "prefix": "test",
+    "body": [
+      "#[test]",
+      "fn ${1:function_name}_test() {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Test function"
+  },
+  "Test module": {
+    "prefix": "testmod",
+    "body": [
+      "#[cfg(test)]",
+      "mod tests {",
+      "\tuse super::${1:*};",
+      "",
+      "\ttest${0}",
+      "}"
+    ],
+    "description": "Test module"
+  },
+  "Trait": {
+    "prefix": "trait",
+    "body": [
+      "trait ${1:Name} {",
+      "\t${0}",
+      "}"
+    ],
+    "description": "Create a trait"
+  },
+  "Enum": {
+    "prefix": "enum",
+    "body": [
+      "enum ${1:Name} {",
+      "\t${2},",
+      "}"
+    ],
+    "description": "Create an enum"
+  },
+  "Public enum": {
+    "prefix": "penum",
+    "body": [
+      "pub enum ${1:Name} {",
+      "\t${2},",
+      "}"
+    ],
+    "description": "Create a public enum"
+  }
+}
