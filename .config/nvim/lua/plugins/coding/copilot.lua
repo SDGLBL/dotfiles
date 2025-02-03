@@ -9,7 +9,10 @@ return {
         desc = "CoplitNext",
         mode = { "i" },
         callback = function()
-          require("cmp").mapping.abort()(function() end)
+          local ok, cmp = pcall(require, "cmp")
+          if ok then
+            cmp.mapping.abort()(function() end)
+          end
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-next)", true, true, true), "m", true)
         end,
       },
@@ -19,7 +22,10 @@ return {
         desc = "CopilotSuggest",
         mode = { "i" },
         callback = function()
-          require("cmp").mapping.abort()(function() end)
+          local ok, cmp = pcall(require, "cmp")
+          if ok then
+            cmp.mapping.abort()(function() end)
+          end
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-suggest)", true, true, true), "m", true)
         end,
       },
@@ -35,7 +41,10 @@ return {
         desc = "CopilotAccept",
         mode = { "i" },
         callback = function()
-          require("cmp").mapping.abort()(function() end)
+          local ok, cmp = pcall(require, "cmp")
+          if ok then
+            cmp.mapping.abort()(function() end)
+          end
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-accept)", true, true, true), "m", true)
         end,
       },
@@ -45,7 +54,10 @@ return {
         desc = "CopilotAcceptWord",
         mode = { "i" },
         callback = function()
-          require("cmp").mapping.abort()(function() end)
+          local ok, cmp = pcall(require, "cmp")
+          if ok then
+            cmp.mapping.abort()(function() end)
+          end
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(copilot-accept-word)", true, true, true), "m", true)
         end,
       },

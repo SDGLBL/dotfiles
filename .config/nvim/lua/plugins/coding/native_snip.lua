@@ -3,6 +3,7 @@ local utils = require "utils.cmp"
 return {
   {
     "nvim-cmp",
+    enabled = false,
     dependencies = {
       {
         "garymjr/nvim-snippets",

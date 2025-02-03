@@ -7,7 +7,13 @@ function M.capabilities()
     dynamicRegistration = false,
     lineFoldingOnly = true,
   }
-  return require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+  local ok, cnl = pcall(require, "cmp_nvim_lsp")
+  if ok then
+    return cnl.default_capabilities(capabilities)
+  end
+
+  return capabilities
 end
 
 local diagnostics_active = true

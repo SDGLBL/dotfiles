@@ -20,7 +20,7 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       { "folke/neoconf.nvim", cmd = "Neoconf", config = true },
-      { "ray-x/lsp_signature.nvim", opts = { hint_prefix = require("utils.icons").diagnostics.BoldHint .. " " } },
+      { "ray-x/lsp_signature.nvim", enabled = false, opts = { hint_prefix = require("utils.icons").diagnostics.BoldHint .. " " } },
       {
         "RRethy/vim-illuminate",
         event = "VeryLazy",
