@@ -28,12 +28,12 @@ return {
       keymap = {
         preset = "enter",
 
-        -- ["<c-f>"] = {
-        --   function()
-        --     -- invoke manually, requires blink >v0.8.0
-        --     require("blink-cmp").show { providers = { "ripgrep" } }
-        --   end,
-        -- },
+        ["<C-Space>"] = {
+          function()
+            -- invoke manually, requires blink >v0.8.0
+            require("blink-cmp").show { providers = { "ripgrep", "dictionary", "path" } }
+          end,
+        },
       },
 
       appearance = {
@@ -100,7 +100,7 @@ return {
             -- Make sure this is at least 2.
             -- 3 is recommended
             max_items = 2,
-            min_keyword_length = 3,
+            min_keyword_length = 2,
             opts = {
               -- options for blink-cmp-dictionary
               dictionary_files = {
