@@ -41,6 +41,20 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          moonshot = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "MOONSHOT_API_KEY",
+            },
+            url = os.getenv "MOONSHOT_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "moonshot-v1-auto",
+                choices = {
+                  "moonshot-v1-auto",
+                },
+              },
+            },
+          }),
           openrouter = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = os.getenv "OPENROUTER_API_KEY",
