@@ -27,7 +27,7 @@ M.translate = {
             stop_context_insertion = true,
             adapter = {
               name = "openrouter",
-              model = "google/gemini-2.0-flash-exp:free",
+              model = "google/gemini-2.0-flash-001",
             },
           },
           prompts = {
