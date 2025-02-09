@@ -2,135 +2,140 @@
 <p>
 </p>
 
-> a dotfiles support full stack dev in terminal
+> A dotfiles support full stack development in terminal
 
-## Contents
+## Features
 
-- vim(Neovim >= 0.9) config support full stack dev
-- tmux config contain pretty themes and useful tools
-- useful terminal tools
+### Neovim Configuration
 
-### Neovim
+Requires Neovim >= 0.10.0
 
-Requires Neovim >= 0.9
+#### Core Features
 
-### Contains
+- Full LSP support with blink.cmp based completion (modern replacement for nvim-cmp)
+- Treesitter-based syntax highlighting and indentation
+- Git integration tools
+- Debug Adapter Protocol (DAP) support
+- Remote SSH copy & paste support
+- Fuzzy finding with Telescope
+- Automatic LSP server installation
+- Copilot integration
+- Advanced AI coding assistance with CodeCompanion
 
-- Git tools
-- Better folding
-- Keymaps shortcuts
-- Better lsp signature
-- Dap debug tools support
-- **Remote ssh copy & paste support**
-- Fuzzy finder with telescope
-- Lsp install and update tools
-- Treesitter highlight and indent
-- Full lsp support with nvim-cmp based on neovim internal lsp
-- Snippets with luasnip containing snippets for all languages
-- ETC....
+#### Language Support
 
-### Configure
+Pre-configured support for:
 
-```lua
--- .config/nvim/init.lua or open nvim and press c
-require("configs").setup({})
-```
-
-### Example
+- Lua
+- Python
+- Golang
+- Rust
+- JavaScript/TypeScript
+- HTML/CSS
+- Docker
+- JSON/YAML
+- Markdown
+- And more...
 
 #### Themes
 
-- [gruvbox](https://github.com/ellisonleao/gruvbox.nvim)
-- [darkplus](https://github.com/martinsione/darkplus.nvim)
-- [catppuccin](https://github.com/catppuccin/nvim)
-- [monokai](https://github.com/tanvirtin/monokai.nvim)
-- [nightfly](https://github.com/bluz71/vim-nightfly-guicolors)
-- [tokyonight](https://github.com/folke/tokyonight.nvim)
-- [rose-pine](https://github.com/rose-pine/neovim)
-- [nightfox](https://github.com/EdenEast/nightfox.nvim)
-- [github-nvim-theme](https://github.com/projekt0n/github-nvim-theme)
-- [tokyodark](https://github.com/tiagovla/tokyodark.nvim)
-- [kanagawa](https://github.com/rebelot/kanagawa.nvim)
-- [material](https://github.com/marko-cerovac/material.nvim)
+Integrated themes include:
 
-#### Plugins
-
-- [project.nvim](https://github.com/ahmedkhalf/project.nvim) - The superior project management solution for neovim.
-- [whick-key](https://github.com/folke/which-key.nvim) - A lua plugin for Neovim 0.5 that displays a popup with possible keybindings of the command you started typing.
-- [nvim-lastplace](https://github.com/ethanholz/nvim-lastplace) - Intelligently reopen files at your last edit position in Vim.
-- [copilot.vim](https://github.com/github/copilot.vim) - Copilot
-- [refactoring.nvim](https://github.com/ThePrimeagen/refactoring.nvim) - Refactoring
-- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) - A completion engine plugin for neovim written in Lua.
-- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) - Enable LSP
-- [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer) - Simple to use language server installer
-- [nlsp-settings.nvim](http://github.com/tamago324/nlsp-settings.nvim) - language server settings defined in json form
-- [null-ls.nvim](http://github.com/jose-elias-alvarez/null-ls.nvim) - Formatters and linters
-- [lspsaga.nvim](https://github.com/tami5/lspsaga.nvim) - A light-weight lsp plugin based on neovim's built-in lsp with a highly performant UI
-- [lsp_signature](https://github.com/ray-x/lsp_signature.nvim) - Better lsp signature.
-- [nvim-autopairs](https://github.com/windwp/nvim-autopairs) - Autopairs
-- [Comment.nvim](https://github.com/numToStr/Comment.nvim) - Easily comment stuff
-- [LuaSnip](https://github.com/L3MON4D3/LuaSnip) - Snippet engine.
-- [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) - A bunch of snippets to use.
-- [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) - Telescope is a highly extendable fuzzy finder over lists.
-- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) - Treesitter configurations and abstraction layer
-- [nvim-ts-rainbow](https://github.com/p00f/nvim-ts-rainbow) - Rainbow parentheses
-- [nvim-ts-autotag](https://github.com/windwp/nvim-ts-autotag) - Auto close for html,jsx,txs
-- [nvim-treesitter-context](https://github.com/romgrk/nvim-treesitter-context) - Show func or class statement
-- [nvim-ts-hint-textobject](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) - Hint textobject
-- [nvim-web-devicons](https://github.com/kyazdani42/nvim-web-devicons) - Devicons
-- [nvim-tree.lua](https://github.com/kyazdani42/nvim-tree.lua) - File explorer
-- [vim-tmux-navigator](https://github.com/christoomey/vim-tmux-navigator) - Tmux navigation
-- [hop.nvim](https://github.com/phaazon/hop.nvim) - Easy motion without messing with your buffer
-- ETC...
+- Catppuccin
+- Gruvbox
+- Rose Pine
+- Tokyo Night
+- Night Fox
+- Material
+- And many more...
 
 ### Terminal Tools
 
-- [duf](https://github.com/muesli/duf) - Disk Usage/Free Utility - a better 'df' alternative
-- [dua-cli](https://github.com/Byron/dua-cli) - A tool to conveniently learn about the space usage of directories on your disk
-- [fzf](https://github.com/junegunn/fzf) - A command-line fuzzy finder
-- [bat](https://www.google.com/search?client=firefox-b-d&q=bat+github) - A cat(1) clone with wings.
-- [exa](https://github.com/ogham/exa) - A modern replacement for ‘ls’.
-- [ripgrep](https://github.com/BurntSushi/ripgrep) - ripgrep recursively searches directories for a regex pattern
-- [delta](https://github.com/dandavison/delta) - A viewer for git and diff output
-- [lazygit](https://github.com/jesseduffield/lazygit) - simple terminal UI for git commands
+Essential CLI tools included:
+
+- [duf](https://github.com/muesli/duf) - Disk usage analyzer
+- [fzf](https://github.com/junegunn/fzf) - Fuzzy finder
+- [bat](https://github.com/sharkdp/bat) - Modern cat replacement
+- [exa](https://github.com/ogham/exa) - Modern ls replacement
+- [ripgrep](https://github.com/BurntSushi/ripgrep) - Fast grep replacement
+- [delta](https://github.com/dandavison/delta) - Git diff viewer
+- [lazygit](https://github.com/jesseduffield/lazygit) - Git TUI
 
 ## Prerequisites
 
-### Ubuntu >= 18.04
+### Ubuntu/Debian
 
 ```bash
 sudo apt install make gcc git python3 zsh curl wget tmux libc6-dev
 ```
 
-### Macos
+### macOS
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 brew install gcc make g++ git python3 zsh libc6-dev wget curl tmux
 ```
 
-### Debian
+## Installation
 
-```bash
-sudo yum install make gcc git python3 zsh curl wget tmux zsh
-```
-
-## Install
+For Linux systems:
 
 ```sh
-# linux
 ./setup.sh -a
-# macos
+```
+
+For macOS systems:
+
+```sh
 ./setup_macos.sh -a
 ```
 
-## Usage
+Use `-h` or `--help` flag to see all available options:
 
 ```sh
-# linux
-./setup.sh -h or ./setup.sh --help
-# macos
-./setup_macos.sh -h or ./setup_macos.sh --help
+./setup.sh -h
+# or
+./setup_macos.sh -h
+```
+
+## Configuration
+
+### Neovim
+
+The main Neovim configuration file is located at `~/.config/nvim/init.lua`. You can customize settings by editing this file:
+
+```lua
+require("configs").setup({
+  -- Choose your colorscheme
+  dark_colorscheme = "rose-pine-moon",
+  light_colorscheme = "catppuccin-latte",
+
+  -- Enable features
+  dap = true,         -- Debug adapter protocol
+  format_on_save = true,
+  transparent_window = true,
+
+  -- Language support
+  go = true,
+  rust = true,
+  python = true,
+
+  -- Additional features
+  autopairs = false,
+  markdown_preview = true
+})
+```
+
+## Project Structure
+
+```
+.
+├── Brewfile
+├── config -> .config
+├── Dockerfile
+├── README.md
+├── setup.sh
+└── setup_macos.sh
 ```
 
 ## Author
@@ -143,6 +148,10 @@ sudo yum install make gcc git python3 zsh curl wget tmux zsh
 
 Give a ⭐️ if this project helped you!
 
+## License
+
+This project is [MIT](LICENSE) licensed.
+
 ---
 
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+_This README was generated with ❤️_
