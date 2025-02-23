@@ -41,6 +41,20 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          doubao = require("codecompanion.adapters").extend("openai", {
+            env = {
+              api_key = os.getenv "DOUBAO_API_KEY",
+            },
+            url = os.getenv "DOUBAO_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "doubao-1-5-pro-256k-250115",
+                choices = {
+                  "doubao-1-5-pro-256k-250115",
+                },
+              },
+            },
+          }),
           moonshot = require("codecompanion.adapters").extend("openai", {
             env = {
               api_key = os.getenv "MOONSHOT_API_KEY",
