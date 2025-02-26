@@ -215,8 +215,8 @@ M.write_git_message = {
 }
 
 local write_in_context_adapter = {
-  name = "deepseek",
-  model = "deepseek-chat",
+  name = "ark",
+  model = "deepseek-v3-241226",
 }
 
 M.write_in_selected_context = {
