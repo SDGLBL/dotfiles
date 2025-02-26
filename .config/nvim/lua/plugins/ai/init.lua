@@ -23,10 +23,9 @@ return {
       { "<leader>av", "<cmd>CodeCompanionAdd<cr>", mode = { "v" }, desc = "Add Visual" },
       { "<leader>at", "<cmd>CodeCompanionChat Toggle<cr>", mode = { "n", "v" }, desc = "Toggle" },
       { "<leader>am", desc = "Switch Mode Chat" },
-      { "<leader>ama", "<cmd>CodeCompanionChat anthropic<cr>", mode = { "n", "v" }, desc = "Anthropic" },
       { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
-      { "<leader>amq", "<cmd>CodeCompanionChat siliconflow<cr>", mode = { "n", "v" }, desc = "Qwen" },
       { "<leader>amo", "<cmd>CodeCompanionChat openrouter<cr>", mode = { "n", "v" }, desc = "Openrouter" },
+      { "<leader>ama", "<cmd>CodeCompanionChat ark<cr>", mode = { "n", "v" }, desc = "Openrouter" },
     },
     init = function()
       require("plugins.ai.fidget-spinner"):init()
