@@ -84,7 +84,7 @@ return {
                   "qwen/qwen-2.5-72b-instruct",
                   "google/gemini-2.0-flash-001",
                   "google/gemini-exp-1206:free",
-                  "anthropic/claude-3.5-sonnet",
+                  "anthropic/claude-3.7-sonnet:beta",
                   "openai/gpt-4o-2024-11-20",
                 },
               },

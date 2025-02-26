@@ -185,8 +185,8 @@ M.write_git_message = {
             modes = { "n" },
             placement = "add",
             adapter = {
-              name = "deepseek",
-              model = "deepseek-chat",
+              name = "openrouter",
+              model = "google/gemini-2.0-flash-001",
             },
           },
           prompts = {
