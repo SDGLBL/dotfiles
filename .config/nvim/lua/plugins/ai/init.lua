@@ -41,15 +41,16 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
-          doubao = require("codecompanion.adapters").extend("openai", {
+          ark = require("codecompanion.adapters").extend("openai", {
             env = {
-              api_key = os.getenv "DOUBAO_API_KEY",
+              api_key = os.getenv "ARK_API_KEY",
             },
-            url = os.getenv "DOUBAO_API_BASE" .. "/chat/completions",
+            url = os.getenv "ARK_API_BASE" .. "/chat/completions",
             schema = {
               model = {
-                default = "doubao-1-5-pro-256k-250115",
+                default = "deepseek-r1-250120",
                 choices = {
+                  "deepseek-r1-250120",
                   "doubao-1-5-pro-256k-250115",
                 },
               },
