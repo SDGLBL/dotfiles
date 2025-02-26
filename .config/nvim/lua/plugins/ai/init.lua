@@ -222,7 +222,7 @@ return {
           },
           diff = {
             enabled = true,
-            provider = "mini_diff",
+            provider = "default",
           },
           chat = {
             show_settings = true,
