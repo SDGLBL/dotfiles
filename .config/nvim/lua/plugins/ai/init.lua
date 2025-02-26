@@ -214,12 +214,6 @@ return {
           ["Write"] = require("plugins.ai.actions").write,
         },
         display = {
-          inline = {
-            diff = {
-              enabled = true,
-              provider = "default",
-            },
-          },
           diff = {
             enabled = true,
             provider = "default",
