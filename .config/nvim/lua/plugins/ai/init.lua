@@ -51,6 +51,7 @@ return {
                 default = "deepseek-r1-250120",
                 choices = {
                   "deepseek-r1-250120",
+                  "deepseek-v3-241226",
                   "doubao-1-5-pro-256k-250115",
                 },
               },
