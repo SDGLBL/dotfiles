@@ -1,6 +1,7 @@
 return {
   {
     "aaronik/treewalker.nvim",
+    enabled = false,
     event = "VeryLazy",
     keys = {
       { "<C-j>", "<cmd>Treewalker Down<cr>", desc = "Move down", mode = { "n", "v" }, silent = true },
