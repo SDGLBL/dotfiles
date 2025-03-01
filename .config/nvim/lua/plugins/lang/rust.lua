@@ -122,6 +122,7 @@ return {
   {
     "Saecki/crates.nvim",
     event = { "BufRead Cargo.toml" },
+    ---@type crates.UserConfig
     opts = {
       null_ls = {
         enabled = true,
@@ -131,7 +132,10 @@ return {
         border = "rounded",
       },
       completion = {
-        cmp = { enabled = true },
+        cmp = { enabled = false },
+        blink = {
+          use_custom_kind = true,
+        },
       },
     },
     config = function(_, opts)
