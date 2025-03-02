@@ -5,3 +5,4 @@
 .DS_Store
 .aider*
 *.dict
+.llm-context
