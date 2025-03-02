@@ -9,14 +9,14 @@ local context_groups = require "context-groups"
 M.support_languages = {
   "Chinese",
   "English",
-  "Japanese",
-  "Korean",
-  "French",
-  "Spanish",
-  "Portuguese",
-  "Russian",
-  "German",
-  "Italian",
+  -- "Japanese",
+  -- "Korean",
+  -- "French",
+  -- "Spanish",
+  -- "Portuguese",
+  -- "Russian",
+  -- "German",
+  -- "Italian",
 }
 
 M.add_struct_field_comment = {
