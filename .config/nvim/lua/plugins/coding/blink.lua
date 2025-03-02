@@ -224,6 +224,7 @@ return {
             columns = { { "kind_icon" }, { "label", gap = 1 }, { "label_description" } },
             components = {
               label = {
+                -- width = { fill = true, max = 45 },
                 text = function(ctx)
                   return require("colorful-menu").blink_components_text(ctx)
                 end,
