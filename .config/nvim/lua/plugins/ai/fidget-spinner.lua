@@ -17,9 +17,6 @@
 -- - Reasoning text formatting
 -- - State tracking
 -- - Neovim UI integration
----@diagnostic disable: inject-field
--- lua/plugins/ai/fidget-spinner.lua
-
 local progress = require "fidget.progress"
 
 local M = {}
@@ -81,10 +78,10 @@ function M:create_progress_handle(request)
     },
   }
 
-  handle.reasoning_chunks = {}
-  handle.current_state = "initializing" -- initializing, reasoning, responding, finished
-  handle.line_count = 3 -- 最多显示的行数
-  handle.char_per_line = 50 -- 每行字符数
+  handle.reasoning_text = "" -- 存储完整的推理文本
+  handle.reasoning_lines = {} -- 存储分行后的推理文本
+  handle.max_lines = 20 -- 最多显示的行数
+  handle.chars_per_line = 70 -- 每行字符数
 
   return handle
 end
@@ -94,67 +91,30 @@ function M:update_reasoning(handle, reasoning_chunk)
     handle.title = ""
   end
 
-  handle.current_state = "reasoning"
+  -- 追加新的推理文本
+  handle.reasoning_text = handle.reasoning_text .. reasoning_chunk
 
-  table.insert(handle.reasoning_chunks, reasoning_chunk)
+  -- 处理文本：替换换行符为空格
+  local processed_text = handle.reasoning_text:gsub("\n", " "):gsub("%s+", " ")
 
-  -- 使用多行格式
-  local multiline_text = self:format_reasoning_multiline(handle.reasoning_chunks, handle.line_count, handle.char_per_line)
+  -- 重新生成所有行
+  handle.reasoning_lines = {}
+  for i = 1, #processed_text, handle.chars_per_line do
+    local line = processed_text:sub(i, i + handle.chars_per_line - 1)
+    table.insert(handle.reasoning_lines, line)
+  end
 
-  -- 保持message为字符串类型
-  handle.message = "Reasoning:\n" .. multiline_text
-end
-
--- 新增函数：格式化多行推理显示
-function M:format_reasoning_multiline(reasoning_chunks, max_lines, chars_per_line)
-  -- 将所有内容合并成一个字符串
-  local all_text = table.concat(reasoning_chunks)
-
-  -- 清理文本：替换换行符为空格
-  all_text = all_text:gsub("\n", " "):gsub("%s+", " ")
-
-  -- 分割成每行固定字符数的行
-  local lines = {}
-  local start_pos = math.max(1, #all_text - (max_lines * chars_per_line) + 1)
-
-  for i = 1, max_lines do
-    local end_pos = start_pos + chars_per_line - 1
-    if start_pos <= #all_text then
-      local line = all_text:sub(start_pos, math.min(end_pos, #all_text))
-      table.insert(lines, line)
-      start_pos = end_pos + 1
-    else
-      -- 如果没有更多文本，退出循环
-      break
+  -- 如果行数超过最大限制，移除最早的行
+  while #handle.reasoning_lines > handle.max_lines do
+    table.remove(handle.reasoning_lines, 1)
+    -- 添加省略号到第一行表示内容被截断
+    if #handle.reasoning_lines > 0 then
+      handle.reasoning_lines[1] = "..." .. handle.reasoning_lines[1]:sub(4)
     end
   end
 
-  -- 如果第一行不是以"..."开头，并且我们实际上截断了文本
-  if #lines > 0 and start_pos > 1 and #all_text > (max_lines * chars_per_line) then
-    lines[1] = "..." .. lines[1]:sub(4)
-  end
-
-  return table.concat(lines, "\n")
-end
-
-function M:format_reasoning_display(reasoning_chunks)
-  local latest_chunks = {}
-  local count = 0
-  for i = #reasoning_chunks, 1, -1 do
-    table.insert(latest_chunks, 1, reasoning_chunks[i])
-    count = count + #reasoning_chunks[i]
-    if count >= 50 then
-      break
-    end
-  end
-
-  local combined = table.concat(latest_chunks)
-  combined = combined:gsub("\n", " "):gsub("%s+", " ")
-  if #combined > 50 then
-    combined = "..." .. combined:sub(-47)
-  end
-
-  return combined
+  -- 更新消息
+  handle.message = "Reasoning:\n" .. table.concat(handle.reasoning_lines, "\n")
 end
 
 function M:llm_role_title(adapter)
