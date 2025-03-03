@@ -89,8 +89,8 @@ M.write_comment = {
             stop_context_insertion = true,
             -- user_prompt = true,
             adapter = {
-              name = "deepseek",
-              model = "deepseek-chat",
+              name = "ark",
+              model = "deepseek-v3-241226",
             },
           },
           prompts = {
@@ -106,15 +106,12 @@ M.write_comment = {
                 return vim.tbl_contains(vim.tbl_keys(comment_prompts), context.filetype)
               end,
               content = function(context)
-                return comment_prompts[context.filetype]
+                return "Here is " .. context.filetype .. " language comment writing guide.\n" .. comment_prompts[context.filetype]
               end,
             },
             {
               role = "user",
               contains_code = true,
-              -- opts = {
-              --   contains_code = true,
-              -- },
               content = function(context)
                 local code = require("codecompanion.helpers.actions").get_code(context.start_line, context.end_line)
                 local bufnr = context.bufnr
@@ -137,7 +134,7 @@ Requirements:
 1. Write the comment in %s.
 2. Include parameter and return types if applicable.
 3. Provide a brief explanation of the code's purpose and functionality.
-4. Use the appropriate comment syntax for %s.
+4. Use the appropriate comment syntax/style for %s.
 5. Only return the comment, without any code or additional explanations.
 6. Ensure the comment is concise yet informative.
 7. Only write comment without any markdown code fences like '```'.
