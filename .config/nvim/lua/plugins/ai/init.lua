@@ -25,7 +25,7 @@ return {
       { "<leader>am", desc = "Switch Mode Chat" },
       { "<leader>amd", "<cmd>CodeCompanionChat deepseek<cr>", mode = { "n", "v" }, desc = "Deepseek" },
       { "<leader>amo", "<cmd>CodeCompanionChat openrouter<cr>", mode = { "n", "v" }, desc = "Openrouter" },
-      { "<leader>ama", "<cmd>CodeCompanionChat ark<cr>", mode = { "n", "v" }, desc = "Openrouter" },
+      { "<leader>ama", "<cmd>CodeCompanionChat ark<cr>", mode = { "n", "v" }, desc = "Ark" },
     },
     init = function()
       require("plugins.ai.fidget-spinner"):init()
@@ -40,9 +40,12 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
-          ark = require("codecompanion.adapters").extend("openai", {
+          ark = require("codecompanion.adapters").extend("deepseek", {
             env = {
               api_key = os.getenv "ARK_API_KEY",
+            },
+            opts = {
+              can_reason = true,
             },
             url = os.getenv "ARK_API_BASE" .. "/chat/completions",
             schema = {
@@ -52,6 +55,7 @@ return {
                   "deepseek-r1-250120",
                   "deepseek-v3-241226",
                   "doubao-1-5-pro-256k-250115",
+                  "deepseek-r1-distill-qwen-32b-250120",
                 },
               },
             },
@@ -70,9 +74,12 @@ return {
               },
             },
           }),
-          openrouter = require("codecompanion.adapters").extend("openai", {
+          openrouter = require("codecompanion.adapters").extend("deepseek", {
             env = {
               api_key = os.getenv "OPENROUTER_API_KEY",
+            },
+            opts = {
+              can_reason = true,
             },
             url = os.getenv "OPENROUTER_API_BASE" .. "/chat/completions",
             schema = {
