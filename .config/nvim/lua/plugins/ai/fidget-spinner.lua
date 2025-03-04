@@ -24,6 +24,9 @@ local M = {}
 function M:init()
   local group = vim.api.nvim_create_augroup("CodeCompanionFidgetHooks", {})
 
+  -- 创建自定义高亮组
+  self:setup_custom_highlights()
+
   vim.api.nvim_create_autocmd({ "User" }, {
     pattern = "CodeCompanionRequestStarted",
     group = group,
@@ -55,6 +58,53 @@ function M:init()
       end
     end,
   })
+
+  -- 当配色方案改变时重新应用高亮
+  vim.api.nvim_create_autocmd("ColorScheme", {
+    group = group,
+    callback = function()
+      self:setup_custom_highlights()
+    end,
+  })
+end
+
+-- 设置自定义高亮组
+function M:setup_custom_highlights()
+  -- 创建自定义高亮组
+  vim.api.nvim_set_hl(0, "CodeCompanionFidgetNormal", {
+    bg = "#2E3440", -- 背景色 (Nordic 深色主题颜色)
+    fg = "#D8DEE9", -- 前景色
+  })
+
+  vim.api.nvim_set_hl(0, "CodeCompanionFidgetTitle", {
+    bg = "#2E3440", -- 背景色
+    fg = "#88C0D0", -- 标题颜色 (亮蓝色)
+    bold = true,
+  })
+
+  vim.api.nvim_set_hl(0, "CodeCompanionFidgetReasoning", {
+    bg = "#2E3440", -- 背景色
+    fg = "#A3BE8C", -- 推理文本颜色 (绿色)
+  })
+
+  -- 设置 Fidget 使用我们的高亮组
+  -- 这需要 Fidget 的配置支持
+  if vim.g.fidget_configured ~= true then
+    require("fidget").setup {
+      notification = {
+        window = {
+          winblend = 0, -- 设置为0以确保背景色完全不透明
+        },
+        configs = {
+          default = {
+            group_style = "CodeCompanionFidgetTitle",
+            annote_style = "CodeCompanionFidgetReasoning",
+          },
+        },
+      },
+    }
+    vim.g.fidget_configured = true
+  end
 end
 
 M.handles = {}
@@ -76,12 +126,14 @@ function M:create_progress_handle(request)
     lsp_client = {
       name = M:llm_role_title(request.data.adapter),
     },
+    -- 尝试应用自定义样式
+    style = "CodeCompanionFidgetNormal",
   }
 
   handle.reasoning_text = "" -- 存储完整的推理文本
   handle.reasoning_lines = {} -- 存储分行后的推理文本
   handle.max_lines = 20 -- 最多显示的行数
-  handle.chars_per_line = 70 -- 每行字符数
+  handle.chars_per_line = 80 -- 每行字符数
 
   return handle
 end
@@ -115,6 +167,7 @@ function M:update_reasoning(handle, reasoning_chunk)
 
   -- 更新消息
   handle.message = "Reasoning:\n" .. table.concat(handle.reasoning_lines, "\n")
+  handle.style = "CodeCompanionFidgetReasoning" -- 尝试应用自定义样式
 end
 
 function M:llm_role_title(adapter)
