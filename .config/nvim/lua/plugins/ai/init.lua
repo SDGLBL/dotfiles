@@ -97,6 +97,25 @@ return {
                 },
               },
             },
+            handlers = {
+              ---@param self CodeCompanion.Adapter
+              ---@return boolean
+              setup = function(self)
+                local os = require("codecompanion.adapters.openai").handlers.setup
+                if os then
+                  os(self)
+                end
+
+                self.parameters.provider = {
+                  order = {
+                    "Groq",
+                  },
+                  allow_fallbacks = true,
+                }
+
+                return true
+              end,
+            },
           }),
           siliconflow = require("codecompanion.adapters").extend("openai", {
             env = {
