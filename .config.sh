@@ -215,5 +215,22 @@ alias jkernels='cd ${HOME}/Library/Jupyter/kernels/'
 # Proxyman
 alias setproxyman='set -a && source "${HOME}/.proxyman/proxyman_env_automatic_setup.sh" && set +a'
 
+# Download arxiv paper command
+download_paper() {
+  local venv_dir="${HOME}/software/script/venv"
+  local script_path="${HOME}/software/script/ocr_paper.py"
+
+  [[ -d "$venv_dir" ]] || {
+    echo "Error: Virtual environment not found at $venv_dir"
+    return 1
+  }
+  [[ -f "$script_path" ]] || {
+    echo "Error: OCR script not found at $script_path"
+    return 1
+  }
+
+  "${venv_dir}"/bin/python "$script_path" pdf-url "${1}" -o .
+}
+
 # Source additional configuration if exists
 [[ -f ${HOME}/.token.sh ]] && source "${HOME}"/.token.sh
