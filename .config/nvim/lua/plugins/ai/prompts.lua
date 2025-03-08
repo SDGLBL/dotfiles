@@ -63,20 +63,6 @@ M.add_struct_field_comment = {
   },
 }
 
-local write_in_context_adapter = {
-  -- name = "deepseek",
-  -- model = "deepseek-chat",
-
-  -- name = "openrouter",
-  -- model = "deepseek/deepseek-chat",
-
-  name = "ark",
-  -- model = "deepseek-v3-241226",
-  -- model = "doubao-1-5-pro-256k-250115",
-  -- model = "deepseek-r1-distill-qwen-32b-250120",
-  model = "deepseek-r1-250120",
-}
-
 M.write_comment = {
   name = "Write comment",
   strategy = "inline",
@@ -102,7 +88,10 @@ M.write_comment = {
             placement = "before",
             stop_context_insertion = true,
             -- user_prompt = true,
-            adapter = write_in_context_adapter,
+            adapter = {
+              name = "ark",
+              model = "deepseek-v3-241226",
+            },
           },
           prompts = {
             {
@@ -192,7 +181,11 @@ M.write_git_message = {
           opts = {
             modes = { "n" },
             placement = "add",
-            adapter = write_in_context_adapter,
+            adapter = {
+              name = "ark",
+              -- model = "deepseek-v3-241226",
+              model = "deepseek-r1-250120",
+            },
           },
           prompts = {
             {
@@ -217,6 +210,22 @@ M.write_git_message = {
       return languages
     end,
   },
+}
+
+local write_in_context_adapter = {
+  -- name = "deepseek",
+  -- model = "deepseek-chat",
+
+  -- name = "openrouter",
+  -- model = "qwen/qwq-32b",
+  -- model = "deepseek/deepseek-chat",
+  -- model = "deepseek/deepseek-r1-distill-llama-70b",
+
+  name = "ark",
+  model = "deepseek-r1-250120",
+  -- model = "deepseek-v3-241226",
+  -- model = "doubao-1-5-pro-256k-250115",
+  -- model = "deepseek-r1-distill-qwen-32b-250120",
 }
 
 M.write_in_selected_context = {
