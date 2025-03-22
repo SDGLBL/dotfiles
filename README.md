@@ -100,6 +100,52 @@ Use `-h` or `--help` flag to see all available options:
 
 ## Configuration
 
+### API Tokens and Secrets
+
+This repository includes a secure mechanism for storing and using API tokens and secrets without exposing them in your Git history.
+
+#### Initial Setup
+
+1. Create a `.token.sh` file in the root of the repository (a template is provided at `.token.sh.template`):
+
+```bash
+cp .token.sh.template .token.sh
+```
+
+2. Edit the file to add your API keys and other secrets:
+
+```bash
+vim .token.sh
+```
+
+3. Add the `TOKEN_DECODE_PASSWORD` to your `~/.zshrc` file:
+
+```bash
+echo 'export TOKEN_DECODE_PASSWORD="your_secure_password"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+4. The Git hooks will automatically encrypt your `.token.sh` when committing changes and decrypt it when checking out or pulling.
+
+#### How It Works
+
+- `.token.sh` contains your sensitive data and is excluded from Git
+- `.token.sh.enc` is an encrypted version that is safe to commit
+- Git hooks automatically handle encryption/decryption using OpenSSL
+- The encryption password is stored in your `~/.zshrc` as `TOKEN_DECODE_PASSWORD`
+
+#### Manual Operations
+
+If you need to manually encrypt or decrypt the file:
+
+```bash
+# Encrypt
+openssl enc -aes-256-cbc -salt -pbkdf2 -pass "pass:$TOKEN_DECODE_PASSWORD" -in .token.sh -out .token.sh.enc
+
+# Decrypt
+openssl enc -aes-256-cbc -d -salt -pbkdf2 -pass "pass:$TOKEN_DECODE_PASSWORD" -in .token.sh.enc -out .token.sh
+```
+
 ### Neovim
 
 The main Neovim configuration file is located at `~/.config/nvim/init.lua`. You can customize settings by editing this file:

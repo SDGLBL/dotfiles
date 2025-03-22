@@ -1,0 +1,17 @@
+#!/bin/bash
+# Template for .token.sh
+# Copy this file to .token.sh and update with your own API keys
+
+# OpenAI API key
+OPENAI_API_KEY="your_openai_api_key_here"
+export OPENAI_API_KEY
+
+# Add other API keys as needed
+# EXAMPLE_API_KEY="your_api_key_here"
+# export EXAMPLE_API_KEY
+
+# Add API base URLs as needed
+# EXAMPLE_API_BASE="https://api.example.com/v1"
+# export EXAMPLE_API_BASE
+
+# Add any other environment variables needed by your tools and plugins

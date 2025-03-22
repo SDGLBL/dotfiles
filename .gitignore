@@ -7,3 +7,4 @@
 *.dict
 .llm-context
 scripts/
+.token.sh
