@@ -1,6 +1,7 @@
 return {
   {
-    "olimorris/codecompanion.nvim",
+    "SDGLBL/codecompanion.nvim",
+    branch = "branch-20250322-205500",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
@@ -40,6 +41,24 @@ return {
           -- log_level = "TRACE",
         },
         adapters = {
+          qianfan = require("codecompanion.adapters").extend("deepseek", {
+            env = {
+              api_key = os.getenv "QIANFAN_API_KEY",
+            },
+            opts = {
+              can_reason = true,
+            },
+            url = os.getenv "QIANFAN_API_BASE" .. "/chat/completions",
+            schema = {
+              model = {
+                default = "ernie-4.5-8k-preview",
+                choices = {
+                  "ernie-4.5-8k-preview",
+                },
+              },
+            },
+          }),
+
           ark = require("codecompanion.adapters").extend("deepseek", {
             env = {
               api_key = os.getenv "ARK_API_KEY",
