@@ -106,23 +106,22 @@ This repository includes a secure mechanism for storing and using API tokens and
 
 #### Initial Setup
 
-1. Create a `.token.sh` file in the root of the repository (a template is provided at `.token.sh.template`):
+1. After cloning the repository, install the Git hooks:
+
+```bash
+./git-hooks/install-hooks.sh
+```
+
+2. Create a `.token.sh` file in the root of the repository (a template is provided at `.token.sh.template`):
 
 ```bash
 cp .token.sh.template .token.sh
 ```
 
-2. Edit the file to add your API keys and other secrets:
+3. Edit the file to add your API keys and other secrets:
 
 ```bash
 vim .token.sh
-```
-
-3. Add the `TOKEN_DECODE_PASSWORD` to your `~/.zshrc` file:
-
-```bash
-echo 'export TOKEN_DECODE_PASSWORD="your_secure_password"' >> ~/.zshrc
-source ~/.zshrc
 ```
 
 4. The Git hooks will automatically encrypt your `.token.sh` when committing changes and decrypt it when checking out or pulling.

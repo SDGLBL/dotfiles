@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Pre-commit hook to encrypt .token.sh before committing
+
+# Path to the .token.sh file
+TOKEN_FILE="$(git rev-parse --show-toplevel)/.token.sh"
+# Path to the encrypted .token.sh.enc file
+ENCRYPTED_FILE="$(git rev-parse --show-toplevel)/.token.sh.enc"
+
+# Check if .token.sh exists
+if [ -f "$TOKEN_FILE" ]; then
+    echo "Encrypting .token.sh to .token.sh.enc..."
+    
+    # Check if TOKEN_DECODE_PASSWORD is set
+    if [ -z "$TOKEN_DECODE_PASSWORD" ]; then
+        # Try to load it from zshrc if not set
+        if [ -f "$HOME/.zshrc" ]; then
+            source "$HOME/.zshrc" 2>/dev/null
+        fi
+    fi
+    
+    # If still not set, use default password (not recommended for production)
+    if [ -z "$TOKEN_DECODE_PASSWORD" ]; then
+        TOKEN_DECODE_PASSWORD="123456"
+        echo "Warning: Using default password for encryption. Set TOKEN_DECODE_PASSWORD in your ~/.zshrc for better security."
+    fi
+    
+    # Use OpenSSL to encrypt the file
+    openssl enc -aes-256-cbc -salt -pbkdf2 -pass "pass:$TOKEN_DECODE_PASSWORD" -in "$TOKEN_FILE" -out "$ENCRYPTED_FILE"
+    
+    # Check if encryption was successful
+    if [ $? -ne 0 ]; then
+        echo "Warning: Failed to encrypt .token.sh. You may need to encrypt it manually with:"
+        echo "  openssl enc -aes-256-cbc -salt -pbkdf2 -pass pass:\$TOKEN_DECODE_PASSWORD -in $TOKEN_FILE -out $ENCRYPTED_FILE"
+        echo "Your commit will proceed without the encrypted file."
+        exit 0
+    fi
+    
+    # Add the encrypted file to the commit if it exists
+    if [ -f "$ENCRYPTED_FILE" ]; then
+        git add "$ENCRYPTED_FILE"
+        echo ".token.sh.enc has been encrypted and added to the commit."
+    else
+        echo "Error: Failed to encrypt .token.sh"
+        exit 1
+    fi
+fi
+
+exit 0

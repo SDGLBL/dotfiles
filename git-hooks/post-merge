@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# Post-merge hook to decrypt .token.sh.enc after pulling
+
+# Path to the .token.sh file
+TOKEN_FILE="$(git rev-parse --show-toplevel)/.token.sh"
+# Path to the encrypted .token.sh.enc file
+ENCRYPTED_FILE="$(git rev-parse --show-toplevel)/.token.sh.enc"
+
+# Check if TOKEN_DECODE_PASSWORD is set
+if [ -z "$TOKEN_DECODE_PASSWORD" ]; then
+    # Try to load it from zshrc if not set
+    if [ -f "$HOME/.zshrc" ]; then
+        source "$HOME/.zshrc" 2>/dev/null
+    fi
+fi
+
+# If still not set, use default password (not recommended for production)
+if [ -z "$TOKEN_DECODE_PASSWORD" ]; then
+    TOKEN_DECODE_PASSWORD="123456"
+    echo "Warning: Using default password for decryption. Set TOKEN_DECODE_PASSWORD in your ~/.zshrc for better security."
+fi
+
+# Check if the encrypted file exists and has been modified
+if [ -f "$ENCRYPTED_FILE" ]; then
+    # If .token.sh already exists, only decrypt if encrypted file is newer
+    if [ -f "$TOKEN_FILE" ]; then
+        ENCRYPTED_TIMESTAMP=$(stat -f "%m" "$ENCRYPTED_FILE")
+        TOKEN_TIMESTAMP=$(stat -f "%m" "$TOKEN_FILE")
+        
+        if [ "$ENCRYPTED_TIMESTAMP" -gt "$TOKEN_TIMESTAMP" ]; then
+            echo "Decrypting .token.sh.enc to .token.sh..."
+            
+            # Try decryption with OpenSSL
+            openssl enc -aes-256-cbc -d -salt -pbkdf2 -pass "pass:$TOKEN_DECODE_PASSWORD" -in "$ENCRYPTED_FILE" -out "$TOKEN_FILE"
+            
+            if [ $? -eq 0 ]; then
+                echo ".token.sh.enc has been decrypted."
+                chmod +x "$TOKEN_FILE"
+            else
+                echo "Error: Failed to decrypt .token.sh.enc. Make sure TOKEN_DECODE_PASSWORD is set correctly."
+                echo "You can manually decrypt using: openssl enc -aes-256-cbc -d -salt -pbkdf2 -pass pass:\$TOKEN_DECODE_PASSWORD -in $ENCRYPTED_FILE -out $TOKEN_FILE"
+            fi
+        fi
+    else
+        # If .token.sh doesn't exist, decrypt it
+        echo "Decrypting .token.sh.enc to .token.sh..."
+        
+        # Try decryption with OpenSSL
+        openssl enc -aes-256-cbc -d -salt -pbkdf2 -pass "pass:$TOKEN_DECODE_PASSWORD" -in "$ENCRYPTED_FILE" -out "$TOKEN_FILE"
+        
+        if [ $? -eq 0 ]; then
+            echo ".token.sh.enc has been decrypted."
+            chmod +x "$TOKEN_FILE"
+        else
+            echo "Error: Failed to decrypt .token.sh.enc. Make sure TOKEN_DECODE_PASSWORD is set correctly."
+            echo "You can manually decrypt using: openssl enc -aes-256-cbc -d -salt -pbkdf2 -pass pass:\$TOKEN_DECODE_PASSWORD -in $ENCRYPTED_FILE -out $TOKEN_FILE"
+        fi
+    fi
+fi
+
+exit 0

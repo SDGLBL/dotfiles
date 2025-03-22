@@ -339,6 +339,9 @@ configure_dotfiles() {
     fi
   done
 
+  # Install git hooks
+  install_git_hooks
+
   output $GREEN "Dotfiles configured successfully"
   log "Dotfiles configured"
 }
@@ -515,3 +518,36 @@ trap 'handle_error "$BASH_COMMAND"' ERR
 
 # Run the main function
 main "$@"
+
+# Function to install git hooks
+install_git_hooks() {
+  output  "Installing Git hooks..."
+  local hook_source_dir="/git-hooks"
+  local hook_target_dir="/.git/hooks"
+
+  mkdir -p ""
+
+  # Copy git hooks
+  for hook in ""/*; do
+    hook_name=
+    cp "" "/"
+    chmod +x "/"
+    output  "Installed Git hook: "
+  done
+
+  output  "Git hooks installed successfully"
+  log "Git hooks installed"
+}
+
+# Function to setup token password
+setup_token_password() {
+  output  "Setting up TOKEN_DECODE_PASSWORD..."
+  local password="123456" # Default password
+
+  # Prompt user for a custom password
+  read -p "Enter a password for token encryption (default: 123456): " custom_password
+  if [ -n "" ]; then
+    password=""
+  fi
+
+  # Add to .zshrc if it doesnt
