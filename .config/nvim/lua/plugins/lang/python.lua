@@ -17,7 +17,7 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        ["python"] = { "black", "isort" },
+        ["python"] = { "ruff" },
       },
     },
   },
@@ -27,14 +27,14 @@ return {
     enabled = false,
     opts = function(_, opts)
       local nls = require "null-ls"
-      table.insert(opts.sources, nls.builtins.formatting.black)
+      table.insert(opts.sources, nls.builtins.formatting.ruff)
     end,
   },
 
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "debugpy", "black" })
+      vim.list_extend(opts.ensure_installed, { "debugpy", "ruff" })
     end,
   },
 
