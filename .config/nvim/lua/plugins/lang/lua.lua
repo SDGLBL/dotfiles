@@ -30,7 +30,7 @@ return {
 
   { "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 
-  {                                        -- optional completion source for require statements and module annotations
+  { -- optional completion source for require statements and module annotations
     "hrsh7th/nvim-cmp",
     opts = function(_, opts)
       opts.sources = opts.sources or {}
@@ -88,7 +88,8 @@ return {
                 library = {
                   -- luarocks path
                   -- [vim.fn.expand "~/.luarocks/share/lua/5.1"] = true,
-                  "/opt/homebrew/share/lua/5.4/",
+                  -- "/opt/homebrew/share/lua/5.4/",
+                  -- "~/.local/share/nvim/lazy/luarocks.nvim/.rocks/share/lua/5.1/",
                 },
               },
             },

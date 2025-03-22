@@ -32,7 +32,7 @@ return {
       -- LSP Server Settings
       ---@type lspconfig.options
       servers = {
-        marksman = {},
+        -- marksman = {},
       },
     },
   },
@@ -40,7 +40,7 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "prettierd", "markdownlint", "markdown-toc" })
+      vim.list_extend(opts.ensure_installed, { "prettierd", "markdown-toc" })
     end,
   },
 
@@ -49,8 +49,8 @@ return {
     optional = true,
     opts = {
       formatters_by_ft = {
-        ["markdown"] = { { "prettierd", "prettier" }, "markdownlint", "markdown-toc" },
-        ["markdown.mdx"] = { { "prettierd", "prettier" }, "markdownlint", "markdown-toc" },
+        ["markdown"] = { { "prettierd", "prettier" }, "markdown-toc" },
+        ["markdown.mdx"] = { { "prettierd", "prettier" }, "markdown-toc" },
       },
     },
   },
@@ -258,10 +258,12 @@ return {
     -- name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     -- ft = "norg",
-    ft = { "markdown", "norg", "rmd", "org", "codecompanion" },
+    -- ft = { "markdown", "norg", "rmd", "org", "codecompanion" },
+    ft = { "markdown", "norg", "rmd", "org" },
     config = function()
       require("render-markdown").setup {
-        file_types = { "markdown", "norg", "rmd", "org", "codecompanion" },
+        -- file_types = { "markdown", "norg", "rmd", "org", "codecompanion" },
+        file_types = { "markdown", "norg", "rmd", "org" },
       }
     end,
   },
@@ -269,6 +271,7 @@ return {
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
+    enabled = false,
     lazy = true,
     ft = "markdown",
     dependencies = {
@@ -279,7 +282,7 @@ return {
       workspaces = {
         {
           name = "work",
-          path = "~/sync/Work&Life/",
+          path = "~/Library/Mobile Documents/com~apple~CloudDocs/Work&Life",
         },
       },
     },

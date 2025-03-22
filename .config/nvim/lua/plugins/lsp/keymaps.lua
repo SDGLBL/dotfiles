@@ -1,6 +1,6 @@
 local M = {}
 
-local function show_documentation()
+function M.show_documentation()
   local filetype = vim.bo.filetype
   if vim.tbl_contains({ "vim", "help" }, filetype) then
     vim.cmd("h " .. vim.fn.expand "<cword>")
@@ -14,8 +14,6 @@ local function show_documentation()
     vim.lsp.buf.hover { border = "rounded" }
   end
 end
-
-vim.keymap.set("n", "K", show_documentation, { silent = true })
 
 function M.on_attach(client, buffer)
   if client.name == "copilot" or client.name == "null-ls" then
@@ -61,7 +59,7 @@ function M.on_attach(client, buffer)
   self:map("<leader>ls", require("telescope.builtin").lsp_document_symbols, { desc = "Document Symbols" })
   self:map("<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "Workspace Symbols" })
   self:map("<leader>lq", vim.diagnostic.setloclist, { desc = "Toggle Inline Diagnostics" })
-  self:map("K", show_documentation, { desc = "Hover" })
+  self:map("K", M.show_documentation, { desc = "Hover" })
 end
 
 function M.new(client, buffer)

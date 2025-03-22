@@ -47,3 +47,7 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
 vim.cmd [[set formatoptions-=cro]]
 vim.cmd [[cab cc CodeCompanion]]
+
+vim.keymap.set("n", "K", function()
+  require("plugins.lsp.keymaps").show_documentation()
+end, { silent = true })
