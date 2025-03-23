@@ -171,11 +171,11 @@ if command_is_exists fzf; then
 
   # FZF preview function
   if command -v bat &>/dev/null; then
-    alias pf='find . -type d \( -name venv -o -name .venv -o -name env -o -name .env -o -name __pycache__ \) -prune -o -type f -not -name "*.pyc" -print | \
+    alias pf='find . -type d \( -name venv -o -name .venv -o -name env -o -name .env -o -name __pycache__ -o -name node_modules \) -prune -o -type f -not -name "*.pyc" -print | \
             fzf --preview "bat --style=numbers --color=always --line-range :500 {}" \
             --bind "ctrl-/:change-preview-window(down|hidden|)"'
   else
-    alias pf='find . -type d \( -name venv -o -name .venv -o -name env -o -name .env -o -name __pycache__ \) -prune -o -type f -not -name "*.pyc" -print | \
+    alias pf='find . -type d \( -name venv -o -name .venv -o -name env -o -name .env -o -name __pycache__ -o -name node_modules \) -prune -o -type f -not -name "*.pyc" -print | \
             fzf --preview "less {}" \
             --bind "shift-up:preview-page-up,shift-down:preview-page-down" \
             --bind "ctrl-/:change-preview-window(down|hidden|)"'
